@@ -1,0 +1,33 @@
+Document Name: TQ-S441-en_UserDoc-mstemp_BuildingBlocks_Content.docx
+Template Name: C:\Users\v523580\temp1\TQ-S441-en_UserDoc-mstemp.dotm
+Macro Name: DeleteSpecificStyles
+Date: 2025-02-18
+Time: 09:50
+
+Deleted Styles:
+1. Linia przerwy ms
+2. ListaSeq 1 ms
+3. ListaSeq 2 ms
+4. ListaSeq 3 ms
+5. ListaSeq 4 ms
+6. Nag³ówek listy ms
+7. Normalny ms
+8. Normalny w tabeli ms
+9. Podpis pod rysunkiem ms
+10. Podpis tabeli ms
+11. PolaTekstowe ms
+12. Punktory ms
+13. Rysunek ms
+14. tabela ms
+15. ukryty ms
+16. Wypunktowanie w tabeli ms
+17. Zwyk³a tabela 41
+
+Document Name: TQ-S441-en_UserDoc-mstemp_BuildingBlocks_Content.docx
+Template Name: C:\Users\v523580\temp1\TQ-S441-en_UserDoc-mstemp.dotm
+Macro Name: DeleteSpecificStyles
+Date: 2025-02-18
+Time: 10:18
+
+Deleted Styles:
+

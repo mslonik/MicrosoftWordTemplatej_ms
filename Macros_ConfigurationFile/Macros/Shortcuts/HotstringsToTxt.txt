@@ -1,0 +1,36 @@
+| Table | Table header with numbering + table content, style "Table ms" |
+| ManufacturerContactData |  |
+| ChangeLog | Change log table |
+| Picture | Canva for a picture and numbered header. |
+| NumberedList |  |
+| BulletedList | Multilevel bulleted list. Indentation:  `ListParIndent 1 ms` ÷ `ListParIndent 4 ms`. |
+| NumberedListFields | Multi level numbered list (4 levels). Indentation: `ListParIndent 1 ms` ÷ `ListParIndent 4 ms` and fields. |
+| WarningTab |  |
+| DangerTab |  |
+| InfoTab |  |
+| UtilizationGeneral |  |
+| UtilizationPackages |  |
+| OccupancyBasics |  |
+| Relay |  |
+| Copyrights |  |
+| SecondPage |  |
+| SecRAC |  |
+| SRACdesigner |  |
+| SRACoperator |  |
+| SourceCode |  |
+| ElectronicSymbols |  |
+| SymbolsIcons |  |
+| BlankA4_Vertical |  |
+| A4_Horizontal |  |
+| ConfidentialityInternal |  |
+| ConfidentialityConfidential |  |
+| CoverPage |  |
+| ListOfAcronyms |  |
+| ReferencedDocuments |  |
+| SRACicons |  |
+| DocumentBoilerplate |  |
+
+
+Template name: TQ-S441-en_UserDoc-mstemp.dotm
+This file contains hotstrings to building blocks defined within this template.
+It was made by the Microsoft Word macro: HotstringsToTxt.

@@ -1,0 +1,80 @@
+Macro Name: CountAndShowAllShortcuts
+Date: 2025-07-16
+Time: 22:46:34
+Template Name: C:\Users\v523580\AppData\Roaming\Microsoft\Templates\vSP_ms_Styles.dotm
+Total Shortcuts: 55
+
+Shortcuts category AutoText:
+
+Shortcuts category Command:
+1. CopyFormat - Ctrl+Shift+C
+2. PasteFormat - Ctrl+Shift+V
+3. FormatFont - Alt+F
+4. NavPane - Alt+Ctrl+H
+5. FormatParagraph - Alt+Ctrl+P
+
+Shorcuts category Disable:
+
+Shortcuts category Font:
+
+Shortcuts category Macro:
+1. TemplateProject.Tools.MyOvertype - Insert
+2. TemplateProject.Tools.ToggleSpecificFormatting - F4
+3. TemplateProject.Tools.SetLanguageToEnglishUS - F8
+4. TemplateProject.Styles.ToggleCharBoldStyle - Ctrl+B
+5. TemplateProject.Styles.ToggleCharItalicStyle - Ctrl+I
+6. TemplateProject.Scenarios.ApplyDistanceBetweenNumberingAndHeading - Ctrl+S
+7. TemplateProject.Styles.ToggleCharUnderlineStyle - Ctrl+U
+8. TemplateProject.Scenarios.Scenario_UpdateAllFieldsAndCloseFile - Ctrl+W
+9. TemplateProject.Scenarios.Scenario_PrintPreviewAndPrint - Ctrl+F2
+10. TemplateProject.Styles.ToggleCharHiddenStyle - Ctrl+Shift+H
+11. TemplateProject.Styles.ToggleCharSourceCode - Ctrl+Shift+K
+12. TemplateProject.Tools.ToggleApplyStyles - Ctrl+Shift+S
+13. TemplateProject.Styles.ToggleCharCrossoutStyle - Ctrl+Shift+X
+14. TemplateProject.Shortcuts.ShowHotkeys - Alt+H,K
+15. TemplateProject.Shortcuts.ShowHotMacros - Alt+H,M
+16. TemplateProject.Shortcuts.ShowHotstrings - Alt+H,S
+17. TemplateProject.Tools.RestartListNumbering - Alt+L,R
+18. TemplateProject.Tools.JumpToNextList - Alt+F2
+19. TemplateProject.Tools.JumpToNextTable - Alt+F3
+20. TemplateProject.Tools.JumpToNextCanvas - Alt+F5
+21. TemplateProject.Tools.ToggleFieldCodes - Alt+F9
+
+Shortcuts category Nil:
+
+Shortcuts category Prefix:
+
+Shortcuts category Style:
+1. CharDefault ms - Ctrl+Space
+2. ParNormal ms - Ctrl+Shift+N
+3. ParListIndent1 ms - Alt+L,1
+4. ParListIndent2 ms - Alt+L,2
+5. ParListIndent3 ms - Alt+L,3
+6. ParListIndent4 ms - Alt+L,4
+7. NumberingBullets ms - Alt+L,B
+8. LegendPicture ms - Alt+L,P
+9. LegendTable ms - Alt+L,T
+10. ParNormalAbove ms - Alt+N,A
+11. ParNormalBelow ms - Alt+N,B
+12. PartNormalAB ms - Alt+N,C
+13. NumberingHeading ms - Alt+N,H
+14. Minimal ms - Alt+N,M
+15. NumberingOrdered ms - Alt+N,O
+16. NumberingReference ms - Alt+N,R
+17. ParInTable ms - Alt+N,T
+18. ParNormalZero ms - Alt+N,Z
+19. PictureCanva ms - Alt+P,P
+20. SourceCode ms - Alt+S,C
+21. TextBoxes ms - Alt+T,B
+22. Heading 1 ms - Alt+Ctrl+1
+23. Heading 2 ms - Alt+Ctrl+2
+24. Heading 3 ms - Alt+Ctrl+3
+25. Heading 4 ms - Alt+Ctrl+4
+26. Heading 5 ms - Alt+Ctrl+5
+27. Heading 6 ms - Alt+Ctrl+6
+28. Heading 7 ms - Alt+Ctrl+7
+29. Heading 8 ms - Alt+Ctrl+8
+
+Shortcuts category Symbol:
+
+

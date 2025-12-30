@@ -1,0 +1,24 @@
+| CrossoutText ms | Ctrl+Shift+X |
+| Heading 1 ms | Alt+Ctrl+1 |
+| Heading 2 ms | Alt+Ctrl+2 |
+| Heading 3 ms | Alt+Ctrl+3 |
+| Heading 4 ms | Alt+Ctrl+4 |
+| Heading 5 ms | Alt+Ctrl+5 |
+| HiddenText ms | Ctrl+Shift+H |
+| Legend picture ms | Alt+P,R |
+| Legend table ms | Alt+P,T |
+| ListParIndent 1 ms | Alt+L,1 |
+| ListParIndent 2 ms | Alt+L,2 |
+| ListParIndent 3 ms | Alt+L,3 |
+| ListParIndent 4 ms | Alt+L,4 |
+| Normal in table ms | Alt+N,T |
+| Normal ms | Ctrl+Shift+N |
+| NumberingBullets ms | Alt+L,P |
+| NumberingOrdered ms | Alt+L,W |
+| NumberingReferences ms | Alt+L,R |
+| PictureCanva ms | Alt+R |
+
+
+Template name: TQ-S441-en_UserDoc-mstemp.dotm
+This file contains hotkeys to styles defined within this template.
+It was made by the Microsoft Word macro: HotkeysToTxt.

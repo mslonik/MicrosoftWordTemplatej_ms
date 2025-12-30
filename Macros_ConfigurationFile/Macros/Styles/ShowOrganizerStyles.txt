@@ -1,0 +1,72 @@
+Document Name: TQ-S441-en_UserDoc-mstemp_BuildingBlocks_Content.docx
+Template Name: C:\Users\v523580\temp1\TQ-S441-en_UserDoc-mstemp.dotm
+Macro Name: ShowOrganizerStyles
+Date: 2025-02-18
+Time: 12:49
+
+No. | Style Name | Type | Built-in
+1 | Default Paragraph Font | Character | True
+2 | Footer | Paragraph | True
+3 | Header | Paragraph | True
+4 | Heading 1 | Paragraph | True
+5 | Heading 2 | Paragraph | True
+6 | Heading 3 | Paragraph | True
+7 | Heading 4 | Paragraph | True
+8 | Heading 5 | Paragraph | True
+9 | Heading 6 | Paragraph | True
+10 | Heading 7 | Paragraph | True
+11 | Heading 8 | Paragraph | True
+12 | Heading 9 | Paragraph | True
+13 | HiddenText ms | Character | False
+14 | Legal note ms | Paragraph | False
+15 | List heading ms | Paragraph | False
+16 | ListParIndent 1 ms | Paragraph | False
+17 | ListParIndent 2 ms | Paragraph | False
+18 | ListParIndent 3 ms | Paragraph | False
+19 | ListParIndent 4 ms | Paragraph | False
+20 | Minimal paragraph ms | Paragraph | False
+21 | No List | List | True
+22 | Normal | Paragraph | True
+23 | Normal in table ms | Paragraph | False
+24 | Normal ms | Paragraph | False
+25 | NumberingOrdered ms | List | False
+26 | NumberingReferences ms | List | False
+27 | SourceCode ms | Paragraph | False
+28 | Table Normal | Table | True
+
+Paragraph Styles:
+1 | Footer | Paragraph | True
+2 | Header | Paragraph | True
+3 | Heading 1 | Paragraph | True
+4 | Heading 2 | Paragraph | True
+5 | Heading 3 | Paragraph | True
+6 | Heading 4 | Paragraph | True
+7 | Heading 5 | Paragraph | True
+8 | Heading 6 | Paragraph | True
+9 | Heading 7 | Paragraph | True
+10 | Heading 8 | Paragraph | True
+11 | Heading 9 | Paragraph | True
+12 | Legal note ms | Paragraph | False
+13 | List heading ms | Paragraph | False
+14 | ListParIndent 1 ms | Paragraph | False
+15 | ListParIndent 2 ms | Paragraph | False
+16 | ListParIndent 3 ms | Paragraph | False
+17 | ListParIndent 4 ms | Paragraph | False
+18 | Minimal paragraph ms | Paragraph | False
+19 | Normal | Paragraph | True
+20 | Normal in table ms | Paragraph | False
+21 | Normal ms | Paragraph | False
+22 | SourceCode ms | Paragraph | False
+
+Character Styles:
+1 | Default Paragraph Font | Character | True
+2 | HiddenText ms | Character | False
+
+Table Styles:
+1 | Table Normal | Table | True
+
+List Styles:
+1 | No List | List | True
+2 | NumberingOrdered ms | List | False
+3 | NumberingReferences ms | List | False
+

@@ -1,0 +1,90 @@
+Document Name: TQ-S441-en_UserDoc-mstemp.dotm
+Template Name: C:\Users\v523580\temp1\TQ-S441-en_UserDoc-mstemp.dotm
+Macro Name: ListNonBuiltInAndSuffixStylesInTemplate
+Date: 2025-02-18
+Time: 11:26
+
+No. | Style Name | Type | Built-in
+1 | CrossoutText ms | Character | False
+2 | DoubleParSpace ms | Paragraph | False
+3 | Heading 1 ms | Paragraph | False
+4 | Heading 2 ms | Paragraph | False
+5 | Heading 3 ms | Paragraph | False
+6 | Heading 4 ms | Paragraph | False
+7 | Heading 5 ms | Paragraph | False
+8 | Heading 6 ms | Paragraph | False
+9 | Heading 7 ms | Paragraph | False
+10 | Heading 8 ms | Paragraph | False
+11 | HiddenText ms | Character | False
+12 | Legal note ms | Paragraph | False
+13 | Legend picture ms | Paragraph | False
+14 | Legend table ms | Paragraph | False
+15 | List heading ms | Paragraph | False
+16 | ListParIndent 1 ms | Paragraph | False
+17 | ListParIndent 2 ms | Paragraph | False
+18 | ListParIndent 3 ms | Paragraph | False
+19 | ListParIndent 4 ms | Paragraph | False
+20 | Minimal paragraph ms | Paragraph | False
+21 | Normal above ms | Paragraph | False
+22 | Normal below ms | Paragraph | False
+23 | Normal in table ms | Paragraph | False
+24 | Normal ms | Paragraph | False
+25 | NumberingBullets ms | List | False
+26 | NumberingHeadings ms | List | False
+27 | NumberingOrdered ms | List | False
+28 | NumberingReferences ms | List | False
+29 | PictureCanva ms | Paragraph | False
+30 | SourceCode ms | Paragraph | False
+31 | Table ms | Table | False
+32 | TableNoGrid ms | Table | False
+33 | TextBoxes ms | Paragraph | False
+34 | TOC 1 ms | Paragraph | False
+35 | TOC 2 ms | Paragraph | False
+36 | TOC 3 ms | Paragraph | False
+37 | TOC 4 ms | Paragraph | False
+
+Paragraph Styles:
+1 | DoubleParSpace ms | Paragraph | False
+2 | Heading 1 ms | Paragraph | False
+3 | Heading 2 ms | Paragraph | False
+4 | Heading 3 ms | Paragraph | False
+5 | Heading 4 ms | Paragraph | False
+6 | Heading 5 ms | Paragraph | False
+7 | Heading 6 ms | Paragraph | False
+8 | Heading 7 ms | Paragraph | False
+9 | Heading 8 ms | Paragraph | False
+10 | Legal note ms | Paragraph | False
+11 | Legend picture ms | Paragraph | False
+12 | Legend table ms | Paragraph | False
+13 | List heading ms | Paragraph | False
+14 | ListParIndent 1 ms | Paragraph | False
+15 | ListParIndent 2 ms | Paragraph | False
+16 | ListParIndent 3 ms | Paragraph | False
+17 | ListParIndent 4 ms | Paragraph | False
+18 | Minimal paragraph ms | Paragraph | False
+19 | Normal above ms | Paragraph | False
+20 | Normal below ms | Paragraph | False
+21 | Normal in table ms | Paragraph | False
+22 | Normal ms | Paragraph | False
+23 | PictureCanva ms | Paragraph | False
+24 | SourceCode ms | Paragraph | False
+25 | TOC 1 ms | Paragraph | False
+26 | TOC 2 ms | Paragraph | False
+27 | TOC 3 ms | Paragraph | False
+28 | TOC 4 ms | Paragraph | False
+29 | TextBoxes ms | Paragraph | False
+
+Character Styles:
+1 | CrossoutText ms | Character | False
+2 | HiddenText ms | Character | False
+
+Table Styles:
+1 | Table ms | Table | False
+2 | TableNoGrid ms | Table | False
+
+List Styles:
+1 | NumberingBullets ms | List | False
+2 | NumberingHeadings ms | List | False
+3 | NumberingOrdered ms | List | False
+4 | NumberingReferences ms | List | False
+
