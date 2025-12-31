@@ -2225,7 +2225,7 @@ Public Function CreateC_LT_Bullets() As Boolean
             .TrailingCharacter = wdTrailingNone
             .NumberStyle = wdListNumberStyleBullet
             .NumberPosition = CentimetersToPoints(i * BaseIndent)
-            .TextPosition = CentimetersToPoints(0)
+            .TextPosition = CentimetersToPoints(i * BaseIndent + 0.6)
             .Alignment = wdListLevelAlignLeft
             .StartAt = 1
             .LinkedStyle = StyleNames(i - 1)
