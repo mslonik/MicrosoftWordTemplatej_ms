@@ -165,9 +165,9 @@ Public Const C_TTR_description As String = "<bb_description>"
 Public Const C_TTR_insertoptions As String = "<bb_insertoptions>"
 
 ' C_SC = Constant ShortCut
-Public Const C_SC_AltHplusS As String = "Alt + H, S"            ' Hotstring
-Public Const C_SC_AltHplusK As String = "Alt + H, K"            ' Hotkey
-Public Const C_SC_AltHplusM As String = "Alt + H, M"            ' HotMacros
+Public Const C_SC_AltHplusS As String = "Alt + H, S"            ' ShowFormHotstrings
+Public Const C_SC_AltHplusK As String = "Alt + H, K"            ' ShowFormHotkeys
+Public Const C_SC_AltHplusM As String = "Alt + H, M"            ' ShowFormHotMacros
 Public Const C_SC_AltRplusS As String = "Alt + R, S"            ' ReapplyTemplateStyle
 Public Const C_SC_AltLplusR As String = "Alt + L, R"            ' RestartListNumbering
 Public Const C_SC_AltF2 As String = "Alt + F2"                  ' JumpToNextList

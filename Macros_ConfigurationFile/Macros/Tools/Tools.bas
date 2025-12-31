@@ -402,40 +402,67 @@ Sub SetMarginsDefault()
 End Sub
 
 
-' Enable several properties for the current view of styles pane
+' Switches active document view properties in a loop, 4x views are available.
+' Keyboard shortcut: F4.
+' Settings are stored within ActiveDocument to restore them next time document is opened.
 ' Reworked by ms on 2025-02-11
 ' Reworked by ms on 2025-07-29
+' 2025-12-31 by ms
 Sub ToggleSpecificFormatting()
-    Dim FileName As String
-    FileName = C_F_Macros
+    Dim FileName As String:       FileName = C_F_Macros
+    Dim ModuleName As String:     ModuleName = C_M_Tools
+    Dim MacroName As String:      MacroName = "ToggleSpecificFormatting"
+    Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
+    Call CheckMicrosoftWordVersion(MacroName)   ' in module 'Tools'
     
-    Dim MacroName As String
-    MacroName = "ToggleSpecificFormatting"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
-    Call CheckMicrosoftWordVersion(MacroName)
-    
-    Dim oSource As Document
-    Set oSource = ActiveDocument
     Dim oView As View
-    Set oView = oSource.ActiveWindow.View
-    Static FormattingToggle As Boolean
-    'FormattingToggle = Not FormattingToggle
+    Set oView = ActiveDocument.ActiveWindow.View
     
-    ' Local Counter: <1, 4>.
+    Static FormattingToggle As Boolean      ' static initial value: false
+    ' View Mode = local counter: <1, 4>.
     ' 1 = toggle formatting, visibility of gridline.
     ' 2 = toggle page color: grey / white.
     ' 3 = toggle formatting, visibility of gridline.
     ' 4 = toggle page color: grey / white.
-    Static LocalCounter As Byte
-    LocalCounter = LocalCounter + 1
+    Static ViewMode As Byte                 ' static initial value: 0
     
-    If LocalCounter = 1 Then
+    Dim DocVarName As String: DocVarName = "DocVarToggleSpecificFormatting"
+    Dim DocVarTemp As Variable
+    Dim FlagDocVarExists As Boolean:    FlagDocVarExists = False
+    Dim FlagUpdateDocVar As Boolean:    FlagUpdateDocVar = False
+    
+    ' Check if document variable named DocVarToggleSpecificFormatting exists in ActiveDocument.
+    For Each DocVarTemp In ActiveDocument.Variables
+        If DocVarTemp.Name = DocVarName Then
+            FlagDocVarExists = True
+            Exit For
+        End If
+    Next DocVarTemp
+    
+    Dim UserDecision As VbMsgBoxResult
+    If FlagDocVarExists Then
+        ViewMode = CByte(ActiveDocument.Variables(DocVarName).Value)
+        FlagUpdateDocVar = True
+    Else
+        ' If such document variable doesn't exist, ask user if it should be created and saved
+        UserDecision = MsgBox( _
+                            Prompt:="Document variable: " & DocVarName & " doesn't exist in the ActiveDocument." & vbNewLine & vbNewLine & _
+                                "Do you want to create it to persist the view state?" & vbNewLine & vbNewLine & _
+                                "It is strongly recommended to do so.", _
+                            Buttons:=vbQuestion + vbYesNo, _
+                            Title:=MsgBoxTitle)
+        If UserDecision = vbYes Then
+            ActiveDocument.Variables.Add _
+                Name:=DocVarName, _
+                Value:=ViewMode
+        End If
+    End If
+    
+    ViewMode = ViewMode + 1
+    If FlagUpdateDocVar Then ActiveDocument.Variables(DocVarName).Value = ViewMode
+    
+    If ViewMode = 1 Then
         FormattingToggle = Not FormattingToggle
         If FormattingToggle = False Then
             oView.ShowTextBoundaries = True
@@ -453,7 +480,7 @@ Sub ToggleSpecificFormatting()
             ActiveWindow.View.ShowCropMarks = False
         End If
         MsgBox _
-            Prompt:="Required specific formatting was just toggled:" & vbNewLine & vbNewLine & _
+            Prompt:="Specific formatting was just toggled:" & ViewMode & vbNewLine & vbNewLine & _
                 "ShowTextBoundaries" & vbNewLine & _
                 "FieldShading" & vbNewLine & _
                 "ShowHiddenText" & vbNewLine & _
@@ -464,19 +491,20 @@ Sub ToggleSpecificFormatting()
             Title:=MsgBoxTitle
     End If
     
-    If LocalCounter = 2 Then
+    If ViewMode = 2 Then
         If FormattingToggle = False Then
-            Call SetPageColorToCustom
+            Call SetPageColorToCustom               ' in module Tools
         Else
-            Call RestoreDefaultPageColor
+            Call RestoreDefaultPageColor            ' in module Tools
         End If
         MsgBox _
-            Prompt:="Page background color was just toggled.", _
+            Prompt:="Specific formatting was just toggled:" & ViewMode & vbNewLine & vbNewLine & _
+                "Page background color was just toggled.", _
             Buttons:=vbInformation + vbOKOnly, _
             Title:=MsgBoxTitle
     End If
     
-    If LocalCounter = 3 Then
+    If ViewMode = 3 Then
         FormattingToggle = Not FormattingToggle
         If FormattingToggle = False Then
             oView.ShowTextBoundaries = True
@@ -494,7 +522,7 @@ Sub ToggleSpecificFormatting()
             ActiveWindow.View.ShowCropMarks = False
         End If
         MsgBox _
-            Prompt:="Required specific formatting was just toggled:" & vbNewLine & vbNewLine & _
+            Prompt:="Specific formatting was just toggled:" & ViewMode & vbNewLine & vbNewLine & _
                 "ShowTextBoundaries" & vbNewLine & _
                 "FieldShading" & vbNewLine & _
                 "ShowHiddenText" & vbNewLine & _
@@ -505,21 +533,22 @@ Sub ToggleSpecificFormatting()
             Title:=MsgBoxTitle
     End If
     
-    If LocalCounter = 4 Then
+    If ViewMode = 4 Then
         If FormattingToggle = False Then
-            Call SetPageColorToCustom
+            Call SetPageColorToCustom               ' in module Tools
         Else
-            Call RestoreDefaultPageColor
+            Call RestoreDefaultPageColor            ' in module Tools
         End If
         MsgBox _
-            Prompt:="Page background color was just toggled.", _
+            Prompt:="Specific formatting was just toggled:" & ViewMode & vbNewLine & vbNewLine & _
+                "Page background color was just toggled.", _
             Buttons:=vbInformation + vbOKOnly, _
             Title:=MsgBoxTitle
-        LocalCounter = 0
+        ViewMode = 0
+        If FlagUpdateDocVar Then ActiveDocument.Variables(DocVarName).Value = ViewMode
     End If
     
     ' Clear object variables
-    Set oSource = Nothing
     Set oView = Nothing
     
 End Sub

@@ -548,23 +548,17 @@ Private Sub HotMacrosUserForm_Initialize(HotkeyHotkey As String)
     Next i
 End Sub
 
+' Prepare arrays containing macro name and macro shortcut.
 ' 2025-08-02 by ms
-' The issue is that KeyBindings collection contains all keybindings from all contexts and I need to check if the keybinding comes from the right context.
+' 2025-12-31 by ms
 Private Sub GetMacrosKeyBindings(ByRef MyStyleName, ByRef MyShortcut)
     Dim kb As keyBinding
     Dim shortcutText As String
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Shortcuts
-    
-    Dim MacroName As String
-    MacroName = "GetMacrosKeyBindings"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:      FileName = C_F_Macros
+    Dim ModuleName As String:    ModuleName = C_M_Shortcuts
+    Dim MacroName As String:     MacroName = "GetMacrosKeyBindings"
+    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
    
     CustomizationContext = ActiveDocument
    
@@ -587,7 +581,7 @@ Private Sub GetMacrosKeyBindings(ByRef MyStyleName, ByRef MyShortcut)
     Dim DataIndex As Integer
     DataIndex = 0
     For Each kb In Application.KeyBindings
-        ' Check if the key binding belongs to the menu category
+        ' Check if the key binding belongs to the command category
         If (kb.KeyCategory = wdKeyCategoryCommand) And (kb.Context.Name = CustomizationContext) Then
             MyStyleName(DataIndex) = kb.Command
             MyShortcut(DataIndex) = kb.KeyString
@@ -599,11 +593,23 @@ Private Sub GetMacrosKeyBindings(ByRef MyStyleName, ByRef MyShortcut)
     
     shortcutText = shortcutText & vbNewLine & "Macros keyboard shortcuts" & vbNewLine & vbNewLine
     
+    Dim TextResult As String
+    Dim LastDotPos As Long
+    
     ' Loop through all key bindings
     For Each kb In Application.KeyBindings
-        ' Check if the key binding belongs to the menu category
+        ' Check if the key binding belongs to the macro category
+        ' Shorten macro name, e.g. from default ame TemplateProject.Tools.CustomizedOvertype make just CustomizedOvertype.
         If (kb.KeyCategory = wdKeyCategoryMacro) And (kb.Context.Name = CustomizationContext) Then
-            MyStyleName(DataIndex) = kb.Command
+            LastDotPos = InStrRev(kb.Command, ".")
+            If LastDotPos > 0 Then
+                TextResult = Mid(kb.Command, LastDotPos + 1)
+            Else
+                TextResult = kb.Command
+            End If
+            
+            MyStyleName(DataIndex) = TextResult
+            ' MyStyleName(DataIndex) = kb.Command
             MyShortcut(DataIndex) = kb.KeyString
             ' Add the command name and its shortcut to the text
             shortcutText = shortcutText & kb.Command & ": " & kb.KeyString & vbCrLf
