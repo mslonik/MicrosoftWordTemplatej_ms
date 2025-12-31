@@ -1,14 +1,22 @@
 Attribute VB_Name = "Validation"
-' Module: Validation.bas macros:
+' VBA Module name: Validation.bas
+' https://github.com/mslonik/Microsoft-Word-Configuration
 '
-'   1. ReplaceUnwantedTextstrings()
-'   2. UpdateAllFields()
-'   3. FormatTables()
-'   4. InsertNoBrakeSpace()
-'   10. FindParagraphStyling()
-'   11. FindCharacterStyling()
-'   12. ModifyReferencesToPicTab ()
-'   13. Table_CheckNestingLevel()
+'   License: MIT License.
+'
+'
+'+----+----------------------------+-------------+----------------------------+--------------------------+
+'| No | Sub name                   | Ribbon name | Ribbon section             | Ribbon button name       |
+'+----+----------------------------+-------------+----------------------------+--------------------------+
+'| 1  | Tables_Format              | Validation  | Tables                     | Tables_Format            |
+'| 2  | Tables_CheckNestingLevel   | Validation  | Tables                     | Tables_CheckNestingLevel |
+'| 3  | UpdateAllFields            | Validation  | Custom (no name)           | UpdateAllFields          |
+'| 4  | InsertNoBrakeSpace         | Validation  | Custom (no name)           | InsertNoBrakeSpace       |
+'| 5  | ModifyReferencesToPicTab   | Validation  | ModifyReferencesToPicTab   |                          |
+'| 6  | ReplaceUnwantedTextstrings | Validation  | ReplaceUnwantedTextstrings |                          |
+'| 7  | FindParagraphStyling       | Validation  | FindParagraphStyling       |                          |
+'| 8  | FindCharacterStyling       | Validation  | FindCharacterStyling       |                          |
+'+----+----------------------------+-------------+----------------------------+--------------------------+
 '
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '
@@ -30,17 +38,10 @@ Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As LongPtr)
 Private Function CheckRefZero() As Boolean
     Dim fld As Field
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "CheckRefZero"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "CheckRefZero"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     For Each fld In ActiveDocument.Fields
         With fld
@@ -67,17 +68,10 @@ Private Function CheckRefError() As Boolean
     Dim fld As Field
     Dim rng As Range
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "CheckRefError"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "CheckRefError"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Dim ErrorString As String
     ErrorString = "Error! Reference source not found."
@@ -124,17 +118,10 @@ Sub ReplaceUnwantedTextstrings()
     Dim Summary As String
     Dim counter As String
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "ReplaceUnwantedTextstrings"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "ReplaceUnwantedTextstrings"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Application.ScreenUpdating = True
     Call AddLastCursorPositionBookmark
@@ -348,17 +335,10 @@ Sub UpdateAllFields()
     Dim toC As TableOfContents
     Dim Summary As String   ' argument for the sub "Logging"
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "UpdateAllFields"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "UpdateAllFields"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     Call MacroBeginning                     ' in module Validation
     Call AddLastCursorPositionBookmark      ' in module Validation
@@ -407,17 +387,10 @@ Function CheckFieldsAgainstErrors() As Boolean
     Dim Flag_CheckRefError As Boolean
     Flag_CheckRefError = CheckRefError      ' in module Validation
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "CheckFieldsAgainstErrors"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "CheckFieldsAgainstErrors"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     If Flag_CheckRefZero = False Then
         Summary = "Found error: zero reference." & vbNewLine & vbNewLine & "It is highligted with yellow color in the content."
@@ -504,17 +477,10 @@ Private Sub RefToHyperlinks()
     Dim i As Long, j As Long
     Dim aField As Field
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "RefToHyperlinks"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "RefToHyperlinks"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Call CheckMicrosoftWordVersion(MacroName)
     
@@ -566,24 +532,17 @@ Sub CheckMicrosoftWordVersion(MacroName As String)
     End If
 End Sub
 
-Sub Table_CheckNestingLevel()
+Sub Tables_CheckNestingLevel()
     Dim oTbl As Table
     Dim oCell As Cell
     Dim tblCount As Long
     Dim nestedTblCount As Long
     Dim highlightedTblCount As Long
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "Table_CheckNestingLevel"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "Tables_CheckNestingLevel"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     tblCount = 0
     nestedTblCount = 0
@@ -627,7 +586,7 @@ End Sub
 ' 2025-02-27 by ms and AI
 ' 2025-03-05 by ms
 ' 2025-12-05 by ms
-Sub FormatTables()
+Sub Tables_Format()
     Dim tbl As Table
     Dim UserDecision As VbMsgBoxResult
     Dim YesHeaderCount As Integer
@@ -637,17 +596,10 @@ Sub FormatTables()
     Dim TotalNoTables As Integer
     Dim Summary As String
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "FormatTables"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "Tables_Format"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Call CheckMicrosoftWordVersion(MacroName)
 
@@ -813,17 +765,10 @@ End Function
 Sub InsertNoBrakeSpace()
     Dim toC As TableOfContents
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "InsertNoBrakeSpace"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "InsertNoBrakeSpace"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     Call MacroBeginning
     Call AddLastCursorPositionBookmark
@@ -886,7 +831,6 @@ Sub InsertNoBrakeSpace()
     Call UpdateAllFields
 End Sub
 
-
 ' Determines whether or not the target style exists in the active document.
 Private Function StyleExists(strStyleName As String) As Boolean
     Dim objStyle As style
@@ -916,17 +860,11 @@ Private Sub AddBookmarksToCaptions()
     Dim BookmarkName As String
     Dim bookmarkIndex As Long
     Dim bookmarkCount As Long
-    Dim FileName As String
-    FileName = C_F_Macros
     
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "AddBookmarksToCaptions"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "AddBookmarksToCaptions"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Set doc = ActiveDocument
     bookmarkIndex = 1
@@ -966,17 +904,10 @@ Private Sub DeleteBookmarksFromCaptions()
     Dim BookmarkName As String
     Dim bookmarkCount As Long
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "DeleteBookmarksFromCaptions"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "DeleteBookmarksFromCaptions"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Set doc = ActiveDocument
     bookmarkCount = 0
@@ -1012,17 +943,10 @@ Private Sub ModifyRefFields()
     Dim refPart As String
     Dim firstFiveChars As String
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "ModifyRefFields"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "ModifyRefFields"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Set doc = ActiveDocument
     foundCount = 0
@@ -1128,17 +1052,10 @@ Private Sub RestoreModifiedRefFields()
     Dim endPos As Long
     Dim refPart As String
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "RestoreModifiedRefFields"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "RestoreModifiedRefFields"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Set doc = ActiveDocument
     
@@ -1180,17 +1097,10 @@ Private Sub AddModifiedRefCaption()
     Dim InsertText As String
     Dim UserForm As Object
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "AddModifiedRefCaption"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "AddModifiedRefCaption"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Call AddLastCursorPositionBookmark
     
@@ -1298,17 +1208,10 @@ Private Sub AddHyperlinkToModRefFields()
     Dim InsertText As String
     Dim CaptionStringLength As Long
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "AddHyperlinkToModRefFields"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "AddHyperlinkToModRefFields"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Set doc = ActiveDocument
     ' Determine length of the caption
@@ -1370,17 +1273,10 @@ Private Sub DeleteHyperlinksFromModRefFields()
     Dim rng As Range
     Dim hyperlinkText As String
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "DeleteHyperlinksFromModRefFields"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "DeleteHyperlinksFromModRefFields"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Set doc = ActiveDocument
     
@@ -1426,17 +1322,10 @@ Private Sub ResetRefToHyperlinks()
     Dim doc As Document
     Dim fld As Field
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "ResetRefToHyperlinks"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "ResetRefToHyperlinks"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Set doc = ActiveDocument
     
@@ -1471,17 +1360,10 @@ Private Sub DeleteHiddenText() ' required in Scenarios -> ModifyReferencesToPicT
     Dim searchStrings As Variant
     Dim i As Integer
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "DeleteHiddenText"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "DeleteHiddenText"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Set doc = ActiveDocument
     searchStrings = Array(C_Caption_Pic & " ", C_Caption_PicSmall & " ", C_Caption_Tab & " ", C_Caption_TabSmall & " ")
@@ -1534,17 +1416,10 @@ Sub FindParagraphStyling()
     Dim bookmarkCounter As Integer
     bookmarkCounter = 0
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "FindParagraphStyling"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "FindParagraphStyling"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     ' Ask user for a style name
     Do
@@ -1656,17 +1531,10 @@ Sub FindCharacterStyling()
     Dim bookmarkCounter As Integer
     bookmarkCounter = 0
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "FindCharacterStyling"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "FindCharacterStyling"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     ' Ask user for a style name
     Do
@@ -1769,7 +1637,6 @@ Sub FindCharacterStyling()
 End Sub
 
 
-
 Private Function IsInCollection(col As Collection, item As Variant) As Boolean
     Dim var As Variant
     On Error Resume Next
@@ -1792,17 +1659,10 @@ Sub SearchNCstylingBookmarks()
     Dim i As Integer
     Dim BookmarkName As String
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "SearchNCstylingBookmarks"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "SearchNCstylingBookmarks"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     ' Loop through all bookmarks in the document
     For i = ActiveDocument.Bookmarks.count To 1 Step -1
@@ -1860,17 +1720,10 @@ End Sub
 '   5. RefToHyperlinks()            <->     ResetRefToHyperlinks()
 ' 2025-03-03 by ms
 Sub ModifyReferencesToPicTab()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Validation
-    
-    Dim MacroName As String
-    MacroName = "ModifyReferencesToPicTab"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Validation
+    Dim MacroName As String:    MacroName = "ModifyReferencesToPicTab"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Origin module: Validation
     Call AddBookmarksToCaptions

@@ -5,43 +5,43 @@ Attribute VB_Name = "Tools"
 '   License: MIT License.
 '
 '
-'+----+----------------------------+-------------+-----------------+----------------------------+
-'| No | Sub name                   | Ribbon name | Ribbon section  | Ribbon button name         |
-'+----+----------------------------+-------------+-----------------+----------------------------+
-'| 1  | DocPropertiesUpdate        | Tools_ms    | DocProperties   | AttachTheme                |
-'| 2  | DocPropertiesUserInput     | Tools_ms    | DocProperties   | DocPropertiesUserInput     |
-'| 3  | SetMarginsDefault          | Tools_ms    | Document        | SetMarginsDefault          |
-'| 4  | SetMarginsMinimal          | Tools_ms    | Document        | SetMarginsMinimal          |
-'| 5  | SetHyphenation             | Tools_ms    | Document        | SetHyphenation             |
-'| 6  | SetLanguageToEnglishUS     | Tools_ms    | Document        | SetLanguageToEnglishUS     |
-'| 7  | SetPageColorToCustom       | Tools_ms    | Document        | SetPageColorToCustom       |
-'| 8  | ShowAllTemplates           | Tools_ms    | Document        | ShowAllTemplates           |
-'| 9  | CommentAddNumber           | Tools_ms    | Comments        | CommentAddNumber           |
-'| 10 | CommentDeleteNumber        | Tools_ms    | Comments        | CommentDeleteNumber        |
-'| 11 | CommentCountByUser         | Tools_ms    | Comments        | CommentCountByUser         |
-'| 12 | DeleteAllUserBookmarks     | Tools_ms    | Before printing | DeleteAllUserBookmarks     |
-'| 13 | ParDistAtNewSectionCheck   | Tools_ms    | Before printing | ParDistAtNewSectionCheck   |
-'| 14 | ParDistAtNewSectionReduce  | Tools_ms    | Before printing | ParDistAtNewSectionReduce  |
-'| 15 | ParDistAtNewSectionRestore | Tools_ms    | Before printing | ParDistAtNewSectionRestore |
-'| 16 | CanvaFormatTextBoxes       | Tools_ms    | Canva           | CanvaFormatTextBoxes       |
-'| 17 | CanvaToggleBorder          | Tools_ms    | Canva           | CanvaToggleBorder          |
-'| 18 | CanvaInsertPNGfiles        | Tools_ms    | Canva           | CanvaInsertPNGfiles        |
-'+----+----------------------------+-------------+-----------------+----------------------------+
+'+----+-------------------------------+-------------+-----------------+-------------------------------+
+'| No | Sub name                      | Ribbon name | Ribbon section  | Ribbon button name            |
+'+----+-------------------------------+-------------+-----------------+-------------------------------+
+'| 1  | DocPropertiesUpdate           | Tools_ms    | DocProperties   | AttachTheme                   |
+'| 2  | DocPropertiesUserInput        | Tools_ms    | DocProperties   | DocPropertiesUserInput        |
+'| 3  | SetMarginsDefault             | Tools_ms    | Document        | SetMarginsDefault             |
+'| 4  | SetMarginsMinimal             | Tools_ms    | Document        | SetMarginsMinimal             |
+'| 5  | SetHyphenation                | Tools_ms    | Document        | SetHyphenation                |
+'| 6  | SetLanguageToEnglishUS        | Tools_ms    | Document        | SetLanguageToEnglishUS        |
+'| 7  | SetPageColorToCustom          | Tools_ms    | Document        | SetPageColorToCustom          |
+'| 8  | ShowAllTemplates              | Tools_ms    | Document        | ShowAllTemplates              |
+'| 9  | CommentAddNumber              | Tools_ms    | Comments        | CommentAddNumber              |
+'| 10 | CommentDeleteNumber           | Tools_ms    | Comments        | CommentDeleteNumber           |
+'| 11 | CommentCountByUser            | Tools_ms    | Comments        | CommentCountByUser            |
+'| 12 | DeleteAllUserBookmarks        | Tools_ms    | Before printing | DeleteAllUserBookmarks        |
+'| 13 | ParDistAtNewSectionCheck      | Tools_ms    | Before printing | ParDistAtNewSectionCheck      |
+'| 14 | ParDistAtNewSectionReduce     | Tools_ms    | Before printing | ParDistAtNewSectionReduce     |
+'| 15 | ParDistAtNewSectionRestore    | Tools_ms    | Before printing | ParDistAtNewSectionRestore    |
+'| 16 | CanvaFormatTextBoxes          | Tools_ms    | Canva           | CanvaFormatTextBoxes          |
+'| 17 | CanvaToggleBorder             | Tools_ms    | Canva           | CanvaToggleBorder             |
+'| 18 | CanvaInsertPNGfiles           | Tools_ms    | Canva           | CanvaInsertPNGfiles           |
+'| 19 | CaptionShow                   | Tools_ms    | Captions        | CaptionShow                   |
+'| 20 | CaptionLabelDeleteCustomized  | Tools_ms    | Captions        | CaptionLabelDeleteCustomized  |
+'| 21 | CapationAddCustomized         | Tools_ms    | Captions        | CapationAddCustomized         |
+'| 22 | WordOptionsCustomize          | Tools_ms    | Word Options    | WordOptionsCustomize          |
+'| 23 | WordOptionsRestore            | Tools_ms    | Word Options    | WordOptionsRestore            |
+'| 24 | WordOptionsDisableAutoFormat  | Tools_ms    | Word Options    | WordOptionsDisableAutoFormat  |
+'| 25 | WordOptionsRestoreAutoFormat  | Tools_ms    | Word Options    | WordOptionsRestoreAutoFormat  |
+'| 26 | WordOptionsDisableAutoCorrect | Tools_ms    | Word Options    | WordOptionsDisableAutoCorrect |
+'| 27 | WordOptionsToggleAutoCorrect  | Tools_ms    | Word Options    | WordOptionsToggleAutoCorrect  |
+'| 28 | Table_CustomizeFormatting     | Tools_ms    | Tables          | Table_CustomizeFormatting     |
+'| 29 | Table_KeepOnOnePage           | Tools_ms    | Tables          | Table_KeepOnOnePage           |
+'| 30 | ShowUsedFonts                 | Tools_ms    | Fonts           | ShowUsedFonts                 |
+'| 31 | ShowDocVariables              | Tools_ms    | DocVariables    | ShowDocVariables              |
+'| 32 | DeleteAllDocVariables         | Tools_ms    | DocVariables    | DeleteAllDocVariables         |
+'+----+-------------------------------+-------------+-----------------+-------------------------------+
 '
-'
-'   Captions:
-'   19. CaptionShow()
-'   20. CapationAddCustomized()
-'   21. CaptionLabelDeleteCustomized()
-'
-'
-'   Word options:
-'   22. WordOptionsCustomize()
-'   23. WordOptionsRestore()
-'   24. WordOptionsDisableAutoFormat()
-'   25. WordOptionsRestoreAutoFormat
-'   26. WordOptionsDisableAutoCorrect()
-'   27. WordOptionsToggleAutoCorrect()
 '
 '   Section related to shortcuts:
 '   31. ToggleSpecificFormatting()
@@ -67,9 +67,8 @@ Attribute VB_Name = "Tools"
 '   50. InsertSVNCommitNumber()
 '   51. AttachBuildingBlocks()
 '   52. AutoExec()
-'
-'   ResetHyphenation()
-'   RestoreDefaultPageColor()
+'   53. ResetHyphenation()
+'   54. RestoreDefaultPageColor()
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '
 ' Used to enforce the explicit declaration of all variables in a module. When you include Option Explicit at the beginning of a module, it ensures that you must
@@ -452,6 +451,7 @@ Sub ToggleSpecificFormatting()
         FlagUpdateDocVar = True
     Else
         ' If such document variable doesn't exist, ask user if it should be created and saved
+        Beep
         UserDecision = MsgBox( _
                             Prompt:="Document variable: " & DocVarName & " doesn't exist in the ActiveDocument." & vbNewLine & vbNewLine & _
                                 "Do you want to create it to persist the view state?" & vbNewLine & vbNewLine & _
