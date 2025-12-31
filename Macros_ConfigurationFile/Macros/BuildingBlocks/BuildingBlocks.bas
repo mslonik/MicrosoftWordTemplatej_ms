@@ -1,17 +1,24 @@
 Attribute VB_Name = "BuildingBlocks"
-' Module: BuildingBlocks.bas macros:
+' VBA Module name: BuildingBlocks.bas
+' https://github.com/mslonik/Microsoft-Word-Configuration
 '
-'   Custom:
-'   1. BB_OpenBuiltInTemplate()
-'   2. BB_DeleteAll()
-'   3. BB_ExportAll() all, no matter which category
-'   4. BB_ExportSelectedCategories(), only categories wdTypeAutoText Or wdTypeTableOfContents Or wdTypeQuickParts
-'   5. BB_List()
+'   License: MIT License.
 '
-'   Edit:
-'   6. BB_Add()
-'   7. BB_InsertBBTemplate()
-'   8. BB_RemoveDefParagraphs()
+'+---------+-----------------------------+-------------------+------------------+----------------------------------------+
+'| No.     | Sub name                    | Ribbon name       | Ribbon section   | Ribbon button name                     |
+'+---------+-----------------------------+-------------------+------------------+----------------------------------------+
+'| 1       | BB_ExportAll                | BuildingBlocks_ms | no name (custom) | BB_ExportAll                           |
+'| 2       | BB_ExportSelectedCategories | BuildingBlocks_ms | no name (custom) | BB_ExportSelectedCategories            |
+'| 3       | BB_OpenBuiltInTemplate      | BuildingBlocks_ms | no name (custom) | BB_OpenBuiltInTemplate                 |
+'| 4       | BB_DeleteAll                | BuildingBlocks_ms | no name (custom) | BB_DeleteAll                           |
+'| 5       | BB_List                     | BuildingBlocks_ms | no name (custom) | BB_List                                |
+'| 6       | BB_Add                      | BuildingBlocks_ms | Edit             | BB_Add                                 |
+'| 7       | BB_InsertBBTemplate         | BuildingBlocks_ms | Edit             | BB_InsertBBTemplate                    |
+'| 8       | BB_RemoveDefParagraphs      | BuildingBlocks_ms | Edit             | BB_RemoveDefParagraphs                 |
+'| 9       | —                           | BuildingBlocks_ms | built-in         | Building Block Gallery Content Control |
+'| 10      | —                           | BuildingBlocks_ms | built-in         | Building Block Organizer               |
+'+---------+-----------------------------+-------------------+------------------+----------------------------------------+
+'
 '
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 ' Used to enforce the explicit declaration of all variables in a module. When you include Option Explicit at the beginning of a module, it ensures that you must
@@ -23,17 +30,10 @@ Option Explicit
 '
 ' 2025-12-18 by ms
 Sub BB_OpenBuiltInTemplate()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_BuildingBlocks
-    
-    Dim MacroName As String
-    MacroName = "BB_OpenBuiltInTemplate"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_BuildingBlocks
+    Dim MacroName As String:    MacroName = "BB_OpenBuiltInTemplate"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     Dim UserName As String
     ' Get the currently logged user name
@@ -91,17 +91,10 @@ End Sub
 ' the Microsoft Word and run this macro. This way you will maintain access to set of default Building Blocks if necessary in future, without need to manipulate additional files and macros.
 ' 2025-12-18 by ms
 Sub BB_DeleteAll()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_BuildingBlocks
-    
-    Dim MacroName As String
-    MacroName = "BB_DeleteAll"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_BuildingBlocks
+    Dim MacroName As String:    MacroName = "BB_DeleteAll"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Dim IsTemplate As Boolean
     ' Check if currently ActiveDocument is a template file
@@ -218,17 +211,10 @@ Public Function GetTemplateIndex(TemplateFilename As String) As Integer
     Dim TemplateIndex As Integer
     Dim UserDecision As VbMsgBoxResult
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_BuildingBlocks
-    
-    Dim MacroName As String
-    MacroName = "GetTemplateIndex"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_BuildingBlocks
+    Dim MacroName As String:    MacroName = "GetTemplateIndex"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Instead of referencing the template filename I need to reference through number.
     For i = Application.Templates.count To 1 Step -1
@@ -248,17 +234,10 @@ Public Function GetAddinIndex(TemplateFilename As String) As Integer
     Dim AddInsIndex As Integer
     Dim UserDecision As VbMsgBoxResult
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_BuildingBlocks
-    
-    Dim MacroName As String
-    MacroName = "GetAddinIndex"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_BuildingBlocks
+    Dim MacroName As String:    MacroName = "GetAddinIndex"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Force loading of all BuildingBlocks
     Templates.LoadBuildingBlocks
@@ -309,17 +288,10 @@ Sub BB_ExportAll()
     Dim i As Integer
     Dim CategoryCount As Object
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_BuildingBlocks
-    
-    Dim MacroName As String
-    MacroName = "BB_ExportAll"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:      FileName = C_F_Macros
+    Dim ModuleName As String:    ModuleName = C_M_BuildingBlocks
+    Dim MacroName As String:     MacroName = "BB_ExportAll"
+    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Dim IfActiveDocument As Boolean
     IfActiveDocument = CheckIfActiveDocumentIsTemplate() ' private function in this module
@@ -452,17 +424,10 @@ Sub BB_ExportSelectedCategories()
     Dim i As Integer
     Dim CategoryCount As Object
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_BuildingBlocks
-    
-    Dim MacroName As String
-    MacroName = "BB_ExportSelectedCategories"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_BuildingBlocks
+    Dim MacroName As String:    MacroName = "BB_ExportSelectedCategories"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     Dim IfActiveDocument As Boolean
     IfActiveDocument = CheckIfActiveDocumentIsTemplate() ' private function in this module
@@ -585,17 +550,10 @@ Sub BB_List()
     Dim CurrentDate As String
     Dim CurrentTime As String
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_BuildingBlocks
-    
-    Dim MacroName As String
-    MacroName = "BB_List"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_BuildingBlocks
+    Dim MacroName As String:    MacroName = "BB_List"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
         
     Dim IfActiveDocument As Boolean
     IfActiveDocument = CheckIfActiveDocumentIsTemplate() ' private function in this module

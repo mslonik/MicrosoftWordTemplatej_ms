@@ -1,7 +1,16 @@
 Attribute VB_Name = "Theme"
-' Module Theme.bas header:
+' VBA Module name: Theme.bas
+' https://github.com/mslonik/Microsoft-Word-Configuration
 '
-' 1. AttachTheme()
+'   License: MIT License.
+'
+'
+'+----+-------------+-------------+----------------+--------------------+
+'| No | Sub name    | Ribbon name | Ribbon section | Ribbon button name |
+'+----+-------------+-------------+----------------+--------------------+
+'| 1  | AttachTheme | Styles_ms   | Theme          | AttachTheme        |
+'+----+-------------+-------------+----------------+--------------------+
+'
 '
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '
@@ -43,17 +52,10 @@ End Type
 ' 2025-04-11 by ms and AI
 ' 2025-07-14 by  ms
 Sub AttachTheme()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Theme
-    
-    Dim MacroName As String
-    MacroName = "AttachTheme"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Theme
+    Dim MacroName As String:    MacroName = "AttachTheme"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Dim ThemePathAndFileName As String
     ThemePathAndFileName = Options.DefaultFilePath(wdUserTemplatesPath) & "\Document Themes\" & C_F_Theme

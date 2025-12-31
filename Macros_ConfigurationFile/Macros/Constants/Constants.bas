@@ -1,6 +1,11 @@
 Attribute VB_Name = "Constants"
+' VBA Module name: Constants.bas
+' https://github.com/mslonik/Microsoft-Word-Configuration
+'
+'   License: MIT License.
+'
 ' Contains all customized constants applied in the code.
-' VBA code must be saved as ANSI text format (not UTF). By Default this file is ANSI Windows-1252 (Western), meanwhile e.g. Windows-1250 (Polish).
+' VBA code file must be saved as ANSI text format (not UTF). By Default this file is ANSI Windows-1252 (Western).
 '
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 ' Used to enforce the explicit declaration of all variables in a module. When you include Option Explicit at the beginning of a module, it ensures that you must

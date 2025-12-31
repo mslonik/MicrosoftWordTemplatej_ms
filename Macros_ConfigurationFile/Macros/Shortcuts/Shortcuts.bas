@@ -1,18 +1,27 @@
 Attribute VB_Name = "Shortcuts"
-' Module Shortcuts.bas header:
+' VBA Module name: Shortcuts.bas
+' https://github.com/mslonik/Microsoft-Word-Configuration
 '
-'   Show:
-'   1. ShowFormHotstrings()                         -> DestroyFormHotstrings()
-'   3. ShowFormHotkeys()                            -> DestroyFormHotkeys()
-'   5. ShowFormHotMacros()                          -> DestroyFormHotMacros()
+'   License: MIT License.
 '
-'   List:
-'   15. ListAllShortcutsToTxt()
-'   7. ListHotkeysToTxt()
-'   8. ListHotstringsToTxt()
-'   9. ListHotMacrosToTxt()
-'   10. ListMWShortcutsToDOCX()
-'   11. ListAllMWCommandsToDOCX()
+'
+'+----+------------------------------------+--------------+----------------+------------------------------------+
+'| No | Sub name                           | Ribbon name  | Ribbon section | Ribbon button name                 |
+'+----+------------------------------------+--------------+----------------+------------------------------------+
+'| 1  | ShowFormHotstrings                 | Shortcuts_ms | Show           | ShowFormHotstrings                 |
+'| 2  | ShowFormHotkeys                    | Shortcuts_ms | Show           | ShowFormHotkeys                    |
+'| 3  | ShowFormHotMacros                  | Shortcuts_ms | Show           | ShowFormHotMacros                  |
+'| 4  | ClearActiveDocumentMacroShortcuts  | Shortcuts_ms | Clear / Create | ClearActiveDocumentMacroShortcuts  |
+'| 5  | ClearActiveDocumentStyleShortcuts  | Shortcuts_ms | Clear / Create | ClearActiveDocumentStyleShortcuts  |
+'| 6  | CreateActiveDocumentMacroShortcuts | Shortcuts_ms | Clear / Create | CreateActiveDocumentMacroShortcuts |
+'| 7  | CreateActiveDocumentMacroShortcuts | Shortcuts_ms | Clear / Create | CreateActiveDocumentMacroShortcuts |
+'| 8  | ListAllShortcutsToTxt              | Shortcuts_ms | List           | ListAllShortcutsToTxt              |
+'| 9  | ListHotkeysToTxt                   | Shortcuts_ms | List           | ListHotkeysToTxt                   |
+'| 10 | ListHotstringsToTxt                | Shortcuts_ms | List           | ListHotstringsToTxt                |
+'| 11 | ListHotMacrosToTxt                 | Shortcuts_ms | List           | ListHotMacrosToTxt                 |
+'| 12 | ListMWShortcutsToDOCX              | Shortcuts_ms | List           | ListMWShortcutsToDOCX              |
+'| 13 | ListAllMWCommandsToDOCX            | Shortcuts_ms | List           | ListAllMWCommandsToDOCX            |
+'+----+------------------------------------+--------------+----------------+------------------------------------+
 '
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '   13. Set_CommandShortcuts()                      -> Reset_CommandShortcut()
@@ -45,13 +54,6 @@ Attribute VB_Name = "Shortcuts"
 '   69. SetShortcut_CustomizedPasteFormat()         -> ResetShortcut_CustomizedPasteFormat()
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '
-'   Clear / Create:
-'   71. ClearActiveDocumentMacroShortcuts()
-'   72. ClearActiveDocumentStyleShortcuts()
-'   73. CreateActiveDocumentMacroShortcuts()
-'   74. RemoveActiveDocumentMacroShortcuts()
-'
-' Results are saved in the default path for all the files.
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 ' Used to enforce the explicit declaration of all variables in a module. When you include Option Explicit at the beginning of a module, it ensures that you must
 ' declare all variables using the Dim, Private, Public, ReDim, or Static statements before using them. This helps prevent errors caused by typos or

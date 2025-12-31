@@ -1,28 +1,38 @@
 Attribute VB_Name = "StylesM"
-' Module Styles.bas header:
+' VBA Module name: Styles.bas
+' https://github.com/mslonik/Microsoft-Word-Configuration
 '
-'   1. DeleteStylesOtherThanInTemplate()
-'   2. DeleteUnusedStyles()
-'   3. CopyStylesFromTemplateToThisFile()
-'   4. SwitchOffAutoupdate()
-'   5. ListBuiltInStyles()
-'   6. ListNonBuiltInAndSuffixStyles()
-'   7. ListStylesCurrentlyInUse()
-'   8. ListCustomStylesToTxt()
-'   9. ReapplyStylesFromTemplate()
-'   10. ReapplyStylesFromTemplateSimple()
-'   11. InsertTextAtBeginningOfListParagraphs() -> RemoveTextFromBeginningOfListParagraphs()
-'   12. ToggleCharBoldStyle()
-'   13. ToggleCharItalicStyle()
-'   14. ToggleCharUnderlineStyle()
-'   15. ToggleCharCroossoutStyle()
-'   16. ToggleCharHiddenStyle()
-'   17. ToggleCharSourceCode()
-'   18. CreateCustomStyles()
-'   19. ShowNonComplientStyling()
-'   20. DeleteCustomStyles_KeepOnlyDefined()
-'   21. DeleteAllNCstylingBookmarks()
-'   22. DeleteNCHighlighting()
+'   License: MIT License.
+'
+'
+'+----+------------------------------------+-------------+------------------+------------------------------------+
+'| No | Sub name                           | Ribbon name | Ribbon section   | Ribbon button name                 |
+'+----+------------------------------------+-------------+------------------+------------------------------------+
+'| 1  | DeleteStylesOtherThanInTemplate    | Styles_ms   | custom (no name) | DeleteStylesOtherThanInTemplate    |
+'| 2  | DeleteUnusedStyles                 | Styles_ms   | custom (no name) | DeleteUnusedStyles                 |
+'| 3  | CopyStylesFromTemplateToThisFile   | Styles_ms   | custom (no name) | CopyStylesFromTemplateToThisFile   |
+'| 4  | SwitchOffAutoupdate                | Styles_ms   | custom (no name) | SwitchOffAutoupdate                |
+'| 5  | DeleteAllNCstylingBookmarks        | Styles_ms   | custom (no name) | DeleteAllNCstylingBookmarks        |
+'| 6  | DeleteNCHighlighting               | Styles_ms   | custom (no name) | DeleteNCHighlighting               |
+'| 7  | DeleteCustomStyles_KeepOnlyDefined | Styles_ms   | custom (no name) | DeleteCustomStyles_KeepOnlyDefined |
+'| 8  | ListBuiltInStyles                  | Styles_ms   | TextOutput       | ListBuiltInStyles                  |
+'| 9  | ListNonBuiltInAndSuffixStyles      | Styles_ms   | TextOutput       | ListNonBuiltInAndSuffixStyles      |
+'| 10 | ListStylesCurrentlyInUse           | Styles_ms   | TextOutput       | ListStylesCurrentlyInUse           |
+'| 11 | ListCustomStylesToTxt              | Styles_ms   | TextOutput       | ListCustomStylesToTxt              |
+'| 12 | ReapplyStylesFromTemplate          | Styles_ms   | Reapply          | ReapplyStylesFromTemplate          |
+'| 13 | ReapplyStylesFromTemplateSimple    | Styles_ms   | Reapply          | ReapplyStylesFromTemplateSimple    |
+'| 14 | CreateCustomStyles                 | Styles_ms   | custom (no name) | CreateCustomStyles                 |
+'+----+------------------------------------+-------------+------------------+------------------------------------+
+'| 15 | AttachTheme                        | Styles_ms   | Theme            | AttachTheme                        |
+'+----+------------------------------------+-------------+------------------+------------------------------------+
+'
+'   16. InsertTextAtBeginningOfListParagraphs() -> RemoveTextFromBeginningOfListParagraphs()
+'   18. ToggleCharBoldStyle()
+'   19. ToggleCharItalicStyle()
+'   20. ToggleCharUnderlineStyle()
+'   21. ToggleCharCroossoutStyle()
+'   22. ToggleCharHiddenStyle()
+'   23. ToggleCharSourceCode()
 '
 ' Results are saved in the default path for all the files.
 '
@@ -865,15 +875,15 @@ End Function
 
 Private Sub SortCollection(ByRef coll As Collection)
     Dim i As Integer, j As Integer
-    Dim temp As Variant
+    Dim Temp As Variant
     
     ' Simple bubble sort
     For i = 1 To coll.count - 1
         For j = i + 1 To coll.count
             If coll(i)(0) > coll(j)(0) Then
-                temp = coll(i)
+                Temp = coll(i)
                 coll.Add coll(j), Before:=i
-                coll.Add temp, Before:=j
+                coll.Add Temp, Before:=j
                 coll.Remove i + 1
                 coll.Remove j + 1
             End If

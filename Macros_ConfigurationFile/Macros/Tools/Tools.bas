@@ -1,41 +1,47 @@
 Attribute VB_Name = "Tools"
-' Module Tools.bas header:
+' VBA Module name: Tools.bas
+' https://github.com/mslonik/Microsoft-Word-Configuration
 '
-'   DocProperties:
-'   1. DocPropertiesUpdate()
-'   2. DocPropertiesUserInput()
+'   License: MIT License.
 '
-'   Document:
-'   3. SetMarginsDefault()
-'   4. SetMarginsMinimal()
-'   5. SetHyphenation()                    -> ResetHyphenation()
-'   7. SetLanguageToEnglishUS()
-'   8. SetPageColorToCustom()              -> RestoreDefaultPageColor()
 '
-'   Canva:
-'   10. CanvaFormatTextBoxes()
-'   11. CanvaToggleBorder()
-'   12. CanvaInsertPNGfiles()
+'+----+----------------------------+-------------+-----------------+----------------------------+
+'| No | Sub name                   | Ribbon name | Ribbon section  | Ribbon button name         |
+'+----+----------------------------+-------------+-----------------+----------------------------+
+'| 1  | DocPropertiesUpdate        | Tools_ms    | DocProperties   | AttachTheme                |
+'| 2  | DocPropertiesUserInput     | Tools_ms    | DocProperties   | DocPropertiesUserInput     |
+'| 3  | SetMarginsDefault          | Tools_ms    | Document        | SetMarginsDefault          |
+'| 4  | SetMarginsMinimal          | Tools_ms    | Document        | SetMarginsMinimal          |
+'| 5  | SetHyphenation             | Tools_ms    | Document        | SetHyphenation             |
+'| 6  | SetLanguageToEnglishUS     | Tools_ms    | Document        | SetLanguageToEnglishUS     |
+'| 7  | SetPageColorToCustom       | Tools_ms    | Document        | SetPageColorToCustom       |
+'| 8  | ShowAllTemplates           | Tools_ms    | Document        | ShowAllTemplates           |
+'| 9  | CommentAddNumber           | Tools_ms    | Comments        | CommentAddNumber           |
+'| 10 | CommentDeleteNumber        | Tools_ms    | Comments        | CommentDeleteNumber        |
+'| 11 | CommentCountByUser         | Tools_ms    | Comments        | CommentCountByUser         |
+'| 12 | DeleteAllUserBookmarks     | Tools_ms    | Before printing | DeleteAllUserBookmarks     |
+'| 13 | ParDistAtNewSectionCheck   | Tools_ms    | Before printing | ParDistAtNewSectionCheck   |
+'| 14 | ParDistAtNewSectionReduce  | Tools_ms    | Before printing | ParDistAtNewSectionReduce  |
+'| 15 | ParDistAtNewSectionRestore | Tools_ms    | Before printing | ParDistAtNewSectionRestore |
+'| 16 | CanvaFormatTextBoxes       | Tools_ms    | Canva           | CanvaFormatTextBoxes       |
+'| 17 | CanvaToggleBorder          | Tools_ms    | Canva           | CanvaToggleBorder          |
+'| 18 | CanvaInsertPNGfiles        | Tools_ms    | Canva           | CanvaInsertPNGfiles        |
+'+----+----------------------------+-------------+-----------------+----------------------------+
 '
-'   Comments:
-'   13. CommentAddNumber()
-'   14. CommentDeleteNumber()
-'   15. CommentCountByUser()
 '
 '   Captions:
-'   16. CapationAddCustomized()          -> CaptionLabelDeleteCustomized()
-'   18. CaptionLabelCopyFromTemplate()
 '   19. CaptionShow()
+'   20. CapationAddCustomized()
+'   21. CaptionLabelDeleteCustomized()
 '
-'   Before printing:
-'   20. ParDistAtNewSectionCheck() -> ParDistAtNewSectionReduce() -> ParDistAtNewSectionRestore()
-'   23. DeleteAllUserBookmarks()
 '
 '   Word options:
-'   25. WordOptionsCustomize()             -> WordOptionsRestore()
-'   27. WordOptionsDisableAutoFormat()     -> WordOptionsRestoreAutoFormat
-'   29. WordOptionsDisableAutoCorrect()
-'   30. WordOptionsToggleAutoCorrect()
+'   22. WordOptionsCustomize()
+'   23. WordOptionsRestore()
+'   24. WordOptionsDisableAutoFormat()
+'   25. WordOptionsRestoreAutoFormat
+'   26. WordOptionsDisableAutoCorrect()
+'   27. WordOptionsToggleAutoCorrect()
 '
 '   Section related to shortcuts:
 '   31. ToggleSpecificFormatting()
@@ -45,7 +51,7 @@ Attribute VB_Name = "Tools"
 '   35. ToggleHeadingCollapseExpand()
 '   36. CustomizedOvertype()
 '   37. InsertCrossRef()                <- keyboard shortcut F7
-'   38.InsertCrossReferences            -> DeleteCrossReferences()
+'   38. InsertCrossReferences            -> DeleteCrossReferences()
 '   40. CustomizedPrinting()
 '   41. CustomizedSaveAs()
 '   42. CustomizedToggleFieldCodes()
@@ -61,9 +67,9 @@ Attribute VB_Name = "Tools"
 '   50. InsertSVNCommitNumber()
 '   51. AttachBuildingBlocks()
 '   52. AutoExec()
-'   53. ShowAllTemplates()
 '
-'
+'   ResetHyphenation()
+'   RestoreDefaultPageColor()
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '
 ' Used to enforce the explicit declaration of all variables in a module. When you include Option Explicit at the beginning of a module, it ensures that you must

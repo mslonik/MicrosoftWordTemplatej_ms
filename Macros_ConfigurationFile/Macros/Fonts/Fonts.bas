@@ -1,10 +1,16 @@
 Attribute VB_Name = "Fonts"
-' Module Fonts.bas header:
+' VBA Module name: Fonts.bas
+' https://github.com/mslonik/Microsoft-Word-Configuration
 '
-'   1. ShowUsedFonts()
-'   2. ShowSubstitutedFonts()
+'   License: MIT License.
 '
-' The ribbon menu: Tools_ms -> Fonts.
+'+----+---------------+-------------+----------------+--------------------+
+'| No | Sub name      | Ribbon name | Ribbon section | Ribbon button name |
+'+----+---------------+-------------+----------------+--------------------+
+'| 1  | ShowUsedFonts | Tools_ms    | Fonts          | ShowUsedFonts      |
+'+----+---------------+-------------+----------------+--------------------+
+'
+' ShowSubstitutedFonts() called automatically from Class Module.
 '
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 ' List in a MsgBox fonts used in this document.
@@ -26,17 +32,10 @@ Sub ShowUsedFonts()
     Dim rng As Range
     Dim fontName As String
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Fonts
-    
-    Dim MacroName As String
-    MacroName = "ShowUsedFonts"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Fonts
+    Dim MacroName As String:    MacroName = "ShowUsedFonts"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Set doc = ActiveDocument
     Set usedFonts = New Collection

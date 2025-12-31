@@ -1,12 +1,19 @@
 Attribute VB_Name = "Scenarios"
-' Module Scenarios.bas header:
+' VBA Module name: Scenarios.bas
+' https://github.com/mslonik/Microsoft-Word-Configuration
 '
-'   This module keep sets of macros aka combos
+'   License: MIT License.
 '
-'   1. ApplyDistanceBetweenNumberingAndHeading() -> ResetDistanceBetweenNumberingAndHeading()
-'   4. UpdateAllFieldsAndCloseFile()
-'   5. CustomizedPrintPreviewAndPrint()
-'   6. NewFileConfAndContent()
+'+----+-----------------------------------------+--------------+----------------+-----------------------------------------+
+'| No | Sub name                                | Ribbon name  | Ribbon section | Ribbon button name                      |
+'+----+-----------------------------------------+--------------+----------------+-----------------------------------------+
+'| 1  | ApplyDistanceBetweenNumberingAndHeading | Scenarios_ms | Combos         | ApplyDistanceBetweenNumberingAndHeading |
+'| 2  | ResetDistanceBetweenNumberingAndHeading | Scenarios_ms | Combos         | ResetDistanceBetweenNumberingAndHeading |
+'| 3  | UpdateAllFieldsAndCloseFile             | Scenarios_ms | Combos         | UpdateAllFieldsAndCloseFile             |
+'| 4  | DeleteAllVBAModulesExceptMacros         | Scenarios_ms | Combos         | DeleteAllVBAModulesExceptMacros         |
+'| 5  | CustomizedPrintPreviewAndPrint          | Scenarios_ms | Combos         | CustomizedPrintPreviewAndPrint          |
+'| 6  | NewFileConfAndContent                   | Scenarios_ms | Combos         | NewFileConfAndContent                   |
+'+----+-----------------------------------------+--------------+----------------+-----------------------------------------+
 '
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 Option Explicit

@@ -1,18 +1,24 @@
 Attribute VB_Name = "Macros"
-' Module Macros.bas header:
+' VBA Module name: Macros.bas
+' https://github.com/mslonik/Microsoft-Word-Configuration
+'
+'   License: MIT License.
 '
 '   Special conditions:
 '   - enable manually: Tools > References > Microsoft Visual Basic for Applications Extensibility 5.3
-'   -run the first four macros only from within template file (DOTM)!
+'   - run the first four macros only from within template file (DOTM)
 '
-'   1. ExportAllVBAModules()
-'   2. ImportAllVBAModules()
-'   3. DeleteAllVBAModules()
-'   4. DeleteAllVBAModulesExceptMacros()
-'
-'   5. ShowMacrosCounter()
-'   6. ListMacros()
-'   7. ScanProjectForNonAscii()
+'+----+---------------------------------+-------------+----------------+---------------------------------+
+'| No | Sub name                        | Ribbon name | Ribbon section | Ribbon button name              |
+'+----+---------------------------------+-------------+----------------+---------------------------------+
+'| 1  | ExportAllVBAModules             | Macros_ms   | Import Export  | ExportAllVBAModules             |
+'| 2  | ImportAllVBAModules             | Macros_ms   | Import Export  | ImportAllVBAModules             |
+'| 3  | DeleteAllVBAModules             | Macros_ms   | Import Export  | DeleteAllVBAModules             |
+'| 4  | DeleteAllVBAModulesExceptMacros | Macros_ms   | Import Export  | DeleteAllVBAModulesExceptMacros |
+'| 5  | ShowMacrosCounter               | Macros_ms   | Tools          | ShowMacrosCounter               |
+'| 6  | ListMacros                      | Macros_ms   | Tools          | ListMacros                      |
+'| 7  | ScanProjectForNonAscii          | Macros_ms   | Tools          | ScanProjectForNonAscii          |
+'+----+---------------------------------+-------------+----------------+---------------------------------+
 '
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '

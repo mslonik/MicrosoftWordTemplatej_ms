@@ -1,29 +1,29 @@
 Attribute VB_Name = "DocVariables"
-' Module DocVariables.bas header:
+' VBA Module name: DocVariables.bas
+' https://github.com/mslonik/Microsoft-Word-Configuration
 '
-' 1. ListDocVariables()
-' 2. DeleteAllDocVariables()
+'   License: MIT License.
+'
+'+---------+-----------------------+-------------+----------------+-----------------------+
+'| No.     | Sub name              | Ribbon name | Ribbon section | Ribbon button name    |
+'+---------+-----------------------+-------------+----------------+-----------------------+
+'| 1       | ShowDocVariables      | Tools_ms    | DocVariables   | ShowDocVariables      |
+'| 2       | DeleteAllDocVariables | Tools_ms    | DocVariables   | DeleteAllDocVariables |
+'+---------+-----------------------+-------------+----------------+-----------------------+
 '
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '
 
 ' List document variables (no. 10 set of information stored within template)
 ' 2025-03-02 by ms and AI
-Sub ListDocVariables()
+Sub ShowDocVariables()
     Dim oVariable As Variable
     Dim ListOfDocVariables As String
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_DocVariables
-    
-    Dim MacroName As String
-    MacroName = "ListDocVariables"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_DocVariables
+    Dim MacroName As String:    MacroName = "ShowDocVariables"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ListOfDocVariables = ""
     
@@ -51,17 +51,10 @@ Sub DeleteAllDocVariables()
     Dim docVarCount As Integer
     Dim DocName As String
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_DocVariables
-    
-    Dim MacroName As String
-    MacroName = "DeleteAllDocVariables"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_DocVariables
+    Dim MacroName As String:    MacroName = "DeleteAllDocVariables"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Get the current document name
     DocName = ActiveDocument.Name
