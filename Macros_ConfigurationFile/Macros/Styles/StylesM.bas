@@ -26,6 +26,8 @@ Attribute VB_Name = "StylesM"
 '| 15 | AttachTheme                        | Styles_ms   | Theme            | AttachTheme                        |
 '+----+------------------------------------+-------------+------------------+------------------------------------+
 '
+' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+'
 '   16. InsertTextAtBeginningOfListParagraphs() -> RemoveTextFromBeginningOfListParagraphs()
 '   18. ToggleCharBoldStyle()
 '   19. ToggleCharItalicStyle()
@@ -34,7 +36,67 @@ Attribute VB_Name = "StylesM"
 '   22. ToggleCharHiddenStyle()
 '   23. ToggleCharSourceCode()
 '
-' Results are saved in the default path for all the files.
+' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+'
+' Paragraph Styles:
+'CreateStyle_ParNormalMs
+'CreateStyle_ParHeading1ms
+'CreateStyle_ParHeading2ms
+'CreateStyle_ParHeading3ms
+'CreateStyle_ParHeading4ms
+'CreateStyle_ParHeading5ms
+'CreateStyle_ParHeading6ms
+'CreateStyle_ParHeading7ms
+'CreateStyle_ParHeading8ms
+'CreateStyle_ParInTableMs
+'CreateStyle_ParLegalNoteMs
+'CreateStyle_ParLegendPictureMs
+'CreateStyle_ParLegendTableMs
+'CreateStyle_ParListHeadingMs
+'CreateStyle_ParListIndent1Ms
+'CreateStyle_ParListIndentB1Ms
+'CreateStyle_ParListIndent2Ms
+'CreateStyle_ParListIndentB2Ms
+'CreateStyle_ParListIndent3Ms
+'CreateStyle_ParListIndentB3Ms
+'CreateStyle_ParListIndent4Ms
+'CreateStyle_ParListIndentB4Ms
+'CreateStyle_ParMinimalMs
+'CreateStyle_ParNormalAboveMs
+'CreateStyle_ParNormalBelowMs
+'CreateStyle_ParNormalAboveBelowMs
+'CreateStyle_ParNormalZeroMs
+'CreateStyle_ParPictureCanvaMs
+'CreateStyle_ParSourceCodeMs
+'CreateStyle_TOC1
+'CreateStyle_TOC2
+'CreateStyle_TOC3
+'CreateStyle_ParTextBoxesMs
+'CreateStyle_ParNumRefMs
+'CreateStyle_ParListInTableMs
+'CreateStyle_ParIconMs
+'
+' Character templates:
+'CreateStyle_CharBoldMs
+'CreateStyle_CharCrossoutMs
+'CreateStyle_CharDefaultMs
+'CreateStyle_CharHiddenMs
+'CreateStyle_CharItalicMs
+'CreateStyle_CharLegalNoteMs
+'CreateStyle_CharSourceCodeMs
+'CreateStyle_CharUnderlineMs
+'
+' List Templates:
+'Create_LT_Headings()
+'Create_LT_NumOrd()
+'Create_LT_Bullets()
+'Create_LT_SingleLevelListNumRefMs()
+'Create_LT_SingleLevelListInTableMs
+'
+' Table styles:
+'CreateStyle_TabTableMs()
+'CreateStyle_TabTableNoGridMs()
+'CreateStyle_TabTableNoPaddingMs
 '
 ' External sources:
 ' https://bettersolutions.com/word/styles/index.htm
@@ -1775,7 +1837,7 @@ Sub CreateCustomStyles()
     IsSuccessful = CreateStyle_TOC1
     If IsSuccessful = False Then
         MsgBox _
-            Prompt:="Error on time of creation the paragraph style " & vbNewLine & C_S_TOC1 & vbNewLine & ". Exiting.", _
+            Prompt:="Error on time of creation the paragraph style " & vbNewLine & wdStyleTOC1 & vbNewLine & ". Exiting.", _
             Buttons:=vbCritical, _
             Title:=MsgBoxTitle
         Exit Sub
@@ -1786,7 +1848,7 @@ Sub CreateCustomStyles()
     IsSuccessful = CreateStyle_TOC2
     If IsSuccessful = False Then
         MsgBox _
-            Prompt:="Error on time of creation the paragraph style " & vbNewLine & C_S_TOC2 & vbNewLine & ". Exiting.", _
+            Prompt:="Error on time of creation the paragraph style " & vbNewLine & wdStyleTOC2 & vbNewLine & ". Exiting.", _
             Buttons:=vbCritical, _
             Title:=MsgBoxTitle
         Exit Sub
@@ -1797,7 +1859,7 @@ Sub CreateCustomStyles()
     IsSuccessful = CreateStyle_TOC3
     If IsSuccessful = False Then
         MsgBox _
-            Prompt:="Error on time of creation the paragraph style " & vbNewLine & C_S_TOC3 & vbNewLine & ". Exiting.", _
+            Prompt:="Error on time of creation the paragraph style " & vbNewLine & wdStyleTOC3 & vbNewLine & ". Exiting.", _
             Buttons:=vbCritical, _
             Title:=MsgBoxTitle
         Exit Sub
@@ -1940,7 +2002,7 @@ Sub CreateCustomStyles()
     End If
         
     ' List Templates:
-    IsSuccessful = CreateC_LT_Headings()
+    IsSuccessful = Create_LT_Headings()
     If IsSuccessful = False Then
         MsgBox _
             Prompt:="Error on time of creation the 'list template' " & vbNewLine & C_LT_Headings & vbNewLine & ". Exiting.", _
@@ -1951,7 +2013,7 @@ Sub CreateCustomStyles()
         ListTemplateCounter = ListTemplateCounter + 1
     End If
     
-    IsSuccessful = CreateC_LT_NumOrd()
+    IsSuccessful = Create_LT_NumOrd()
     If IsSuccessful = False Then
         MsgBox _
             Prompt:="Error on time of creation the 'list template' " & vbNewLine & C_LT_NumOrd & vbNewLine & ". Exiting.", _
@@ -1962,7 +2024,7 @@ Sub CreateCustomStyles()
         ListTemplateCounter = ListTemplateCounter + 1
     End If
     
-    IsSuccessful = CreateC_LT_Bullets()
+    IsSuccessful = Create_LT_Bullets()
     If IsSuccessful = False Then
         MsgBox _
             Prompt:="Error on time of creation the 'list template' " & vbNewLine & C_LT_Bullets & vbNewLine & ". Exiting.", _
@@ -1973,7 +2035,7 @@ Sub CreateCustomStyles()
         ListTemplateCounter = ListTemplateCounter + 1
     End If
     
-    IsSuccessful = Create_SingleLevelListNumRefMs()
+    IsSuccessful = Create_LT_SingleLevelListNumRefMs()
     If IsSuccessful = False Then
         MsgBox _
             Prompt:="Error on time of creation the 'list template' " & vbNewLine & C_LT_ListNumRef & vbNewLine & ". Exiting.", _
@@ -1984,7 +2046,7 @@ Sub CreateCustomStyles()
         ListTemplateCounter = ListTemplateCounter + 1
     End If
     
-    IsSuccessful = Create_SingleLevelListInTableMs
+    IsSuccessful = Create_LT_SingleLevelListInTableMs
     If IsSuccessful = False Then
         MsgBox _
             Prompt:="Error on time of creation the 'list template' " & vbNewLine & C_LT_ListNumTable & vbNewLine & ". Exiting.", _
@@ -1994,6 +2056,18 @@ Sub CreateCustomStyles()
     Else
         ListTemplateCounter = ListTemplateCounter + 1
     End If
+    
+    IsSuccessful = Create_LT_ToC
+    If IsSuccessful = False Then
+        MsgBox _
+            Prompt:="Error on time of creation the 'list template' " & vbNewLine & C_LT_TOC & vbNewLine & ". Exiting.", _
+            Buttons:=vbCritical, _
+            Title:=MsgBoxTitle
+        Exit Sub
+    Else
+        ListTemplateCounter = ListTemplateCounter + 1
+    End If
+    
     
     ' Table styles:
     IsSuccessful = CreateStyle_TabTableMs()
@@ -2046,17 +2120,10 @@ Sub ShowListTemplates()
     Dim lt As ListTemplate
     Dim msg As String
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "ShowListTemplates"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "ShowListTemplates"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     msg = "List Templates in Active Document:" & vbNewLine & vbNewLine
     
@@ -2071,7 +2138,7 @@ Sub ShowListTemplates()
 End Sub
 
 ' 2025-11-25 by ms
-Public Function Create_SingleLevelListInTableMs() As Boolean
+Public Function Create_LT_SingleLevelListInTableMs() As Boolean
     Dim NewStyle As style
     Dim ListTemplate As ListTemplate
     
@@ -2082,7 +2149,7 @@ Public Function Create_SingleLevelListInTableMs() As Boolean
     ModuleName = C_M_Styles
     
     Dim MacroName As String
-    MacroName = "Create_SingleLevelListInTableMs"
+    MacroName = "Create_LT_SingleLevelListInTableMs"
     
     Dim MsgBoxTitle As String
     MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
@@ -2122,12 +2189,12 @@ Public Function Create_SingleLevelListInTableMs() As Boolean
         .LinkedStyle = C_S_ListNumTable
     End With
     
-    Create_SingleLevelListInTableMs = True
+    Create_LT_SingleLevelListInTableMs = True
 End Function
 
 
 ' 2025-11-25 by ms
-Public Function Create_SingleLevelListNumRefMs() As Boolean
+Public Function Create_LT_SingleLevelListNumRefMs() As Boolean
     Dim NewStyle As style
     Dim ListTemplate As ListTemplate
     
@@ -2138,7 +2205,7 @@ Public Function Create_SingleLevelListNumRefMs() As Boolean
     ModuleName = C_M_Styles
     
     Dim MacroName As String
-    MacroName = "Create_SingleLevelListNumRefMs"
+    MacroName = "Create_LT_SingleLevelListNumRefMs"
     
     Dim MsgBoxTitle As String
     MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
@@ -2178,11 +2245,11 @@ Public Function Create_SingleLevelListNumRefMs() As Boolean
         .LinkedStyle = C_S_ListNumRef
     End With
     
-    Create_SingleLevelListNumRefMs = True
+    Create_LT_SingleLevelListNumRefMs = True
 End Function
 
 ' 2025-11-24 by ms
-Public Function CreateC_LT_Bullets() As Boolean
+Public Function Create_LT_Bullets() As Boolean
     Dim ListTemplate As ListTemplate
     Dim NumberFormat As String
     Dim StyleNames As Variant
@@ -2235,24 +2302,96 @@ Public Function CreateC_LT_Bullets() As Boolean
         End With
     Next i
                 
-    CreateC_LT_Bullets = True
+    Create_LT_Bullets = True
 End Function
 
-
-' 2025-11-22 by ms
-Public Function CreateC_LT_NumOrd() As Boolean
+' Create dedicated List Template just for ToC 1 to ToC 3.
+' I define only indentations, no numbering. Numbering is inherited just from the field definition, I suppose:
+'{ TOC \h \z \t \u "ParListHeading ms;1;ParHeading 1ms;1;ParHeading 2 ms;2;ParHeading 3 ms;3" }
+' Remaining space after number is a mystery.
+' Observe sub: Private Sub ResetTOCStylesNumbering()
+' 2026-01-02 by ms
+Public Function Create_LT_ToC() As Boolean
     Dim ListTemplate As ListTemplate
     Dim NumberFormat As String
     Dim StyleNames As Variant
     Dim BaseIndent As Double
-            
-    ' Define heading styles for each level
-    StyleNames = Array( _
-        C_S_ListLevel1, _
-        C_S_ListLevel2, _
-        C_S_ListLevel3, _
-        C_S_ListLevel4)
+                
+    BaseIndent = 0.3 ' cm
     
+    ' Check if template already exists in gallery
+    Dim lt As ListTemplate
+    Dim FlagFound As Boolean
+    FlagFound = False
+    
+    For Each lt In ActiveDocument.ListTemplates
+        If lt.Name = C_LT_TOC Then
+            Set ListTemplate = lt
+            FlagFound = True
+            Exit For
+        End If
+    Next lt
+    
+    ' If not found, create new template in Outline Numbered gallery
+    If Not FlagFound Then
+        Set ListTemplate = ActiveDocument.ListTemplates.Add( _
+            Name:=C_LT_TOC, _
+            OutlineNumbered:=True)
+    End If
+    
+    ' Configure each level
+    With ListTemplate.ListLevels(1)
+'        .NumberFormat = ""
+'        .TrailingCharacter = wdTrailingNone
+'        .NumberStyle = wdListNumberStyleNone
+'        .NumberPosition = CentimetersToPoints(0 * BaseIndent)
+        .TextPosition = CentimetersToPoints(1#)
+        .Alignment = wdListLevelAlignLeft
+        .LinkedStyle = ActiveDocument.Styles(wdStyleTOC1).NameLocal
+'        .font.Name = C_FT_Basic
+'        .font.Size = 11
+'        .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
+    End With
+        
+    With ListTemplate.ListLevels(2)
+'        .NumberFormat = ""
+'        .TrailingCharacter = wdTrailingNone
+'        .NumberStyle = wdListNumberStyleNone
+'        .NumberPosition = CentimetersToPoints(1 * BaseIndent)
+        .TextPosition = CentimetersToPoints(1.3)
+        .Alignment = wdListLevelAlignLeft
+        .StartAt = 1
+        .LinkedStyle = ActiveDocument.Styles(wdStyleTOC2).NameLocal
+'        .font.Name = C_FT_Basic
+'        .font.Size = 11
+'        .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
+    End With
+    
+    With ListTemplate.ListLevels(3)
+'        .NumberFormat = ""
+'        .TrailingCharacter = wdTrailingNone
+'        .NumberStyle = wdListNumberStyleNone
+'        .NumberPosition = CentimetersToPoints(2 * BaseIndent)
+'        .TextPosition = CentimetersToPoints(1.6)
+        .Alignment = wdListLevelAlignLeft
+        .StartAt = 1
+        .LinkedStyle = ActiveDocument.Styles(wdStyleTOC3).NameLocal
+'        .font.Name = C_FT_Basic
+'        .font.Size = 11
+'        .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
+    End With
+                
+    Create_LT_ToC = True
+End Function
+
+
+' 2025-11-22 by ms
+Public Function Create_LT_NumOrd() As Boolean
+    Dim ListTemplate As ListTemplate
+    Dim NumberFormat As String
+    Dim StyleNames As Variant
+    Dim BaseIndent As Double
+                
     BaseIndent = 0.3 ' cm
     
     ' Check if template already exists in gallery
@@ -2284,7 +2423,7 @@ Public Function CreateC_LT_NumOrd() As Boolean
         .TextPosition = CentimetersToPoints(1#)
         .Alignment = wdListLevelAlignLeft
         .StartAt = 1
-        .LinkedStyle = StyleNames(0)
+        .LinkedStyle = C_S_ListLevel1
         .font.Name = C_FT_Basic
         .font.Size = 11
         .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
@@ -2298,7 +2437,7 @@ Public Function CreateC_LT_NumOrd() As Boolean
         .TextPosition = CentimetersToPoints(1.3)
         .Alignment = wdListLevelAlignLeft
         .StartAt = 1
-        .LinkedStyle = StyleNames(1)
+        .LinkedStyle = C_S_ListLevel2
         .font.Name = C_FT_Basic
         .font.Size = 11
         .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
@@ -2312,7 +2451,7 @@ Public Function CreateC_LT_NumOrd() As Boolean
         .TextPosition = CentimetersToPoints(1.6)
         .Alignment = wdListLevelAlignLeft
         .StartAt = 1
-        .LinkedStyle = StyleNames(2)
+        .LinkedStyle = C_S_ListLevel3
         .font.Name = C_FT_Basic
         .font.Size = 11
         .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
@@ -2326,18 +2465,18 @@ Public Function CreateC_LT_NumOrd() As Boolean
         .TextPosition = CentimetersToPoints(1.9)
         .Alignment = wdListLevelAlignLeft
         .StartAt = 1
-        .LinkedStyle = StyleNames(3)
+        .LinkedStyle = C_S_ListLevel4
         .font.Name = C_FT_Basic
         .font.Size = 11
         .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
         
-    CreateC_LT_NumOrd = True
+    Create_LT_NumOrd = True
 End Function
 
 
 ' 2025-11-22 by ms
-Public Function CreateC_LT_Headings() As Boolean
+Public Function Create_LT_Headings() As Boolean
     Dim ListTemplate As ListTemplate
     Dim i As Integer, j As Integer
     Dim NumberFormat As String
@@ -2401,7 +2540,7 @@ Public Function CreateC_LT_Headings() As Boolean
         End With
     Next i
     
-    CreateC_LT_Headings = True
+    Create_LT_Headings = True
 End Function
 
 ' 2025-11-25 by ms
@@ -2712,66 +2851,65 @@ End Function
 Private Function CreateStyle_TOC3() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_TOC3"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:       FileName = C_F_Macros
+    Dim ModuleName As String:     ModuleName = C_M_Styles
+    Dim MacroName As String:      MacroName = "CreateStyle_TOC3"
+    Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
     On Error Resume Next
-    Set NewStyle = ActiveDocument.Styles(C_S_TOC3)
+    Set NewStyle = ActiveDocument.Styles(wdStyleTOC3)   ' exception, apply built-in style
     '  Turns off any active error handler and restores default behavior
     On Error GoTo 0
-
-    ' If the style doesn't exist, try to create it
+    
+    ' If built-in style doesn't exist, warn user and exit.
     If NewStyle Is Nothing Then
-        On Error GoTo StyleError
-        Set NewStyle = ActiveDocument.Styles.Add(Name:=C_S_TOC3, Type:=wdStyleTypeParagraph)
-        On Error GoTo 0
+        ' It should not happen, as this is built-in style
+        MsgBox _
+            Prompt:="Built-in style cannot be find: " & wdStyleTOC3 & vbNewLine & vbNewLine & _
+                "Exiting.", _
+            Buttons:=vbCritical, _
+            Title:=MsgBoxTitle
+        CreateStyle_TOC3 = False
+        Exit Function
     End If
 
-    If Not NewStyle Is Nothing Then
-        With NewStyle
-            .BaseStyle = C_S_ParNormal
-            .NextParagraphStyle = C_S_ParNormal
-            .AutomaticallyUpdate = False
-            .QuickStyle = False
-            .LanguageId = wdEnglishUS
-            
-            ' Font formatting
-            With .font
-                .Name = C_FT_Body
-                .Size = 11
-                .Bold = False
-                .Italic = False
-                .color = wdColorAutomatic
-            End With
-            
-            ' Paragraph formatting
-            With .ParagraphFormat
-                .Alignment = wdAlignParagraphLeft
-                .LeftIndent = CentimetersToPoints(1.2)
-                .RightIndent = CentimetersToPoints(0)
-                .FirstLineIndent = 0
-                .SpaceBefore = 0
-                .SpaceAfter = 0
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
-                .WidowControl = True
-                .KeepWithNext = False
-                .KeepTogether = False
-                .PageBreakBefore = False
-                .OutlineLevel = wdOutlineLevelBodyText
-            End With
+    With NewStyle
+        .Visibility = False
+        .UnhideWhenUsed = False
+        .BaseStyle = C_S_ParNormal
+        .NextParagraphStyle = C_S_ParNormal
+        .AutomaticallyUpdate = False
+        .QuickStyle = False
+        .LanguageId = wdEnglishUS
+        
+        ' Font formatting
+        With .font
+            .Name = C_FT_Body
+            .Size = 11
+            .Bold = False
+            .Italic = False
+            .color = wdColorAutomatic
         End With
+        
+        ' Paragraph formatting
+        With .ParagraphFormat
+            .Alignment = wdAlignParagraphLeft
+            .LeftIndent = CentimetersToPoints(1.2)
+            .RightIndent = CentimetersToPoints(0)
+            .FirstLineIndent = 0
+            .SpaceBefore = 0
+            .SpaceAfter = 0
+            .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+            .LineSpacingRule = wdLineSpaceExactly
+            .WidowControl = True
+            .KeepWithNext = False
+            .KeepTogether = False
+            .PageBreakBefore = False
+            .OutlineLevel = wdOutlineLevelBodyText
+        End With
+    End With
 
 '       === Add keyboard shortcut for the style ===
 '       On Error GoTo ShortcutError
@@ -2784,23 +2922,13 @@ Private Function CreateStyle_TOC3() As Boolean
 '       On Error GoTo 0
 
     CreateStyle_TOC3 = True
-    End If
     Exit Function
                 
 ' === Error handler ===
-StyleError:
-    MsgBox _
-        Prompt:="Error: Unable to create style '" & C_S_TOC3 & "'." & vbNewLine & _
-            "Error number: " & Err.Number & vbNewLine & _
-            "Description: " & Err.Description, _
-        Buttons:=vbCritical, _
-        Title:=MsgBoxTitle
-    CreateStyle_TOC3 = False
-    Exit Function
         
 ShortcutError:
     MsgBox _
-        Prompt:="Error adding shortcut for style '" & C_S_TOC3 & "'." & vbCrLf & _
+        Prompt:="Error adding shortcut for style '" & wdStyleTOC3 & "'." & vbCrLf & _
            "Error Number: " & Err.Number & vbCrLf & _
            "Description: " & Err.Description, _
         Buttons:=vbCritical, _
@@ -2815,66 +2943,65 @@ End Function
 Private Function CreateStyle_TOC2() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_TOC2"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_TOC2"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
     On Error Resume Next
-    Set NewStyle = ActiveDocument.Styles(C_S_TOC2)
+    Set NewStyle = ActiveDocument.Styles(wdStyleTOC2)   ' exception, apply built-in style
     '  Turns off any active error handler and restores default behavior
     On Error GoTo 0
-
-    ' If the style doesn't exist, try to create it
+    
+    ' If built-in style doesn't exist, warn user and exit.
     If NewStyle Is Nothing Then
-        On Error GoTo StyleError
-        Set NewStyle = ActiveDocument.Styles.Add(Name:=C_S_TOC2, Type:=wdStyleTypeParagraph)
-        On Error GoTo 0
+        ' It should not happen, as this is built-in style
+        MsgBox _
+            Prompt:="Built-in style cannot be find: " & wdStyleTOC2 & vbNewLine & vbNewLine & _
+                "Exiting.", _
+            Buttons:=vbCritical, _
+            Title:=MsgBoxTitle
+        CreateStyle_TOC2 = False
+        Exit Function
     End If
 
-    If Not NewStyle Is Nothing Then
-        With NewStyle
-            .BaseStyle = C_S_ParNormal
-            .NextParagraphStyle = C_S_ParNormal
-            .AutomaticallyUpdate = False
-            .QuickStyle = False
-            .LanguageId = wdEnglishUS
-            
-            ' Font formatting
-            With .font
-                .Name = C_FT_Body
-                .Size = 11
-                .Bold = False
-                .Italic = False
-                .color = wdColorAutomatic
-            End With
-            
-            ' Paragraph formatting
-            With .ParagraphFormat
-                .Alignment = wdAlignParagraphLeft
-                .LeftIndent = CentimetersToPoints(0.8)
-                .RightIndent = CentimetersToPoints(0)
-                .FirstLineIndent = 0
-                .SpaceBefore = 0
-                .SpaceAfter = 0
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
-                .WidowControl = True
-                .KeepWithNext = False
-                .KeepTogether = False
-                .PageBreakBefore = False
-                .OutlineLevel = wdOutlineLevelBodyText
-            End With
+    With NewStyle
+        .Visibility = False
+        .UnhideWhenUsed = False
+        .BaseStyle = C_S_ParNormal
+        .NextParagraphStyle = C_S_ParNormal
+        .AutomaticallyUpdate = False
+        .QuickStyle = False
+        .LanguageId = wdEnglishUS
+        
+        ' Font formatting
+        With .font
+            .Name = C_FT_Body
+            .Size = 11
+            .Bold = False
+            .Italic = False
+            .color = wdColorAutomatic
         End With
+        
+        ' Paragraph formatting
+        With .ParagraphFormat
+            .Alignment = wdAlignParagraphLeft
+            .LeftIndent = CentimetersToPoints(0.8)
+            .RightIndent = CentimetersToPoints(0)
+            .FirstLineIndent = CentimetersToPoints(-0.8)
+            .SpaceBefore = 0
+            .SpaceAfter = 0
+            .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+            .LineSpacingRule = wdLineSpaceExactly
+            .WidowControl = True
+            .KeepWithNext = False
+            .KeepTogether = False
+            .PageBreakBefore = False
+            .OutlineLevel = wdOutlineLevelBodyText
+        End With
+    End With
 
 '       === Add keyboard shortcut for the style ===
 '       On Error GoTo ShortcutError
@@ -2887,23 +3014,14 @@ Private Function CreateStyle_TOC2() As Boolean
 '       On Error GoTo 0
 
     CreateStyle_TOC2 = True
-    End If
+
     Exit Function
                 
 ' === Error handler ===
-StyleError:
-    MsgBox _
-        Prompt:="Error: Unable to create style '" & C_S_TOC2 & "'." & vbNewLine & _
-            "Error number: " & Err.Number & vbNewLine & _
-            "Description: " & Err.Description, _
-        Buttons:=vbCritical, _
-        Title:=MsgBoxTitle
-    CreateStyle_TOC2 = False
-    Exit Function
         
 ShortcutError:
     MsgBox _
-        Prompt:="Error adding shortcut for style '" & C_S_TOC2 & "'." & vbCrLf & _
+        Prompt:="Error adding shortcut for style '" & wdStyleTOC2 & "'." & vbCrLf & _
            "Error Number: " & Err.Number & vbCrLf & _
            "Description: " & Err.Description, _
         Buttons:=vbCritical, _
@@ -2912,72 +3030,70 @@ ShortcutError:
 
 End Function
 
-
 ' Exception: built-in styles, which I modify. This is the only way which I know to keep Table of Content functionality of Microsoft Word.
 ' 2025-11-22 by ms
 Private Function CreateStyle_TOC1() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_TOC1"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_TOC1"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
     On Error Resume Next
-    Set NewStyle = ActiveDocument.Styles(C_S_TOC1)
+    Set NewStyle = ActiveDocument.Styles(wdStyleTOC1)   ' exception, apply built-in style
     '  Turns off any active error handler and restores default behavior
     On Error GoTo 0
 
-    ' If the style doesn't exist, try to create it
+    ' If built-in style doesn't exist, warn user and exit.
     If NewStyle Is Nothing Then
-        On Error GoTo StyleError
-        Set NewStyle = ActiveDocument.Styles.Add(Name:=C_S_TOC1, Type:=wdStyleTypeParagraph)
-        On Error GoTo 0
+        ' It should not happen, as this is built-in style
+        MsgBox _
+            Prompt:="Built-in style cannot be find: " & wdStyleTOC1 & vbNewLine & vbNewLine & _
+                "Exiting.", _
+            Buttons:=vbCritical, _
+            Title:=MsgBoxTitle
+        CreateStyle_TOC1 = False
+        Exit Function
     End If
 
-    If Not NewStyle Is Nothing Then
-        With NewStyle
-            .BaseStyle = C_S_ParNormal
-            .NextParagraphStyle = C_S_ParNormal
-            .AutomaticallyUpdate = False
-            .QuickStyle = False
-            .LanguageId = wdEnglishUS
-            
-            ' Font formatting
-            With .font
-                .Name = C_FT_Body
-                .Size = 14
-                .Bold = True
-                .Italic = False
-                .color = wdColorAutomatic
-            End With
-            
-            ' Paragraph formatting
-            With .ParagraphFormat
-                .Alignment = wdAlignParagraphLeft
-                .LeftIndent = CentimetersToPoints(0.4)
-                .RightIndent = CentimetersToPoints(0)
-                .FirstLineIndent = 0
-                .SpaceBefore = 0
-                .SpaceAfter = 6
-                .LineSpacing = 14   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
-                .WidowControl = True
-                .KeepWithNext = False
-                .KeepTogether = False
-                .PageBreakBefore = False
-                .OutlineLevel = wdOutlineLevelBodyText
-            End With
+    With NewStyle
+        .Visibility = False
+        .UnhideWhenUsed = False
+        .BaseStyle = C_S_ParNormal
+        .NextParagraphStyle = C_S_ParNormal
+        .AutomaticallyUpdate = False
+        .QuickStyle = False
+        .LanguageId = wdEnglishUS
+        
+        ' Font formatting
+        With .font
+            .Name = C_FT_Body
+            .Size = 14
+            .Bold = True
+            .Italic = False
+            .color = wdColorAutomatic
         End With
+        
+        ' Paragraph formatting
+        With .ParagraphFormat
+            .Alignment = wdAlignParagraphLeft
+            .LeftIndent = CentimetersToPoints(0.4)
+            .RightIndent = CentimetersToPoints(0)
+            .FirstLineIndent = CentimetersToPoints(-0.4)
+            .SpaceBefore = 0
+            .SpaceAfter = 6
+            .LineSpacing = 14   ' order matters: specify at first LineSpacing, next LineSpacingRule
+            .LineSpacingRule = wdLineSpaceExactly
+            .WidowControl = True
+            .KeepWithNext = False
+            .KeepTogether = False
+            .PageBreakBefore = False
+            .OutlineLevel = wdOutlineLevelBodyText
+        End With
+    End With
 
 '       === Add keyboard shortcut for the style ===
 '       On Error GoTo ShortcutError
@@ -2990,23 +3106,13 @@ Private Function CreateStyle_TOC1() As Boolean
 '       On Error GoTo 0
 
     CreateStyle_TOC1 = True
-    End If
     Exit Function
                 
 ' === Error handler ===
-StyleError:
-    MsgBox _
-        Prompt:="Error: Unable to create style '" & C_S_TOC1 & "'." & vbNewLine & _
-            "Error number: " & Err.Number & vbNewLine & _
-            "Description: " & Err.Description, _
-        Buttons:=vbCritical, _
-        Title:=MsgBoxTitle
-    CreateStyle_TOC1 = False
-    Exit Function
         
 ShortcutError:
     MsgBox _
-        Prompt:="Error adding shortcut for style '" & C_S_TOC1 & "'." & vbCrLf & _
+        Prompt:="Error adding shortcut for style '" & wdStyleTOC1 & "'." & vbCrLf & _
            "Error Number: " & Err.Number & vbCrLf & _
            "Description: " & Err.Description, _
         Buttons:=vbCritical, _
@@ -5052,17 +5158,10 @@ End Function
 Private Function CreateStyle_ParHeading2ms() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParHeading2ms"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParHeading2ms"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -7452,3 +7551,26 @@ Private Function IsAllowedStyleName(ByVal styleName As String, ByVal tableArr As
     Next i
 Bail:
 End Function
+
+' Tool to clear all styles numbering.
+' 2026-01-02 by ms and AI
+Private Sub ResetTOCStylesNumbering()
+    Dim i As Integer
+    Dim styleName As Variant
+    Dim stylesToClean As Variant
+    
+    ' Lista stylów do wyczyszczenia
+    stylesToClean = Array(wdStyleTOC1, wdStyleTOC2, wdStyleTOC3)
+    
+    For Each styleName In stylesToClean
+        With ActiveDocument.Styles(styleName)
+            ' To polecenie całkowicie usuwa powiązanie stylu z jakąkolwiek listą
+            .LinkToListTemplate ListTemplate:=Nothing
+        End With
+    Next styleName
+    
+    ' Odśwież spis treści
+    If ActiveDocument.TablesOfContents.count > 0 Then
+        ActiveDocument.TablesOfContents(1).Update
+    End If
+End Sub

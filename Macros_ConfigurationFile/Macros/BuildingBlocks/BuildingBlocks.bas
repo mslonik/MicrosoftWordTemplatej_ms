@@ -870,6 +870,8 @@ Sub BB_RemoveDefParagraphs()
                         Next Tag
                     End If
                     On Error GoTo 0
+                    ' Let user to stop it while running with Ctrl + Break
+                    DoEvents
                 Next i
                 
                 ' Brute force to remove empty paragraphs
@@ -893,6 +895,8 @@ Sub BB_RemoveDefParagraphs()
                             delRange.Delete
                             On Error GoTo 0
                         End If
+                    ' Let user to stop it while running with Ctrl + Break
+                    DoEvents
                     Next i
                 End If
                 
@@ -900,7 +904,11 @@ Sub BB_RemoveDefParagraphs()
             
             ' Move to the next Story.
             Set aStory = aStory.NextStoryRange
+            ' Let user to stop it while running with Ctrl + Break
+            DoEvents
         Loop Until aStory Is Nothing
+        ' Let user to stop it while running with Ctrl + Break
+        DoEvents
     Next aStory
     Application.ScreenUpdating = True
     

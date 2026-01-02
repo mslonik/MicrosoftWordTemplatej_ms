@@ -75,9 +75,6 @@ Public Const C_S_ParNormalAB As String = "ParNormalAB ms"
 Public Const C_S_ParPictureCanva As String = "ParPictureCanva ms"
 Public Const C_S_ParIcon As String = "ParIcon ms"
 Public Const C_S_ParSourceCode As String = "ParSourceCode ms"
-Public Const C_S_TOC1 As String = "TOC1"
-Public Const C_S_TOC2 As String = "TOC2"
-Public Const C_S_TOC3 As String = "TOC3"
 Public Const C_S_TextBoxes As String = "ParTextBoxes ms"
 Public Const C_S_ListNumRef As String = "ParNumRef ms"
 Public Const C_S_ListNumTable As String = "ParListInTable ms"
@@ -101,6 +98,7 @@ Public Const C_LT_NumOrd As String = "MultiLevelList Ordered ms"
 Public Const C_LT_Bullets As String = "MultiLevelList Bullets ms"
 Public Const C_LT_ListNumRef As String = "SingleLevelListNumRef ms"
 Public Const C_LT_ListNumTable As String = "SingleLevelListInTable ms"
+Public Const C_LT_TOC As String = "MultilevelList Table of Content ms"
 
 ' ===========================
 ' Character Styles Table
