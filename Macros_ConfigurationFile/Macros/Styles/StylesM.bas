@@ -1231,31 +1231,19 @@ End Function
 ' 2025-08-06 by ms
 Sub ToggleCharItalicStyle()
     Dim CurrentStyle As String
-    Dim FlagStyleItalicExists As Boolean
-    Dim FlagStyleDefaultExists As Boolean
     
     ' Surprisingly this is enough to proceed further. If user selects few paragraphs with different styling, then Selectio.style.NameLocal is empty.
     On Error Resume Next
         CurrentStyle = Selection.style.NameLocal
     On Error GoTo 0
     
+    Dim FileName As String:      FileName = C_F_Macros
+    Dim ModuleName As String:    ModuleName = C_M_Styles
+    Dim MacroName As String:     MacroName = "ToggleCharItalicStyle"
+    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
     ' Check if the styles exist
-    FlagStyleItalicExists = StyleExists(C_S_Italic)
-    FlagStyleDefaultExists = StyleExists(C_S_CharDefault)
-    
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "ToggleCharItalicStyle"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
-    If Not FlagStyleItalicExists Or Not FlagStyleDefaultExists Then
+    If Not StyleExists(C_S_Italic) Or Not StyleExists(C_S_CharDefault) Then
         MsgBox _
             Prompt:="One or both of the required styles do not exist in this document:" & vbNewLine & vbNewLine & _
                 C_S_Italic & " or " & C_S_CharDefault, _
@@ -1264,45 +1252,36 @@ Sub ToggleCharItalicStyle()
         Exit Sub
     End If
     
+    Dim Rng As Word.Range
+    Set Rng = Selection.Range
+    
     ' Toggle styles
-    If CurrentStyle = C_S_Italic Then
-        Selection.style = ActiveDocument.Styles(C_S_CharDefault)
-        Application.statusBar = MsgBoxTitle & " > " & C_S_CharDefault
+    If Rng.font.Italic = False Then
+        ' TURN ON: Apply the specific Character Style
+        Rng.style = ActiveDocument.Styles(C_S_Italic)
+        Application.statusBar = MsgBoxTitle & " > Applied: " & C_S_Italic
     Else
-        Selection.style = ActiveDocument.Styles(C_S_Italic)
-        Application.statusBar = MsgBoxTitle & " > " & C_S_Italic
+        ' TURN OFF: Clear back to Default Paragraph Font
+        ' Note: Using wdStyleDefaultParagraphFont is safer than a custom string
+        Rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
+        
+        ' IMPORTANT: Remove direct italic formatting in case it was applied manually
+        Rng.font.Italic = False
+        
+        Application.statusBar = MsgBoxTitle & " > Reset to Default Font"
     End If
 End Sub
 
 ' 2025-03-20 by ms and AI
 ' 2025-08-06 by ms
 Sub ToggleCharUnderlineStyle()
-    Dim CurrentStyle As String
-    Dim FlagStyleUnderlineExists As Boolean
-    Dim FlagStyleDefaultExists As Boolean
-    
-    ' Surprisingly this is enough to proceed further. If user selects few paragraphs with different styling, then Selectio.style.NameLocal is empty.
-    On Error Resume Next
-        CurrentStyle = Selection.style.NameLocal
-    On Error GoTo 0
+    Dim FileName As String:       FileName = C_F_Macros
+    Dim ModuleName As String:     ModuleName = C_M_Styles
+    Dim MacroName As String:      MacroName = "ToggleCharUnderlineStyle"
+    Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the styles exist
-    FlagStyleUnderlineExists = StyleExists(C_S_Underline)
-    FlagStyleDefaultExists = StyleExists(C_S_CharDefault)
-    
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "ToggleCharUnderlineStyle"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
-    If Not FlagStyleUnderlineExists Or Not FlagStyleDefaultExists Then
+    If Not StyleExists(C_S_Underline) Or Not StyleExists(C_S_CharDefault) Then
         MsgBox _
             Prompt:="One or both of the required styles do not exist in this document:" & vbNewLine & vbNewLine & _
                 C_S_Underline & " or " & C_S_CharDefault, _
@@ -1311,14 +1290,23 @@ Sub ToggleCharUnderlineStyle()
         Exit Sub
     End If
     
+    Dim Rng As Word.Range
+    Set Rng = Selection.Range
+    
     ' Toggle styles
-    If CurrentStyle = C_S_Underline Then
-        Selection.style = ActiveDocument.Styles(C_S_CharDefault)
-        Application.statusBar = MsgBoxTitle & " > " & C_S_CharDefault
-    Else
-        Selection.style = ActiveDocument.Styles(C_S_Underline)
-        Application.statusBar = MsgBoxTitle & " > " & C_S_Underline
-    End If
+    Select Case Rng.font.Underline
+        Case wdUnderlineNone, wdUndefined
+            ' turn on: apply the character style that only sets underline
+            Rng.style = ActiveDocument.Styles(C_S_Underline)
+            Application.statusBar = MsgBoxTitle & " > " & C_S_Underline
+        Case Else
+            ' turn off: clear the character-style overlay back to "default char"
+            Rng.style = ActiveDocument.Styles(C_S_CharDefault)
+            ' ensure direct underline is off (if user applied underline directly)
+            Rng.font.Underline = wdUnderlineNone
+            Application.statusBar = MsgBoxTitle & " > " & C_S_CharDefault
+    End Select
+    
 End Sub
 
 ' 2025-03-21 by ms
@@ -6160,17 +6148,10 @@ End Function
 Private Function CreateStyle_CharBoldMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_CharBoldMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:       FileName = C_F_Macros
+    Dim ModuleName As String:     ModuleName = C_M_Styles
+    Dim MacroName As String:      MacroName = "CreateStyle_CharBoldMs"
+    Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     ' Check if the style already exists
     On Error Resume Next
@@ -6186,11 +6167,9 @@ Private Function CreateStyle_CharBoldMs() As Boolean
 
     ' Apply character formatting
     If Not NewStyle Is Nothing Then
+        NewStyle.BaseStyle = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
         With NewStyle.font
-            '.Name = C_FT_Body        ' Font name, optional for Character style type definition
-            '.Size = 11               ' Font size, optional for Character style type definition
             .Bold = True              ' Bold text
-            '.color = wdColorAutomatic ' Text color
         End With
         CreateStyle_CharBoldMs = True
     End If
@@ -6210,17 +6189,10 @@ End Function
 Private Function CreateStyle_CharCrossoutMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_CharCrossoutMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:       FileName = C_F_Macros
+    Dim ModuleName As String:     ModuleName = C_M_Styles
+    Dim MacroName As String:      MacroName = "CreateStyle_CharCrossoutMs"
+    Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     ' Check if the style already exists
     On Error Resume Next
@@ -6236,12 +6208,9 @@ Private Function CreateStyle_CharCrossoutMs() As Boolean
 
     ' Apply character formatting
     If Not NewStyle Is Nothing Then
+        NewStyle.BaseStyle = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
         With NewStyle.font
-            '.Name = C_FT_Body        ' Font name, optional for Character style type definition
-            '.Size = 11               ' Font size, optional for Character style type definition
-            .Bold = False             ' Bold text
             .Strikethrough = True
-            '.color = wdColorAutomatic ' Text color
         End With
                 
         CreateStyle_CharCrossoutMs = True
@@ -6259,20 +6228,14 @@ StyleError:
 End Function
 
 ' 2025-11-19 by ms
+' 2026-01-14 by ms and AI
 Private Function CreateStyle_CharDefaultMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_CharDefaultMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:       FileName = C_F_Macros
+    Dim ModuleName As String:     ModuleName = C_M_Styles
+    Dim MacroName As String:      MacroName = "CreateStyle_CharDefaultMs"
+    Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     ' Check if the style already exists
     On Error Resume Next
@@ -6288,14 +6251,7 @@ Private Function CreateStyle_CharDefaultMs() As Boolean
 
     ' Apply character formatting
     If Not NewStyle Is Nothing Then
-        With NewStyle.font
-            '.Name = C_FT_Body        ' Font name, optional for Character style type definition
-            '.Size = 11               ' Font size, optional for Character style type definition
-            '.Bold = False             ' Bold text
-            '.Strikethrough = True
-            .color = wdColorAutomatic ' Text color
-        End With
-                
+        NewStyle.BaseStyle = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
         CreateStyle_CharDefaultMs = True
     End If
     Exit Function
@@ -6311,20 +6267,14 @@ StyleError:
 End Function
 
 ' 2025-11-19 by ms
+'Unfortunately it is not possible in VBA style definition to apply shading color (#F6C0C0) light red. Therefore another macro is involved which is run by shortcut Shift + Ctrl + H to toggle shading color of the selected content.
 Private Function CreateStyle_CharHiddenMs() As Boolean
     Dim NewStyle As style
         
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_CharHiddenMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:       FileName = C_F_Macros
+    Dim ModuleName As String:     ModuleName = C_M_Styles
+    Dim MacroName As String:      MacroName = "CreateStyle_CharHiddenMs"
+    Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     ' Check if the style already exists
     On Error Resume Next
@@ -6355,7 +6305,7 @@ Private Function CreateStyle_CharHiddenMs() As Boolean
             NewStyle.borders(i).LineStyle = wdLineStyleNone
         Next i
                 
-        ' Apply shading color (#F6C0C0) light red
+' Unfortunately it is not possible in VBA style definition to apply shading color (#F6C0C0) light red. Therefore another macro is involved which is run by shortcut Shift + Ctrl + H to toggle shading color of the selected content.
 '        With NewStyle.shading
 '            .BackgroundPatternColor = RGB(246, 192, 192) ' #F6C0C0 light red tu jestem
 '            .Texture = wdTextureNone
@@ -6380,18 +6330,10 @@ End Function
 Private Function CreateStyle_CharItalicMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_CharItalicMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:       FileName = C_F_Macros
+    Dim ModuleName As String:     ModuleName = C_M_Styles
+    Dim MacroName As String:      MacroName = "CreateStyle_CharItalicMs"
+    Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     ' Check if the style already exists
     On Error Resume Next
@@ -6407,14 +6349,11 @@ Private Function CreateStyle_CharItalicMs() As Boolean
 
     ' Apply character formatting
     If Not NewStyle Is Nothing Then
+        ' Make sure the style inherits and only overrides underline
+        NewStyle.BaseStyle = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
+    
         With NewStyle.font
-            '.Name = C_FT_Body        ' Font name, optional for Character style type definition
-            '.Size = 11               ' Font size, optional for Character style type definition
-            '.Bold = False             ' Bold text
-            '.Strikethrough = True
             .Italic = True
-            '.Hidden = True
-            '.color = wdColorAutomatic ' Text color
         End With
         CreateStyle_CharItalicMs = True
     End If
@@ -6434,17 +6373,10 @@ End Function
 Private Function CreateStyle_CharLegalNoteMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_CharLegalNoteMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:       FileName = C_F_Macros
+    Dim ModuleName As String:     ModuleName = C_M_Styles
+    Dim MacroName As String:      MacroName = "CreateStyle_CharLegalNoteMs"
+    Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     ' Check if the style already exists
     On Error Resume Next
@@ -6461,8 +6393,8 @@ Private Function CreateStyle_CharLegalNoteMs() As Boolean
     ' Apply character formatting
     If Not NewStyle Is Nothing Then
         With NewStyle.font
-            '.Name = C_FT_Body        ' Font name, optional for Character style type definition
-            '.Size = 11               ' Font size, optional for Character style type definition
+            .Name = C_FT_Body        ' Font name, optional for Character style type definition
+            .Size = 11               ' Font size, optional for Character style type definition
             '.Bold = False             ' Bold text
             '.Strikethrough = True
             '.Italic = True
@@ -6487,17 +6419,10 @@ End Function
 Private Function CreateStyle_CharSourceCodeMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_CharSourceCodeMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:      FileName = C_F_Macros
+    Dim ModuleName As String:    ModuleName = C_M_Styles
+    Dim MacroName As String:     MacroName = "CreateStyle_CharSourceCodeMs"
+    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     ' Check if the style already exists
     On Error Resume Next
@@ -6542,17 +6467,10 @@ End Function
 Private Function CreateStyle_CharUnderlineMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_CharUnderlineMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_CharUnderlineMs"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     ' Check if the style already exists
     On Error Resume Next
@@ -6568,15 +6486,11 @@ Private Function CreateStyle_CharUnderlineMs() As Boolean
 
     ' Apply character formatting
     If Not NewStyle Is Nothing Then
+        ' Make sure the style inherits and only overrides underline
+        NewStyle.BaseStyle = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
+        
         With NewStyle.font
-            .Name = C_FT_AntiHomoglyph  ' Font name, optional for Character style type definition
-            .Size = 11                  ' Font size, optional for Character style type definition
-            '.Bold = False              ' Bold text
-            '.Strikethrough = True
-            '.Italic = True
-            '.Hidden = True
             .Underline = wdUnderlineSingle
-            .color = wdColorAutomatic
         End With
                                 
         CreateStyle_CharUnderlineMs = True
