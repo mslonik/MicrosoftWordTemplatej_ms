@@ -99,7 +99,7 @@ Sub CanvaInsertPNGfiles()
     Dim doc As Document
     Dim canvasShape As Shape
     Dim pictureShape As Shape
-    Dim rng As Range
+    Dim Rng As Range
     Dim totalFiles As Integer
     Dim estimatedTime As Double
     Dim processingTime As Double
@@ -120,7 +120,7 @@ Sub CanvaInsertPNGfiles()
     
     ' Initialize
     Set pngFiles = New Collection
-    Set rng = Selection.Range
+    Set Rng = Selection.Range
     Set doc = ActiveDocument
     TemplateName = doc.AttachedTemplate.Name
     
@@ -168,19 +168,19 @@ Sub CanvaInsertPNGfiles()
     ' Insert each PNG file into a separate canvas with an empty paragraph in between
     For Each file In pngFiles
         ' Insert empty paragraph and format with style "Normal ms"
-        rng.Collapse Direction:=wdCollapseEnd
-        rng.InsertParagraphAfter
-        rng.style = C_S_ParNormal
-        rng.Collapse Direction:=wdCollapseEnd
+        Rng.Collapse Direction:=wdCollapseEnd
+        Rng.InsertParagraphAfter
+        Rng.style = C_S_ParNormal
+        Rng.Collapse Direction:=wdCollapseEnd
         
         ' Insert next empty paragraph and format with style "PictureCanva ms"
-        rng.InsertParagraphAfter
-        rng.style = C_S_ParPictureCanva
-        rng.Collapse Direction:=wdCollapseEnd
+        Rng.InsertParagraphAfter
+        Rng.style = C_S_ParPictureCanva
+        Rng.Collapse Direction:=wdCollapseEnd
         
         ' Move back (up) to the empty paragraph formatted with style "PictureCanva ms"
-        rng.MoveStart Unit:=wdParagraph, count:=-1
-        rng.Select
+        Rng.MoveStart Unit:=wdParagraph, count:=-1
+        Rng.Select
         
         ' Add a new canvas
         Set canvasShape = doc.Shapes.AddCanvas(0, 0, 500, 500)
@@ -195,18 +195,18 @@ Sub CanvaInsertPNGfiles()
         canvasShape.WrapFormat.Type = wdWrapInline
         
         ' Insert empty paragraph and BuildingBlock "LegendPicture"
-        rng.Collapse Direction:=wdCollapseEnd
-        rng.InsertParagraphAfter
+        Rng.Collapse Direction:=wdCollapseEnd
+        Rng.InsertParagraphAfter
         
         Dim bb As BuildingBlock
         Dim bbe As BuildingBlockEntries
         Set bbe = ReturnBuildingBlockEntries() ' in module Shortcuts
         Set bb = bbe(C_BB_LegendPicture)
-        bb.Insert rng, True
+        bb.Insert Rng, True
         
         ' Here do text processing
         Dim prevPara As Range
-        Set prevPara = rng.Paragraphs(rng.Paragraphs.count).Range
+        Set prevPara = Rng.Paragraphs(Rng.Paragraphs.count).Range
         With prevPara.Find
             .Text = "[source: ]"
             .Replacement.Text = "[source: " & file & "]"
@@ -231,7 +231,7 @@ Sub CanvaInsertPNGfiles()
     ' Clear object variables
     Set pngFiles = Nothing
     Set doc = Nothing
-    Set rng = Nothing
+    Set Rng = Nothing
     Set pictureShape = Nothing
     Set canvasShape = Nothing
     Set prevPara = Nothing
@@ -829,15 +829,15 @@ End Sub
 
 Public Sub AddLastCursorPositionBookmark()
     ' Adds a bookmark in place where cursor is present
-    Dim rng As Range
+    Dim Rng As Range
     
     If ActiveWindow.ActivePane.View.SeekView = wdSeekMainDocument Then
-        Set rng = Selection.Range
-        rng.Bookmarks.Add C_BM_LastCursorPosition
+        Set Rng = Selection.Range
+        Rng.Bookmarks.Add C_BM_LastCursorPosition
     End If
     
     ' Clear object variable
-    Set rng = Nothing
+    Set Rng = Nothing
 End Sub
 
 Public Sub RemoveLastCursorPositionBookmark()
@@ -1422,7 +1422,7 @@ Sub SaveDocumentAsPDFWithSettings()
         OptimizeFor:=wdExportOptimizeForPrint, _
         Range:=wdExportAllDocument, _
         From:=1, _
-        To:=1, _
+        to:=1, _
         item:=wdExportDocumentContent, _
         IncludeDocProps:=False, _
         KeepIRM:=True, _
@@ -1828,7 +1828,7 @@ Sub InsertSVNCommitNumber()
     Dim CommitNumber As String
     Dim CommitFile As Integer
     Dim doc As Document
-    Dim rng As Range
+    Dim Rng As Range
     Const CommitFilename As String = "next_commit.txt"
     Const DocumentVariableName As String = "DV_CommitFilePath"
     Const DocCP_SVN_Revision As String = "ms_SVN_Revision" ' Document Custom Property
@@ -2366,17 +2366,10 @@ End Sub
 
 ' 2025-06-19 by ms
 Public Sub AttachBuildingBlocks()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "AttachBuildingBlocks"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "AttachBuildingBlocks"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     Dim BuildingBlockEntries As Object
     ' At first try to set bbe to ActiveDocument.AttachedTemplate.BuildingBlockEntries (template with integrated BuildingBlocks)
@@ -2414,17 +2407,10 @@ End Sub
 Private Sub EnableAddIns(AddInsIndex As Integer)
     Dim UserDecision As VbMsgBoxResult
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "EnableAddIns"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "EnableAddIns"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     If Not AddIns(AddInsIndex).Installed Then
         Beep
@@ -2523,7 +2509,7 @@ End Sub
 Private Sub InsertCrossReferences_Headings()
     Dim doc As Document
     Dim para2 As Paragraph
-    Dim rng As Range
+    Dim Rng As Range
     
     Dim StyleName2 As Variant
     Dim refItemH As Integer
@@ -2560,7 +2546,7 @@ Private Sub InsertCrossReferences_Headings()
         For Each StyleName2 In StyleNameArray
             If para2.style = StyleName2 Then
                 ' Set the range to the beginning of the paragraph
-                Set rng = para2.Range
+                Set Rng = para2.Range
                 
                 For i = 1 To HeaderMatrixSize
                     If para2.Range.Text = HeaderMatrix(i) Then
@@ -2570,10 +2556,10 @@ Private Sub InsertCrossReferences_Headings()
                             ' Trim all spaces (from the front of  a text string and from the end of it).
                             TempString = Trim(TempString)
                             If InStr(1, RefItems(j), TempString, vbTextCompare) Then
-                                rng.Collapse Direction:=wdCollapseStart
+                                Rng.Collapse Direction:=wdCollapseStart
                                 ' Insert the cross-reference at the beginning of the paragraph using InsertCrossReference method
                                 ' "Numbered item" = wdRefTypeNumberedItem
-                                rng.InsertCrossReference _
+                                Rng.InsertCrossReference _
                                     ReferenceType:=wdRefTypeNumberedItem, _
                                     ReferenceKind:=wdNumberRelativeContext, _
                                     ReferenceItem:=CStr(j), _
@@ -2588,8 +2574,8 @@ Private Sub InsertCrossReferences_Headings()
                                 Dim SubstrLength As Integer
                                 SubstrLength = SpacePosition - 1
                                 
-                                rng.MoveEnd Unit:=wdCharacter, count:=SubstrLength
-                                rng.style = doc.Styles(C_S_CharHidden)
+                                Rng.MoveEnd Unit:=wdCharacter, count:=SubstrLength
+                                Rng.style = doc.Styles(C_S_CharHidden)
                                 FlagFound = True
                                 Exit For
                             End If
@@ -2607,7 +2593,7 @@ Private Sub InsertCrossReferences_Headings()
         Next StyleName2
     Next para2
     
-    Set rng = Nothing
+    Set Rng = Nothing
     Set doc = Nothing
     
     Dim FileName As String
@@ -2699,8 +2685,8 @@ Private Sub DeleteCrossReference_Headings()
     Dim doc As Document
     Dim para As Paragraph
     Dim fld As Field
-    Dim rng As Range
-    Dim styleName As Variant
+    Dim Rng As Range
+    Dim StyleName As Variant
     Dim found As Boolean
     
     ' Initialize the style names array
@@ -2722,12 +2708,12 @@ Private Sub DeleteCrossReference_Headings()
     For Each para In doc.Paragraphs
         ' Check if the paragraph style is in the StyleNameArray
         Let found = False
-        For Each styleName In StyleNameArray
-            If para.style = doc.Styles(styleName) Then
+        For Each StyleName In StyleNameArray
+            If para.style = doc.Styles(StyleName) Then
                 found = True
                 Exit For
             End If
-        Next styleName
+        Next StyleName
         
         ' If the paragraph style is found in the array
         If found Then
@@ -2769,8 +2755,8 @@ Private Sub DeleteCrossReferences_Pictures()
     Dim doc As Document
     Dim para As Paragraph
     Dim fld As Field
-    Dim rng As Range
-    Dim styleName As Variant
+    Dim Rng As Range
+    Dim StyleName As Variant
     Dim found As Boolean
     
     ' Set the document
@@ -2791,13 +2777,13 @@ Private Sub DeleteCrossReferences_Pictures()
                 Set fld = para.Range.Fields(1)
                 If fld.Type = wdFieldRef Then
                     ' Get the range of the filed result
-                    Set rng = fld.result
+                    Set Rng = fld.result
                     ' Remove the cross-reference field
                     fld.Delete
                     ' Check if the next character is a space and delete it
-                    If rng.Characters.count > 0 Then
-                        If rng.Characters(1).Text = " " Then
-                            rng.Characters(1).Delete
+                    If Rng.Characters.count > 0 Then
+                        If Rng.Characters(1).Text = " " Then
+                            Rng.Characters(1).Delete
                         End If
                     End If
                 End If
@@ -2808,7 +2794,7 @@ Private Sub DeleteCrossReferences_Pictures()
     ' Clean up of the object variables
     Set doc = Nothing
     Set fld = Nothing
-    Set rng = Nothing
+    Set Rng = Nothing
     
     Dim FileName As String
     FileName = C_F_Macros
@@ -2832,7 +2818,7 @@ End Sub
 Private Sub InsertCrossReferences_Pictures()
     Dim doc As Document
     Dim para As Paragraph
-    Dim rng As Range
+    Dim Rng As Range
     
     ' Set the document to the active document
     Set doc = ActiveDocument
@@ -2847,14 +2833,14 @@ Private Sub InsertCrossReferences_Pictures()
         ' Check if the paragraph style matches any of the specified styles
         If para.style = C_S_PictureLegend Then
             ' Set the range to the beginning of the paragraph
-            Set rng = para.Range
-            rng.Collapse Direction:=wdCollapseStart
+            Set Rng = para.Range
+            Rng.Collapse Direction:=wdCollapseStart
             ' Insert a space character before the cross-reference field
-            rng.Text = " "
+            Rng.Text = " "
             ' Move the insertion point before the inserted space character
-            rng.Collapse Direction:=wdCollapseStart
+            Rng.Collapse Direction:=wdCollapseStart
             ' "Pic." = C_Caption_Pic
-            rng.InsertCrossReference _
+            Rng.InsertCrossReference _
                 ReferenceType:=C_Caption_Pic, _
                 ReferenceKind:=wdOnlyLabelAndNumber, _
                 ReferenceItem:=CStr(i), _
@@ -2863,17 +2849,17 @@ Private Sub InsertCrossReferences_Pictures()
                 SeparateNumbers:=False, _
                 SeparatorString:=" "
             ' Move the insertion point to the beginning of the range after cross-reference is inserted
-            rng.Collapse Direction:=wdCollapseStart
+            Rng.Collapse Direction:=wdCollapseStart
             ' Select all characters belonging to the cross-reference field
-            rng.MoveEndUntil cset:=Chr(32), count:=wdForward
+            Rng.MoveEndUntil cset:=Chr(32), count:=wdForward
             ' Apply the character style to the cross-reference
-            rng.style = C_S_CharHidden
+            Rng.style = C_S_CharHidden
             ' Increment the reference item counter for the next cross-reference
             i = i + 1
         End If
     Next para
     
-    Set rng = Nothing
+    Set Rng = Nothing
     Set doc = Nothing
     
     Dim FileName As String
@@ -2898,7 +2884,7 @@ End Sub
 Private Sub InsertCrossReferences_Tables()
     Dim doc As Document
     Dim para As Paragraph
-    Dim rng As Range
+    Dim Rng As Range
     
     ' Set the document to the active document
     Set doc = ActiveDocument
@@ -2913,14 +2899,14 @@ Private Sub InsertCrossReferences_Tables()
         ' Check if the paragraph style matches any of the specified styles
         If para.style = C_S_TableLegend Then
             ' Set the range to the beginning of the paragraph
-            Set rng = para.Range
-            rng.Collapse Direction:=wdCollapseStart
+            Set Rng = para.Range
+            Rng.Collapse Direction:=wdCollapseStart
             ' Insert a space character before the cross-reference field
-            rng.Text = " "
+            Rng.Text = " "
             ' Move the insertion point before the inserted space character
-            rng.Collapse Direction:=wdCollapseStart
+            Rng.Collapse Direction:=wdCollapseStart
             ' "Tab." = C_Caption_Tab
-            rng.InsertCrossReference _
+            Rng.InsertCrossReference _
                 ReferenceType:=C_Caption_Tab, _
                 ReferenceKind:=wdOnlyLabelAndNumber, _
                 ReferenceItem:=CStr(i), _
@@ -2929,17 +2915,17 @@ Private Sub InsertCrossReferences_Tables()
                 SeparateNumbers:=False, _
                 SeparatorString:=" "
             ' Move the insertion point to the beginning of the range after cross-reference is inserted
-            rng.Collapse Direction:=wdCollapseStart
+            Rng.Collapse Direction:=wdCollapseStart
             ' Select all characters belonging to the cross-reference field
-            rng.MoveEndUntil cset:=Chr(32), count:=wdForward
+            Rng.MoveEndUntil cset:=Chr(32), count:=wdForward
             ' Apply the character style to the cross-reference
-            rng.style = C_S_CharHidden
+            Rng.style = C_S_CharHidden
             ' Increment the reference item counter for the next cross-reference
             i = i + 1
         End If
     Next para
     
-    Set rng = Nothing
+    Set Rng = Nothing
     Set doc = Nothing
     
     Dim FileName As String
@@ -2965,8 +2951,8 @@ Private Sub DeleteCrossReferences_Tables()
     Dim doc As Document
     Dim para As Paragraph
     Dim fld As Field
-    Dim rng As Range
-    Dim styleName As Variant
+    Dim Rng As Range
+    Dim StyleName As Variant
     Dim found As Boolean
     
     ' Set the document
@@ -2987,13 +2973,13 @@ Private Sub DeleteCrossReferences_Tables()
                 Set fld = para.Range.Fields(1)
                 If fld.Type = wdFieldRef Then
                     ' Get the range of the filed result
-                    Set rng = fld.result
+                    Set Rng = fld.result
                     ' Remove the cross-reference field
                     fld.Delete
                     ' Check if the next character is a space and delete it
-                    If rng.Characters.count > 0 Then
-                        If rng.Characters(1).Text = " " Then
-                            rng.Characters(1).Delete
+                    If Rng.Characters.count > 0 Then
+                        If Rng.Characters(1).Text = " " Then
+                            Rng.Characters(1).Delete
                         End If
                     End If
                 End If
@@ -3004,7 +2990,7 @@ Private Sub DeleteCrossReferences_Tables()
     ' Clean up of the object variables
     Set doc = Nothing
     Set fld = Nothing
-    Set rng = Nothing
+    Set Rng = Nothing
     
     Dim FileName As String
     FileName = C_F_Macros
@@ -3027,7 +3013,7 @@ End Sub
 Private Function BuildReferencesArray() As String()
     Dim i As Integer
     Dim para As Paragraph
-    Dim styleName As Variant
+    Dim StyleName As Variant
     Dim ReferencesArray() As String
     
     ' Initialize the array with an initial size
@@ -3074,9 +3060,9 @@ Private Sub InsertCrossReferences_References()
     MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Dim para As Paragraph
-    Dim rng As Range
+    Dim Rng As Range
     
-    Dim styleName As Variant
+    Dim StyleName As Variant
     
     Dim doc As Document
     ' Set the document to the active document
@@ -3108,7 +3094,7 @@ Private Sub InsertCrossReferences_References()
         If Not para.Range.ListStyle Is Nothing Then
             If para.Range.ListStyle.NameLocal = C_S_ListNumRef Then
                 ' Set the range to the beginning of the paragraph
-                Set rng = para.Range
+                Set Rng = para.Range
                 
                 For i = 1 To ReferenceMatrixSize
                     If para.Range.Text = ReferenceMatrix(i) Then
@@ -3119,11 +3105,11 @@ Private Sub InsertCrossReferences_References()
                             TempString = Trim(TempString)
                             TempString = Replace(TempString, Chr(11), " ")
                             If InStr(1, RefItems(j), TempString, vbTextCompare) Then
-                                rng.Collapse Direction:=wdCollapseStart
+                                Rng.Collapse Direction:=wdCollapseStart
                                 ' Insert the cross-reference at the beginning of the paragraph using InsertCrossReference method
                                 ' "Numbered item" = wdRefTypeNumberedItem
                                 On Error GoTo Error_Insert
-                                rng.InsertCrossReference _
+                                Rng.InsertCrossReference _
                                     ReferenceType:=wdRefTypeNumberedItem, _
                                     ReferenceKind:=wdNumberRelativeContext, _
                                     ReferenceItem:=CStr(j), _
@@ -3138,8 +3124,8 @@ Private Sub InsertCrossReferences_References()
                                 Dim SubstrLength As Integer
                                 SubstrLength = SpacePosition - 1
                                 
-                                rng.MoveEnd Unit:=wdCharacter, count:=SubstrLength
-                                rng.style = doc.Styles(C_S_CharHidden)
+                                Rng.MoveEnd Unit:=wdCharacter, count:=SubstrLength
+                                Rng.style = doc.Styles(C_S_CharHidden)
                                 FlagFound = True
                                 Exit For
                             End If
@@ -3154,7 +3140,7 @@ Private Sub InsertCrossReferences_References()
         FlagFound = False
     Next para
     
-    Set rng = Nothing
+    Set Rng = Nothing
     Set doc = Nothing
     
     MsgBox _
@@ -3164,7 +3150,7 @@ Private Sub InsertCrossReferences_References()
     Exit Sub
 
 Error_Insert:
-    Set rng = Nothing
+    Set Rng = Nothing
     Set doc = Nothing
 
     MsgBox _
@@ -3179,8 +3165,8 @@ Private Sub DeleteCrossReferences_References()
     Dim doc As Document
     Dim para As Paragraph
     Dim fld As Field
-    Dim rng As Range
-    Dim styleName As Variant
+    Dim Rng As Range
+    Dim StyleName As Variant
     Dim found As Boolean
     
     ' Set the document
@@ -3547,8 +3533,8 @@ End Sub
 ' 2025-07-16 by ms and AI
 ' Restart list numbering. Available only from a context menu.
 Sub RestartListNumbering()
-    Dim rng As Range
-    Set rng = Selection.Range
+    Dim Rng As Range
+    Set Rng = Selection.Range
 
     Dim FileName As String
     FileName = C_F_Macros
@@ -3562,9 +3548,9 @@ Sub RestartListNumbering()
     Dim MsgBoxTitle As String
     MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
-    If rng.ListFormat.ListType <> wdListNoNumbering Then
-        rng.ListFormat.ApplyListTemplateWithLevel _
-            ListTemplate:=rng.ListFormat.ListTemplate, _
+    If Rng.ListFormat.ListType <> wdListNoNumbering Then
+        Rng.ListFormat.ApplyListTemplateWithLevel _
+            ListTemplate:=Rng.ListFormat.ListTemplate, _
             ContinuePreviousList:=False, _
             ApplyTo:=wdListApplyToWholeList, _
             DefaultListBehavior:=wdWord10ListBehavior
@@ -4014,11 +4000,11 @@ Public Sub Table_CustomizeFormatting()
     Dim sel As Selection
     Dim tbl As Word.Table
     Dim sty As Word.style
-    Dim rng As Word.Range
+    Dim Rng As Word.Range
     Dim isExactSelection As Boolean
     
     Set sel = Selection
-    Set rng = sel.Range
+    Set Rng = sel.Range
     
     Dim FileName As String
     FileName = C_F_Macros

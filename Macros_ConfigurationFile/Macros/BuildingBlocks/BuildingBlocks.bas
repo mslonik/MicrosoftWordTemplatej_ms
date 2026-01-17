@@ -108,7 +108,7 @@ Sub BB_DeleteAll()
         Exit Sub
     End If
 
-    ' Set the context to the currently attached template
+    ' Set the context to the currently opened file
     Application.CustomizationContext = ActiveDocument
     
     ' The following line refreshes all the building blocks. It is essential for proper work of this Sub.
@@ -141,9 +141,6 @@ Sub BB_DeleteAll()
                 Title:=MsgBoxTitle
             Exit Sub
         End If
-
-        ' Set the context to the currently opened document
-        Application.CustomizationContext = MyTemplate
 
         Dim j As Integer
         Dim bb As BuildingBlock
@@ -283,7 +280,7 @@ Sub BB_ExportAll()
     Dim TemplateIndex As Integer
     Dim bb As BuildingBlock
     Dim newDoc As Document
-    Dim rng As Range
+    Dim Rng As Range
     Dim bbe As BuildingBlockEntries
     Dim i As Integer
     Dim CategoryCount As Object
@@ -347,28 +344,28 @@ Sub BB_ExportAll()
     For i = 1 To bbe.count
         Set bb = bbe(i)
         ' Insert building block name and gallery name into the new document.
-        Set rng = newDoc.Content
-        rng.Collapse Direction:=wdCollapseEnd
+        Set Rng = newDoc.Content
+        Rng.Collapse Direction:=wdCollapseEnd
 '        rng.style = C_S_ParNormal
 '        rng.InsertAfter "Building block name: " & bb.Name & vbCrLf & "Gallery: " & bb.Type.Name & vbCrLf
 '        rng.style = C_S_ParNormal
-        rng.InsertParagraphAfter
-        rng.style = C_S_ParNormal
+        Rng.InsertParagraphAfter
+        Rng.style = C_S_ParNormal
         
         ' Collapse range to end before inserting building block itself to ensure correct cursor position.
-        rng.Collapse Direction:=wdCollapseEnd
+        Rng.Collapse Direction:=wdCollapseEnd
         
         ' Insert the building block itself and get the range of the inserted content.
-        Set rng = bb.Insert(Where:=rng, RichText:=True)
+        Set Rng = bb.Insert(Where:=Rng, RichText:=True)
         
         ' Collapse range to end after inserting building block to ensure correct cursor position.
-        rng.Collapse Direction:=wdCollapseEnd
+        Rng.Collapse Direction:=wdCollapseEnd
         
-        rng.InsertParagraphAfter
-        rng.style = C_S_ParNormal
+        Rng.InsertParagraphAfter
+        Rng.style = C_S_ParNormal
         
         ' Collapse range to end after inserting paragraph to ensure correct cursor position.
-        rng.Collapse Direction:=wdCollapseEnd
+        Rng.Collapse Direction:=wdCollapseEnd
         
         ' Count the building block category
         If CategoryCount.Exists(bb.Type.Name) Then
@@ -379,18 +376,18 @@ Sub BB_ExportAll()
     Next i
     
     ' Insert summary of building block counts
-    Set rng = newDoc.Content
-    rng.Collapse Direction:=wdCollapseEnd
-    rng.InsertAfter "Summary of Building Blocks by Category:" & vbCrLf
-    rng.style = C_S_ParNormal
-    rng.InsertParagraphAfter
+    Set Rng = newDoc.Content
+    Rng.Collapse Direction:=wdCollapseEnd
+    Rng.InsertAfter "Summary of Building Blocks by Category:" & vbCrLf
+    Rng.style = C_S_ParNormal
+    Rng.InsertParagraphAfter
 
     Dim key As Variant
     For Each key In CategoryCount.Keys
-        rng.InsertAfter key & ": " & CategoryCount(key) & vbCrLf
-        rng.style = C_S_ParNormal
-        rng.InsertParagraphAfter
-        rng.style = C_S_ParNormal
+        Rng.InsertAfter key & ": " & CategoryCount(key) & vbCrLf
+        Rng.style = C_S_ParNormal
+        Rng.InsertParagraphAfter
+        Rng.style = C_S_ParNormal
     Next key
 
     ' Save the new document.
@@ -401,8 +398,8 @@ Sub BB_ExportAll()
     Set CategoryCount = Nothing
     Set newDoc = Nothing
     Set bbe = Nothing
-    Set rng = Nothing
-    Set rng = Nothing
+    Set Rng = Nothing
+    Set Rng = Nothing
     
     ' Inform the user.
     MsgBox _
@@ -418,7 +415,7 @@ End Sub
 Sub BB_ExportSelectedCategories()
     Dim bb As BuildingBlock
     Dim newDoc As Document
-    Dim rng As Range
+    Dim Rng As Range
     Dim TemplateName As String
     Dim bbe As BuildingBlockEntries
     Dim i As Integer
@@ -485,24 +482,24 @@ Sub BB_ExportSelectedCategories()
         ' Check if the building block belongs to the desired categories
         If bb.Type = wdTypeAutoText Or bb.Type = wdTypeTableOfContents Or bb.Type = wdTypeQuickParts Then
             ' Insert building block name and gallery name into the new document.
-            Set rng = newDoc.Content
-            rng.Collapse Direction:=wdCollapseEnd
-            rng.InsertAfter "Building block name: " & bb.Name & vbCrLf & "Gallery: " & bb.Type.Name & vbCrLf
-            rng.InsertParagraphAfter
+            Set Rng = newDoc.Content
+            Rng.Collapse Direction:=wdCollapseEnd
+            Rng.InsertAfter "Building block name: " & bb.Name & vbCrLf & "Gallery: " & bb.Type.Name & vbCrLf
+            Rng.InsertParagraphAfter
             
             ' Collapse range to end before inserting building block itself to ensure correct cursor position.
-            rng.Collapse Direction:=wdCollapseEnd
+            Rng.Collapse Direction:=wdCollapseEnd
             
             ' Insert the building block itself and get the range of the inserted content.
-            Set rng = bb.Insert(Where:=rng, RichText:=True)
+            Set Rng = bb.Insert(Where:=Rng, RichText:=True)
             
             ' Collapse range to end after inserting building block to ensure correct cursor position.
-            rng.Collapse Direction:=wdCollapseEnd
+            Rng.Collapse Direction:=wdCollapseEnd
             
-            rng.InsertParagraphAfter
+            Rng.InsertParagraphAfter
             
             ' Collapse range to end after inserting paragraph to ensure correct cursor position.
-            rng.Collapse Direction:=wdCollapseEnd
+            Rng.Collapse Direction:=wdCollapseEnd
         End If
     Next i
     
@@ -513,7 +510,7 @@ Sub BB_ExportSelectedCategories()
     Set newDoc = Nothing
     Set bbe = Nothing
     Set bb = Nothing
-    Set rng = Nothing
+    Set Rng = Nothing
 
     ' Inform the user.
     MsgBox _

@@ -266,7 +266,7 @@ Private Sub SaveIniStyle_ParPictureCanvaMs()
     Call WriteIniValue( _
         Section:=C_S_ParPictureCanva, _
         key:="Font_Name", _
-        Value:=C_FT_Basic, _
+        Value:=C_FT_Body, _
         FilePath:=IniPath _
         )
     Call WriteIniValue( _

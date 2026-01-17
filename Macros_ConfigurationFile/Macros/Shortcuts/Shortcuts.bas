@@ -404,6 +404,7 @@ Private Function HotstringUserForm_Initialize(HotkeyHotkey As String) As Boolean
     HotstringUserForm_Initialize = False ' no error
 End Function
 
+' 2026-01-15 by ms
 Public Function ReturnBuildingBlockEntries() As BuildingBlockEntries
     Dim i As Integer
     Dim AddInsName As String
@@ -411,17 +412,10 @@ Public Function ReturnBuildingBlockEntries() As BuildingBlockEntries
     Dim UserDecision As VbMsgBoxResult
     Dim TemplateIndex As Integer
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Shortcuts
-    
-    Dim MacroName As String
-    MacroName = "ReturnBuildingBlockEntries"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Shortcuts
+    Dim MacroName As String:    MacroName = "ReturnBuildingBlockEntries"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     AddInsIndex = 0
     ' At first try to set bbe to ActiveDocument.AttachedTemplate.BuildingBlockEntries (template with integrated BuildingBlocks)
@@ -440,6 +434,14 @@ Public Function ReturnBuildingBlockEntries() As BuildingBlockEntries
             End If
         Next i
         
+        If AddInsIndex = 0 Then
+            MsgBox _
+                Prompt:="The " & C_F_BuildingBlocks & " was not found." & vbNewLine & vbNewLine & _
+                    "Exiting.", _
+                Buttons:=vbCritical, _
+                Title:=MsgBoxTitle
+                Exit Function
+        End If
         ' Ask user if to enable BuildingBlocks template "C_F_BuildingBlocks"
         If Not AddIns(AddInsIndex).Installed Then
             Beep
@@ -702,7 +704,7 @@ Private Sub GetStylesAndKeyBindings(ByRef MyStyleName() As String, ByRef MyShort
     ' Clear object variables
     Set DocumentStyles = Nothing
 End Sub
-Private Function GetKeyBinding(styleName As String) As String
+Private Function GetKeyBinding(StyleName As String) As String
     Dim Shortcut As String
     Dim key As keyBinding
     
@@ -710,7 +712,7 @@ Private Function GetKeyBinding(styleName As String) As String
     
     ' Check if the style has a key binding
     For Each key In KeyBindings
-        If key.Command = styleName Then
+        If key.Command = StyleName Then
             Shortcut = key.KeyString
             Exit For
         End If
@@ -1423,19 +1425,12 @@ Private Sub SetKeyBindingStyle(KeybShortcut As String, WhichStyle As String)
     Dim MyCode1 As Long
     Dim MyCode2 As Integer
     
-    Dim FileName As String
-    FileName = C_F_Macros
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Shortcuts
+    Dim MacroName As String:    MacroName = "SetKeyBindingStyle"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    Dim ModuleName As String
-    ModuleName = C_M_Shortcuts
-    
-    Dim MacroName As String
-    MacroName = "SetKeyBindingStyle"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
-    ' Set the customization context to the current template
+    ' Set the customization context to the current template. This is conscious exception.
     CustomizationContext = ActiveDocument.AttachedTemplate
     
     MyCode1 = ParseKeyCode1(KeybShortcut)

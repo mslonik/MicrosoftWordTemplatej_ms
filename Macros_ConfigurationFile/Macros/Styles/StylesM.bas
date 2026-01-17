@@ -32,13 +32,14 @@ Attribute VB_Name = "StylesM"
 '   18. ToggleCharBoldStyle()
 '   19. ToggleCharItalicStyle()
 '   20. ToggleCharUnderlineStyle()
-'   21. ToggleCharCroossoutStyle()
+'   21. ToggleCharCrossoutStyle()
 '   22. ToggleCharHiddenStyle()
 '   23. ToggleCharSourceCode()
 '
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '
 ' Paragraph Styles:
+'CreateStyle_Normal()
 'CreateStyle_ParNormalMs
 'CreateStyle_ParHeading1ms
 'CreateStyle_ParHeading2ms
@@ -129,20 +130,13 @@ Sub DeleteStylesOtherThanInTemplate()
     Dim deletedStyles As String
     Dim TemplateStyles As Collection
     Dim templateStyleNames As Collection
-    Dim styleName As Variant
+    Dim StyleName As Variant
     Dim CounterDeletedStyles As Integer
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "DeleteStylesOtherThanInTemplate"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "DeleteStylesOtherThanInTemplate"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the currently opened document is a template file
     If ActiveDocument.AttachedTemplate.Path = "" Then
@@ -233,17 +227,10 @@ Sub RestoreBuiltinStyleNames()
     Dim StyleAlteredName As String
     Dim CommaPos As Long
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "RestoreBuiltinStyleNames"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "RestoreBuiltinStyleNames"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     For Each s In ActiveDocument.Styles
         If s.BuiltIn Then
@@ -324,17 +311,10 @@ Sub ListBuiltInStyles()
     Dim BuiltInStyles As String
     Dim counter As Integer
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "ListBuiltInStyles"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "ListBuiltInStyles"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Get the currently active document
     Set doc = ActiveDocument
@@ -390,20 +370,13 @@ Sub ListNonBuiltInAndSuffixStyles()
     ' This style type practically does not exist in new Microsoft Word
     Dim LinkedStyles As Collection      ' wdStyleTypeLinked
     
-    Dim styleName As Variant
+    Dim StyleName As Variant
     Dim StyleType As Variant
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "ListNonBuiltInAndSuffixStylesInTemplate"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "ListNonBuiltInAndSuffixStylesInTemplate"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Get the currently active document
     If Documents.count > 0 Then
@@ -457,46 +430,46 @@ Sub ListNonBuiltInAndSuffixStyles()
     styleInfo = styleInfo & vbCrLf & "Paragraph Styles:" & vbCrLf
     Call SortCollection(coll:=ParagraphStyles)
     rowNum = 1
-    For Each styleName In ParagraphStyles
-        styleInfo = styleInfo & rowNum & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
+    For Each StyleName In ParagraphStyles
+        styleInfo = styleInfo & rowNum & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
         rowNum = rowNum + 1
-    Next styleName
+    Next StyleName
     
     ' Character styles: sort and add character styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "Character Styles:" & vbCrLf
     Call SortCollection(coll:=CharacterStyles)
     rowNum = 1
-    For Each styleName In CharacterStyles
-        styleInfo = styleInfo & rowNum & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
+    For Each StyleName In CharacterStyles
+        styleInfo = styleInfo & rowNum & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
         rowNum = rowNum + 1
-    Next styleName
+    Next StyleName
     
     ' Table styles: Sort and add table styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "Table Styles:" & vbCrLf
     Call SortCollection(coll:=TableStyles)
     rowNum = 1
-    For Each styleName In TableStyles
-        styleInfo = styleInfo & rowNum & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
+    For Each StyleName In TableStyles
+        styleInfo = styleInfo & rowNum & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
         rowNum = rowNum + 1
-    Next styleName
+    Next StyleName
     
     ' List styles: sort and add list styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "List Styles:" & vbCrLf
     Call SortCollection(coll:=ListStyles)
     rowNum = 1
-    For Each styleName In ListStyles
-        styleInfo = styleInfo & rowNum & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
+    For Each StyleName In ListStyles
+        styleInfo = styleInfo & rowNum & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
         rowNum = rowNum + 1
-    Next styleName
+    Next StyleName
     
     ' Linked styles: sort and add list styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "Linked styles:" & vbCrLf
     Call SortCollection(coll:=LinkedStyles)
     rowNum = 1
-    For Each styleName In LinkedStyles
-        styleInfo = styleInfo & rowNum & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
+    For Each StyleName In LinkedStyles
+        styleInfo = styleInfo & rowNum & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
         rowNum = rowNum + 1
-    Next styleName
+    Next StyleName
     
     Call SaveLog(MacroName:=MacroName, LoggedParameter:=styleInfo)
         
@@ -539,17 +512,10 @@ Sub DeleteUnusedStyles()
         End If
     Next oStyle
         
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "DeleteUnusedStyles"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "DeleteUnusedStyles"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
         
     Call SaveLog(MacroName:=MacroName, LoggedParameter:=deletedStyles)
 End Sub
@@ -571,17 +537,10 @@ Sub ReapplyStylesFromTemplate()
     Dim totalParagraphs As Integer
     Dim checkedParagraphs As Integer
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "ReapplyStylesFromTemplate"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "ReapplyStylesFromTemplate"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Display warning message
     Dim UserDecision As VbMsgBoxResult
@@ -715,17 +674,10 @@ Private Function CompareParagraphFormatting(para As Paragraph, style As style) A
 End Function
 
 Private Sub CheckWordVersion()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Macros
-    
-    Dim MacroName As String
-    MacroName = "CheckWordVersion"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Macros
+    Dim MacroName As String:    MacroName = "CheckWordVersion"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     If Application.Version <> "14.0" And Application.Version <> "16.0" Then
         MsgBox _
@@ -763,17 +715,10 @@ Sub ReapplyStylesFromTemplateSimple()
     Dim hdr As HeaderFooter
     Dim ftr As HeaderFooter
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "ReapplyStylesFromTemplateSimple"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "ReapplyStylesFromTemplateSimple"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Reapply styles for all paragraphs in the main document
     For Each para In ActiveDocument.Paragraphs
@@ -818,19 +763,12 @@ Sub ListStylesCurrentlyInUse()
     Dim CharacterStyles As Collection
     Dim TableStyles As Collection
     Dim ListStyles As Collection
-    Dim styleName As Variant
+    Dim StyleName As Variant
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "ListStylesCurrentlyInUse"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "ListStylesCurrentlyInUse"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Get the currently active document
     Set doc = ActiveDocument
@@ -875,37 +813,37 @@ Sub ListStylesCurrentlyInUse()
     styleInfo = styleInfo & vbCrLf & "Paragraph Styles:" & vbCrLf
     Call SortCollection(coll:=ParagraphStyles)
     counter = 1
-    For Each styleName In ParagraphStyles
-        styleInfo = styleInfo & counter & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
+    For Each StyleName In ParagraphStyles
+        styleInfo = styleInfo & counter & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
         counter = counter + 1
-    Next styleName
+    Next StyleName
     
     ' Sort and add character styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "Character Styles:" & vbCrLf
     Call SortCollection(coll:=CharacterStyles)
     counter = 1
-    For Each styleName In CharacterStyles
-        styleInfo = styleInfo & counter & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
+    For Each StyleName In CharacterStyles
+        styleInfo = styleInfo & counter & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
         counter = counter + 1
-    Next styleName
+    Next StyleName
     
     ' Sort and add table styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "Table Styles:" & vbCrLf
     Call SortCollection(coll:=TableStyles)
     counter = 1
-    For Each styleName In TableStyles
-        styleInfo = styleInfo & counter & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
+    For Each StyleName In TableStyles
+        styleInfo = styleInfo & counter & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
         counter = counter + 1
-    Next styleName
+    Next StyleName
     
     ' Sort and add list styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "List Styles:" & vbCrLf
     Call SortCollection(coll:=ListStyles)
     counter = 1
-    For Each styleName In ListStyles
-        styleInfo = styleInfo & counter & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
+    For Each StyleName In ListStyles
+        styleInfo = styleInfo & counter & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
         counter = counter + 1
-    Next styleName
+    Next StyleName
     
     Call SaveLog(MacroName:=MacroName, _
         LoggedParameter:=vbNewLine & _
@@ -959,25 +897,17 @@ End Sub
 Sub CopyStylesFromTemplateToThisFile()
     Dim TemplateDoc As Document
     Dim activeDoc As Document
-    Dim styleName As String
+    Dim StyleName As String
     Dim tocStyles As Variant
     Dim i As Integer
     Dim errorCounter As Integer
     Dim StyleCounter As Integer
     Dim MyStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CopyStylesFromTemplateToThisFile"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CopyStylesFromTemplateToThisFile"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Define the TOC styles
     tocStyles = Array("TOC 1", "TOC 2", "TOC 3", "TOC 4")
@@ -1003,16 +933,16 @@ Sub CopyStylesFromTemplateToThisFile()
     
     ' Loop through all styles in the template document
     For Each MyStyle In TemplateDoc.Styles
-        styleName = MyStyle.NameLocal
+        StyleName = MyStyle.NameLocal
         
         ' Check if the style name ends with the specified suffix or is one of the TOC styles
-        If Right(styleName, Len(C_StyleSuffix)) = C_StyleSuffix Or IsInArray(Value:=styleName, ArrayPar:=tocStyles) Then
+        If Right(StyleName, Len(C_StyleSuffix)) = C_StyleSuffix Or IsInArray(Value:=StyleName, ArrayPar:=tocStyles) Then
             ' Copy or overwrite the style in the active document
             On Error Resume Next
             Application.OrganizerCopy _
                 Source:=TemplateDoc.FullName, _
                 Destination:=activeDoc.FullName, _
-                Name:=styleName, _
+                Name:=StyleName, _
                 Object:=wdOrganizerObjectStyles
             
             ' Check for errors and update counters
@@ -1062,17 +992,10 @@ End Function
 Sub InsertTextAtBeginningOfListParagraphs(textToInsert As String)
     Dim para As Paragraph
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "InsertTextAtBeginningOfListParagraphs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "InsertTextAtBeginningOfListParagraphs"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Dim UserDecision As VbMsgBoxResult
     
@@ -1176,33 +1099,22 @@ End Sub
 
 ' 2025-03-20 by ms and AI
 ' 2025-08-07 by ms
+' 2026-01-15 by ms
 Sub ToggleCharBoldStyle()
     Dim CurrentStyle As String
-    Dim FlagStyleBoldExists As Boolean
-    Dim FlagStyleDefaultExists As Boolean
     
     ' Surprisingly this is enough to proceed further. If user selects few paragraphs with different styling, then Selectio.style.NameLocal is empty.
     On Error Resume Next
         CurrentStyle = Selection.style.NameLocal
     On Error GoTo 0
     
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "ToggleCharBoldStyle"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
     ' Check if the styles exist
-    FlagStyleBoldExists = StyleExists(C_S_Bold)
-    FlagStyleDefaultExists = StyleExists(C_S_CharDefault)
-    
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "ToggleCharBoldStyle"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
-    If Not FlagStyleBoldExists Or Not FlagStyleDefaultExists Then
+    If Not StyleExists(C_S_Bold) Or Not StyleExists(C_S_CharDefault) Then
         MsgBox _
             Prompt:="One or both of the required styles do not exist in this document:" & vbNewLine & vbNewLine & _
                 C_S_Bold & " or " & C_S_CharDefault, _
@@ -1210,25 +1122,38 @@ Sub ToggleCharBoldStyle()
             Title:=MsgBoxTitle
         Exit Sub
     End If
+    
+    Dim Rng As Word.Range
+    Set Rng = Selection.Range
+    
     ' Toggle styles
-    If CurrentStyle = C_S_Bold Then
-        Selection.style = ActiveDocument.Styles(C_S_CharDefault)
-        Application.statusBar = MsgBoxTitle & " > " & C_S_CharDefault
+    If Rng.font.Bold = False Then
+        ' TURN ON: Apply the specific Character Style
+        Rng.style = ActiveDocument.Styles(C_S_Bold)
+        Application.statusBar = MsgBoxTitle & " > Applied: " & C_S_Bold
     Else
-        Selection.style = ActiveDocument.Styles(C_S_Bold)
-        Application.statusBar = MsgBoxTitle & " > " & C_S_Bold
+        ' TURN OFF: Clear back to Default Paragraph Font
+        ' Note: Using wdStyleDefaultParagraphFont is safer than a custom string
+        Rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
+        ' IMPORTANT: Remove direct italic formatting in case it was applied manually
+        Rng.font.Bold = False
+        Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
     End If
+    
+    Set Rng = Nothing
+    
 End Sub
 
 ' 2025-08-05 by ms and ai
-Function StyleExists(styleName As String) As Boolean
+Function StyleExists(StyleName As String) As Boolean
     On Error Resume Next
-    StyleExists = Not ActiveDocument.Styles(styleName) Is Nothing
+    StyleExists = Not ActiveDocument.Styles(StyleName) Is Nothing
     On Error GoTo 0
 End Function
 
 ' 2025-03-20 by ms and AI
 ' 2025-08-06 by ms
+' 2026-01-14 by ms
 Sub ToggleCharItalicStyle()
     Dim CurrentStyle As String
     
@@ -1264,16 +1189,17 @@ Sub ToggleCharItalicStyle()
         ' TURN OFF: Clear back to Default Paragraph Font
         ' Note: Using wdStyleDefaultParagraphFont is safer than a custom string
         Rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
-        
         ' IMPORTANT: Remove direct italic formatting in case it was applied manually
         Rng.font.Italic = False
-        
-        Application.statusBar = MsgBoxTitle & " > Reset to Default Font"
+        Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
     End If
+    
+    Set Rng = Nothing
 End Sub
 
 ' 2025-03-20 by ms and AI
 ' 2025-08-06 by ms
+' 2026-01-14 by ms and AI
 Sub ToggleCharUnderlineStyle()
     Dim FileName As String:       FileName = C_F_Macros
     Dim ModuleName As String:     ModuleName = C_M_Styles
@@ -1304,40 +1230,29 @@ Sub ToggleCharUnderlineStyle()
             Rng.style = ActiveDocument.Styles(C_S_CharDefault)
             ' ensure direct underline is off (if user applied underline directly)
             Rng.font.Underline = wdUnderlineNone
-            Application.statusBar = MsgBoxTitle & " > " & C_S_CharDefault
+            Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
     End Select
-    
+    Set Rng = Nothing
 End Sub
 
 ' 2025-03-21 by ms
 ' 2025-08-06 by ms
+' 2026-01-15 by ms
 Sub ToggleCharCrossoutStyle()
     Dim CurrentStyle As String
-    Dim FlagStyleCharCrossoutExists As Boolean
-    Dim FlagStyleDefaultExists As Boolean
     
     ' Surprisingly this is enough to proceed further. If user selects few paragraphs with different styling, then Selectio.style.NameLocal is empty.
     On Error Resume Next
         CurrentStyle = Selection.style.NameLocal
     On Error GoTo 0
     
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "ToggleCharCrossoutStyle"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
     ' Check if the styles exist
-    FlagStyleCharCrossoutExists = StyleExists(C_S_CharCrossout)
-    FlagStyleDefaultExists = StyleExists(C_S_CharDefault)
-    
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "ToggleCharCrossoutStyle"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
-    If Not FlagStyleCharCrossoutExists Or Not FlagStyleDefaultExists Then
+    If Not StyleExists(C_S_CharCrossout) Or Not StyleExists(C_S_CharDefault) Then
         MsgBox _
             Prompt:="One or both of the required styles do not exist in this document:" & vbNewLine & vbNewLine & _
                 C_S_CharCrossout & " or " & C_S_CharDefault, _
@@ -1346,45 +1261,45 @@ Sub ToggleCharCrossoutStyle()
         Exit Sub
     End If
     
+    Dim Rng As Word.Range
+    Set Rng = Selection.Range
+    
     ' Toggle styles
-    If CurrentStyle = C_S_CharCrossout Then
-        Selection.style = ActiveDocument.Styles(C_S_CharDefault)
-        Application.statusBar = MsgBoxTitle & " > " & C_S_CharDefault
+    If Rng.font.Strikethrough = False Then
+        ' TURN ON: Apply the specific Character Style
+        Rng.style = ActiveDocument.Styles(C_S_CharCrossout)
+        Application.statusBar = MsgBoxTitle & " > Applied: " & C_S_CharCrossout
     Else
-        Selection.style = ActiveDocument.Styles(C_S_CharCrossout)
-        Application.statusBar = MsgBoxTitle & " > " & C_S_CharCrossout
+        ' TURN OFF: Clear back to Default Paragraph Font
+        ' Note: Using wdStyleDefaultParagraphFont is safer than a custom string
+        Rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
+        ' IMPORTANT: Remove direct italic formatting in case it was applied manually
+        Rng.font.Strikethrough = False
+        Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
     End If
+    
+    Set Rng = Nothing
 End Sub
 
+' Trick is, only extra Sub enableschange of the background shading. The VBA for character styles does not.
 ' 2025-03-21 by ms
 ' 2025-08-06 by ms
+' 2026-01-15 by ms
 Sub ToggleCharHiddenStyle()
     Dim CurrentStyle As String
-    Dim FlagStyleCharHiddenExists As Boolean
-    Dim FlagStyleDefaultExists As Boolean
     
     ' Surprisingly this is enough to proceed further. If user selects few paragraphs with different styling, then Selectio.style.NameLocal is empty.
     On Error Resume Next
         CurrentStyle = Selection.style.NameLocal
     On Error GoTo 0
     
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "ToggleCharHiddenStyle"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
     ' Check if the styles exist
-    FlagStyleCharHiddenExists = StyleExists(C_S_CharHidden)
-    FlagStyleDefaultExists = StyleExists(C_S_CharDefault)
-    
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "ToggleCharHiddenStyle"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
-    If Not FlagStyleCharHiddenExists Or Not FlagStyleDefaultExists Then
+    If Not StyleExists(C_S_CharHidden) Or Not StyleExists(C_S_CharDefault) Then
         MsgBox _
             Prompt:="One or both of the required styles do not exist in this document:" & vbNewLine & vbNewLine & _
                 C_S_CharHidden & " or " & C_S_CharDefault, _
@@ -1393,46 +1308,45 @@ Sub ToggleCharHiddenStyle()
         Exit Sub
     End If
     
+    Dim Rng As Word.Range
+    Set Rng = Selection.Range
+    
     ' Toggle styles
-    If CurrentStyle = C_S_CharHidden Then
-        Selection.style = ActiveDocument.Styles(C_S_CharDefault)
-        Application.statusBar = MsgBoxTitle & " > " & C_S_CharDefault
-    Else
-        Selection.style = ActiveDocument.Styles(C_S_CharHidden)
+    If Rng.font.Hidden = False Then
+        ' TURN ON: Apply the specific Character Style
+        Rng.style = ActiveDocument.Styles(C_S_CharHidden)
         Selection.Range.shading.BackgroundPatternColor = RGB(246, 192, 192)
-        Application.statusBar = MsgBoxTitle & " > " & C_S_CharHidden
+        Application.statusBar = MsgBoxTitle & " > Applied: " & C_S_CharHidden
+    Else
+        ' TURN OFF: Clear back to Default Paragraph Font
+        ' Note: Using wdStyleDefaultParagraphFont is safer than a custom string
+        Rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
+        ' IMPORTANT: Remove direct italic formatting in case it was applied manually
+        Rng.font.Hidden = False
+        Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
     End If
+    
+    Set Rng = Nothing
 End Sub
 
 ' 2025-04-14 by ms
 ' 2025-08-06 by ms
+' 2026-01-15 by ms
 Sub ToggleCharSourceCode()
     Dim CurrentStyle As String
-    Dim FlagStyleCharSourceCodeExists As Boolean
-    Dim FlagStyleDefaultExists As Boolean
     
     ' Surprisingly this is enough to proceed further. If user selects few paragraphs with different styling, then Selectio.style.NameLocal is empty.
     On Error Resume Next
         CurrentStyle = Selection.style.NameLocal
     On Error GoTo 0
     
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "ToggleCharSourceCode"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
     ' Check if the styles exist
-    FlagStyleCharSourceCodeExists = StyleExists(C_S_CharSourceCode)
-    FlagStyleDefaultExists = StyleExists(C_S_CharDefault)
-    
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "ToggleCharSourceCode"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
-    If Not FlagStyleCharSourceCodeExists Or Not FlagStyleDefaultExists Then
+    If Not StyleExists(C_S_CharSourceCode) Or Not StyleExists(C_S_CharDefault) Then
         MsgBox _
             Prompt:="One or both of the required styles do not exist in this document:" & vbNewLine & vbNewLine & _
                 C_S_CharSourceCode & " or " & C_S_CharDefault, _
@@ -1442,13 +1356,24 @@ Sub ToggleCharSourceCode()
     End If
     
     ' Toggle styles
-    If CurrentStyle = C_S_CharSourceCode Then
-        Selection.style = ActiveDocument.Styles(C_S_CharDefault)
-        Application.statusBar = MsgBoxTitle & " > " & C_S_CharDefault
+    Dim Rng As Word.Range
+    Set Rng = Selection.Range
+    
+    ' Toggle styles
+    If Rng.style <> C_S_CharSourceCode Then
+        ' TURN ON: Apply the specific Character Style
+        Rng.style = ActiveDocument.Styles(C_S_CharSourceCode)
+        Application.statusBar = MsgBoxTitle & " > Applied: " & C_S_CharSourceCode
     Else
-        Selection.style = ActiveDocument.Styles(C_S_CharSourceCode)
-        Application.statusBar = MsgBoxTitle & " > " & C_S_CharSourceCode
+        ' TURN OFF: Clear back to Default Paragraph Font
+        ' Note: Using wdStyleDefaultParagraphFont is safer than a custom string
+        Rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
+        ' IMPORTANT: Remove direct italic formatting in case it was applied manually
+        Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
     End If
+    
+    Set Rng = Nothing
+    
 End Sub
 
 ' 2025-08-07 by ms
@@ -1464,17 +1389,10 @@ Sub SwitchOffAutoupdate()
     Set aStyle = Nothing
     On Error GoTo -1
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "SwitchOffAutoupdate"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "SwitchOffAutoupdate"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     MsgBox _
         Prompt:="End of processing.", _
@@ -1485,6 +1403,7 @@ End Sub
 ' Order matters. At first the most basic styles must be created (C_S_ParNormal)
 ' 2025-11-16 by ms
 ' 2025-12-28 by ms
+' 2026-01-15 by ms
 Sub CreateCustomStyles()
     Dim IsSuccessful As Boolean
     IsSuccessful = False
@@ -1503,6 +1422,17 @@ Sub CreateCustomStyles()
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Paragraph Styles:
+    IsSuccessful = CreateStyle_Normal()
+    If IsSuccessful = False Then
+        MsgBox _
+            Prompt:="Error on time of creation the paragraph style " & vbNewLine & "Normal" & vbNewLine & ". Exiting.", _
+            Buttons:=vbCritical, _
+            Title:=MsgBoxTitle
+        Exit Sub
+    Else
+        ParagraphCounter = ParagraphCounter + 1
+    End If
+    
     IsSuccessful = CreateStyle_ParNormalMs()
     If IsSuccessful = False Then
         MsgBox _
@@ -2170,7 +2100,7 @@ Public Function Create_LT_SingleLevelListInTableMs() As Boolean
         .NumberPosition = CentimetersToPoints(0)
         .TextPosition = CentimetersToPoints(0)
         .Alignment = wdListLevelAlignLeft
-        .font.Name = C_FT_Basic
+        .font.Name = C_FT_Body
         .font.Size = 11
         .font.color = wdColorAutomatic
         .StartAt = 1
@@ -2179,7 +2109,6 @@ Public Function Create_LT_SingleLevelListInTableMs() As Boolean
     
     Create_LT_SingleLevelListInTableMs = True
 End Function
-
 
 ' 2025-11-25 by ms
 Public Function Create_LT_SingleLevelListNumRefMs() As Boolean
@@ -2226,7 +2155,7 @@ Public Function Create_LT_SingleLevelListNumRefMs() As Boolean
         .NumberPosition = CentimetersToPoints(0)
         .TextPosition = CentimetersToPoints(0.9)
         .Alignment = wdListLevelAlignLeft
-        .font.Name = C_FT_Basic
+        .font.Name = C_FT_Body
         .font.Size = 11
         .font.color = wdColorAutomatic
         .StartAt = 1
@@ -2241,7 +2170,6 @@ Public Function Create_LT_Bullets() As Boolean
     Dim ListTemplate As ListTemplate
     Dim NumberFormat As String
     Dim StyleNames As Variant
-    Dim BaseIndent As Double
             
     ' Define heading styles for each level
     StyleNames = Array( _
@@ -2249,8 +2177,6 @@ Public Function Create_LT_Bullets() As Boolean
         C_S_ListLevelB2, _
         C_S_ListLevelB3, _
         C_S_ListLevelB4)
-    
-    BaseIndent = 0.3 ' cm
     
     ' Check if template already exists in gallery
     Dim lt As ListTemplate
@@ -2279,12 +2205,12 @@ Public Function Create_LT_Bullets() As Boolean
             .NumberFormat = ChrW(&HBB)     ' Unicode for » (solid circle bullet)
             .TrailingCharacter = wdTrailingNone
             .NumberStyle = wdListNumberStyleBullet
-            .NumberPosition = CentimetersToPoints(i * BaseIndent)
-            .TextPosition = CentimetersToPoints(i * BaseIndent + 0.6)
+            .NumberPosition = CentimetersToPoints(i * C_BaseIndent)
+            .TextPosition = CentimetersToPoints(i * C_BaseIndent + 0.6)
             .Alignment = wdListLevelAlignLeft
             .StartAt = 1
             .LinkedStyle = StyleNames(i - 1)
-            .font.Name = C_FT_Basic
+            .font.Name = C_FT_Body
             .font.Size = 11
             .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
         End With
@@ -2303,9 +2229,6 @@ Public Function Create_LT_ToC() As Boolean
     Dim ListTemplate As ListTemplate
     Dim NumberFormat As String
     Dim StyleNames As Variant
-    Dim BaseIndent As Double
-                
-    BaseIndent = 0.3 ' cm
     
     ' Check if template already exists in gallery
     Dim lt As ListTemplate
@@ -2332,11 +2255,11 @@ Public Function Create_LT_ToC() As Boolean
 '        .NumberFormat = ""
 '        .TrailingCharacter = wdTrailingNone
 '        .NumberStyle = wdListNumberStyleNone
-'        .NumberPosition = CentimetersToPoints(0 * BaseIndent)
+'        .NumberPosition = CentimetersToPoints(0 * C_BaseIndent)
         .TextPosition = CentimetersToPoints(1#)
         .Alignment = wdListLevelAlignLeft
         .LinkedStyle = ActiveDocument.Styles(wdStyleTOC1).NameLocal
-'        .font.Name = C_FT_Basic
+'        .font.Name = C_FT_Body
 '        .font.Size = 11
 '        .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
@@ -2345,12 +2268,12 @@ Public Function Create_LT_ToC() As Boolean
 '        .NumberFormat = ""
 '        .TrailingCharacter = wdTrailingNone
 '        .NumberStyle = wdListNumberStyleNone
-'        .NumberPosition = CentimetersToPoints(1 * BaseIndent)
+'        .NumberPosition = CentimetersToPoints(1 * C_BaseIndent)
         .TextPosition = CentimetersToPoints(1.3)
         .Alignment = wdListLevelAlignLeft
         .StartAt = 1
         .LinkedStyle = ActiveDocument.Styles(wdStyleTOC2).NameLocal
-'        .font.Name = C_FT_Basic
+'        .font.Name = C_FT_Body
 '        .font.Size = 11
 '        .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
@@ -2359,12 +2282,12 @@ Public Function Create_LT_ToC() As Boolean
 '        .NumberFormat = ""
 '        .TrailingCharacter = wdTrailingNone
 '        .NumberStyle = wdListNumberStyleNone
-'        .NumberPosition = CentimetersToPoints(2 * BaseIndent)
+'        .NumberPosition = CentimetersToPoints(2 * C_BaseIndent)
 '        .TextPosition = CentimetersToPoints(1.6)
         .Alignment = wdListLevelAlignLeft
         .StartAt = 1
         .LinkedStyle = ActiveDocument.Styles(wdStyleTOC3).NameLocal
-'        .font.Name = C_FT_Basic
+'        .font.Name = C_FT_Body
 '        .font.Size = 11
 '        .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
@@ -2378,9 +2301,6 @@ Public Function Create_LT_NumOrd() As Boolean
     Dim ListTemplate As ListTemplate
     Dim NumberFormat As String
     Dim StyleNames As Variant
-    Dim BaseIndent As Double
-                
-    BaseIndent = 0.3 ' cm
     
     ' Check if template already exists in gallery
     Dim lt As ListTemplate
@@ -2407,12 +2327,12 @@ Public Function Create_LT_NumOrd() As Boolean
         .NumberFormat = "%1."
         .TrailingCharacter = wdTrailingNone
         .NumberStyle = wdListNumberStyleArabic  '1., 2., 3., …
-        .NumberPosition = CentimetersToPoints(BaseIndent)
+        .NumberPosition = CentimetersToPoints(C_BaseIndent)
         .TextPosition = CentimetersToPoints(1#)
         .Alignment = wdListLevelAlignLeft
         .StartAt = 1
         .LinkedStyle = C_S_ListLevel1
-        .font.Name = C_FT_Basic
+        .font.Name = C_FT_Body
         .font.Size = 11
         .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
@@ -2421,12 +2341,12 @@ Public Function Create_LT_NumOrd() As Boolean
         .NumberFormat = "%2."
         .TrailingCharacter = wdTrailingNone
         .NumberStyle = wdListNumberStyleLowercaseLetter ' a., b., c., …
-        .NumberPosition = CentimetersToPoints(2 * BaseIndent)
+        .NumberPosition = CentimetersToPoints(2 * C_BaseIndent)
         .TextPosition = CentimetersToPoints(1.3)
         .Alignment = wdListLevelAlignLeft
         .StartAt = 1
         .LinkedStyle = C_S_ListLevel2
-        .font.Name = C_FT_Basic
+        .font.Name = C_FT_Body
         .font.Size = 11
         .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
@@ -2435,12 +2355,12 @@ Public Function Create_LT_NumOrd() As Boolean
         .NumberFormat = "%3."
         .TrailingCharacter = wdTrailingNone
         .NumberStyle = wdListNumberStyleLowercaseRoman ' i., ii., iii., …
-        .NumberPosition = CentimetersToPoints(3 * BaseIndent)
+        .NumberPosition = CentimetersToPoints(3 * C_BaseIndent)
         .TextPosition = CentimetersToPoints(1.6)
         .Alignment = wdListLevelAlignLeft
         .StartAt = 1
         .LinkedStyle = C_S_ListLevel3
-        .font.Name = C_FT_Basic
+        .font.Name = C_FT_Body
         .font.Size = 11
         .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
@@ -2449,12 +2369,12 @@ Public Function Create_LT_NumOrd() As Boolean
         .NumberFormat = "00%4."
         .TrailingCharacter = wdTrailingNone
         .NumberStyle = wdListNumberStyleArabic ' 001., 002., 003., …
-        .NumberPosition = CentimetersToPoints(4 * BaseIndent)
+        .NumberPosition = CentimetersToPoints(4 * C_BaseIndent)
         .TextPosition = CentimetersToPoints(1.9)
         .Alignment = wdListLevelAlignLeft
         .StartAt = 1
         .LinkedStyle = C_S_ListLevel4
-        .font.Name = C_FT_Basic
+        .font.Name = C_FT_Body
         .font.Size = 11
         .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
@@ -2469,7 +2389,6 @@ Public Function Create_LT_Headings() As Boolean
     Dim i As Integer, j As Integer
     Dim NumberFormat As String
     Dim StyleNames As Variant
-    Dim BaseIndent As Double
     
     ' Define heading styles for each level
     StyleNames = Array( _
@@ -2481,8 +2400,6 @@ Public Function Create_LT_Headings() As Boolean
         C_S_Heading6, _
         C_S_Heading7, _
         C_S_Heading8)
-    
-    BaseIndent = 0.5 ' cm
     
     ' Check if template already exists in gallery
     Dim lt As ListTemplate
@@ -2515,9 +2432,9 @@ Public Function Create_LT_Headings() As Boolean
             .NumberFormat = NumberFormat
             .TrailingCharacter = wdTrailingNone
             .NumberStyle = wdListNumberStyleArabic
-            .NumberPosition = CentimetersToPoints((i - 1) * BaseIndent)
+            .NumberPosition = CentimetersToPoints((i - 1) * C_BaseIndent)
             .Alignment = wdListLevelAlignLeft
-            .TextPosition = CentimetersToPoints(1# + (i - 1) * BaseIndent)
+            .TextPosition = CentimetersToPoints(1# + (i - 1) * C_BaseIndent)
             .ResetOnHigher = i - 1
             .StartAt = 1
             .LinkedStyle = StyleNames(i - 1)
@@ -3216,17 +3133,10 @@ End Function
 Private Function CreateStyle_ParListIndentB4Ms() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParListIndentB4Ms"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParListIndentB4Ms"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -3265,8 +3175,8 @@ Private Function CreateStyle_ParListIndentB4Ms() As Boolean
                 .LeftIndent = CentimetersToPoints(1.2)
                 .RightIndent = CentimetersToPoints(-1.2)
                 .FirstLineIndent = 0
-                .SpaceBefore = 6
-                .SpaceAfter = 6
+                .SpaceBefore = C_DistParBAList
+                .SpaceAfter = C_DistParBAList
                 .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
@@ -3313,22 +3223,14 @@ ShortcutError:
 
 End Function
 
-
 ' 2025-11-18 by ms
 Private Function CreateStyle_ParListIndent4Ms() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParListIndent4Ms"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParListIndent4Ms"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -3367,8 +3269,8 @@ Private Function CreateStyle_ParListIndent4Ms() As Boolean
                 .LeftIndent = CentimetersToPoints(1.2)
                 .RightIndent = CentimetersToPoints(0)
                 .FirstLineIndent = CentimetersToPoints(-1.2)
-                .SpaceBefore = 6
-                .SpaceAfter = 6
+                .SpaceBefore = C_DistParBAList
+                .SpaceAfter = C_DistParBAList
                 .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
@@ -3420,17 +3322,10 @@ End Function
 Private Function CreateStyle_ParListIndentB3Ms() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParListIndentB3Ms"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParListIndentB3Ms"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -3469,8 +3364,8 @@ Private Function CreateStyle_ParListIndentB3Ms() As Boolean
                 .LeftIndent = CentimetersToPoints(0.9)
                 .RightIndent = CentimetersToPoints(0)
                 .FirstLineIndent = CentimetersToPoints(-0.9)
-                .SpaceBefore = 6
-                .SpaceAfter = 6
+                .SpaceBefore = C_DistParBAList
+                .SpaceAfter = C_DistParBAList
                 .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
@@ -3517,22 +3412,14 @@ ShortcutError:
 
 End Function
 
-
 ' 2025-11-18 by ms
 Private Function CreateStyle_ParListIndent3Ms() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParListIndent3Ms"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParListIndent3Ms"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -3571,8 +3458,8 @@ Private Function CreateStyle_ParListIndent3Ms() As Boolean
                 .LeftIndent = CentimetersToPoints(0.9)
                 .RightIndent = CentimetersToPoints(0)
                 .FirstLineIndent = CentimetersToPoints(-0.9)
-                .SpaceBefore = 6
-                .SpaceAfter = 6
+                .SpaceBefore = C_DistParBAList
+                .SpaceAfter = C_DistParBAList
                 .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
@@ -3619,23 +3506,15 @@ ShortcutError:
 
 End Function
 
-
 ' 2025-11-25 by ms
 ' Additional style for bulleted list only
 Private Function CreateStyle_ParListIndentB2Ms() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParListIndentB2Ms"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParListIndentB2Ms"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -3674,8 +3553,8 @@ Private Function CreateStyle_ParListIndentB2Ms() As Boolean
                 .LeftIndent = CentimetersToPoints(0.6)
                 .RightIndent = CentimetersToPoints(0)
                 .FirstLineIndent = CentimetersToPoints(-0.6)
-                .SpaceBefore = 6
-                .SpaceAfter = 6
+                .SpaceBefore = C_DistParBAList
+                .SpaceAfter = C_DistParBAList
                 .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
@@ -3722,22 +3601,14 @@ ShortcutError:
 
 End Function
 
-
 ' 2025-11-18 by ms
 Private Function CreateStyle_ParListIndent2Ms() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParListIndent2Ms"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParListIndent2Ms"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -3776,8 +3647,8 @@ Private Function CreateStyle_ParListIndent2Ms() As Boolean
                 .LeftIndent = CentimetersToPoints(0.6)
                 .RightIndent = CentimetersToPoints(0)
                 .FirstLineIndent = CentimetersToPoints(-0.6)
-                .SpaceBefore = 6
-                .SpaceAfter = 6
+                .SpaceBefore = C_DistParBAList
+                .SpaceAfter = C_DistParBAList
                 .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
@@ -3829,17 +3700,10 @@ End Function
 Private Function CreateStyle_ParListIndentB1Ms() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParListIndentB1Ms"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParListIndentB1Ms"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -3878,8 +3742,8 @@ Private Function CreateStyle_ParListIndentB1Ms() As Boolean
                 .LeftIndent = CentimetersToPoints(0.3)
                 .RightIndent = CentimetersToPoints(0)
                 .FirstLineIndent = CentimetersToPoints(-0.3)
-                .SpaceBefore = 6
-                .SpaceAfter = 6
+                .SpaceBefore = C_DistParBAList
+                .SpaceAfter = C_DistParBAList
                 .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
@@ -3931,17 +3795,10 @@ End Function
 Private Function CreateStyle_ParListIndent1Ms() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParListIndent1Ms"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParListIndent1Ms"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -3980,8 +3837,8 @@ Private Function CreateStyle_ParListIndent1Ms() As Boolean
                 .LeftIndent = CentimetersToPoints(0.3)
                 .RightIndent = CentimetersToPoints(0)
                 .FirstLineIndent = CentimetersToPoints(-0.3)
-                .SpaceBefore = 6
-                .SpaceAfter = 6
+                .SpaceBefore = C_DistParBAList
+                .SpaceAfter = C_DistParBAList
                 .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
@@ -4032,17 +3889,10 @@ End Function
 Private Function CreateStyle_ParListHeadingMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParListHeadingMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParListHeadingMs"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -5335,22 +5185,108 @@ ShortcutError:
 
 End Function
 
+' One additional style, to get rid of default styling for "Normal"
+' 2026-01-15 by ms
+Private Function CreateStyle_Normal() As Boolean
+    Dim NewStyle As style
+    
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_Normal"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
+    ' Check if the style already exists in the document
+    ' If an error occurs, skip the line that caused the error and continue with the next line of code.
+    On Error Resume Next
+    Set NewStyle = ActiveDocument.Styles("Normal")
+    '  Turns off any active error handler and restores default behavior
+    On Error GoTo 0
+
+    ' If the style doesn't exist, try to create it
+    If NewStyle Is Nothing Then
+        On Error GoTo StyleError
+        Set NewStyle = ActiveDocument.Styles.Add(Name:="Normal", Type:=wdStyleTypeParagraph)
+        On Error GoTo 0
+    End If
+
+    If Not NewStyle Is Nothing Then
+        With NewStyle
+            ' .BaseStyle = "Normal" run-time error 5648: the built-in styles Normal and Default Paragraph Font cannot be based on any style
+            .NextParagraphStyle = "Normal"
+            .AutomaticallyUpdate = False
+            .QuickStyle = False
+            .LanguageId = wdEnglishUS
+            
+            ' Font formatting
+            With .font
+                .Name = C_FT_Body
+                .Size = 11
+                .Bold = False
+                .Italic = False
+                .color = wdColorAutomatic
+            End With
+            
+            ' Paragraph formatting
+            With .ParagraphFormat
+                .Alignment = wdAlignParagraphLeft
+                .LeftIndent = CentimetersToPoints(0)
+                .RightIndent = CentimetersToPoints(0)
+                .FirstLineIndent = 0
+                .SpaceBefore = 0
+                .SpaceAfter = 0
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacingRule = wdLineSpaceExactly
+                .WidowControl = True
+                .KeepWithNext = False
+                .KeepTogether = False
+                .PageBreakBefore = False
+                .OutlineLevel = wdOutlineLevelBodyText
+            End With
+        End With
+
+'       === Add keyboard shortcut for the style ===
+'       On Error GoTo ShortcutError
+'       CustomizationContext = ActiveDocument
+'       KeyBindings.Add _
+'            KeyCategory:=wdKeyCategoryStyle, _
+'            Command:=C_S_ParNormal, _
+'            KeyCode:=BuildKeyCode(wdKeyControl, wdKeyShift, wdKeyN)
+'       On Error GoTo 0
+
+    CreateStyle_Normal = True
+    End If
+    Exit Function
+                
+' === Error handler ===
+StyleError:
+    MsgBox _
+        Prompt:="Error: Unable to create style '" & C_S_ParNormal & "'." & vbNewLine & _
+            "Error number: " & Err.Number & vbNewLine & _
+            "Description: " & Err.Description, _
+        Buttons:=vbCritical, _
+        Title:=MsgBoxTitle
+    CreateStyle_Normal = False
+    Exit Function
+        
+ShortcutError:
+    MsgBox _
+        Prompt:="Error adding shortcut for style '" & "Normal" & "'." & vbCrLf & _
+           "Error Number: " & Err.Number & vbCrLf & _
+           "Description: " & Err.Description, _
+        Buttons:=vbCritical, _
+        Title:=MsgBoxTitle
+    Resume Next
+
+End Function
 
 ' 2025-11-16 by ms
 Private Function CreateStyle_ParNormalMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParNormalMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParNormalMs"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -5435,7 +5371,6 @@ ShortcutError:
     Resume Next
 
 End Function
-
 
 ' 2025-10-07 by ms
 ' 2025-11-15 by ms
@@ -6291,12 +6226,7 @@ Private Function CreateStyle_CharHiddenMs() As Boolean
     ' Apply character formatting
     If Not NewStyle Is Nothing Then
         With NewStyle.font
-            '.Name = C_FT_Body        ' Font name, optional for Character style type definition
-            '.Size = 11               ' Font size, optional for Character style type definition
-            '.Bold = False             ' Bold text
-            '.Strikethrough = True
             .Hidden = True
-            '.color = wdColorAutomatic ' Text color
         End With
         
         ' Remove all borders
@@ -6713,20 +6643,13 @@ Sub ListCustomStylesToTxt()
     Dim TemplateName As String
     Dim i As Byte
 
-    Dim FileName As String
-    FileName = C_F_Macros
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Template
+    Dim MacroName As String:    MacroName = "ListCustomStylesToTxt"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    Dim ModuleName As String
-    ModuleName = C_M_Template
-    
-    Dim MacroName As String
-    MacroName = "ListCustomStylesToTxt"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
-    ' Set the CustomizationContext to the currently attached template
-    CustomizationContext = ActiveDocument.AttachedTemplate
+    ' Set the CustomizationContext to the currently active document
+    CustomizationContext = ActiveDocument
     
     ' Set the file path to the default file location
     FilePath = Options.DefaultFilePath(wdDocumentsPath) & "\" & MacroName & ".txt"
@@ -7451,10 +7374,10 @@ End Sub
 
 ' Returns True if styleName matches any second element (Style Name) in the given table (2D Variant-of-Variants)
 ' 2025-12-08 by ms and AI
-Private Function IsAllowedStyleName(ByVal styleName As String, ByVal tableArr As Variant) As Boolean
+Private Function IsAllowedStyleName(ByVal StyleName As String, ByVal tableArr As Variant) As Boolean
     Dim i As Long
     Dim s As String, query As String
-    query = LCase$(Trim$(styleName))
+    query = LCase$(Trim$(StyleName))
     On Error GoTo Bail
     For i = LBound(tableArr) To UBound(tableArr)
         s = LCase$(Trim$(tableArr(i)(1))) ' second element holds the Style Name
@@ -7470,18 +7393,18 @@ End Function
 ' 2026-01-02 by ms and AI
 Private Sub ResetTOCStylesNumbering()
     Dim i As Integer
-    Dim styleName As Variant
+    Dim StyleName As Variant
     Dim stylesToClean As Variant
     
     ' Lista stylÃ³w do wyczyszczenia
     stylesToClean = Array(wdStyleTOC1, wdStyleTOC2, wdStyleTOC3)
     
-    For Each styleName In stylesToClean
-        With ActiveDocument.Styles(styleName)
+    For Each StyleName In stylesToClean
+        With ActiveDocument.Styles(StyleName)
             ' To polecenie caÅ‚kowicie usuwa powiÄ…zanie stylu z jakÄ…kolwiek listÄ…
             .LinkToListTemplate ListTemplate:=Nothing
         End With
-    Next styleName
+    Next StyleName
     
     ' OdÅ›wieÅ¼ spis treÅ›ci
     If ActiveDocument.TablesOfContents.count > 0 Then

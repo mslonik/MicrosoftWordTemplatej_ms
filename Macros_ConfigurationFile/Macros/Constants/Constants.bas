@@ -16,10 +16,9 @@ Option Explicit
 Public Const C_StyleSuffix As String = " ms"
 
 ' Font names
-Public Const C_FT_Basic As String = "Excalifont"
+Public Const C_FT_Body As String = "+Body"                      ' Body, as in Design -> Fonts -> Customize font; to inheritage from Theme
+Public Const C_FT_Headings As String = "+Headings"              ' Heading, as in Design -> Fonts -> Customize font; to inheritage from Theme
 Public Const C_FT_AntiHomoglyph As String = "Consolas"
-Public Const C_FT_Headings As String = "+Headings"
-Public Const C_FT_Body As String = "+Body"
 
 ' File names
 Public Const C_F_BBB = "Built-In Building Blocks.dotx"          ' BBB = Built-in BuildingBlocks, default file (re)created by Microsoft Word
@@ -99,6 +98,10 @@ Public Const C_LT_Bullets As String = "MultiLevelList Bullets ms"
 Public Const C_LT_ListNumRef As String = "SingleLevelListNumRef ms"
 Public Const C_LT_ListNumTable As String = "SingleLevelListInTable ms"
 Public Const C_LT_TOC As String = "MultilevelList Table of Content ms"
+
+' Constants related to styles setting
+Public Const C_DistParBAList As Single = 3      ' Distance Before and After paragraph of a list
+Public Const C_BaseIndent As Single = 0.3       ' cm
 
 ' ===========================
 ' Character Styles Table
