@@ -130,7 +130,7 @@ Sub DeleteStylesOtherThanInTemplate()
     Dim deletedStyles As String
     Dim TemplateStyles As Collection
     Dim templateStyleNames As Collection
-    Dim StyleName As Variant
+    Dim styleName As Variant
     Dim CounterDeletedStyles As Integer
     
     Dim FileName As String:     FileName = C_F_Macros
@@ -370,7 +370,7 @@ Sub ListNonBuiltInAndSuffixStyles()
     ' This style type practically does not exist in new Microsoft Word
     Dim LinkedStyles As Collection      ' wdStyleTypeLinked
     
-    Dim StyleName As Variant
+    Dim styleName As Variant
     Dim StyleType As Variant
     
     Dim FileName As String:     FileName = C_F_Macros
@@ -430,46 +430,46 @@ Sub ListNonBuiltInAndSuffixStyles()
     styleInfo = styleInfo & vbCrLf & "Paragraph Styles:" & vbCrLf
     Call SortCollection(coll:=ParagraphStyles)
     rowNum = 1
-    For Each StyleName In ParagraphStyles
-        styleInfo = styleInfo & rowNum & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
+    For Each styleName In ParagraphStyles
+        styleInfo = styleInfo & rowNum & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
         rowNum = rowNum + 1
-    Next StyleName
+    Next styleName
     
     ' Character styles: sort and add character styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "Character Styles:" & vbCrLf
     Call SortCollection(coll:=CharacterStyles)
     rowNum = 1
-    For Each StyleName In CharacterStyles
-        styleInfo = styleInfo & rowNum & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
+    For Each styleName In CharacterStyles
+        styleInfo = styleInfo & rowNum & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
         rowNum = rowNum + 1
-    Next StyleName
+    Next styleName
     
     ' Table styles: Sort and add table styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "Table Styles:" & vbCrLf
     Call SortCollection(coll:=TableStyles)
     rowNum = 1
-    For Each StyleName In TableStyles
-        styleInfo = styleInfo & rowNum & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
+    For Each styleName In TableStyles
+        styleInfo = styleInfo & rowNum & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
         rowNum = rowNum + 1
-    Next StyleName
+    Next styleName
     
     ' List styles: sort and add list styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "List Styles:" & vbCrLf
     Call SortCollection(coll:=ListStyles)
     rowNum = 1
-    For Each StyleName In ListStyles
-        styleInfo = styleInfo & rowNum & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
+    For Each styleName In ListStyles
+        styleInfo = styleInfo & rowNum & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
         rowNum = rowNum + 1
-    Next StyleName
+    Next styleName
     
     ' Linked styles: sort and add list styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "Linked styles:" & vbCrLf
     Call SortCollection(coll:=LinkedStyles)
     rowNum = 1
-    For Each StyleName In LinkedStyles
-        styleInfo = styleInfo & rowNum & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
+    For Each styleName In LinkedStyles
+        styleInfo = styleInfo & rowNum & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
         rowNum = rowNum + 1
-    Next StyleName
+    Next styleName
     
     Call SaveLog(MacroName:=MacroName, LoggedParameter:=styleInfo)
         
@@ -763,7 +763,7 @@ Sub ListStylesCurrentlyInUse()
     Dim CharacterStyles As Collection
     Dim TableStyles As Collection
     Dim ListStyles As Collection
-    Dim StyleName As Variant
+    Dim styleName As Variant
     
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Styles
@@ -813,37 +813,37 @@ Sub ListStylesCurrentlyInUse()
     styleInfo = styleInfo & vbCrLf & "Paragraph Styles:" & vbCrLf
     Call SortCollection(coll:=ParagraphStyles)
     counter = 1
-    For Each StyleName In ParagraphStyles
-        styleInfo = styleInfo & counter & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
+    For Each styleName In ParagraphStyles
+        styleInfo = styleInfo & counter & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
         counter = counter + 1
-    Next StyleName
+    Next styleName
     
     ' Sort and add character styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "Character Styles:" & vbCrLf
     Call SortCollection(coll:=CharacterStyles)
     counter = 1
-    For Each StyleName In CharacterStyles
-        styleInfo = styleInfo & counter & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
+    For Each styleName In CharacterStyles
+        styleInfo = styleInfo & counter & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
         counter = counter + 1
-    Next StyleName
+    Next styleName
     
     ' Sort and add table styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "Table Styles:" & vbCrLf
     Call SortCollection(coll:=TableStyles)
     counter = 1
-    For Each StyleName In TableStyles
-        styleInfo = styleInfo & counter & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
+    For Each styleName In TableStyles
+        styleInfo = styleInfo & counter & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
         counter = counter + 1
-    Next StyleName
+    Next styleName
     
     ' Sort and add list styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "List Styles:" & vbCrLf
     Call SortCollection(coll:=ListStyles)
     counter = 1
-    For Each StyleName In ListStyles
-        styleInfo = styleInfo & counter & " | " & StyleName(0) & " | " & StyleName(1) & " | " & StyleName(2) & vbCrLf
+    For Each styleName In ListStyles
+        styleInfo = styleInfo & counter & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
         counter = counter + 1
-    Next StyleName
+    Next styleName
     
     Call SaveLog(MacroName:=MacroName, _
         LoggedParameter:=vbNewLine & _
@@ -875,15 +875,15 @@ End Function
 
 Private Sub SortCollection(ByRef coll As Collection)
     Dim i As Integer, j As Integer
-    Dim Temp As Variant
+    Dim temp As Variant
     
     ' Simple bubble sort
     For i = 1 To coll.count - 1
         For j = i + 1 To coll.count
             If coll(i)(0) > coll(j)(0) Then
-                Temp = coll(i)
+                temp = coll(i)
                 coll.Add coll(j), Before:=i
-                coll.Add Temp, Before:=j
+                coll.Add temp, Before:=j
                 coll.Remove i + 1
                 coll.Remove j + 1
             End If
@@ -897,7 +897,7 @@ End Sub
 Sub CopyStylesFromTemplateToThisFile()
     Dim TemplateDoc As Document
     Dim activeDoc As Document
-    Dim StyleName As String
+    Dim styleName As String
     Dim tocStyles As Variant
     Dim i As Integer
     Dim errorCounter As Integer
@@ -933,16 +933,16 @@ Sub CopyStylesFromTemplateToThisFile()
     
     ' Loop through all styles in the template document
     For Each MyStyle In TemplateDoc.Styles
-        StyleName = MyStyle.NameLocal
+        styleName = MyStyle.NameLocal
         
         ' Check if the style name ends with the specified suffix or is one of the TOC styles
-        If Right(StyleName, Len(C_StyleSuffix)) = C_StyleSuffix Or IsInArray(Value:=StyleName, ArrayPar:=tocStyles) Then
+        If Right(styleName, Len(C_StyleSuffix)) = C_StyleSuffix Or IsInArray(Value:=styleName, ArrayPar:=tocStyles) Then
             ' Copy or overwrite the style in the active document
             On Error Resume Next
             Application.OrganizerCopy _
                 Source:=TemplateDoc.FullName, _
                 Destination:=activeDoc.FullName, _
-                Name:=StyleName, _
+                Name:=styleName, _
                 Object:=wdOrganizerObjectStyles
             
             ' Check for errors and update counters
@@ -1123,31 +1123,31 @@ Sub ToggleCharBoldStyle()
         Exit Sub
     End If
     
-    Dim Rng As Word.Range
-    Set Rng = Selection.Range
+    Dim rng As Word.Range
+    Set rng = Selection.Range
     
     ' Toggle styles
-    If Rng.font.Bold = False Then
+    If rng.font.Bold = False Then
         ' TURN ON: Apply the specific Character Style
-        Rng.style = ActiveDocument.Styles(C_S_Bold)
+        rng.style = ActiveDocument.Styles(C_S_Bold)
         Application.statusBar = MsgBoxTitle & " > Applied: " & C_S_Bold
     Else
         ' TURN OFF: Clear back to Default Paragraph Font
         ' Note: Using wdStyleDefaultParagraphFont is safer than a custom string
-        Rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
+        rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
         ' IMPORTANT: Remove direct italic formatting in case it was applied manually
-        Rng.font.Bold = False
+        rng.font.Bold = False
         Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
     End If
     
-    Set Rng = Nothing
+    Set rng = Nothing
     
 End Sub
 
 ' 2025-08-05 by ms and ai
-Function StyleExists(StyleName As String) As Boolean
+Function StyleExists(styleName As String) As Boolean
     On Error Resume Next
-    StyleExists = Not ActiveDocument.Styles(StyleName) Is Nothing
+    StyleExists = Not ActiveDocument.Styles(styleName) Is Nothing
     On Error GoTo 0
 End Function
 
@@ -1177,24 +1177,24 @@ Sub ToggleCharItalicStyle()
         Exit Sub
     End If
     
-    Dim Rng As Word.Range
-    Set Rng = Selection.Range
+    Dim rng As Word.Range
+    Set rng = Selection.Range
     
     ' Toggle styles
-    If Rng.font.Italic = False Then
+    If rng.font.Italic = False Then
         ' TURN ON: Apply the specific Character Style
-        Rng.style = ActiveDocument.Styles(C_S_Italic)
+        rng.style = ActiveDocument.Styles(C_S_Italic)
         Application.statusBar = MsgBoxTitle & " > Applied: " & C_S_Italic
     Else
         ' TURN OFF: Clear back to Default Paragraph Font
         ' Note: Using wdStyleDefaultParagraphFont is safer than a custom string
-        Rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
+        rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
         ' IMPORTANT: Remove direct italic formatting in case it was applied manually
-        Rng.font.Italic = False
+        rng.font.Italic = False
         Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
     End If
     
-    Set Rng = Nothing
+    Set rng = Nothing
 End Sub
 
 ' 2025-03-20 by ms and AI
@@ -1216,23 +1216,23 @@ Sub ToggleCharUnderlineStyle()
         Exit Sub
     End If
     
-    Dim Rng As Word.Range
-    Set Rng = Selection.Range
+    Dim rng As Word.Range
+    Set rng = Selection.Range
     
     ' Toggle styles
-    Select Case Rng.font.Underline
+    Select Case rng.font.Underline
         Case wdUnderlineNone, wdUndefined
             ' turn on: apply the character style that only sets underline
-            Rng.style = ActiveDocument.Styles(C_S_Underline)
+            rng.style = ActiveDocument.Styles(C_S_Underline)
             Application.statusBar = MsgBoxTitle & " > " & C_S_Underline
         Case Else
             ' turn off: clear the character-style overlay back to "default char"
-            Rng.style = ActiveDocument.Styles(C_S_CharDefault)
+            rng.style = ActiveDocument.Styles(C_S_CharDefault)
             ' ensure direct underline is off (if user applied underline directly)
-            Rng.font.Underline = wdUnderlineNone
+            rng.font.Underline = wdUnderlineNone
             Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
     End Select
-    Set Rng = Nothing
+    Set rng = Nothing
 End Sub
 
 ' 2025-03-21 by ms
@@ -1261,24 +1261,24 @@ Sub ToggleCharCrossoutStyle()
         Exit Sub
     End If
     
-    Dim Rng As Word.Range
-    Set Rng = Selection.Range
+    Dim rng As Word.Range
+    Set rng = Selection.Range
     
     ' Toggle styles
-    If Rng.font.Strikethrough = False Then
+    If rng.font.Strikethrough = False Then
         ' TURN ON: Apply the specific Character Style
-        Rng.style = ActiveDocument.Styles(C_S_CharCrossout)
+        rng.style = ActiveDocument.Styles(C_S_CharCrossout)
         Application.statusBar = MsgBoxTitle & " > Applied: " & C_S_CharCrossout
     Else
         ' TURN OFF: Clear back to Default Paragraph Font
         ' Note: Using wdStyleDefaultParagraphFont is safer than a custom string
-        Rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
+        rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
         ' IMPORTANT: Remove direct italic formatting in case it was applied manually
-        Rng.font.Strikethrough = False
+        rng.font.Strikethrough = False
         Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
     End If
     
-    Set Rng = Nothing
+    Set rng = Nothing
 End Sub
 
 ' Trick is, only extra Sub enableschange of the background shading. The VBA for character styles does not.
@@ -1308,25 +1308,25 @@ Sub ToggleCharHiddenStyle()
         Exit Sub
     End If
     
-    Dim Rng As Word.Range
-    Set Rng = Selection.Range
+    Dim rng As Word.Range
+    Set rng = Selection.Range
     
     ' Toggle styles
-    If Rng.font.Hidden = False Then
+    If rng.font.Hidden = False Then
         ' TURN ON: Apply the specific Character Style
-        Rng.style = ActiveDocument.Styles(C_S_CharHidden)
+        rng.style = ActiveDocument.Styles(C_S_CharHidden)
         Selection.Range.shading.BackgroundPatternColor = RGB(246, 192, 192)
         Application.statusBar = MsgBoxTitle & " > Applied: " & C_S_CharHidden
     Else
         ' TURN OFF: Clear back to Default Paragraph Font
         ' Note: Using wdStyleDefaultParagraphFont is safer than a custom string
-        Rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
+        rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
         ' IMPORTANT: Remove direct italic formatting in case it was applied manually
-        Rng.font.Hidden = False
+        rng.font.Hidden = False
         Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
     End If
     
-    Set Rng = Nothing
+    Set rng = Nothing
 End Sub
 
 ' 2025-04-14 by ms
@@ -1356,23 +1356,23 @@ Sub ToggleCharSourceCode()
     End If
     
     ' Toggle styles
-    Dim Rng As Word.Range
-    Set Rng = Selection.Range
+    Dim rng As Word.Range
+    Set rng = Selection.Range
     
     ' Toggle styles
-    If Rng.style <> C_S_CharSourceCode Then
+    If rng.style <> C_S_CharSourceCode Then
         ' TURN ON: Apply the specific Character Style
-        Rng.style = ActiveDocument.Styles(C_S_CharSourceCode)
+        rng.style = ActiveDocument.Styles(C_S_CharSourceCode)
         Application.statusBar = MsgBoxTitle & " > Applied: " & C_S_CharSourceCode
     Else
         ' TURN OFF: Clear back to Default Paragraph Font
         ' Note: Using wdStyleDefaultParagraphFont is safer than a custom string
-        Rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
+        rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
         ' IMPORTANT: Remove direct italic formatting in case it was applied manually
         Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
     End If
     
-    Set Rng = Nothing
+    Set rng = Nothing
     
 End Sub
 
@@ -2060,17 +2060,10 @@ Public Function Create_LT_SingleLevelListInTableMs() As Boolean
     Dim NewStyle As style
     Dim ListTemplate As ListTemplate
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "Create_LT_SingleLevelListInTableMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:      FileName = C_F_Macros
+    Dim ModuleName As String:    ModuleName = C_M_Styles
+    Dim MacroName As String:     MacroName = "Create_LT_SingleLevelListInTableMs"
+    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if template already exists in gallery
     Dim lt As ListTemplate
@@ -2101,7 +2094,7 @@ Public Function Create_LT_SingleLevelListInTableMs() As Boolean
         .TextPosition = CentimetersToPoints(0)
         .Alignment = wdListLevelAlignLeft
         .font.Name = C_FT_Body
-        .font.Size = 11
+        .font.Size = C_BaseFontSize
         .font.color = wdColorAutomatic
         .StartAt = 1
         .LinkedStyle = C_S_ListNumTable
@@ -2115,17 +2108,10 @@ Public Function Create_LT_SingleLevelListNumRefMs() As Boolean
     Dim NewStyle As style
     Dim ListTemplate As ListTemplate
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "Create_LT_SingleLevelListNumRefMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:      FileName = C_F_Macros
+    Dim ModuleName As String:    ModuleName = C_M_Styles
+    Dim MacroName As String:     MacroName = "Create_LT_SingleLevelListNumRefMs"
+    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if template already exists in gallery
     Dim lt As ListTemplate
@@ -2156,7 +2142,7 @@ Public Function Create_LT_SingleLevelListNumRefMs() As Boolean
         .TextPosition = CentimetersToPoints(0.9)
         .Alignment = wdListLevelAlignLeft
         .font.Name = C_FT_Body
-        .font.Size = 11
+        .font.Size = C_BaseFontSize
         .font.color = wdColorAutomatic
         .StartAt = 1
         .LinkedStyle = C_S_ListNumRef
@@ -2211,7 +2197,7 @@ Public Function Create_LT_Bullets() As Boolean
             .StartAt = 1
             .LinkedStyle = StyleNames(i - 1)
             .font.Name = C_FT_Body
-            .font.Size = 11
+            .font.Size = C_BaseFontSize
             .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
         End With
     Next i
@@ -2260,7 +2246,7 @@ Public Function Create_LT_ToC() As Boolean
         .Alignment = wdListLevelAlignLeft
         .LinkedStyle = ActiveDocument.Styles(wdStyleTOC1).NameLocal
 '        .font.Name = C_FT_Body
-'        .font.Size = 11
+'        .font.Size = C_BaseFontSize
 '        .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
         
@@ -2274,7 +2260,7 @@ Public Function Create_LT_ToC() As Boolean
         .StartAt = 1
         .LinkedStyle = ActiveDocument.Styles(wdStyleTOC2).NameLocal
 '        .font.Name = C_FT_Body
-'        .font.Size = 11
+'        .font.Size = C_BaseFontSize
 '        .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
     
@@ -2288,13 +2274,12 @@ Public Function Create_LT_ToC() As Boolean
         .StartAt = 1
         .LinkedStyle = ActiveDocument.Styles(wdStyleTOC3).NameLocal
 '        .font.Name = C_FT_Body
-'        .font.Size = 11
+'        .font.Size = C_BaseFontSize
 '        .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
                 
     Create_LT_ToC = True
 End Function
-
 
 ' 2025-11-22 by ms
 Public Function Create_LT_NumOrd() As Boolean
@@ -2333,7 +2318,7 @@ Public Function Create_LT_NumOrd() As Boolean
         .StartAt = 1
         .LinkedStyle = C_S_ListLevel1
         .font.Name = C_FT_Body
-        .font.Size = 11
+        .font.Size = C_BaseFontSize
         .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
         
@@ -2347,7 +2332,7 @@ Public Function Create_LT_NumOrd() As Boolean
         .StartAt = 1
         .LinkedStyle = C_S_ListLevel2
         .font.Name = C_FT_Body
-        .font.Size = 11
+        .font.Size = C_BaseFontSize
         .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
     
@@ -2361,7 +2346,7 @@ Public Function Create_LT_NumOrd() As Boolean
         .StartAt = 1
         .LinkedStyle = C_S_ListLevel3
         .font.Name = C_FT_Body
-        .font.Size = 11
+        .font.Size = C_BaseFontSize
         .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
         
@@ -2375,13 +2360,12 @@ Public Function Create_LT_NumOrd() As Boolean
         .StartAt = 1
         .LinkedStyle = C_S_ListLevel4
         .font.Name = C_FT_Body
-        .font.Size = 11
+        .font.Size = C_BaseFontSize
         .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
         
     Create_LT_NumOrd = True
 End Function
-
 
 ' 2025-11-22 by ms
 Public Function Create_LT_Headings() As Boolean
@@ -2452,17 +2436,10 @@ End Function
 Private Function CreateStyle_ParListInTableMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParListInTableMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:      FileName = C_F_Macros
+    Dim ModuleName As String:    ModuleName = C_M_Styles
+    Dim MacroName As String:     MacroName = "CreateStyle_ParListInTableMs"
+    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -2489,7 +2466,7 @@ Private Function CreateStyle_ParListInTableMs() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -2503,7 +2480,7 @@ Private Function CreateStyle_ParListInTableMs() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = 3
                 .SpaceAfter = 3
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = False
@@ -2553,17 +2530,10 @@ End Function
 Private Function CreateStyle_ParNumRefMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParNumRefMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:      FileName = C_F_Macros
+    Dim ModuleName As String:    ModuleName = C_M_Styles
+    Dim MacroName As String:     MacroName = "CreateStyle_ParNumRefMs"
+    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -2590,7 +2560,7 @@ Private Function CreateStyle_ParNumRefMs() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -2604,7 +2574,7 @@ Private Function CreateStyle_ParNumRefMs() As Boolean
                 .FirstLineIndent = CentimetersToPoints(-0.9)
                 .SpaceBefore = 0
                 .SpaceAfter = 6
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = False
                 .KeepWithNext = False
@@ -2654,17 +2624,10 @@ End Function
 Private Function CreateStyle_ParTextBoxesMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParTextBoxesMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:      FileName = C_F_Macros
+    Dim ModuleName As String:    ModuleName = C_M_Styles
+    Dim MacroName As String:     MacroName = "CreateStyle_ParTextBoxesMs"
+    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -2691,7 +2654,7 @@ Private Function CreateStyle_ParTextBoxesMs() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 10
+                .Size = C_BaseFontSize - 1
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -2705,7 +2668,7 @@ Private Function CreateStyle_ParTextBoxesMs() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = 0
                 .SpaceAfter = 0
-                .LineSpacing = 10   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = False
                 .KeepWithNext = False
@@ -2792,7 +2755,7 @@ Private Function CreateStyle_TOC3() As Boolean
         ' Font formatting
         With .font
             .Name = C_FT_Body
-            .Size = 11
+            .Size = C_BaseFontSize
             .Bold = False
             .Italic = False
             .color = wdColorAutomatic
@@ -2806,7 +2769,7 @@ Private Function CreateStyle_TOC3() As Boolean
             .FirstLineIndent = 0
             .SpaceBefore = 0
             .SpaceAfter = 0
-            .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+            .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
             .LineSpacingRule = wdLineSpaceExactly
             .WidowControl = True
             .KeepWithNext = False
@@ -2841,7 +2804,6 @@ ShortcutError:
     Resume Next
 
 End Function
-
 
 ' Exception: built-in styles, which I modify. This is the only way which I know to keep Table of Content functionality of Microsoft Word.
 ' 2025-11-22 by ms
@@ -2884,7 +2846,7 @@ Private Function CreateStyle_TOC2() As Boolean
         ' Font formatting
         With .font
             .Name = C_FT_Body
-            .Size = 11
+            .Size = C_BaseFontSize
             .Bold = False
             .Italic = False
             .color = wdColorAutomatic
@@ -2898,7 +2860,7 @@ Private Function CreateStyle_TOC2() As Boolean
             .FirstLineIndent = CentimetersToPoints(-0.8)
             .SpaceBefore = 0
             .SpaceAfter = 0
-            .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+            .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
             .LineSpacingRule = wdLineSpaceExactly
             .WidowControl = True
             .KeepWithNext = False
@@ -2976,7 +2938,7 @@ Private Function CreateStyle_TOC1() As Boolean
         ' Font formatting
         With .font
             .Name = C_FT_Body
-            .Size = 14
+            .Size = C_BaseFontSize + 3
             .Bold = True
             .Italic = False
             .color = wdColorAutomatic
@@ -2990,7 +2952,7 @@ Private Function CreateStyle_TOC1() As Boolean
             .FirstLineIndent = CentimetersToPoints(-0.4)
             .SpaceBefore = 0
             .SpaceAfter = 6
-            .LineSpacing = 14   ' order matters: specify at first LineSpacing, next LineSpacingRule
+            .LineSpacing = NewStyle.font.Size ' order matters: specify at first LineSpacing, next LineSpacingRule
             .LineSpacingRule = wdLineSpaceExactly
             .WidowControl = True
             .KeepWithNext = False
@@ -3030,17 +2992,10 @@ End Function
 Private Function CreateStyle_ParMinimalMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParMinimalMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:      FileName = C_F_Macros
+    Dim ModuleName As String:    ModuleName = C_M_Styles
+    Dim MacroName As String:     MacroName = "CreateStyle_ParMinimalMs"
+    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -3081,7 +3036,7 @@ Private Function CreateStyle_ParMinimalMs() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = 0
                 .SpaceAfter = 0
-                .LineSpacing = 1   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = False
                 .KeepWithNext = False
@@ -3127,7 +3082,6 @@ ShortcutError:
 
 End Function
 
-
 ' 2025-11-25 by ms
 ' Additional style for bulleted list only
 Private Function CreateStyle_ParListIndentB4Ms() As Boolean
@@ -3163,7 +3117,7 @@ Private Function CreateStyle_ParListIndentB4Ms() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -3177,7 +3131,7 @@ Private Function CreateStyle_ParListIndentB4Ms() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = C_DistParBAList
                 .SpaceAfter = C_DistParBAList
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = False
@@ -3257,7 +3211,7 @@ Private Function CreateStyle_ParListIndent4Ms() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -3271,7 +3225,7 @@ Private Function CreateStyle_ParListIndent4Ms() As Boolean
                 .FirstLineIndent = CentimetersToPoints(-1.2)
                 .SpaceBefore = C_DistParBAList
                 .SpaceAfter = C_DistParBAList
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = False
@@ -3352,7 +3306,7 @@ Private Function CreateStyle_ParListIndentB3Ms() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -3366,7 +3320,7 @@ Private Function CreateStyle_ParListIndentB3Ms() As Boolean
                 .FirstLineIndent = CentimetersToPoints(-0.9)
                 .SpaceBefore = C_DistParBAList
                 .SpaceAfter = C_DistParBAList
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = False
@@ -3446,7 +3400,7 @@ Private Function CreateStyle_ParListIndent3Ms() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -3460,7 +3414,7 @@ Private Function CreateStyle_ParListIndent3Ms() As Boolean
                 .FirstLineIndent = CentimetersToPoints(-0.9)
                 .SpaceBefore = C_DistParBAList
                 .SpaceAfter = C_DistParBAList
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = False
@@ -3541,7 +3495,7 @@ Private Function CreateStyle_ParListIndentB2Ms() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -3555,7 +3509,7 @@ Private Function CreateStyle_ParListIndentB2Ms() As Boolean
                 .FirstLineIndent = CentimetersToPoints(-0.6)
                 .SpaceBefore = C_DistParBAList
                 .SpaceAfter = C_DistParBAList
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = False
@@ -3635,7 +3589,7 @@ Private Function CreateStyle_ParListIndent2Ms() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -3649,7 +3603,7 @@ Private Function CreateStyle_ParListIndent2Ms() As Boolean
                 .FirstLineIndent = CentimetersToPoints(-0.6)
                 .SpaceBefore = C_DistParBAList
                 .SpaceAfter = C_DistParBAList
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = False
@@ -3730,7 +3684,7 @@ Private Function CreateStyle_ParListIndentB1Ms() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -3744,7 +3698,7 @@ Private Function CreateStyle_ParListIndentB1Ms() As Boolean
                 .FirstLineIndent = CentimetersToPoints(-0.3)
                 .SpaceBefore = C_DistParBAList
                 .SpaceAfter = C_DistParBAList
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = False
@@ -3790,7 +3744,6 @@ ShortcutError:
 
 End Function
 
-
 ' 2025-11-18 by ms
 Private Function CreateStyle_ParListIndent1Ms() As Boolean
     Dim NewStyle As style
@@ -3825,7 +3778,7 @@ Private Function CreateStyle_ParListIndent1Ms() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -3839,7 +3792,7 @@ Private Function CreateStyle_ParListIndent1Ms() As Boolean
                 .FirstLineIndent = CentimetersToPoints(-0.3)
                 .SpaceBefore = C_DistParBAList
                 .SpaceAfter = C_DistParBAList
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = False
@@ -3919,7 +3872,7 @@ Private Function CreateStyle_ParListHeadingMs() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Headings
-                .Size = 14
+                .Size = C_BaseFontSize + 3
                 .Bold = False
                 .Italic = False
                 .color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)   ' in module Template
@@ -3933,7 +3886,7 @@ Private Function CreateStyle_ParListHeadingMs() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = 24
                 .SpaceAfter = 0
-                .LineSpacing = 14   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = True
@@ -3980,22 +3933,14 @@ ShortcutError:
 
 End Function
 
-
 ' 2025-11-18 by ms
 Private Function CreateStyle_ParLegendTableMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParLegendTableMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:      FileName = C_F_Macros
+    Dim ModuleName As String:    ModuleName = C_M_Styles
+    Dim MacroName As String:     MacroName = "CreateStyle_ParLegendTableMs"
+    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -4022,7 +3967,7 @@ Private Function CreateStyle_ParLegendTableMs() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = True
                 .Italic = False
                 .color = wdColorAutomatic
@@ -4036,7 +3981,7 @@ Private Function CreateStyle_ParLegendTableMs() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = 12
                 .SpaceAfter = 3
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = True
@@ -4087,17 +4032,10 @@ End Function
 Private Function CreateStyle_ParLegendPictureMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParLegendPictureMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParLegendPictureMs"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -4124,7 +4062,7 @@ Private Function CreateStyle_ParLegendPictureMs() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = True
                 .Italic = False
                 .color = wdColorAutomatic
@@ -4138,7 +4076,7 @@ Private Function CreateStyle_ParLegendPictureMs() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = 6
                 .SpaceAfter = 12
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = False
@@ -4184,22 +4122,14 @@ ShortcutError:
 
 End Function
 
-
 ' 2025-11-18 by ms
 Private Function CreateStyle_ParLegalNoteMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParLegalNoteMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:      FileName = C_F_Macros
+    Dim ModuleName As String:    ModuleName = C_M_Styles
+    Dim MacroName As String:     MacroName = "CreateStyle_ParLegalNoteMs"
+    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -4226,7 +4156,7 @@ Private Function CreateStyle_ParLegalNoteMs() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent6, TintAndShade:=0)   ' in module Template
@@ -4240,7 +4170,7 @@ Private Function CreateStyle_ParLegalNoteMs() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = 0
                 .SpaceAfter = 6
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = False
@@ -4290,17 +4220,10 @@ End Function
 Private Function CreateStyle_ParInTableMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParInTableMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParInTableMs"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -4327,7 +4250,7 @@ Private Function CreateStyle_ParInTableMs() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -4341,7 +4264,7 @@ Private Function CreateStyle_ParInTableMs() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = 3
                 .SpaceAfter = 3
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = False
@@ -4391,17 +4314,10 @@ End Function
 Private Function CreateStyle_ParHeading8ms() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParHeading8ms"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParHeading8ms"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -4428,7 +4344,7 @@ Private Function CreateStyle_ParHeading8ms() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Headings
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)   ' in module Template
@@ -4442,7 +4358,7 @@ Private Function CreateStyle_ParHeading8ms() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = 24
                 .SpaceAfter = 6
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = True
@@ -4487,22 +4403,14 @@ ShortcutError:
 
 End Function
 
-
 ' 2025-11-18 by ms
 Private Function CreateStyle_ParHeading7ms() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParHeading7ms"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParHeading7ms"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -4529,7 +4437,7 @@ Private Function CreateStyle_ParHeading7ms() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Headings
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)   ' in module Template
@@ -4543,7 +4451,7 @@ Private Function CreateStyle_ParHeading7ms() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = 24
                 .SpaceAfter = 6
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = True
@@ -4592,17 +4500,10 @@ End Function
 Private Function CreateStyle_ParHeading6ms() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParHeading6ms"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParHeading6ms"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -4629,7 +4530,7 @@ Private Function CreateStyle_ParHeading6ms() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Headings
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)   ' in module Template
@@ -4643,7 +4544,7 @@ Private Function CreateStyle_ParHeading6ms() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = 24
                 .SpaceAfter = 6
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = True
@@ -4688,22 +4589,14 @@ ShortcutError:
 
 End Function
 
-
 ' 2025-11-18 by ms
 Private Function CreateStyle_ParHeading5ms() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParHeading5ms"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParHeading5ms"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -4730,7 +4623,7 @@ Private Function CreateStyle_ParHeading5ms() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Headings
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)   ' in module Template
@@ -4744,7 +4637,7 @@ Private Function CreateStyle_ParHeading5ms() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = 24
                 .SpaceAfter = 6
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = True
@@ -4789,22 +4682,14 @@ ShortcutError:
 
 End Function
 
-
 ' 2025-11-18 by ms
 Private Function CreateStyle_ParHeading4ms() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParHeading4ms"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParHeading4ms"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -4831,7 +4716,7 @@ Private Function CreateStyle_ParHeading4ms() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Headings
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)   ' in module Template
@@ -4845,7 +4730,7 @@ Private Function CreateStyle_ParHeading4ms() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = 24
                 .SpaceAfter = 6
-                .LineSpacing = 11   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = True
@@ -4890,22 +4775,14 @@ ShortcutError:
 
 End Function
 
-
 ' 2025-11-18 by ms
 Private Function CreateStyle_ParHeading3ms() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParHeading3ms"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParHeading3ms"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -4932,7 +4809,7 @@ Private Function CreateStyle_ParHeading3ms() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Headings
-                .Size = 12
+                .Size = C_BaseFontSize + 2
                 .Bold = False
                 .Italic = False
                 .color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)   ' in module Template
@@ -4946,7 +4823,7 @@ Private Function CreateStyle_ParHeading3ms() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = 26
                 .SpaceAfter = 6
-                .LineSpacing = 12   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceExactly
                 .WidowControl = True
                 .KeepWithNext = True
@@ -4991,7 +4868,6 @@ ShortcutError:
 
 End Function
 
-
 ' 2025-11-17 by ms
 Private Function CreateStyle_ParHeading2ms() As Boolean
     Dim NewStyle As style
@@ -5026,7 +4902,7 @@ Private Function CreateStyle_ParHeading2ms() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Headings
-                .Size = 13
+                .Size = C_BaseFontSize + 2
                 .Bold = False
                 .Italic = False
                 .color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)   ' in module Template
@@ -5089,17 +4965,10 @@ End Function
 Private Function CreateStyle_ParHeading1ms() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParHeading1ms"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:      FileName = C_F_Macros
+    Dim ModuleName As String:    ModuleName = C_M_Styles
+    Dim MacroName As String:     MacroName = "CreateStyle_ParHeading1ms"
+    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -5126,7 +4995,7 @@ Private Function CreateStyle_ParHeading1ms() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Headings
-                .Size = 14
+                .Size = C_BaseFontSize + 3
                 .Bold = False
                 .Italic = False
                 .color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)   ' in module Template
@@ -5140,7 +5009,7 @@ Private Function CreateStyle_ParHeading1ms() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = 24
                 .SpaceAfter = 6
-                .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
+                .LineSpacing = NewStyle.font.Size  ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = wdLineSpaceAtLeast
                 .WidowControl = True
                 .KeepWithNext = True
@@ -5220,7 +5089,7 @@ Private Function CreateStyle_Normal() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -5313,7 +5182,7 @@ Private Function CreateStyle_ParNormalMs() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -5377,17 +5246,10 @@ End Function
 Private Function CreateStyle_ParSourceCodeMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParSourceCodeMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:      FileName = C_F_Macros
+    Dim ModuleName As String:    ModuleName = C_M_Styles
+    Dim MacroName As String:     MacroName = "CreateStyle_ParSourceCodeMs"
+    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -5414,7 +5276,7 @@ Private Function CreateStyle_ParSourceCodeMs() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_AntiHomoglyph
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -5483,17 +5345,10 @@ End Function
 Private Function CreateStyle_ParPictureCanvaMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParPictureCanvaMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParPictureCanvaMs"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -5520,7 +5375,7 @@ Private Function CreateStyle_ParPictureCanvaMs() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -5534,7 +5389,7 @@ Private Function CreateStyle_ParPictureCanvaMs() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = 12
                 .SpaceAfter = 6
-                .LineSpacingRule = wdLineSpaceSingle        ' exception for this style
+                .LineSpacingRule = wdLineSpaceSingle        ' exception for this style, without it pictures / canvas are strangly inserted in document content
                 .WidowControl = True
                 .KeepWithNext = True
                 .KeepTogether = False
@@ -5581,17 +5436,10 @@ End Function
 Private Function CreateStyle_ParIconMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParIconMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParIconMs"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -5618,7 +5466,7 @@ Private Function CreateStyle_ParIconMs() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -5632,7 +5480,7 @@ Private Function CreateStyle_ParIconMs() As Boolean
                 .FirstLineIndent = 0
                 .SpaceBefore = 0
                 .SpaceAfter = 0
-                .LineSpacingRule = wdLineSpaceSingle        ' exception for this style
+                .LineSpacingRule = wdLineSpaceSingle        ' exception for this style, without it pictures are strangly inserted in document content
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -5675,22 +5523,14 @@ ShortcutError:
     Resume Next
 End Function
 
-
 ' 2025-10-07 by ms
 Private Function CreateStyle_ParNormalZeroMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParNormalZeroMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParNormalZeroMs"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -5717,7 +5557,7 @@ Private Function CreateStyle_ParNormalZeroMs() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -5780,17 +5620,10 @@ End Function
 Private Function CreateStyle_ParNormalBelowMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParNormalBelowMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParNormalBelowMs"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -5817,7 +5650,7 @@ Private Function CreateStyle_ParNormalBelowMs() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -5881,17 +5714,10 @@ End Function
 Private Function CreateStyle_ParNormalAboveMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParNormalAboveMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParNormalAboveMs"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -5918,7 +5744,7 @@ Private Function CreateStyle_ParNormalAboveMs() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -5982,17 +5808,10 @@ End Function
 Private Function CreateStyle_ParNormalAboveBelowMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_ParNormalAboveBelowMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_ParNormalAboveBelowMs"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the style already exists in the document
     ' If an error occurs, skip the line that caused the error and continue with the next line of code.
@@ -6019,7 +5838,7 @@ Private Function CreateStyle_ParNormalAboveBelowMs() As Boolean
             ' Font formatting
             With .font
                 .Name = C_FT_Body
-                .Size = 11
+                .Size = C_BaseFontSize
                 .Bold = False
                 .Italic = False
                 .color = wdColorAutomatic
@@ -6255,7 +6074,6 @@ StyleError:
     CreateStyle_CharHiddenMs = False
 End Function
 
-
 ' 2025-11-19 by ms
 Private Function CreateStyle_CharItalicMs() As Boolean
     Dim NewStyle As style
@@ -6324,7 +6142,7 @@ Private Function CreateStyle_CharLegalNoteMs() As Boolean
     If Not NewStyle Is Nothing Then
         With NewStyle.font
             .Name = C_FT_Body        ' Font name, optional for Character style type definition
-            .Size = 11               ' Font size, optional for Character style type definition
+            .Size = C_BaseFontSize               ' Font size, optional for Character style type definition
             '.Bold = False             ' Bold text
             '.Strikethrough = True
             '.Italic = True
@@ -6370,7 +6188,7 @@ Private Function CreateStyle_CharSourceCodeMs() As Boolean
     If Not NewStyle Is Nothing Then
         With NewStyle.font
             .Name = C_FT_AntiHomoglyph  ' Font name, optional for Character style type definition
-            .Size = 11                  ' Font size, optional for Character style type definition
+            .Size = C_BaseFontSize                  ' Font size, optional for Character style type definition
             '.Bold = False              ' Bold text
             '.Strikethrough = True
             '.Italic = True
@@ -6391,7 +6209,6 @@ StyleError:
         Title:=MsgBoxTitle
     CreateStyle_CharSourceCodeMs = False
 End Function
-
 
 ' 2025-11-19 by ms
 Private Function CreateStyle_CharUnderlineMs() As Boolean
@@ -6441,17 +6258,10 @@ End Function
 Private Function CreateStyle_TabTableMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_TabTableMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_TabTableMs"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Create or get the style
     On Error Resume Next
@@ -6543,17 +6353,10 @@ End Function
 Private Function CreateStyle_TabTableNoGridMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_TabTableNoGridMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_TabTableNoGridMs"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Create or get the style
     On Error Resume Next
@@ -6588,17 +6391,10 @@ End Function
 Private Function CreateStyle_TabTableNoPaddingMs() As Boolean
     Dim NewStyle As style
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Styles
-    
-    Dim MacroName As String
-    MacroName = "CreateStyle_TabTableNoPaddingMs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "CreateStyle_TabTableNoPaddingMs"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Create or get the style
     On Error Resume Next
@@ -7374,10 +7170,10 @@ End Sub
 
 ' Returns True if styleName matches any second element (Style Name) in the given table (2D Variant-of-Variants)
 ' 2025-12-08 by ms and AI
-Private Function IsAllowedStyleName(ByVal StyleName As String, ByVal tableArr As Variant) As Boolean
+Private Function IsAllowedStyleName(ByVal styleName As String, ByVal tableArr As Variant) As Boolean
     Dim i As Long
     Dim s As String, query As String
-    query = LCase$(Trim$(StyleName))
+    query = LCase$(Trim$(styleName))
     On Error GoTo Bail
     For i = LBound(tableArr) To UBound(tableArr)
         s = LCase$(Trim$(tableArr(i)(1))) ' second element holds the Style Name
@@ -7393,18 +7189,18 @@ End Function
 ' 2026-01-02 by ms and AI
 Private Sub ResetTOCStylesNumbering()
     Dim i As Integer
-    Dim StyleName As Variant
+    Dim styleName As Variant
     Dim stylesToClean As Variant
     
     ' Lista stylów do wyczyszczenia
     stylesToClean = Array(wdStyleTOC1, wdStyleTOC2, wdStyleTOC3)
     
-    For Each StyleName In stylesToClean
-        With ActiveDocument.Styles(StyleName)
+    For Each styleName In stylesToClean
+        With ActiveDocument.Styles(styleName)
             ' To polecenie całkowicie usuwa powiązanie stylu z jakąkolwiek listą
             .LinkToListTemplate ListTemplate:=Nothing
         End With
-    Next StyleName
+    Next styleName
     
     ' Odśwież spis treści
     If ActiveDocument.TablesOfContents.count > 0 Then

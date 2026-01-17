@@ -102,6 +102,7 @@ Public Const C_LT_TOC As String = "MultilevelList Table of Content ms"
 ' Constants related to styles setting
 Public Const C_DistParBAList As Single = 3      ' Distance Before and After paragraph of a list
 Public Const C_BaseIndent As Single = 0.3       ' cm
+Public Const C_BaseFontSize As Single = 11      ' pt
 
 ' ===========================
 ' Character Styles Table
