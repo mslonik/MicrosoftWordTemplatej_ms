@@ -85,9 +85,6 @@ Const WS_SYSMENU = &H80000
 
 ' 2025-04-21 by ms, reworked
 Sub CreateActiveDocumentMacroShortcuts()
-    ' Set the customization context to the current document
-    Application.CustomizationContext = ActiveDocument
-
     ' Pripare all the shortcuts:
     Call Set_CommandShortcuts(IfMsgBox:="quiet")                       ' module: Shortcuts
     
@@ -1328,17 +1325,10 @@ End Sub
 Private Sub SetKeyBindingMacro(ByVal KeybShortcut As String, _
                                 ByVal WhichMacro As String, _
                                 ByVal IfMsgBox As String)
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Shortcuts
-    
-    Dim MacroName As String
-    MacroName = "SetKeyBindingMacro"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Shortcuts
+    Dim MacroName As String:    MacroName = "SetKeyBindingMacro"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     If LCase(IfMsgBox) <> "quiet" And LCase(IfMsgBox) <> "loud" Then
         MsgBox _
@@ -1354,6 +1344,9 @@ Private Sub SetKeyBindingMacro(ByVal KeybShortcut As String, _
         
     MyCode1 = ParseKeyCode1(KeybShortcut)
     MyCode2 = ParseKeyCode2(KeybShortcut)
+    
+    ' Set the customization context to the current document
+    Application.CustomizationContext = ActiveDocument
     
     ' Loop through all key bindings
     For Each kb In Application.KeyBindings
