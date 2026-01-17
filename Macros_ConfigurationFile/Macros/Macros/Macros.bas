@@ -472,6 +472,8 @@ Sub ListMacros()
     Set vbCodeMod = Nothing
 End Sub
 
+' If you get compilation error, enable manually: Tools > References > Microsoft Visual Basic for Applications Extensibility 5.3
+' Read the very top comments in this file.
 Function GetComponentType(compType As VBIDE.vbext_ComponentType) As String
     Select Case compType
         Case vbext_ct_StdModule
