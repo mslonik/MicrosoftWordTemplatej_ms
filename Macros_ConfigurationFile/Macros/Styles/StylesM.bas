@@ -26,6 +26,8 @@ Attribute VB_Name = "StylesM"
 '| 15 | AttachTheme                        | Styles_ms   | Theme            | AttachTheme                        |
 '+----+------------------------------------+-------------+------------------+------------------------------------+
 '
+' ShowListTemplates
+' ResetAllListGalleries
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '
 '   16. InsertTextAtBeginningOfListParagraphs() -> RemoveTextFromBeginningOfListParagraphs()
@@ -88,11 +90,12 @@ Attribute VB_Name = "StylesM"
 'CreateStyle_CharUnderlineMs
 '
 ' List Templates:
-'Create_LT_Headings()
-'Create_LT_NumOrd()
-'Create_LT_Bullets()
-'Create_LT_SingleLevelListNumRefMs()
+'Create_LT_Headings
+'Create_LT_NumOrd
+'Create_LT_Bullets
+'Create_LT_SingleLevelListNumRefMs
 'Create_LT_SingleLevelListInTableMs
+'Create_LT_ToC
 '
 ' Table styles:
 'CreateStyle_TabTableMs()
@@ -2033,6 +2036,30 @@ Sub CreateCustomStyles()
         Title:=MsgBoxTitle
 End Sub
 
+' 2026-01-18 by ms
+Sub ResetAllListGalleries()
+    Dim i As Integer
+    Dim g As Integer
+    
+    ' Word has 3 main list galleries: 1-bullets, 2-numbered, 3-multileveled
+    For g = 1 To 3
+        For i = 1 To 7 ' each gallery has 7 slots
+            ListGalleries(g).Reset (i)
+        Next i
+    Next g
+    
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "ResetAllListGalleries"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
+    MsgBox _
+        Prompt:="All List Template galleries are clear now" & vbNewLine, _
+        Buttons:=vbInformation + vbOKOnly, _
+        Title:=MsgBoxTitle
+
+End Sub
+
 ' 2025-11-24 by ms
 Sub ShowListTemplates()
     Dim lt As ListTemplate
@@ -2043,7 +2070,7 @@ Sub ShowListTemplates()
     Dim MacroName As String:    MacroName = "ShowListTemplates"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    msg = "List Templates in Active Document:" & vbNewLine & vbNewLine
+    msg = "List Templates in Active Document:" & vbNewLine
     
     For Each lt In ActiveDocument.ListTemplates
         msg = msg & lt.Name & vbNewLine
@@ -2056,6 +2083,7 @@ Sub ShowListTemplates()
 End Sub
 
 ' 2025-11-25 by ms
+' 2026-01-18 by ms
 Public Function Create_LT_SingleLevelListInTableMs() As Boolean
     Dim NewStyle As style
     Dim ListTemplate As ListTemplate
@@ -2087,23 +2115,25 @@ Public Function Create_LT_SingleLevelListInTableMs() As Boolean
 
    ' Configure Level 1
     With ListTemplate.ListLevels(1)
-        .NumberFormat = "%1."             ' custom format: 1., 2., 3., …
-        .TrailingCharacter = wdTrailingNone
+        .NumberFormat = "%1."                           ' custom format: 1., 2., 3., ...
         .NumberStyle = wdListNumberStyleArabic
+        .Alignment = wdListLevelAlignLeft
+        .TrailingCharacter = wdTrailingNone             ' wdTrailingNone | wdTrailingSpace | wdTrailingTab
         .NumberPosition = CentimetersToPoints(0)
         .TextPosition = CentimetersToPoints(0)
-        .Alignment = wdListLevelAlignLeft
+        '.TabPosition = .TextPosition
+        .StartAt = 1
+        .LinkedStyle = C_S_ListNumTable
         .font.Name = C_FT_Body
         .font.Size = C_BaseFontSize
         .font.color = wdColorAutomatic
-        .StartAt = 1
-        .LinkedStyle = C_S_ListNumTable
     End With
     
     Create_LT_SingleLevelListInTableMs = True
 End Function
 
 ' 2025-11-25 by ms
+' 2026-01-18 by ms
 Public Function Create_LT_SingleLevelListNumRefMs() As Boolean
     Dim NewStyle As style
     Dim ListTemplate As ListTemplate
@@ -2135,23 +2165,25 @@ Public Function Create_LT_SingleLevelListNumRefMs() As Boolean
 
    ' Configure Level 1
     With ListTemplate.ListLevels(1)
-        .NumberFormat = "[%1]."             ' custom format: [1]., [2]., [3]., …
-        .TrailingCharacter = wdTrailingNone
+        .NumberFormat = "[%1]."                 ' custom format: [1]., [2]., [3]., ...
         .NumberStyle = wdListNumberStyleArabic
-        .NumberPosition = CentimetersToPoints(0)
-        .TextPosition = CentimetersToPoints(0.9)
         .Alignment = wdListLevelAlignLeft
+        .TrailingCharacter = wdTrailingTab     ' wdTrailingNone | wdTrailingSpace | wdTrailingTab
+        .NumberPosition = CentimetersToPoints(0)
+        .TextPosition = CentimetersToPoints(C_ListTabPosL1)
+        .TabPosition = .TextPosition
+        .StartAt = 1
+        .LinkedStyle = C_S_ListNumRef
         .font.Name = C_FT_Body
         .font.Size = C_BaseFontSize
         .font.color = wdColorAutomatic
-        .StartAt = 1
-        .LinkedStyle = C_S_ListNumRef
     End With
     
     Create_LT_SingleLevelListNumRefMs = True
 End Function
 
 ' 2025-11-24 by ms
+' 2026-01-18 by ms
 Public Function Create_LT_Bullets() As Boolean
     Dim ListTemplate As ListTemplate
     Dim NumberFormat As String
@@ -2184,23 +2216,67 @@ Public Function Create_LT_Bullets() As Boolean
             OutlineNumbered:=True)
     End If
     
-    Dim i As Integer
-    For i = 1 To 4
-        ' Configure each level
-        With ListTemplate.ListLevels(i)
-            .NumberFormat = ChrW(&HBB)     ' Unicode for » (solid circle bullet)
-            .TrailingCharacter = wdTrailingNone
-            .NumberStyle = wdListNumberStyleBullet
-            .NumberPosition = CentimetersToPoints(i * C_BaseIndent)
-            .TextPosition = CentimetersToPoints(i * C_BaseIndent + 0.6)
-            .Alignment = wdListLevelAlignLeft
-            .StartAt = 1
-            .LinkedStyle = StyleNames(i - 1)
-            .font.Name = C_FT_Body
-            .font.Size = C_BaseFontSize
-            .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
-        End With
-    Next i
+    ' Configure each level
+    With ListTemplate.ListLevels(1)
+        .NumberFormat = ChrW(&HBB)                  ' Unicode for » (solid circle bullet)
+        .NumberStyle = wdListNumberStyleBullet
+        .Alignment = wdListLevelAlignLeft
+        .TrailingCharacter = wdTrailingTab             ' wdTrailingNone | wdTrailingSpace | wdTrailingTab
+        .NumberPosition = CentimetersToPoints(C_BaseIndent)
+        .TextPosition = CentimetersToPoints(C_ListTabPosL1)
+        .TabPosition = .TextPosition
+        .StartAt = 1
+        .LinkedStyle = StyleNames(0)
+        .font.Name = C_FT_Body
+        .font.Size = C_BaseFontSize
+        .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
+    End With
+        
+    With ListTemplate.ListLevels(2)
+        .NumberFormat = ChrW(&HBB)                  ' Unicode for » (solid circle bullet)
+        .NumberStyle = wdListNumberStyleBullet
+        .Alignment = wdListLevelAlignLeft
+        .TrailingCharacter = wdTrailingTab          ' wdTrailingNone | wdTrailingSpace | wdTrailingTab
+        .NumberPosition = CentimetersToPoints(2 * C_BaseIndent)
+        .TextPosition = CentimetersToPoints(C_ListTabPosL2)
+        .TabPosition = .TextPosition
+        .StartAt = 1
+        .LinkedStyle = StyleNames(1)
+        .font.Name = C_FT_Body
+        .font.Size = C_BaseFontSize
+        .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
+    End With
+    
+    With ListTemplate.ListLevels(3)
+        .NumberFormat = ChrW(&HBB)                  ' Unicode for » (solid circle bullet)
+        .NumberStyle = wdListNumberStyleBullet
+        .Alignment = wdListLevelAlignLeft
+        .TrailingCharacter = wdTrailingTab          ' wdTrailingNone | wdTrailingSpace | wdTrailingTab
+        .NumberPosition = CentimetersToPoints(3 * C_BaseIndent)
+        .TextPosition = CentimetersToPoints(C_ListTabPosL3)
+        .TabPosition = .TextPosition
+        .StartAt = 1
+        .LinkedStyle = StyleNames(2)
+        .font.Name = C_FT_Body
+        .font.Size = C_BaseFontSize
+        .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
+    End With
+        
+    With ListTemplate.ListLevels(4)
+        .NumberFormat = ChrW(&HBB)                  ' Unicode for » (solid circle bullet)
+        .NumberStyle = wdListNumberStyleBullet
+        .Alignment = wdListLevelAlignLeft
+        .TrailingCharacter = wdTrailingTab          ' wdTrailingNone | wdTrailingSpace | wdTrailingTab
+        .NumberPosition = CentimetersToPoints(4 * C_BaseIndent)
+        .TextPosition = CentimetersToPoints(C_ListTabPosL4)
+        .TabPosition = .TextPosition
+        .StartAt = 1
+        .LinkedStyle = StyleNames(3)
+        .font.Name = C_FT_Body
+        .font.Size = C_BaseFontSize
+        .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
+    End With
+                
                 
     Create_LT_Bullets = True
 End Function
@@ -2211,6 +2287,7 @@ End Function
 ' Remaining space after number is a mystery.
 ' Observe sub: Private Sub ResetTOCStylesNumbering()
 ' 2026-01-02 by ms
+' 2026-01-18 by ms
 Public Function Create_LT_ToC() As Boolean
     Dim ListTemplate As ListTemplate
     Dim NumberFormat As String
@@ -2238,50 +2315,30 @@ Public Function Create_LT_ToC() As Boolean
     
     ' Configure each level
     With ListTemplate.ListLevels(1)
-'        .NumberFormat = ""
-'        .TrailingCharacter = wdTrailingNone
-'        .NumberStyle = wdListNumberStyleNone
-'        .NumberPosition = CentimetersToPoints(0 * C_BaseIndent)
-        .TextPosition = CentimetersToPoints(1#)
-        .Alignment = wdListLevelAlignLeft
+'        .NumberPosition = CentimetersToPoints(0)
+'        .TabPosition = CentimetersToPoints(0)
+'        .TextPosition = CentimetersToPoints(0)
         .LinkedStyle = ActiveDocument.Styles(wdStyleTOC1).NameLocal
-'        .font.Name = C_FT_Body
-'        .font.Size = C_BaseFontSize
-'        .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
         
     With ListTemplate.ListLevels(2)
-'        .NumberFormat = ""
-'        .TrailingCharacter = wdTrailingNone
-'        .NumberStyle = wdListNumberStyleNone
 '        .NumberPosition = CentimetersToPoints(1 * C_BaseIndent)
-        .TextPosition = CentimetersToPoints(1.3)
-        .Alignment = wdListLevelAlignLeft
-        .StartAt = 1
+'        .TabPosition = .TextPosition
+'        .TextPosition = CentimetersToPoints(1#)
         .LinkedStyle = ActiveDocument.Styles(wdStyleTOC2).NameLocal
-'        .font.Name = C_FT_Body
-'        .font.Size = C_BaseFontSize
-'        .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
     
     With ListTemplate.ListLevels(3)
-'        .NumberFormat = ""
-'        .TrailingCharacter = wdTrailingNone
-'        .NumberStyle = wdListNumberStyleNone
 '        .NumberPosition = CentimetersToPoints(2 * C_BaseIndent)
-'        .TextPosition = CentimetersToPoints(1.6)
-        .Alignment = wdListLevelAlignLeft
-        .StartAt = 1
+'        .TextPosition = CentimetersToPoints(2#)
         .LinkedStyle = ActiveDocument.Styles(wdStyleTOC3).NameLocal
-'        .font.Name = C_FT_Body
-'        .font.Size = C_BaseFontSize
-'        .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)  ' in module Theme
     End With
                 
     Create_LT_ToC = True
 End Function
 
 ' 2025-11-22 by ms
+' 2026-01-18 by ms
 Public Function Create_LT_NumOrd() As Boolean
     Dim ListTemplate As ListTemplate
     Dim NumberFormat As String
@@ -2310,11 +2367,12 @@ Public Function Create_LT_NumOrd() As Boolean
     ' Configure each level
     With ListTemplate.ListLevels(1)
         .NumberFormat = "%1."
-        .TrailingCharacter = wdTrailingNone
         .NumberStyle = wdListNumberStyleArabic  '1., 2., 3., …
-        .NumberPosition = CentimetersToPoints(C_BaseIndent)
-        .TextPosition = CentimetersToPoints(1#)
         .Alignment = wdListLevelAlignLeft
+        .TrailingCharacter = wdTrailingTab             ' wdTrailingNone | wdTrailingSpace | wdTrailingTab
+        .NumberPosition = CentimetersToPoints(C_BaseIndent)
+        .TextPosition = CentimetersToPoints(C_ListTabPosL1)
+        .TabPosition = .TextPosition
         .StartAt = 1
         .LinkedStyle = C_S_ListLevel1
         .font.Name = C_FT_Body
@@ -2324,11 +2382,12 @@ Public Function Create_LT_NumOrd() As Boolean
         
     With ListTemplate.ListLevels(2)
         .NumberFormat = "%2."
-        .TrailingCharacter = wdTrailingNone
         .NumberStyle = wdListNumberStyleLowercaseLetter ' a., b., c., …
-        .NumberPosition = CentimetersToPoints(2 * C_BaseIndent)
-        .TextPosition = CentimetersToPoints(1.3)
         .Alignment = wdListLevelAlignLeft
+        .TrailingCharacter = wdTrailingTab          ' wdTrailingNone | wdTrailingSpace | wdTrailingTab
+        .NumberPosition = CentimetersToPoints(2 * C_BaseIndent)
+        .TextPosition = CentimetersToPoints(C_ListTabPosL2)
+        .TabPosition = .TextPosition
         .StartAt = 1
         .LinkedStyle = C_S_ListLevel2
         .font.Name = C_FT_Body
@@ -2338,11 +2397,12 @@ Public Function Create_LT_NumOrd() As Boolean
     
     With ListTemplate.ListLevels(3)
         .NumberFormat = "%3."
-        .TrailingCharacter = wdTrailingNone
         .NumberStyle = wdListNumberStyleLowercaseRoman ' i., ii., iii., …
-        .NumberPosition = CentimetersToPoints(3 * C_BaseIndent)
-        .TextPosition = CentimetersToPoints(1.6)
         .Alignment = wdListLevelAlignLeft
+        .TrailingCharacter = wdTrailingTab          ' wdTrailingNone | wdTrailingSpace | wdTrailingTab
+        .NumberPosition = CentimetersToPoints(3 * C_BaseIndent)
+        .TextPosition = CentimetersToPoints(C_ListTabPosL3)
+        .TabPosition = .TextPosition
         .StartAt = 1
         .LinkedStyle = C_S_ListLevel3
         .font.Name = C_FT_Body
@@ -2352,11 +2412,12 @@ Public Function Create_LT_NumOrd() As Boolean
         
     With ListTemplate.ListLevels(4)
         .NumberFormat = "00%4."
-        .TrailingCharacter = wdTrailingNone
         .NumberStyle = wdListNumberStyleArabic ' 001., 002., 003., …
-        .NumberPosition = CentimetersToPoints(4 * C_BaseIndent)
-        .TextPosition = CentimetersToPoints(1.9)
         .Alignment = wdListLevelAlignLeft
+        .TrailingCharacter = wdTrailingTab          ' wdTrailingNone | wdTrailingSpace | wdTrailingTab
+        .NumberPosition = CentimetersToPoints(4 * C_BaseIndent)
+        .TextPosition = CentimetersToPoints(C_ListTabPosL4)
+        .TabPosition = .TextPosition
         .StartAt = 1
         .LinkedStyle = C_S_ListLevel4
         .font.Name = C_FT_Body
@@ -2368,11 +2429,13 @@ Public Function Create_LT_NumOrd() As Boolean
 End Function
 
 ' 2025-11-22 by ms
+' 2026-01-18 by ms
 Public Function Create_LT_Headings() As Boolean
     Dim ListTemplate As ListTemplate
     Dim i As Integer, j As Integer
     Dim NumberFormat As String
     Dim StyleNames As Variant
+    Dim SafetyMargin As Double
     
     ' Define heading styles for each level
     StyleNames = Array( _
@@ -2412,17 +2475,37 @@ Public Function Create_LT_Headings() As Boolean
             NumberFormat = NumberFormat & "%" & j & "."
         Next j
         
+        ' Dynamic approach, different separator for different levels, defined by trial and error approach
+        Select Case i
+            Case 1
+                SafetyMargin = 1#   ' (eg. 1)
+            Case 2
+                SafetyMargin = 1.5  ' (eg. 1.2.)
+            Case 3
+                SafetyMargin = 2#  ' (eg. 1.2.3.)
+            Case 4
+                SafetyMargin = 2.5  ' (eg. 1.2.3.4.)
+            Case 5
+                SafetyMargin = 3#  ' (eg. 1.2.3.4.5.)
+            Case 6
+                SafetyMargin = 3.5  ' (eg. 1.2.3.4.5.6.)
+            Case 7
+                SafetyMargin = 4#   ' (eg. 1.2.3.4.5.6.7.)
+            Case 8
+                SafetyMargin = 4.5   ' (eg. 1.2.3.4.5.6.7.8.)
+        End Select
+        
         With ListTemplate.ListLevels(i)
             .NumberFormat = NumberFormat
-            .TrailingCharacter = wdTrailingNone
             .NumberStyle = wdListNumberStyleArabic
-            .NumberPosition = CentimetersToPoints((i - 1) * C_BaseIndent)
             .Alignment = wdListLevelAlignLeft
-            .TextPosition = CentimetersToPoints(1# + (i - 1) * C_BaseIndent)
+            .TrailingCharacter = wdTrailingTab ' wdTrailingNone | wdTrailingSpace | wdTrailingTab
+            .NumberPosition = CentimetersToPoints((i - 1) * C_BaseIndent)
+            .TabPosition = CentimetersToPoints(SafetyMargin + (i - 1) * C_BaseIndent)
+            .TextPosition = .TabPosition
             .ResetOnHigher = i - 1
             .StartAt = 1
             .LinkedStyle = StyleNames(i - 1)
-            
             ' Apply font and color for number formatting
             .font.Name = C_FT_Headings
             .font.color = GetThemeColor(ThemeColorIndex:=wdThemeColorAccent1, TintAndShade:=0)   ' in module Template
@@ -2763,10 +2846,10 @@ Private Function CreateStyle_TOC3() As Boolean
         
         ' Paragraph formatting
         With .ParagraphFormat
-            .Alignment = wdAlignParagraphLeft
-            .LeftIndent = CentimetersToPoints(1.2)
+'            .Alignment = wdAlignParagraphLeft
+            .LeftIndent = CentimetersToPoints(2 * C_BaseIndent)
             .RightIndent = CentimetersToPoints(0)
-            .FirstLineIndent = 0
+'            .FirstLineIndent = CentimetersToPoints(-2 * C_BaseIndent)
             .SpaceBefore = 0
             .SpaceAfter = 0
             .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
@@ -2854,10 +2937,10 @@ Private Function CreateStyle_TOC2() As Boolean
         
         ' Paragraph formatting
         With .ParagraphFormat
-            .Alignment = wdAlignParagraphLeft
-            .LeftIndent = CentimetersToPoints(0.8)
+'            .Alignment = wdAlignParagraphLeft
+            .LeftIndent = CentimetersToPoints(1 * C_BaseIndent)
             .RightIndent = CentimetersToPoints(0)
-            .FirstLineIndent = CentimetersToPoints(-0.8)
+'            .FirstLineIndent = CentimetersToPoints(-1 * C_BaseIndent)
             .SpaceBefore = 0
             .SpaceAfter = 0
             .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
@@ -2899,6 +2982,7 @@ End Function
 
 ' Exception: built-in styles, which I modify. This is the only way which I know to keep Table of Content functionality of Microsoft Word.
 ' 2025-11-22 by ms
+' 2026-01-18 by ms
 Private Function CreateStyle_TOC1() As Boolean
     Dim NewStyle As style
     
@@ -2946,12 +3030,12 @@ Private Function CreateStyle_TOC1() As Boolean
         
         ' Paragraph formatting
         With .ParagraphFormat
-            .Alignment = wdAlignParagraphLeft
-            .LeftIndent = CentimetersToPoints(0.4)
+'            .Alignment = wdAlignParagraphLeft
+            .LeftIndent = CentimetersToPoints(0)
             .RightIndent = CentimetersToPoints(0)
-            .FirstLineIndent = CentimetersToPoints(-0.4)
-            .SpaceBefore = 0
-            .SpaceAfter = 6
+'            .FirstLineIndent = CentimetersToPoints(-C_BaseIndent)
+            .SpaceBefore = 3
+            .SpaceAfter = 3
             .LineSpacing = NewStyle.font.Size ' order matters: specify at first LineSpacing, next LineSpacingRule
             .LineSpacingRule = wdLineSpaceExactly
             .WidowControl = True

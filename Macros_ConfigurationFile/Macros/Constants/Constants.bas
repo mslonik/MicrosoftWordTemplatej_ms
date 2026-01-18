@@ -101,8 +101,17 @@ Public Const C_LT_TOC As String = "MultilevelList Table of Content ms"
 
 ' Constants related to styles setting
 Public Const C_DistParBAList As Single = 3      ' Distance Before and After paragraph of a list
-Public Const C_BaseIndent As Single = 0.3       ' cm
+Public Const C_BaseIndent As Single = 0.3      ' cm
 Public Const C_BaseFontSize As Single = 11      ' pt
+Public Const C_TabStopCust As Double = 1#       ' cm
+Public Const C_ListTabPosL1 As Single = 1#      ' cm
+Public Const C_ListTabPosL2 As Single = 1.5     ' cm
+Public Const C_ListTabPosL3 As Single = 2#      ' cm
+Public Const C_ListTabPosL4 As Single = 2.5     ' cm
+
+' C = Constant
+Public Const C_PointsToCm As Single = 0.0352778
+Public Const C_TabStopDef As Double = 1.25                 ' cm
 
 ' ===========================
 ' Character Styles Table
@@ -120,9 +129,6 @@ Public TableStyles As Variant
 ' List Templates Table
 ' ===========================
 Public ListTemplates As Variant
-
-' C = Constant
-Public Const C_PointsToCm As Single = 0.0352778
 
 ' C_BM = Constant BookMarks
 Public Const C_BM_LastCursorPosition As String = "ms_LastCursorPosition"

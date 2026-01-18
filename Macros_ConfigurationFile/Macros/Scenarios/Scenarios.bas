@@ -28,17 +28,10 @@ End Sub
 ' In order to work, headings styles 1 ÷ 8 must be correctly setup with zero length space between number and text.
 ' 2025-03-09 by ms
 Sub ResetDistanceBetweenNumberingAndHeading()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Scenarios
-    
-    Dim MacroName As String
-    MacroName = "ResetDistanceBetweenNumberingAndHeading"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Scenarios
+    Dim MacroName As String:    MacroName = "ResetDistanceBetweenNumberingAndHeading"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Dim UserDecision As VbMsgBoxResult
     Beep
@@ -62,22 +55,16 @@ End Sub
 ' This macro is linked to Ctrl + S keyboard shortcut. Each time user runs it, it enters specific text character (em space) at the beginning of each paragraph style type list.
 ' Then the built-in command Save is run.
 ' 2025-03-09 by ms and AI
+' 2026-01-17 by ms
 Sub ApplyDistanceBetweenNumberingAndHeading()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Scenarios
-    
-    Dim MacroName As String
-    MacroName = "ApplyDistanceBetweenNumberingAndHeading"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:    FileName = C_F_Macros
+    Dim ModuleName As String:    ModuleName = C_M_Scenarios
+    Dim MacroName As String:    MacroName = "ApplyDistanceBetweenNumberingAndHeading"
+    Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     ' Initialize em space constant as BetweenNumberAndText
-    Call InitializeConstants
-    Call InsertTextAtBeginningOfListParagraphs(textToInsert:=BetweenNumberAndText)  ' in Styles
+'    Call InitializeConstants
+'    Call InsertTextAtBeginningOfListParagraphs(textToInsert:=BetweenNumberAndText)  ' in Styles
     
     ' Enable error handling in case that user presses 'Cancel' button.
     On Error Resume Next
