@@ -2060,26 +2060,97 @@ Sub ResetAllListGalleries()
 
 End Sub
 
+' Shows only defined / named List Templates.
 ' 2025-11-24 by ms
-Sub ShowListTemplates()
+' 2026-01-19 by ms
+Sub ListTemplatesShowNamed()
     Dim lt As ListTemplate
     Dim msg As String
+    Dim AllCounter As Integer: AllCounter = 0
+    Dim NamedCount As Integer: NamedCount = 0
+    Dim i As Integer
+    Dim lvl As ListLevel
     
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Styles
     Dim MacroName As String:    MacroName = "ShowListTemplates"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    msg = "List Templates in Active Document:" & vbNewLine
+    msg = "List Templates in Active Document:" & vbNewLine & vbNewLine
     
     For Each lt In ActiveDocument.ListTemplates
-        msg = msg & lt.Name & vbNewLine
+        If lt.Name <> "" Then
+            NamedCount = NamedCount + 1
+            msg = msg & NamedCount & ". LT Name: " & lt.Name & vbNewLine
+            
+            For i = 1 To lt.ListLevels.count
+                Set lvl = lt.ListLevels(i)
+                If lvl.LinkedStyle <> "" Then
+                    
+                    msg = msg & "   - Lvl " & i & " LinkedStyle: " & lvl.LinkedStyle & vbNewLine
+                End If
+            Next i
+            msg = msg & vbNewLine
+        Else
+            AllCounter = AllCounter + 1
+        End If
     Next lt
     
     MsgBox _
-        Prompt:=msg, _
+        Prompt:=msg & vbNewLine & _
+            "All ListTemplates in document: " & AllCounter, _
         Buttons:=vbInformation, _
         Title:=MsgBoxTitle
+End Sub
+
+' List, create file, only defined / named List Templates.
+' 2025-11-24 by ms
+' 2026-01-19 by ms
+Sub ListTemplatesListNamed()
+    Dim lt As ListTemplate
+    Dim msg As String
+    Dim AllCounter As Integer: AllCounter = 0
+    Dim NamedCount As Integer: NamedCount = 0
+    Dim i As Integer
+    Dim lvl As ListLevel
+    
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Styles
+    Dim MacroName As String:    MacroName = "ShowListTemplates"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
+    msg = "List Templates in Active Document:" & vbNewLine & vbNewLine
+    
+    For Each lt In ActiveDocument.ListTemplates
+        If lt.Name <> "" Then
+            NamedCount = NamedCount + 1
+            msg = msg & NamedCount & ". LT Name: " & lt.Name & vbNewLine
+            
+            For i = 1 To lt.ListLevels.count
+                Set lvl = lt.ListLevels(i)
+                If lvl.LinkedStyle <> "" Then
+                    
+                    msg = msg & "   - Lvl " & i & " LinkedStyle: " & lvl.LinkedStyle & vbNewLine
+                End If
+            Next i
+            msg = msg & vbNewLine
+        Else
+            AllCounter = AllCounter + 1
+        End If
+    Next lt
+    
+    MsgBox _
+        Prompt:=msg & vbNewLine & _
+            "All ListTemplates in document: " & AllCounter, _
+        Buttons:=vbInformation, _
+        Title:=MsgBoxTitle
+End Sub
+
+
+' Unlink specific style from ListTemplate
+' 2026-01-21 by ms
+Sub ListTemplatesUnlinkStyle()
+    ActiveDocument.Styles("List Paragraph").LinkToListTemplate Nothing
 End Sub
 
 ' 2025-11-25 by ms
