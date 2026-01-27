@@ -26,7 +26,8 @@ Attribute VB_Name = "StylesM"
 '| 15 | AttachTheme                        | Styles_ms   | Theme            | AttachTheme                        |
 '+----+------------------------------------+-------------+------------------+------------------------------------+
 '
-' ShowListTemplates
+' ListTemplatesShowNamed
+' ListTemplatesListAll
 ' ResetAllListGalleries
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '
@@ -308,8 +309,6 @@ End Sub
 ' Because the built-in styles cannot be deleted, this macro lists all built-in styles.
 ' Created by AI and ms on 2025-02-19.
 Sub ListBuiltInStyles()
-    Dim doc As Document
-    Dim TemplatePath As String
     Dim style As style
     Dim BuiltInStyles As String
     Dim counter As Integer
@@ -319,17 +318,11 @@ Sub ListBuiltInStyles()
     Dim MacroName As String:    MacroName = "ListBuiltInStyles"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    ' Get the currently active document
-    Set doc = ActiveDocument
-    
-    ' Get the path of the template attached to the document
-    TemplatePath = doc.AttachedTemplate.FullName
-    
     ' Initialize the deleted styles string and counters
     counter = 1
     
     ' Loop through all styles in the document
-    For Each style In doc.Styles
+    For Each style In ActiveDocument.Styles
         If style.BuiltIn Then
                 BuiltInStyles = BuiltInStyles & counter & ". " & style.NameLocal & vbCrLf
                 counter = counter + 1
@@ -338,8 +331,6 @@ Sub ListBuiltInStyles()
     
     Call SaveLog(MacroName:=MacroName, LoggedParameter:=BuiltInStyles)
     
-    ' Clear object variables
-    Set doc = Nothing
 End Sub
 
 Private Function IsInCollection(coll As Collection, item As Variant) As Boolean
@@ -1977,19 +1968,7 @@ Sub CreateCustomStyles()
     Else
         ListTemplateCounter = ListTemplateCounter + 1
     End If
-    
-    IsSuccessful = Create_LT_ToC
-    If IsSuccessful = False Then
-        MsgBox _
-            Prompt:="Error on time of creation the 'list template' " & vbNewLine & C_LT_TOC & vbNewLine & ". Exiting.", _
-            Buttons:=vbCritical, _
-            Title:=MsgBoxTitle
-        Exit Sub
-    Else
-        ListTemplateCounter = ListTemplateCounter + 1
-    End If
-    
-    
+        
     ' Table styles:
     IsSuccessful = CreateStyle_TabTableMs()
     If IsSuccessful = False Then
@@ -2086,7 +2065,6 @@ Sub ListTemplatesShowNamed()
             For i = 1 To lt.ListLevels.count
                 Set lvl = lt.ListLevels(i)
                 If lvl.LinkedStyle <> "" Then
-                    
                     msg = msg & "   - Lvl " & i & " LinkedStyle: " & lvl.LinkedStyle & vbNewLine
                 End If
             Next i
@@ -2103,10 +2081,9 @@ Sub ListTemplatesShowNamed()
         Title:=MsgBoxTitle
 End Sub
 
-' List, create file, only defined / named List Templates.
-' 2025-11-24 by ms
-' 2026-01-19 by ms
-Sub ListTemplatesListNamed()
+' Log in the file all List Templates together with linked styles.
+' 2026-01-26 by ms
+Sub ListTemplatesListAll()
     Dim lt As ListTemplate
     Dim msg As String
     Dim AllCounter As Integer: AllCounter = 0
@@ -2114,12 +2091,7 @@ Sub ListTemplatesListNamed()
     Dim i As Integer
     Dim lvl As ListLevel
     
-    Dim FileName As String:     FileName = C_F_Macros
-    Dim ModuleName As String:   ModuleName = C_M_Styles
-    Dim MacroName As String:    MacroName = "ShowListTemplates"
-    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
-    msg = "List Templates in Active Document:" & vbNewLine & vbNewLine
+    Dim MacroName As String:    MacroName = "ListTemplatesListAll"
     
     For Each lt In ActiveDocument.ListTemplates
         If lt.Name <> "" Then
@@ -2129,7 +2101,6 @@ Sub ListTemplatesListNamed()
             For i = 1 To lt.ListLevels.count
                 Set lvl = lt.ListLevels(i)
                 If lvl.LinkedStyle <> "" Then
-                    
                     msg = msg & "   - Lvl " & i & " LinkedStyle: " & lvl.LinkedStyle & vbNewLine
                 End If
             Next i
@@ -2139,18 +2110,16 @@ Sub ListTemplatesListNamed()
         End If
     Next lt
     
-    MsgBox _
-        Prompt:=msg & vbNewLine & _
-            "All ListTemplates in document: " & AllCounter, _
-        Buttons:=vbInformation, _
-        Title:=MsgBoxTitle
+    Call SaveLog(MacroName:=MacroName, LoggedParameter:=msg)
+    
 End Sub
-
 
 ' Unlink specific style from ListTemplate
 ' 2026-01-21 by ms
 Sub ListTemplatesUnlinkStyle()
-    ActiveDocument.Styles("List Paragraph").LinkToListTemplate Nothing
+    ActiveDocument.Styles("TOC 1").LinkToListTemplate Nothing
+    ActiveDocument.Styles("TOC 2").LinkToListTemplate Nothing
+    ActiveDocument.Styles("TOC 3").LinkToListTemplate Nothing
 End Sub
 
 ' 2025-11-25 by ms
@@ -2352,62 +2321,6 @@ Public Function Create_LT_Bullets() As Boolean
     Create_LT_Bullets = True
 End Function
 
-' Create dedicated List Template just for ToC 1 to ToC 3.
-' I define only indentations, no numbering. Numbering is inherited just from the field definition, I suppose:
-'{ TOC \h \z \t \u "ParListHeading ms;1;ParHeading 1ms;1;ParHeading 2 ms;2;ParHeading 3 ms;3" }
-' Remaining space after number is a mystery.
-' Observe sub: Private Sub ResetTOCStylesNumbering()
-' 2026-01-02 by ms
-' 2026-01-18 by ms
-Public Function Create_LT_ToC() As Boolean
-    Dim ListTemplate As ListTemplate
-    Dim NumberFormat As String
-    Dim StyleNames As Variant
-    
-    ' Check if template already exists in gallery
-    Dim lt As ListTemplate
-    Dim FlagFound As Boolean
-    FlagFound = False
-    
-    For Each lt In ActiveDocument.ListTemplates
-        If lt.Name = C_LT_TOC Then
-            Set ListTemplate = lt
-            FlagFound = True
-            Exit For
-        End If
-    Next lt
-    
-    ' If not found, create new template in Outline Numbered gallery
-    If Not FlagFound Then
-        Set ListTemplate = ActiveDocument.ListTemplates.Add( _
-            Name:=C_LT_TOC, _
-            OutlineNumbered:=True)
-    End If
-    
-    ' Configure each level
-    With ListTemplate.ListLevels(1)
-'        .NumberPosition = CentimetersToPoints(0)
-'        .TabPosition = CentimetersToPoints(0)
-'        .TextPosition = CentimetersToPoints(0)
-        .LinkedStyle = ActiveDocument.Styles(wdStyleTOC1).NameLocal
-    End With
-        
-    With ListTemplate.ListLevels(2)
-'        .NumberPosition = CentimetersToPoints(1 * C_BaseIndent)
-'        .TabPosition = .TextPosition
-'        .TextPosition = CentimetersToPoints(1#)
-        .LinkedStyle = ActiveDocument.Styles(wdStyleTOC2).NameLocal
-    End With
-    
-    With ListTemplate.ListLevels(3)
-'        .NumberPosition = CentimetersToPoints(2 * C_BaseIndent)
-'        .TextPosition = CentimetersToPoints(2#)
-        .LinkedStyle = ActiveDocument.Styles(wdStyleTOC3).NameLocal
-    End With
-                
-    Create_LT_ToC = True
-End Function
-
 ' 2025-11-22 by ms
 ' 2026-01-18 by ms
 Public Function Create_LT_NumOrd() As Boolean
@@ -2549,11 +2462,11 @@ Public Function Create_LT_Headings() As Boolean
         ' Dynamic approach, different separator for different levels, defined by trial and error approach
         Select Case i
             Case 1
-                SafetyMargin = 1#   ' (eg. 1)
+                SafetyMargin = 1#    ' (eg. 1)
             Case 2
                 SafetyMargin = 1.5  ' (eg. 1.2.)
             Case 3
-                SafetyMargin = 2#  ' (eg. 1.2.3.)
+                SafetyMargin = 2#   ' (eg. 1.2.3.)
             Case 4
                 SafetyMargin = 2.5  ' (eg. 1.2.3.4.)
             Case 5
@@ -2561,7 +2474,7 @@ Public Function Create_LT_Headings() As Boolean
             Case 6
                 SafetyMargin = 3.5  ' (eg. 1.2.3.4.5.6.)
             Case 7
-                SafetyMargin = 4#   ' (eg. 1.2.3.4.5.6.7.)
+                SafetyMargin = 4#    ' (eg. 1.2.3.4.5.6.7.)
             Case 8
                 SafetyMargin = 4.5   ' (eg. 1.2.3.4.5.6.7.8.)
         End Select
@@ -2905,6 +2818,7 @@ Private Function CreateStyle_TOC3() As Boolean
         .AutomaticallyUpdate = False
         .QuickStyle = False
         .LanguageId = wdEnglishUS
+        .NoSpaceBetweenParagraphsOfSameStyle = True
         
         ' Font formatting
         With .font
@@ -2917,12 +2831,18 @@ Private Function CreateStyle_TOC3() As Boolean
         
         ' Paragraph formatting
         With .ParagraphFormat
-'            .Alignment = wdAlignParagraphLeft
-            .LeftIndent = CentimetersToPoints(2 * C_BaseIndent)
-            .RightIndent = CentimetersToPoints(0)
-'            .FirstLineIndent = CentimetersToPoints(-2 * C_BaseIndent)
-            .SpaceBefore = 0
-            .SpaceAfter = 0
+            .Alignment = wdAlignParagraphLeft
+            .LeftIndent = CentimetersToPoints(4 * C_BaseIndent)
+            .FirstLineIndent = CentimetersToPoints(-3 * C_BaseIndent)
+            .TabStops.ClearAll
+            .TabStops.Add Position:=CentimetersToPoints(0), _
+                            Alignment:=wdAlignTabLeft, _
+                            Leader:=wdTabLeaderSpaces
+            .TabStops.Add Position:=CentimetersToPoints(17.5), _
+                          Alignment:=wdAlignTabRight, _
+                          Leader:=wdTabLeaderDots
+            .SpaceBefore = 3
+            .SpaceAfter = 3
             .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
             .LineSpacingRule = wdLineSpaceExactly
             .WidowControl = True
@@ -3008,10 +2928,16 @@ Private Function CreateStyle_TOC2() As Boolean
         
         ' Paragraph formatting
         With .ParagraphFormat
-'            .Alignment = wdAlignParagraphLeft
-            .LeftIndent = CentimetersToPoints(1 * C_BaseIndent)
-            .RightIndent = CentimetersToPoints(0)
-'            .FirstLineIndent = CentimetersToPoints(-1 * C_BaseIndent)
+            .Alignment = wdAlignParagraphLeft
+            .LeftIndent = CentimetersToPoints(3 * C_BaseIndent)
+            .FirstLineIndent = CentimetersToPoints(-3 * C_BaseIndent)
+            .TabStops.ClearAll
+            .TabStops.Add Position:=CentimetersToPoints(0), _
+                            Alignment:=wdAlignTabLeft, _
+                            Leader:=wdTabLeaderSpaces
+            .TabStops.Add Position:=CentimetersToPoints(17.5), _
+                          Alignment:=wdAlignTabRight, _
+                          Leader:=wdTabLeaderDots
             .SpaceBefore = 0
             .SpaceAfter = 0
             .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
@@ -3101,10 +3027,16 @@ Private Function CreateStyle_TOC1() As Boolean
         
         ' Paragraph formatting
         With .ParagraphFormat
-'            .Alignment = wdAlignParagraphLeft
-            .LeftIndent = CentimetersToPoints(0)
-            .RightIndent = CentimetersToPoints(0)
-'            .FirstLineIndent = CentimetersToPoints(-C_BaseIndent)
+            .Alignment = wdAlignParagraphLeft
+            .LeftIndent = CentimetersToPoints(2 * C_BaseIndent)
+            .FirstLineIndent = CentimetersToPoints(-2 * C_BaseIndent)
+            .TabStops.ClearAll
+            .TabStops.Add Position:=CentimetersToPoints(0), _
+                            Alignment:=wdAlignTabLeft, _
+                            Leader:=wdTabLeaderSpaces
+            .TabStops.Add Position:=CentimetersToPoints(17.5), _
+                          Alignment:=wdAlignTabRight, _
+                          Leader:=wdTabLeaderDots
             .SpaceBefore = 3
             .SpaceAfter = 3
             .LineSpacing = NewStyle.font.Size ' order matters: specify at first LineSpacing, next LineSpacingRule
