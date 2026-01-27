@@ -305,17 +305,10 @@ Sub SetMarginsMinimal()
     Dim HFDistance As Double
     Dim GutterSize As Double
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "SetMarginsMinimal"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "SetMarginsMinimal"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
         
     MarginInside = 0.5  ' cm
     MarginOutside = 0.5 ' cm
@@ -357,6 +350,7 @@ End Sub
 ' 2025-02-02 by ms and AI
 ' 2025-03-02 by ms and AI
 ' 2025-08-05 by ms added gutter size
+' 2026-01-27 by ms exchanged outside with inside
 Sub SetMarginsDefault()
     Dim MarginInside As Double
     Dim MarginOutside As Double
@@ -364,27 +358,20 @@ Sub SetMarginsDefault()
     Dim HFDistance As Double
     Dim GutterSize As Double
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "SetMarginsDefault"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "SetMarginsDefault"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
         
-    MarginInside = 1.2  ' cm
-    MarginOutside = 2.2 ' cm
+    MarginInside = 2.2  ' cm
+    MarginOutside = 1.2 ' cm
     MirrorMarginsDecision = True
     HFDistance = 0.5    ' cm
     GutterSize = 0#     ' cm
      
      With ActiveDocument.PageSetup
-        .TopMargin = CentimetersToPoints(MarginInside)
-        .BottomMargin = CentimetersToPoints(MarginInside)
+        .TopMargin = CentimetersToPoints(MarginOutside)
+        .BottomMargin = CentimetersToPoints(MarginOutside)
         .LeftMargin = CentimetersToPoints(MarginInside) ' This sets the inside margin
         .RightMargin = CentimetersToPoints(MarginOutside) ' This sets the outside margin
         .Orientation = wdOrientPortrait

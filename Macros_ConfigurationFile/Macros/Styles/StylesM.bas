@@ -2832,12 +2832,12 @@ Private Function CreateStyle_TOC3() As Boolean
         ' Paragraph formatting
         With .ParagraphFormat
             .Alignment = wdAlignParagraphLeft
-            .LeftIndent = CentimetersToPoints(4 * C_BaseIndent)
-            .FirstLineIndent = CentimetersToPoints(-3 * C_BaseIndent)
+            .LeftIndent = CentimetersToPoints(1.8)  ' 1.8 -1.5 = 0.3
+            .FirstLineIndent = CentimetersToPoints(-1.5)
             .TabStops.ClearAll
-            .TabStops.Add Position:=CentimetersToPoints(0), _
-                            Alignment:=wdAlignTabLeft, _
-                            Leader:=wdTabLeaderSpaces
+'            .TabStops.Add Position:=CentimetersToPoints(0), _
+'                            Alignment:=wdAlignTabLeft, _
+'                            Leader:=wdTabLeaderSpaces
             .TabStops.Add Position:=CentimetersToPoints(17.5), _
                           Alignment:=wdAlignTabRight, _
                           Leader:=wdTabLeaderDots
@@ -2929,12 +2929,12 @@ Private Function CreateStyle_TOC2() As Boolean
         ' Paragraph formatting
         With .ParagraphFormat
             .Alignment = wdAlignParagraphLeft
-            .LeftIndent = CentimetersToPoints(3 * C_BaseIndent)
-            .FirstLineIndent = CentimetersToPoints(-3 * C_BaseIndent)
+            .LeftIndent = CentimetersToPoints(1.8)
+            .FirstLineIndent = CentimetersToPoints(-1.8)
             .TabStops.ClearAll
-            .TabStops.Add Position:=CentimetersToPoints(0), _
-                            Alignment:=wdAlignTabLeft, _
-                            Leader:=wdTabLeaderSpaces
+'            .TabStops.Add Position:=CentimetersToPoints(0), _
+'                            Alignment:=wdAlignTabLeft, _
+'                            Leader:=wdTabLeaderSpaces
             .TabStops.Add Position:=CentimetersToPoints(17.5), _
                           Alignment:=wdAlignTabRight, _
                           Leader:=wdTabLeaderDots
@@ -3028,12 +3028,12 @@ Private Function CreateStyle_TOC1() As Boolean
         ' Paragraph formatting
         With .ParagraphFormat
             .Alignment = wdAlignParagraphLeft
-            .LeftIndent = CentimetersToPoints(2 * C_BaseIndent)
-            .FirstLineIndent = CentimetersToPoints(-2 * C_BaseIndent)
+            .LeftIndent = CentimetersToPoints(1#)
+            .FirstLineIndent = CentimetersToPoints(-1#)
             .TabStops.ClearAll
-            .TabStops.Add Position:=CentimetersToPoints(0), _
-                            Alignment:=wdAlignTabLeft, _
-                            Leader:=wdTabLeaderSpaces
+'            .TabStops.Add Position:=CentimetersToPoints(0), _
+'                            Alignment:=wdAlignTabLeft, _
+'                            Leader:=wdTabLeaderSpaces
             .TabStops.Add Position:=CentimetersToPoints(17.5), _
                           Alignment:=wdAlignTabRight, _
                           Leader:=wdTabLeaderDots
