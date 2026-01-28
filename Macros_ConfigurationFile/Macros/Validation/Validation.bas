@@ -33,8 +33,9 @@ Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As LongPtr)
 '
 ' Checks if there are in the document body any reference displayed as "0". If it does, macro stops there.
 ' This is part of validation routines.
-' Reworked by ms on 2025-02-11
-' Changed to private function by ms on 2025-03-15
+' 2025-02-11 reworked by m
+' 2025-03-15 changed to private function by ms
+' 2026-01-28 by ms, changed proppertyto TextVisibleOnScreen
 Private Function CheckRefZero() As Boolean
     Dim fld As Field
 
@@ -46,7 +47,7 @@ Private Function CheckRefZero() As Boolean
     For Each fld In ActiveDocument.Fields
         With fld
             If .Type = wdFieldRef Then
-                If InStr(.result, ".0.") > 0 Or .result Like "0.*" Or .result Like "*.0" Or .result = "0" Then
+                If .result.TextVisibleOnScreen = "0" Then
                     .Select
                     CheckRefZero = False
                     Exit Function

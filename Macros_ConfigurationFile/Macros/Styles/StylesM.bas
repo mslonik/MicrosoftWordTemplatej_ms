@@ -1832,6 +1832,7 @@ Sub CreateCustomStyles()
             Title:=MsgBoxTitle
         Exit Sub
     Else
+        ActiveDocument.Variables(C_S_Bold).Value = True
         CharCounter = CharCounter + 1
     End If
     
@@ -1843,6 +1844,7 @@ Sub CreateCustomStyles()
             Title:=MsgBoxTitle
         Exit Sub
     Else
+        ActiveDocument.Variables(C_S_CharCrossout).Value = True
         CharCounter = CharCounter + 1
     End If
     
@@ -1865,6 +1867,7 @@ Sub CreateCustomStyles()
             Title:=MsgBoxTitle
         Exit Sub
     Else
+        ActiveDocument.Variables(C_S_CharHidden).Value = True
         CharCounter = CharCounter + 1
     End If
     
@@ -1877,6 +1880,7 @@ Sub CreateCustomStyles()
         
         Exit Sub
     Else
+        ActiveDocument.Variables(C_S_Italic).Value = False
         CharCounter = CharCounter + 1
     End If
         
@@ -1899,6 +1903,7 @@ Sub CreateCustomStyles()
             Title:=MsgBoxTitle
         Exit Sub
     Else
+        ActiveDocument.Variables(C_S_CharSourceCode).Value = True
         CharCounter = CharCounter + 1
     End If
     
@@ -1910,6 +1915,7 @@ Sub CreateCustomStyles()
             Title:=MsgBoxTitle
         Exit Sub
     Else
+        ActiveDocument.Variables(C_S_Underline).Value = True
         CharCounter = CharCounter + 1
     End If
         
@@ -3028,8 +3034,8 @@ Private Function CreateStyle_TOC1() As Boolean
         ' Paragraph formatting
         With .ParagraphFormat
             .Alignment = wdAlignParagraphLeft
-            .LeftIndent = CentimetersToPoints(1#)
-            .FirstLineIndent = CentimetersToPoints(-1#)
+            .LeftIndent = CentimetersToPoints(1.2)
+            .FirstLineIndent = CentimetersToPoints(-1.2)
             .TabStops.ClearAll
 '            .TabStops.Add Position:=CentimetersToPoints(0), _
 '                            Alignment:=wdAlignTabLeft, _

@@ -1713,7 +1713,7 @@ End Sub
 
 ' 2025-03-20 by ms
 Private Sub SetShortcut_ToggleCharBoldStyle(ByVal IfMsgBox As String)
-    ActiveDocument.Variables(C_S_Bold).Value = True
+    ActiveDocument.Variables(C_S_Bold).Value = False
     Call SetKeyBindingMacro(KeybShortcut:=C_SC_CtrlB, _
                             WhichMacro:="ToggleCharBoldStyle", _
                             IfMsgBox:=IfMsgBox)
@@ -1728,7 +1728,7 @@ End Sub
 
 ' 2025-03-20 by ms
 Private Sub SetShortcut_ToggleCharItalicStyle(ByVal IfMsgBox As String)
-    ActiveDocument.Variables(C_S_Italic).Value = True
+    ActiveDocument.Variables(C_S_Italic).Value = False
     Call SetKeyBindingMacro(KeybShortcut:=C_SC_CtrlI, _
                             WhichMacro:="ToggleCharItalicStyle", _
                             IfMsgBox:=IfMsgBox)
@@ -1743,7 +1743,7 @@ End Sub
 
 ' 2025-03-20 by ms
 Private Sub SetShortcut_ToggleCharUnderlineStyle(ByVal IfMsgBox As String)
-    ActiveDocument.Variables(C_S_Underline).Value = True
+    ActiveDocument.Variables(C_S_Underline).Value = False
     Call SetKeyBindingMacro(KeybShortcut:=C_SC_CtrlU, _
                             WhichMacro:="ToggleCharUnderlineStyle", _
                             IfMsgBox:=IfMsgBox)
@@ -1760,7 +1760,7 @@ End Sub
 ' It is strange and not yet clarified. This function always returns run-time error '5346': Word cannot change the function of the specified key.
 ' But when shortcut is set manually to the macro "ToggleCharCrossoutStyle", it works. So this is unclear why this error is set.
 Private Sub SetShortcut_ToggleCharCrossoutStyle(ByVal IfMsgBox As String)
-    ActiveDocument.Variables(C_S_CharCrossout).Value = True
+    ActiveDocument.Variables(C_S_CharCrossout).Value = False
     Call SetKeyBindingMacro(KeybShortcut:=C_SC_ShiftCtrlX, _
                             WhichMacro:="ToggleCharCrossoutStyle", _
                             IfMsgBox:=IfMsgBox)
@@ -1775,7 +1775,7 @@ End Sub
 
 ' 2025-03-21 by ms
 Private Sub SetShortcut_ToggleCharHiddenStyle(ByVal IfMsgBox As String)
-    ActiveDocument.Variables(C_S_CharHidden).Value = True
+    ActiveDocument.Variables(C_S_CharHidden).Value = False
     Call SetKeyBindingMacro(KeybShortcut:=C_SC_ShiftCtrlH, _
                             WhichMacro:="ToggleCharHiddenStyle", _
                             IfMsgBox:=IfMsgBox)
@@ -1802,7 +1802,7 @@ End Sub
 
 ' 2025-04-14 by ms
 Private Sub SetShortcut_ToggleCharSourceCode(ByVal IfMsgBox As String)
-    ActiveDocument.Variables(C_S_CharSourceCode).Value = True
+    ActiveDocument.Variables(C_S_CharSourceCode).Value = False
     Call SetKeyBindingMacro(KeybShortcut:=C_SC_ShiftCtrlK, _
                             WhichMacro:="ToggleCharSourceCode", _
                             IfMsgBox:=IfMsgBox)
