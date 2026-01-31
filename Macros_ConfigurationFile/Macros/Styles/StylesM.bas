@@ -25,10 +25,11 @@ Attribute VB_Name = "StylesM"
 '+----+------------------------------------+-------------+------------------+------------------------------------+
 '| 15 | AttachTheme                        | Styles_ms   | Theme            | AttachTheme                        |
 '+----+------------------------------------+-------------+------------------+------------------------------------+
+'| 16 | ListTemplatesShowNamed             | Styles_ms   | ListTemplates    | ListTemplatesShowNamed             |
+'| 17 | ListTemplatesListAll               | Styles_ms   | ListTemplates    | ListTemplatesListAll               |
+'| 18 | ResetAllListGalleries              | Styles_ms   | ListTemplates    | ResetAllListGalleries              |
+'+----+------------------------------------+-------------+------------------+------------------------------------+
 '
-' ListTemplatesShowNamed
-' ListTemplatesListAll
-' ResetAllListGalleries
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '
 '   16. InsertTextAtBeginningOfListParagraphs() -> RemoveTextFromBeginningOfListParagraphs()
@@ -102,13 +103,6 @@ Attribute VB_Name = "StylesM"
 'CreateStyle_TabTableMs()
 'CreateStyle_TabTableNoGridMs()
 'CreateStyle_TabTableNoPaddingMs
-'
-' External sources:
-' https://bettersolutions.com/word/styles/index.htm
-' https://addbalance.com/usersguide/styles.htm#Overview
-' https://gregmaxey.com/word_tips.html
-' https://www.clausebase.com/msword/numbering
-' https://wordmvp.com/
 '
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '' Used to enforce the explicit declaration of all variables in a module. When you include Option Explicit at the beginning of a module, it ensures that you must
@@ -2468,7 +2462,7 @@ Public Function Create_LT_Headings() As Boolean
         ' Dynamic approach, different separator for different levels, defined by trial and error approach
         Select Case i
             Case 1
-                SafetyMargin = 1#    ' (eg. 1)
+                SafetyMargin = 1.2     ' (eg. 1)
             Case 2
                 SafetyMargin = 1.5  ' (eg. 1.2.)
             Case 3

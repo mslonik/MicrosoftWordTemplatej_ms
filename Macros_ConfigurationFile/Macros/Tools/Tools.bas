@@ -10,39 +10,49 @@ Attribute VB_Name = "Tools"
 '+----+-------------------------------+-------------+-----------------+-------------------------------+
 '| 1  | DocPropertiesUpdate           | Tools_ms    | DocProperties   | AttachTheme                   |
 '| 2  | DocPropertiesUserInput        | Tools_ms    | DocProperties   | DocPropertiesUserInput        |
+'+----+-------------------------------+-------------+-----------------+-------------------------------+
 '| 3  | SetMarginsDefault             | Tools_ms    | Document        | SetMarginsDefault             |
 '| 4  | SetMarginsMinimal             | Tools_ms    | Document        | SetMarginsMinimal             |
 '| 5  | SetHyphenation                | Tools_ms    | Document        | SetHyphenation                |
 '| 6  | SetLanguageToEnglishUS        | Tools_ms    | Document        | SetLanguageToEnglishUS        |
 '| 7  | SetPageColorToCustom          | Tools_ms    | Document        | SetPageColorToCustom          |
 '| 8  | ShowAllTemplates              | Tools_ms    | Document        | ShowAllTemplates              |
+'+----+-------------------------------+-------------+-----------------+-------------------------------+
 '| 9  | CommentAddNumber              | Tools_ms    | Comments        | CommentAddNumber              |
 '| 10 | CommentDeleteNumber           | Tools_ms    | Comments        | CommentDeleteNumber           |
 '| 11 | CommentCountByUser            | Tools_ms    | Comments        | CommentCountByUser            |
+'+----+-------------------------------+-------------+-----------------+-------------------------------+
 '| 12 | DeleteAllUserBookmarks        | Tools_ms    | Before printing | DeleteAllUserBookmarks        |
 '| 13 | ParDistAtNewSectionCheck      | Tools_ms    | Before printing | ParDistAtNewSectionCheck      |
 '| 14 | ParDistAtNewSectionReduce     | Tools_ms    | Before printing | ParDistAtNewSectionReduce     |
 '| 15 | ParDistAtNewSectionRestore    | Tools_ms    | Before printing | ParDistAtNewSectionRestore    |
+'+----+-------------------------------+-------------+-----------------+-------------------------------+
 '| 16 | CanvaFormatTextBoxes          | Tools_ms    | Canva           | CanvaFormatTextBoxes          |
 '| 17 | CanvaToggleBorder             | Tools_ms    | Canva           | CanvaToggleBorder             |
 '| 18 | CanvaInsertPNGfiles           | Tools_ms    | Canva           | CanvaInsertPNGfiles           |
+'+----+-------------------------------+-------------+-----------------+-------------------------------+
 '| 19 | CaptionShow                   | Tools_ms    | Captions        | CaptionShow                   |
 '| 20 | CaptionLabelDeleteCustomized  | Tools_ms    | Captions        | CaptionLabelDeleteCustomized  |
 '| 21 | CapationAddCustomized         | Tools_ms    | Captions        | CapationAddCustomized         |
+'+----+-------------------------------+-------------+-----------------+-------------------------------+
 '| 22 | WordOptionsCustomize          | Tools_ms    | Word Options    | WordOptionsCustomize          |
 '| 23 | WordOptionsRestore            | Tools_ms    | Word Options    | WordOptionsRestore            |
 '| 24 | WordOptionsDisableAutoFormat  | Tools_ms    | Word Options    | WordOptionsDisableAutoFormat  |
 '| 25 | WordOptionsRestoreAutoFormat  | Tools_ms    | Word Options    | WordOptionsRestoreAutoFormat  |
 '| 26 | WordOptionsDisableAutoCorrect | Tools_ms    | Word Options    | WordOptionsDisableAutoCorrect |
 '| 27 | WordOptionsToggleAutoCorrect  | Tools_ms    | Word Options    | WordOptionsToggleAutoCorrect  |
+'+----+-------------------------------+-------------+-----------------+-------------------------------+
 '| 28 | Table_CustomizeFormatting     | Tools_ms    | Tables          | Table_CustomizeFormatting     |
 '| 29 | Table_KeepOnOnePage           | Tools_ms    | Tables          | Table_KeepOnOnePage           |
+'+----+-------------------------------+-------------+-----------------+-------------------------------+
 '| 30 | ShowUsedFonts                 | Tools_ms    | Fonts           | ShowUsedFonts                 |
+'+----+-------------------------------+-------------+-----------------+-------------------------------+
 '| 31 | ShowDocVariables              | Tools_ms    | DocVariables    | ShowDocVariables              |
 '| 32 | DeleteAllDocVariables         | Tools_ms    | DocVariables    | DeleteAllDocVariables         |
-'| 33 | TabDefaultRestore             | Tools_ms    | Tabs            | Sub TabDefaultRestore         |
-'| 34 | TabDefaultSetCustom           | Tools_ms    | Tabs            | TabDefaultSetCustom           |
-'| 35 | TabDefaultShow                | Tools_ms    | Tabs            | TabDefaultShow                |
+'+----+-------------------------------+-------------+-----------------+-------------------------------+
+'| 33 | TabDefaultRestore             | Tools2_ms   | Tabs            | TabDefaultRestore             |
+'| 34 | TabDefaultSetCustom           | Tools2_ms   | Tabs            | TabDefaultSetCustom           |
+'| 35 | TabDefaultShow                | Tools2_ms   | Tabs            | TabDefaultShow                |
 '+----+-------------------------------+-------------+-----------------+-------------------------------+
 '
 '
@@ -476,7 +486,7 @@ Sub ToggleSpecificFormatting()
             ActiveWindow.View.ShowCropMarks = False
         End If
         MsgBox _
-            Prompt:="Specific formatting was just toggled:" & ViewMode & vbNewLine & vbNewLine & _
+            Prompt:="Specific formatting was just toggled: " & ViewMode & vbNewLine & vbNewLine & _
                 "ShowTextBoundaries" & vbNewLine & _
                 "FieldShading" & vbNewLine & _
                 "ShowHiddenText" & vbNewLine & _
@@ -494,7 +504,7 @@ Sub ToggleSpecificFormatting()
             Call RestoreDefaultPageColor            ' in module Tools
         End If
         MsgBox _
-            Prompt:="Specific formatting was just toggled:" & ViewMode & vbNewLine & vbNewLine & _
+            Prompt:="Specific formatting was just toggled: " & ViewMode & vbNewLine & vbNewLine & _
                 "Page background color was just toggled.", _
             Buttons:=vbInformation + vbOKOnly, _
             Title:=MsgBoxTitle
@@ -518,7 +528,7 @@ Sub ToggleSpecificFormatting()
             ActiveWindow.View.ShowCropMarks = False
         End If
         MsgBox _
-            Prompt:="Specific formatting was just toggled:" & ViewMode & vbNewLine & vbNewLine & _
+            Prompt:="Specific formatting was just toggled: " & ViewMode & vbNewLine & vbNewLine & _
                 "ShowTextBoundaries" & vbNewLine & _
                 "FieldShading" & vbNewLine & _
                 "ShowHiddenText" & vbNewLine & _
@@ -536,7 +546,7 @@ Sub ToggleSpecificFormatting()
             Call RestoreDefaultPageColor            ' in module Tools
         End If
         MsgBox _
-            Prompt:="Specific formatting was just toggled:" & ViewMode & vbNewLine & vbNewLine & _
+            Prompt:="Specific formatting was just toggled: " & ViewMode & vbNewLine & vbNewLine & _
                 "Page background color was just toggled.", _
             Buttons:=vbInformation + vbOKOnly, _
             Title:=MsgBoxTitle
