@@ -339,17 +339,10 @@ Private Function HotstringUserForm_Initialize(HotkeyHotkey As String) As Boolean
     Dim tempDescription As String
     Dim j As Integer
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Shortcuts
-    
-    Dim MacroName As String
-    MacroName = "HotstringUserForm_Initialize"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Shortcuts
+    Dim MacroName As String:    MacroName = "HotstringUserForm_Initialize"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Set the Forms properties
     frmHotstring.Caption = "Template keyboard shortcuts (HotStrings): " & HotkeyHotkey
@@ -735,17 +728,10 @@ Sub ListHotkeysToTxt()
     Dim FilePath As String
     Dim filenum As Integer
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Shortcuts
-    
-    Dim MacroName As String
-    MacroName = "ListHotkeysToTxt"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Shortcuts
+    Dim MacroName As String:    MacroName = "ListHotkeysToTxt"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Get the styles and their key bindings
     Call GetStylesAndKeyBindings(MyStyleName, MyShortcut)
@@ -799,17 +785,10 @@ Sub ListHotstringsToTxt()
     Dim FilePath As String
     Dim filenum As Integer
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Shortcuts
-    
-    Dim MacroName As String
-    MacroName = "ListHotstringsToTxt"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:      FileName = C_F_Macros
+    Dim ModuleName As String:    ModuleName = C_M_Shortcuts
+    Dim MacroName As String:     MacroName = "ListHotstringsToTxt"
+    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Get the building blocks and their descriptions
     Call GetBBKeyBindings(MyBBName, MyBBDescription, MsgBoxTitle)
@@ -860,17 +839,10 @@ Sub ListHotMacrosToTxt()
     Dim FilePath As String
     Dim filenum As Integer
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Shortcuts
-    
-    Dim MacroName As String
-    MacroName = "ListHotMacrosToTxt"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Shortcuts
+    Dim MacroName As String:    MacroName = "ListHotMacrosToTxt"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Get the macros and their key bindings
     Call GetMacrosKeyBindings(MyStyleName, MyShortcut)
@@ -916,17 +888,10 @@ End Sub
 
 ' 2025-07-16 by ms, review
 Sub ListMWShortcutsToDOCX()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Shortcuts
-    
-    Dim MacroName As String
-    MacroName = "ListMWShortcutsToDOCX"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Shortcuts
+    Dim MacroName As String:    MacroName = "ListMWShortcutsToDOCX"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     'ListAllCommands = False
     Call CopyMWShortcuts(Argument:=False)
@@ -940,17 +905,10 @@ End Sub
 
 ' 2025-07-16 by ms, review
 Sub ListAllMWCommandsToDOCX()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Shortcuts
-    
-    Dim MacroName As String
-    MacroName = "ListAllMWCommandsToDOCX"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Shortcuts
+    Dim MacroName As String:    MacroName = "ListAllMWCommandsToDOCX"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     Call CopyMWShortcuts(Argument:=True)
 
@@ -1026,17 +984,10 @@ Private Sub ShowActiveDocumentMacroShortcuts()
         End If
     Next keyBinding
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Shortcuts
-    
-    Dim MacroName As String
-    MacroName = "ShowActiveDocumentMacroShortcuts"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Shortcuts
+    Dim MacroName As String:    MacroName = "ShowActiveDocumentMacroShortcuts"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Display the shortcuts in a message box
     MsgBox _
@@ -1048,17 +999,10 @@ End Sub
 ' 2025-07-15 by ms
 ' This macro contains changed or added shortcuts. I don't remember why I keep them in separate sub.
 Private Sub Set_CommandShortcuts(ByVal IfMsgBox As String)
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Shortcuts
-    
-    Dim MacroName As String
-    MacroName = "Set_CommandShortcuts"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Shortcuts
+    Dim MacroName As String:    MacroName = "Set_CommandShortcuts"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
         
     ' Validate argument
     If LCase(IfMsgBox) <> "quiet" And LCase(IfMsgBox) <> "loud" Then
@@ -1067,6 +1011,8 @@ Private Sub Set_CommandShortcuts(ByVal IfMsgBox As String)
             Buttons:=vbCritical + vbOKOnly, _
             Title:=MsgBoxTitle
     End If
+    
+    Word.CustomizationContext = ActiveDocument
     
     ' Assign Alt + Ctrl + H to NavPane
     KeyBindings.Add _
@@ -1116,17 +1062,10 @@ Public Sub Reset_CommandShortcut()
     Set kb = Application.FindKey(BuildKeyCode(wdKeyAlt, wdKeyF))
     kb.Clear
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Shortcuts
-    
-    Dim MacroName As String
-    MacroName = "Reset_CommandShortcut"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Shortcuts
+    Dim MacroName As String:    MacroName = "Reset_CommandShortcut"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     MsgBox _
         Prompt:="The following shortcuts have been cleared:" & vbNewLine & vbNewLine & _
@@ -1172,17 +1111,10 @@ Sub ListAllShortcutsToTxt()
     Dim CurrentDate As String
     Dim CurrentTime As String
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Shortcuts
-    
-    Dim MacroName As String
-    MacroName = "ListAllShortcutsToTxt"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Shortcuts
+    Dim MacroName As String:    MacroName = "ListAllShortcutsToTxt"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Get the name of the attached template
     TemplateName = ActiveDocument.AttachedTemplate.FullName
@@ -1325,6 +1257,7 @@ End Sub
 Private Sub SetKeyBindingMacro(ByVal KeybShortcut As String, _
                                 ByVal WhichMacro As String, _
                                 ByVal IfMsgBox As String)
+    
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Shortcuts
     Dim MacroName As String:    MacroName = "SetKeyBindingMacro"
@@ -1991,17 +1924,10 @@ Sub ClearActiveDocumentMacroShortcuts()
     Dim kb As keyBinding
     Dim UserDecision As VbMsgBoxResult
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Macros
-    
-    Dim MacroName As String
-    MacroName = "ClearActiveDocumentMacroShortcuts"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Macros
+    Dim MacroName As String:    MacroName = "ClearActiveDocumentMacroShortcuts"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     UserDecision = MsgBox( _
         Prompt:="Remove all shortcuts assigned to macros in the document" & vbNewLine & ActiveDocument.Name & "?", _
@@ -2042,17 +1968,10 @@ Sub ClearActiveDocumentStyleShortcuts()
     Dim kb As keyBinding
     Dim UserDecision As VbMsgBoxResult
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Macros
-    
-    Dim MacroName As String
-    MacroName = "ClearActiveDocumentStyleShortcuts"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Macros
+    Dim MacroName As String:    MacroName = "ClearActiveDocumentStyleShortcuts"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     UserDecision = MsgBox( _
         Prompt:="Remove all shortcuts assigned to styles in the document" & vbNewLine & ActiveDocument.Name & "?", _
