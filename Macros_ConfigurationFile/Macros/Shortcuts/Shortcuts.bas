@@ -1724,7 +1724,7 @@ End Sub
 
 Private Sub SetShortcut_ToggleSpecificFormatting(ByVal IfMsgBox As String)
     Call SetKeyBindingMacro(KeybShortcut:=C_SC_F4, _
-                            WhichMacro:="ToggleSpecificFormatting", _
+                            WhichMacro:="Macros_ms.Tools.ToggleSpecificFormatting", _
                             IfMsgBox:=IfMsgBox) ' in module: Tools
 End Sub
 
@@ -1910,7 +1910,7 @@ End Sub
 ' 2025-10-02 by ms
 Private Sub SetShortcut_CustomizedPasteFormat(ByVal IfMsgBox As String)
     Call SetKeyBindingMacro(KeybShortcut:=C_SC_ShiftCtrlV, _
-                            WhichMacro:="CustomizedPasteFormat", _
+                            WhichMacro:="Macros_ms.Macros_ms.CustomizedPasteFormat", _
                             IfMsgBox:=IfMsgBox) ' module: Tools
 End Sub
 

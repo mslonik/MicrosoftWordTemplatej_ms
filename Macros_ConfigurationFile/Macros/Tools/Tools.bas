@@ -119,17 +119,10 @@ Sub CanvaInsertPNGfiles()
     Dim totalTime As Double
     Dim TemplateName As String
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "CanvaInsertPNGfiles"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "CanvaInsertPNGfiles"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Initialize
     Set pngFiles = New Collection
@@ -264,17 +257,11 @@ Private Function GetPNGFilesInFolder(folderPath As String) As Collection
     Dim fso As Object
     Dim folder As Object
     Dim file As Object
-    Dim FileName As String
-    FileName = C_F_Macros
     
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "GetPNGFilesInFolder"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "GetPNGFilesInFolder"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Initialize
     Set pngFiles = New Collection
@@ -560,14 +547,9 @@ Sub ToggleSpecificFormatting()
 End Sub
 
 Private Sub CheckMicrosoftWordVersion(MacroName As String)
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:      FileName = C_F_Macros
+    Dim ModuleName As String:    ModuleName = C_M_Tools
+    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     If Application.Version <> "14.0" And Application.Version <> "16.0" Then
         MsgBox _
@@ -590,17 +572,10 @@ Sub CanvaFormatTextBoxes()
     Dim i As Integer
     Dim j As Integer
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "CanvaFormatTextBoxes"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "CanvaFormatTextBoxes"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Call CheckMicrosoftWordVersion(MacroName)
     
@@ -693,17 +668,11 @@ End Sub
 Sub CommentAddNumber()
     Dim i As Long
     Dim rngComment As Range
-    Dim FileName As String
-    FileName = C_F_Macros
     
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "CommentAddNumber"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "CommentAddNumber"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     With ActiveDocument
         For i = 1 To .Comments.count
@@ -733,17 +702,10 @@ Sub CommentDeleteNumber()
     Dim commentText As String
     Dim colonPos As Long
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "CommentDeleteNumber"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "CommentDeleteNumber"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     With ActiveDocument
         For i = 1 To .Comments.count
@@ -781,17 +743,10 @@ Sub CommentCountByUser()
     Dim result As String
     Dim i As Long
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "CommentCountByUser"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "CommentCountByUser"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Set doc = ActiveDocument
     Set userNames = New Collection
@@ -896,17 +851,10 @@ End Function
 ' When you attach this template to existing document and want captions to be moved to that document file, you need to run the macro CaptionLabelCopyFromTemplate.
 ' 2025-03-04 by ms and AI
 Sub CapationAddCustomized()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Macros
-    
-    Dim MacroName As String
-    MacroName = "CapationAddCustomized"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Macros
+    Dim MacroName As String:    MacroName = "CapationAddCustomized"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Add the new caption labels
     CaptionLabels.Add Name:=C_Caption_Tab
@@ -943,17 +891,10 @@ Sub CaptionLabelDeleteCustomized()
         i = i + 1
     Next Caption
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Macros
-    
-    Dim MacroName As String
-    MacroName = "CaptionLabelDeleteCustomized"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Macros
+    Dim MacroName As String:    MacroName = "CaptionLabelDeleteCustomized"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     MsgBox _
         Prompt:="Deleted caption labels: " & vbNewLine & NotBuiltinCaptions & vbNewLine & vbNewLine & _
@@ -971,17 +912,10 @@ Sub CaptionShow()
     Dim Info As String
     Dim i As Byte
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "CaptionShow"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "CaptionShow"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     i = 0
     For Each Label In Application.CaptionLabels
@@ -1001,17 +935,10 @@ Sub DeleteAllUserBookmarks()
     Dim Bm As bookmark
     Dim bmCount As Integer
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "DeleteAllUserBookmarks"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "DeleteAllUserBookmarks"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Ask user for permission
     Dim UserDecision As VbMsgBoxResult
@@ -1059,17 +986,10 @@ Sub JumpToNextList()
     Dim found As Boolean
     Dim startPos As Long
         
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "JumpToNextList"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "JumpToNextList"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
         
     ' Get the starting position of the current selection
     startPos = Selection.Start
@@ -1105,17 +1025,10 @@ Sub JumpToNextTable()
     Dim found As Boolean
     Dim startPos As Long
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "JumpToNextTable"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "JumpToNextTable"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Get the starting position of the current selection
     startPos = Selection.Start
@@ -1147,17 +1060,10 @@ Sub JumpToNextCanvas()
     Dim found As Boolean
     Dim startPos As Long
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "JumpToNextCanvas"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "JumpToNextCanvas"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Get the starting position of the current selection
     startPos = Selection.Start
@@ -1195,17 +1101,10 @@ Sub ParDistAtNewSectionReduce()
     Dim CounterUnchanged As Integer
     Dim BookmarkName As String
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "ParDistAtNewSectionReduce"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "ParDistAtNewSectionReduce"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ActiveWindow.View.Type = wdPrintView
     Application.ScreenUpdating = True
@@ -1270,17 +1169,10 @@ Sub ParDistAtNewSectionRestore()
     Dim CounterRestored As Integer
     Dim CounterUnchanged As Integer
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "ParDistAtNewSectionRestore"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "ParDistAtNewSectionRestore"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     CounterRestored = 0
     CounterUnchanged = 0
@@ -1333,17 +1225,10 @@ Sub ParDistAtNewSectionCheck()
     Dim para As Paragraph
     Dim CounterFound As Integer
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "ParDistAtNewSectionCheck"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "ParDistAtNewSectionCheck"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ActiveWindow.View.Type = wdPrintView
     Application.ScreenUpdating = False
@@ -1377,17 +1262,10 @@ Sub SaveDocumentAsPDFWithSettings()
     Dim FilePath As String
     Dim DefaultPath As String
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "SaveDocumentAsPDFWithSettings"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "SaveDocumentAsPDFWithSettings"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Define the file path and name for the PDF file
     ' This example uses the document's name and saves the PDF in the default directory.
@@ -1450,17 +1328,10 @@ Sub DocPropertiesUpdate()
     Dim PropToDelete As Boolean
     Dim ReqProp As Variant
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "DocPropertiesUpdate"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "DocPropertiesUpdate"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Set the document to the currently opened document
     Set doc = ActiveDocument
@@ -1546,17 +1417,10 @@ Sub SetHyphenation()
     Dim doc As Document
     Dim para As Paragraph
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "SetHyphenation"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "SetHyphenation"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Initialize object variables
     Set doc = ActiveDocument
@@ -1591,17 +1455,10 @@ Sub ResetHyphenation()
     Dim para As Paragraph
     Dim doc As Document
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "ResetHyphenation"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "ResetHyphenation"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Set doc = ActiveDocument
     
@@ -1765,17 +1622,10 @@ Sub CanvaToggleBorder()
     Dim MyCanvas As Shape
     Dim RngAnchor As Range
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "CanvaToggleBorder"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "CanvaToggleBorder"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Loop through all shapes in the active document
     For Each MyCanvas In ActiveDocument.Shapes
@@ -1836,17 +1686,10 @@ Sub InsertSVNCommitNumber()
     Dim MyCanvas As Shape
     Dim RngAnchor As Range
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "InsertSVNCommitNumber"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "InsertSVNCommitNumber"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Initialize commitFilePath with Document Variable DV_CommitFilePath
     On Error Resume Next
@@ -1931,17 +1774,10 @@ Sub WordOptionsRestore()
     ActiveDocument.Compatibility(wdSuppressTopSpacing) = msoFalse
     ActiveWindow.View.PageMovementType = wdVertical
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "WordOptionsRestore"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "WordOptionsRestore"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     MsgBox _
         Prompt:="The following Microsoft Word properties have been set to default:" & vbNewLine & vbNewLine & _
@@ -1965,17 +1801,10 @@ End Sub
 Private Function WordOptionsSetAsExpected() As Boolean
     WordOptionsSetAsExpected = True
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "WordOptionsSetAsExpected"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "WordOptionsSetAsExpected"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
        
     If ActiveWindow.View.FieldShading <> wdFieldShadingAlways Then
         WordOptionsSetAsExpected = False
@@ -2061,17 +1890,10 @@ End Function
 ' Microsoft Word customized settings
 ' 2025-04-02 by ms and AI
 Sub WordOptionsCustomize()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "WordOptionsCustomize"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "WordOptionsCustomize"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' File -> Options -> Advanced -> Editing options, Default paragraph style: "ParNormal ms". This setting refers to the default paragraph style defined in the Normal template (Normal.dotm).
     ' Se even if "ParNormal ms" is used in the current document, Word still considers "Normal" as the defaultstyle globally unless you modify the Normal.dotm template.
@@ -2162,17 +1984,10 @@ Sub WordOptionsDisableAutoCorrect()
     AutoCorrect.CorrectTableCells = False
     AutoCorrect.replaceText = False
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "WordOptionsDisableAutoCorrect"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "WordOptionsDisableAutoCorrect"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     MsgBox _
         Prompt:="Microsoft Word options related to Autocorrect were switched off (all).", _
@@ -2183,17 +1998,10 @@ End Sub
 ' Restore AutoFormat options of Microsoft Word to default values.
 ' 2025-08-17 by ms
 Sub WordOptionsRestoreAutoFormat()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "WordOptionsRestoreAutoFormat"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "WordOptionsRestoreAutoFormat"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     With Application.Options
         ' AutoCorrect -> AutoFormat -> Apply: Built-in Heading styles
@@ -2249,17 +2057,10 @@ End Sub
 ' 2025-07-16 by ms, AutoFormat is batch processing, not available directly from ribbon menu
 ' AutoFormat as you type is fully automatic. This macro disables both.
 Sub WordOptionsDisableAutoFormat()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "WordOptionsDisableAutoFormat"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "WordOptionsDisableAutoFormat"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     With Application.Options
         ' AutoCorrect -> AutoFormat -> Apply: Built-in Heading styles
@@ -2311,17 +2112,10 @@ Sub WordOptionsDisableAutoFormat()
 End Sub
 
 Sub WordOptionsToggleAutoCorrect()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "WordOptionsToggleAutoCorrect"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "WordOptionsToggleAutoCorrect"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     With Application.Options
         ' AutoCorrect -> AutoFormat -> Apply: Built-in Heading styles
@@ -2461,17 +2255,10 @@ End Sub
 
 
 Sub SetLanguageToEnglishUS()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "SetLanguageToEnglishUS"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "SetLanguageToEnglishUS"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if there is a selection
     If Selection.Type <> wdNoSelection Then
@@ -2596,17 +2383,10 @@ Private Sub InsertCrossReferences_Headings()
     Set rng = Nothing
     Set doc = Nothing
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "InsertCrossReferences_Headings"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "InsertCrossReferences_Headings"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     MsgBox _
         Prompt:="Finished processing.", _
@@ -2655,17 +2435,11 @@ End Function
 ' https://superuser.com/questions/1825151/word-keyboard-shortcut-to-close-apply-styles-popup
 Sub ToggleApplyStyles()
     Static ToggleBit As Boolean
-    Dim FileName As String
-    FileName = C_F_Macros
     
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "ToggleApplyStyles"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "ToggleApplyStyles"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ToggleBit = Not ToggleBit
     If ToggleBit Then
@@ -2732,17 +2506,10 @@ Private Sub DeleteCrossReference_Headings()
     Set doc = Nothing
     Set fld = Nothing
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "DeleteCrossReference_Headings"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "DeleteCrossReference_Headings"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     MsgBox _
         Prompt:="Finished processing.", _
@@ -2796,17 +2563,10 @@ Private Sub DeleteCrossReferences_Pictures()
     Set fld = Nothing
     Set rng = Nothing
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "DeleteCrossReferences_Pictures"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "DeleteCrossReferences_Pictures"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     MsgBox _
         Prompt:="Finished processing.", _
@@ -2862,17 +2622,10 @@ Private Sub InsertCrossReferences_Pictures()
     Set rng = Nothing
     Set doc = Nothing
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "InsertCrossReferences_Pictures"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "InsertCrossReferences_Pictures"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     MsgBox _
         Prompt:="Finished processing.", _
@@ -2928,17 +2681,10 @@ Private Sub InsertCrossReferences_Tables()
     Set rng = Nothing
     Set doc = Nothing
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "InsertCrossReferences_Tables"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "InsertCrossReferences_Tables"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     MsgBox _
         Prompt:="Finished processing.", _
@@ -2992,17 +2738,10 @@ Private Sub DeleteCrossReferences_Tables()
     Set fld = Nothing
     Set rng = Nothing
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "DeleteCrossReferences_Tables"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "DeleteCrossReferences_Tables"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     MsgBox _
         Prompt:="Finished processing.", _
@@ -3047,17 +2786,10 @@ End Function
 ' The last paragraph in a document must be emtpy and formatted to "ParNormal ms" or "Normal".
 ' 2025-04-19 by ms
 Private Sub InsertCrossReferences_References()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "InsertCrossReferences_References"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "InsertCrossReferences_References"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Dim para As Paragraph
     Dim rng As Range
@@ -3199,17 +2931,10 @@ Private Sub DeleteCrossReferences_References()
     Set doc = Nothing
     Set fld = Nothing
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "DeleteCrossReferences_References"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "DeleteCrossReferences_References"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     MsgBox _
         Prompt:="Finished processing.", _
@@ -3227,17 +2952,10 @@ End Sub
 ' There is also setting of the Status Bar, which cannot be accessed by VBA: Overtype
 ' 2025-04-20 by ms and AI
 Sub CustomizedOvertype()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "CustomizedOvertype"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "CustomizedOvertype"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Static InsertKeyState As Boolean
     
@@ -3273,17 +2991,10 @@ Sub InsertCrossRef()
     ' enum type
     Dim RefType As RefType
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "InsertCrossRef"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "InsertCrossRef"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     Application.statusBar = MsgBoxTitle & " > " & "is running..."
 
@@ -3536,17 +3247,10 @@ Sub RestartListNumbering()
     Dim rng As Range
     Set rng = Selection.Range
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "RestartListNumbering"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "RestartListNumbering"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     If rng.ListFormat.ListType <> wdListNoNumbering Then
         rng.ListFormat.ApplyListTemplateWithLevel _
@@ -3606,17 +3310,10 @@ Sub ToggleHeadingCollapseExpand()
     If para.style Like "Heading*" Then
         para.CollapsedState = Not para.CollapsedState
     Else
-        Dim FileName As String
-        FileName = C_F_Macros
-        
-        Dim ModuleName As String
-        ModuleName = C_M_Tools
-        
-        Dim MacroName As String
-        MacroName = "ToggleHeadingCollapseExpand"
-        
-        Dim MsgBoxTitle As String
-        MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+        Dim FileName As String:         FileName = C_F_Macros
+        Dim ModuleName As String:       ModuleName = C_M_Tools
+        Dim MacroName As String:        MacroName = "ToggleHeadingCollapseExpand"
+        Dim MsgBoxTitle As String:      MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
         
         MsgBox _
             Prompt:="The current paragraph is not a heading", _
@@ -3671,17 +3368,10 @@ Private Sub SetPrintingOptionsDisplay()
         .UpdateLinksAtPrint = True   ' Update linked data before printing
     End With
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "SetPrintingOptionsDisplay"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "SetPrintingOptionsDisplay"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     MsgBox _
         Prompt:="The following printing options, level Display, have been set, context Application:" & vbNewLine & vbNewLine & _
@@ -3745,17 +3435,10 @@ Private Sub SetPrintingOptionsAdvanced()
         .DefaultTray = wdPrinterDefaultBin          ' Default tray: User printer settings
     End With
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "SetPrintingOptionsAdvanced"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "SetPrintingOptionsAdvanced"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     MsgBox _
         Prompt:="The following printing options, level Advanced, have been set, context Application:" & vbNewLine & vbNewLine & _
@@ -3777,17 +3460,10 @@ End Sub
 Sub CustomizedPrinting()
     Dim UserDecision As VbMsgBoxResult
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "CustomizedPrinting"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "CustomizedPrinting"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Application.statusBar = MsgBoxTitle & " > " & "is running..."
     
@@ -3848,17 +3524,10 @@ End Sub
 Sub CustomizedSaveAs()
     Dim UserDecision As VbMsgBoxResult
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "CustomizedSaveAs"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "CustomizedSaveAs"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Beep
     UserDecision = MsgBox( _
@@ -3884,38 +3553,25 @@ End Sub
 
 ' 2025-10-02 by ms
 Sub CustomizedCopyFormat()
-    Dim FileName As String
-    FileName = C_F_Macros
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "CustomizedCopyFormat"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "CustomizedCopyFormat"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     Application.Run "CopyFormat"    ' call built-in Microsoft Word command
     Application.statusBar = MsgBoxTitle & " > " & C_SC_ShiftCtrlC
 End Sub
 
 ' 2025-10-02 by ms
 Sub CustomizedPasteFormat()
-    Dim FileName As String
-    FileName = C_F_Macros
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "CustomizedPasteFormat"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "CustomizedPasteFormat"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     Application.Run "PasteFormat"   ' call built-in Microsoft Word command
     Application.statusBar = MsgBoxTitle & " > " & C_SC_ShiftCtrlV
 End Sub
-
 
 ' Counts all templates and shows full path of all templates.
 ' Added display of template type. If only Normal.dotm is attached to currently ActiveDocument, then its type is set to 'wdNormalTemplate', not 'wdAttachedTemplate'.
@@ -3925,17 +3581,10 @@ Sub ShowAllTemplates()
     Dim TemplateDoc As Template
     Dim TemplateCollection As String
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "ShowAllTemplates"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "ShowAllTemplates"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Dim TemplateCounter As Byte
     TemplateCounter = 1
@@ -4006,17 +3655,10 @@ Public Sub Table_CustomizeFormatting()
     Set sel = Selection
     Set rng = sel.Range
     
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "Table_CustomizeFormatting"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "Table_CustomizeFormatting"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' === 1) Resolve a table from the current selection ===
     Set tbl = GetTableFromSelection(sel, isExactSelection)
@@ -4113,17 +3755,10 @@ End Function
 
 ' 2025-12-05 by ms and AI
 Public Sub Table_KeepOnOnePage()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "Table_KeepOnOnePage"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "Table_KeepOnOnePage"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     If IsSelectedJustTable() = False Then
         Exit Sub
@@ -4142,17 +3777,10 @@ End Sub
 ' Verify the selection is exactly one table (and nothing else)
 ' 2025-12-09 by ms
 Private Function IsSelectedJustTable() As Boolean
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Tools
-    
-    Dim MacroName As String
-    MacroName = "IsSelectedJustTable"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "IsSelectedJustTable"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
   
     If Selection.Tables.count <> 1 Then
         MsgBox _
@@ -4240,4 +3868,3 @@ Sub TabDefaultSetCustom()
         Buttons:=vbInformation + vbOKOnly, _
         Title:=MsgBoxTitle
 End Sub
-
