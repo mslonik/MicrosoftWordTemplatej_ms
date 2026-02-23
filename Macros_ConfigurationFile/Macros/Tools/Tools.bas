@@ -75,13 +75,16 @@ Attribute VB_Name = "Tools"
 '   47. JumpToNextList()
 '   48. JumpToNextTable()
 '   49. JumpToNextCanvas()
+'   50. ToggleApplyStyles()
+'   51. CustomizedCopyFormat()
+'   52. CustomizedPasteFormat()
 '
 '   Others / legacy:
-'   50. InsertSVNCommitNumber()
-'   51. AttachBuildingBlocks()
-'   52. AutoExec()
-'   53. ResetHyphenation()
-'   54. RestoreDefaultPageColor()
+'   53. InsertSVNCommitNumber()
+'   54. AttachBuildingBlocks()
+'   55. AutoExec()
+'   56. ResetHyphenation()
+'   57. RestoreDefaultPageColor()
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '
 ' Used to enforce the explicit declaration of all variables in a module. When you include Option Explicit at the beginning of a module, it ensures that you must
@@ -406,7 +409,7 @@ Sub ToggleSpecificFormatting()
     Dim MacroName As String:      MacroName = "ToggleSpecificFormatting"
     Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    Call CheckMicrosoftWordVersion(MacroName)   ' in module 'Tools'
+    Call Macros_ms.Tools.CheckMicrosoftWordVersion(MacroName)    ' in module 'Tools' 'Application.Run C_P_Macros & "." & C_M_Tools & "." & "CheckMicrosoftWordVersion", MacroName
     
     Dim oView As View
     Set oView = ActiveDocument.ActiveWindow.View
