@@ -27,6 +27,9 @@ Public Const C_F_BuildingBlocks As String = "BB_ms.dotm"        ' Name of the te
 Public Const C_F_Theme As String = "Theme_ms.thmx"
 Public Const C_F_Macros As String = "Macros_ms.dotm"
 
+' Project names, for full call definitions
+Public Const C_P_Macros As String = "Macros_ms"
+
 ' Module names from C_F_Macros
 Public Const C_M_BuildingBlocks = "BuildingBlocks"
 Public Const C_M_Constants = "Constants"
@@ -108,6 +111,7 @@ Public Const C_ListTabPosL1 As Single = 1#      ' cm
 Public Const C_ListTabPosL2 As Single = 1.5     ' cm
 Public Const C_ListTabPosL3 As Single = 2#      ' cm
 Public Const C_ListTabPosL4 As Single = 2.5     ' cm
+Public Const C_ParLineDistance = wdLineSpaceSingle ' wdLineSpaceExactly
 
 ' C = Constant
 Public Const C_PointsToCm As Single = 0.0352778

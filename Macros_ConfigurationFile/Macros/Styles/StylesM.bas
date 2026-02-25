@@ -2548,7 +2548,7 @@ Private Function CreateStyle_ParListInTableMs() As Boolean
                 .SpaceBefore = 3
                 .SpaceAfter = 3
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -2642,7 +2642,7 @@ Private Function CreateStyle_ParNumRefMs() As Boolean
                 .SpaceBefore = 0
                 .SpaceAfter = 6
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = False
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -2736,7 +2736,7 @@ Private Function CreateStyle_ParTextBoxesMs() As Boolean
                 .SpaceBefore = 0
                 .SpaceAfter = 0
                 .LineSpacing = NewStyle.font.Size ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = False
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -2844,7 +2844,7 @@ Private Function CreateStyle_TOC3() As Boolean
             .SpaceBefore = 3
             .SpaceAfter = 3
             .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-            .LineSpacingRule = wdLineSpaceExactly
+            .LineSpacingRule = C_ParLineDistance
             .WidowControl = True
             .KeepWithNext = False
             .KeepTogether = False
@@ -2941,7 +2941,7 @@ Private Function CreateStyle_TOC2() As Boolean
             .SpaceBefore = 0
             .SpaceAfter = 0
             .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-            .LineSpacingRule = wdLineSpaceExactly
+            .LineSpacingRule = C_ParLineDistance
             .WidowControl = True
             .KeepWithNext = False
             .KeepTogether = False
@@ -3040,7 +3040,7 @@ Private Function CreateStyle_TOC1() As Boolean
             .SpaceBefore = 3
             .SpaceAfter = 3
             .LineSpacing = NewStyle.font.Size ' order matters: specify at first LineSpacing, next LineSpacingRule
-            .LineSpacingRule = wdLineSpaceExactly
+            .LineSpacingRule = C_ParLineDistance
             .WidowControl = True
             .KeepWithNext = False
             .KeepTogether = False
@@ -3124,7 +3124,7 @@ Private Function CreateStyle_ParMinimalMs() As Boolean
                 .SpaceBefore = 0
                 .SpaceAfter = 0
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = False
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -3219,7 +3219,7 @@ Private Function CreateStyle_ParListIndentB4Ms() As Boolean
                 .SpaceBefore = C_DistParBAList
                 .SpaceAfter = C_DistParBAList
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -3313,7 +3313,7 @@ Private Function CreateStyle_ParListIndent4Ms() As Boolean
                 .SpaceBefore = C_DistParBAList
                 .SpaceAfter = C_DistParBAList
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -3408,7 +3408,7 @@ Private Function CreateStyle_ParListIndentB3Ms() As Boolean
                 .SpaceBefore = C_DistParBAList
                 .SpaceAfter = C_DistParBAList
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -3502,7 +3502,7 @@ Private Function CreateStyle_ParListIndent3Ms() As Boolean
                 .SpaceBefore = C_DistParBAList
                 .SpaceAfter = C_DistParBAList
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -3597,7 +3597,7 @@ Private Function CreateStyle_ParListIndentB2Ms() As Boolean
                 .SpaceBefore = C_DistParBAList
                 .SpaceAfter = C_DistParBAList
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -3691,7 +3691,7 @@ Private Function CreateStyle_ParListIndent2Ms() As Boolean
                 .SpaceBefore = C_DistParBAList
                 .SpaceAfter = C_DistParBAList
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -3786,7 +3786,7 @@ Private Function CreateStyle_ParListIndentB1Ms() As Boolean
                 .SpaceBefore = C_DistParBAList
                 .SpaceAfter = C_DistParBAList
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -3880,7 +3880,7 @@ Private Function CreateStyle_ParListIndent1Ms() As Boolean
                 .SpaceBefore = C_DistParBAList
                 .SpaceAfter = C_DistParBAList
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -3974,7 +3974,7 @@ Private Function CreateStyle_ParListHeadingMs() As Boolean
                 .SpaceBefore = 24
                 .SpaceAfter = 0
                 .LineSpacing = NewStyle.font.Size ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = True
                 .KeepTogether = False
@@ -4069,7 +4069,7 @@ Private Function CreateStyle_ParLegendTableMs() As Boolean
                 .SpaceBefore = 12
                 .SpaceAfter = 3
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = True
                 .KeepTogether = False
@@ -4164,7 +4164,7 @@ Private Function CreateStyle_ParLegendPictureMs() As Boolean
                 .SpaceBefore = 6
                 .SpaceAfter = 12
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -4258,7 +4258,7 @@ Private Function CreateStyle_ParLegalNoteMs() As Boolean
                 .SpaceBefore = 0
                 .SpaceAfter = 6
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -4352,7 +4352,7 @@ Private Function CreateStyle_ParInTableMs() As Boolean
                 .SpaceBefore = 3
                 .SpaceAfter = 3
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -4446,7 +4446,7 @@ Private Function CreateStyle_ParHeading8ms() As Boolean
                 .SpaceBefore = 24
                 .SpaceAfter = 6
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = True
                 .KeepTogether = False
@@ -4539,7 +4539,7 @@ Private Function CreateStyle_ParHeading7ms() As Boolean
                 .SpaceBefore = 24
                 .SpaceAfter = 6
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = True
                 .KeepTogether = False
@@ -4632,7 +4632,7 @@ Private Function CreateStyle_ParHeading6ms() As Boolean
                 .SpaceBefore = 24
                 .SpaceAfter = 6
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = True
                 .KeepTogether = False
@@ -4725,7 +4725,7 @@ Private Function CreateStyle_ParHeading5ms() As Boolean
                 .SpaceBefore = 24
                 .SpaceAfter = 6
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = True
                 .KeepTogether = False
@@ -4818,7 +4818,7 @@ Private Function CreateStyle_ParHeading4ms() As Boolean
                 .SpaceBefore = 24
                 .SpaceAfter = 6
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = True
                 .KeepTogether = False
@@ -4911,7 +4911,7 @@ Private Function CreateStyle_ParHeading3ms() As Boolean
                 .SpaceBefore = 26
                 .SpaceAfter = 6
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = True
                 .KeepTogether = False
@@ -5191,7 +5191,7 @@ Private Function CreateStyle_Normal() As Boolean
                 .SpaceBefore = 0
                 .SpaceAfter = 0
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -5284,7 +5284,7 @@ Private Function CreateStyle_ParNormalMs() As Boolean
                 .SpaceBefore = 0
                 .SpaceAfter = 6
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -5378,7 +5378,7 @@ Private Function CreateStyle_ParSourceCodeMs() As Boolean
                 .SpaceBefore = 12
                 .SpaceAfter = 12
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -5659,7 +5659,7 @@ Private Function CreateStyle_ParNormalZeroMs() As Boolean
                 .SpaceBefore = 0
                 .SpaceAfter = 0
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -5752,7 +5752,7 @@ Private Function CreateStyle_ParNormalBelowMs() As Boolean
                 .SpaceBefore = 0
                 .SpaceAfter = 15
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -5846,7 +5846,7 @@ Private Function CreateStyle_ParNormalAboveMs() As Boolean
                 .SpaceBefore = 8
                 .SpaceAfter = 6
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -5940,7 +5940,7 @@ Private Function CreateStyle_ParNormalAboveBelowMs() As Boolean
                 .SpaceBefore = 8
                 .SpaceAfter = 8
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
-                .LineSpacingRule = wdLineSpaceExactly
+                .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True
                 .KeepWithNext = False
                 .KeepTogether = False
@@ -6714,10 +6714,10 @@ Sub ListCustomStylesToTxt()
             Print #filenum, "Language ID: " & style.LanguageId
 
             ' Font:
-            Call Macros_ms.Theme.PrintFontProperties(filenum, style)
+            Call Macros_ms.StylesM.PrintFontProperties(filenum, style)
             
             ' Paragraph:
-            Call Macros_ms.Theme.PrintParagraphProperties(filenum, style)
+            Call Macros_ms.StylesM.PrintParagraphProperties(filenum, style)
         End If
     End If
     
@@ -7015,7 +7015,7 @@ Private Sub ShowNonComplientStylingInTables()
     ' Initialize collection
     Set msStyleCollection = New Collection
     ' Collect styles with " ms" suffix
-    Call Macros_ms.Theme.CollectmsStylesAndTOC(msStyleCollection)
+    Call Macros_ms.StylesM.CollectmsStylesAndTOC(msStyleCollection)
     
     ' Loop through all tables in the document
     For TblIndex = 1 To ActiveDocument.Tables.count
@@ -7118,7 +7118,7 @@ Sub DeleteNCHighlighting()
     
     Call Macros_ms.Validation.MacroBeginning
     Call Macros_ms.Tools.AddLastCursorPositionBookmark
-    Call Macros_ms.Tools.CheckMicrosoftWordVersion(MacroName)
+    Call Macros_ms.Validation.CheckMicrosoftWordVersion(MacroName)
     
     NoTotalPar = ActiveDocument.Paragraphs.count
         
