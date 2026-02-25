@@ -204,7 +204,7 @@ Sub DeleteStylesOtherThanInTemplate()
         End If
     Next style
     
-    Call SaveLog(MacroName:=MacroName, LoggedParameter:=deletedStyles)  ' in module Styles
+    Call Macros_ms.StylesM.SaveLog(MacroName:=MacroName, LoggedParameter:=deletedStyles)  ' in module Styles
     
     ' Clear object variable
     Set TemplateDoc = Nothing
@@ -323,7 +323,7 @@ Sub ListBuiltInStyles()
         End If
     Next style
     
-    Call SaveLog(MacroName:=MacroName, LoggedParameter:=BuiltInStyles)
+    Call Macros_ms.StylesM.SaveLog(MacroName:=MacroName, LoggedParameter:=BuiltInStyles)
     
 End Sub
 
@@ -416,7 +416,7 @@ Sub ListNonBuiltInAndSuffixStyles()
        
     ' Paragraph styles: sort and add paragraph styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "Paragraph Styles:" & vbCrLf
-    Call SortCollection(coll:=ParagraphStyles)
+    Call Macros_ms.StylesM.SortCollection(coll:=ParagraphStyles)
     rowNum = 1
     For Each styleName In ParagraphStyles
         styleInfo = styleInfo & rowNum & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
@@ -425,7 +425,7 @@ Sub ListNonBuiltInAndSuffixStyles()
     
     ' Character styles: sort and add character styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "Character Styles:" & vbCrLf
-    Call SortCollection(coll:=CharacterStyles)
+    Call Macros_ms.StylesM.SortCollection(coll:=CharacterStyles)
     rowNum = 1
     For Each styleName In CharacterStyles
         styleInfo = styleInfo & rowNum & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
@@ -434,7 +434,7 @@ Sub ListNonBuiltInAndSuffixStyles()
     
     ' Table styles: Sort and add table styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "Table Styles:" & vbCrLf
-    Call SortCollection(coll:=TableStyles)
+    Call Macros_ms.StylesM.SortCollection(coll:=TableStyles)
     rowNum = 1
     For Each styleName In TableStyles
         styleInfo = styleInfo & rowNum & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
@@ -443,7 +443,7 @@ Sub ListNonBuiltInAndSuffixStyles()
     
     ' List styles: sort and add list styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "List Styles:" & vbCrLf
-    Call SortCollection(coll:=ListStyles)
+    Call Macros_ms.StylesM.SortCollection(coll:=ListStyles)
     rowNum = 1
     For Each styleName In ListStyles
         styleInfo = styleInfo & rowNum & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
@@ -452,14 +452,14 @@ Sub ListNonBuiltInAndSuffixStyles()
     
     ' Linked styles: sort and add list styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "Linked styles:" & vbCrLf
-    Call SortCollection(coll:=LinkedStyles)
+    Call Macros_ms.StylesM.SortCollection(coll:=LinkedStyles)
     rowNum = 1
     For Each styleName In LinkedStyles
         styleInfo = styleInfo & rowNum & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
         rowNum = rowNum + 1
     Next styleName
     
-    Call SaveLog(MacroName:=MacroName, LoggedParameter:=styleInfo)
+    Call Macros_ms.StylesM.SaveLog(MacroName:=MacroName, LoggedParameter:=styleInfo)
         
     ' Clear object variables
     Set doc = Nothing
@@ -505,7 +505,7 @@ Sub DeleteUnusedStyles()
     Dim MacroName As String:    MacroName = "DeleteUnusedStyles"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
         
-    Call SaveLog(MacroName:=MacroName, LoggedParameter:=deletedStyles)
+    Call Macros_ms.StylesM.SaveLog(MacroName:=MacroName, LoggedParameter:=deletedStyles)
 End Sub
 
 ' Restores or reapplies settings of a style assigned to paragraph. Each paragraph has assigned certain paragraph type style. Such style can be altered on time of editing by a user. The purpose of this macro is to restore original settings of style which was ssigned to the paragraph.
@@ -546,8 +546,8 @@ Sub ReapplyStylesFromTemplate()
     End If
     
     ' Check if this macro could run correctly
-    Call CheckWordVersion
-    Call AddTemporaryBookmark
+    Call Macros_ms.StylesM.CheckWordVersion
+    Call Macros_ms.StylesM.AddTemporaryBookmark
     
     ' Initialize variables
     Set doc = ActiveDocument
@@ -630,7 +630,7 @@ Sub ReapplyStylesFromTemplate()
     Application.ScreenUpdating = True
     
     Unload ReapplyStylesFromTemplate_Form
-    Call RemoveTemporaryBookmark
+    Call Macros_ms.StylesM.RemoveTemporaryBookmark
     
     MsgBox _
         Prompt:="Styles in this document have been successfuly reapplied from the current template." _
@@ -799,7 +799,7 @@ Sub ListStylesCurrentlyInUse()
     
     ' Sort and add paragraph styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "Paragraph Styles:" & vbCrLf
-    Call SortCollection(coll:=ParagraphStyles)
+    Call Macros_ms.StylesM.SortCollection(coll:=ParagraphStyles)
     counter = 1
     For Each styleName In ParagraphStyles
         styleInfo = styleInfo & counter & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
@@ -808,7 +808,7 @@ Sub ListStylesCurrentlyInUse()
     
     ' Sort and add character styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "Character Styles:" & vbCrLf
-    Call SortCollection(coll:=CharacterStyles)
+    Call Macros_ms.StylesM.SortCollection(coll:=CharacterStyles)
     counter = 1
     For Each styleName In CharacterStyles
         styleInfo = styleInfo & counter & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
@@ -817,7 +817,7 @@ Sub ListStylesCurrentlyInUse()
     
     ' Sort and add table styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "Table Styles:" & vbCrLf
-    Call SortCollection(coll:=TableStyles)
+    Call Macros_ms.StylesM.SortCollection(coll:=TableStyles)
     counter = 1
     For Each styleName In TableStyles
         styleInfo = styleInfo & counter & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
@@ -826,14 +826,14 @@ Sub ListStylesCurrentlyInUse()
     
     ' Sort and add list styles to styleInfo
     styleInfo = styleInfo & vbCrLf & "List Styles:" & vbCrLf
-    Call SortCollection(coll:=ListStyles)
+    Call Macros_ms.StylesM.SortCollection(coll:=ListStyles)
     counter = 1
     For Each styleName In ListStyles
         styleInfo = styleInfo & counter & " | " & styleName(0) & " | " & styleName(1) & " | " & styleName(2) & vbCrLf
         counter = counter + 1
     Next styleName
     
-    Call SaveLog(MacroName:=MacroName, _
+    Call Macros_ms.StylesM.SaveLog(MacroName:=MacroName, _
         LoggedParameter:=vbNewLine & _
         "Only the styles that are currently in use or have been modified in the document, rather than all available styles." & _
         vbNewLine & vbNewLine & styleInfo)
@@ -2110,7 +2110,7 @@ Sub ListTemplatesListAll()
         End If
     Next lt
     
-    Call SaveLog(MacroName:=MacroName, LoggedParameter:=msg)
+    Call Macros_ms.StylesM.SaveLog(MacroName:=MacroName, LoggedParameter:=msg)
     
 End Sub
 
@@ -6553,13 +6553,13 @@ Sub ListCustomStylesToTxt()
         ' Check if the style name ends with " ms"
         If Right(style.NameLocal, 3) = C_StyleSuffix Then
             ' Write the style name and type to the file
-            Call PrintStyleBasicProperties(filenum, style)
+            Call Macros_ms.StylesM.PrintStyleBasicProperties(filenum, style)
             
             ' Char type styles selected features:
             If style.Type = wdStyleTypeCharacter Then
                 Print #filenum, "Language ID: " & style.LanguageId
                 
-                Call PrintFontProperties(filenum, style)
+                Call Macros_ms.StylesM.PrintFontProperties(filenum, style)
                 ' Shortcut key: in KeyBindings
                 ' Text effects: future, if necessary
             End If
@@ -6570,10 +6570,10 @@ Sub ListCustomStylesToTxt()
                 Print #filenum, "Language ID: " & style.LanguageId
 
                 ' Font:
-                Call PrintFontProperties(filenum, style)
+                Call Macros_ms.StylesM.PrintFontProperties(filenum, style)
                 
                 ' Paragraph:
-                Call PrintParagraphProperties(filenum, style)
+                Call Macros_ms.StylesM.PrintParagraphProperties(filenum, style)
             End If
             
             ' Linked type styles selected features:
@@ -6594,7 +6594,7 @@ Sub ListCustomStylesToTxt()
                 Print #filenum, "AllowBreakAcrossPage: " & GetBooleanName(style.Table.AllowBreakAcrossPage)
                 Print #filenum, "AllowPageBreaks: " & style.Table.AllowPageBreaks
                 
-                Call InitializeColourDetails(MyVar:=ExampleResult)
+                Call Macros_ms.Theme.InitializeColourDetails(MyVar:=ExampleResult)
                 ExampleResult.ColourValue = style.Table.Condition(wdFirstRow).shading.BackgroundPatternColor
                 ExampleResult = QueryColour(ExampleResult.ColourValue)
                 Print #filenum, "Heading row fill (shading) [Long]: " & ExampleResult.ColourValue
@@ -6611,7 +6611,7 @@ Sub ListCustomStylesToTxt()
                     Print #filenum, "Heading row fill (shading) Blue: " & ExampleResult.Blue
                 End If
                 
-                Call InitializeColourDetails(MyVar:=ExampleResult)
+                Call Macros_ms.Theme.InitializeColourDetails(MyVar:=ExampleResult)
                 ExampleResult.ColourValue = style.Table.Condition(wdOddRowBanding).shading.BackgroundPatternColor
                 ExampleResult = QueryColour(ExampleResult.ColourValue)
                 Print #filenum, "Odd row banding fill (shading) [Long]: " & ExampleResult.ColourValue
@@ -6628,7 +6628,7 @@ Sub ListCustomStylesToTxt()
                     Print #filenum, "Odd row banding fill (shading) Blue: " & ExampleResult.Blue
                 End If
                 
-                Call InitializeColourDetails(MyVar:=ExampleResult)
+                Call Macros_ms.Theme.InitializeColourDetails(MyVar:=ExampleResult)
                 ExampleResult.ColourValue = style.Table.Condition(wdEvenRowBanding).shading.BackgroundPatternColor
                 ExampleResult = QueryColour(ExampleResult.ColourValue)
                 Print #filenum, "Even row banding fill (shading) [Long]: " & ExampleResult.ColourValue
@@ -6645,7 +6645,7 @@ Sub ListCustomStylesToTxt()
                     Print #filenum, "Even row banding fill (shading) Blue: " & ExampleResult.Blue
                 End If
                                 
-                Call InitializeColourDetails(MyVar:=ExampleResult)
+                Call Macros_ms.Theme.InitializeColourDetails(MyVar:=ExampleResult)
                 ExampleResult.ColourValue = style.Table.borders(wdBorderBottom).color
                 ExampleResult = QueryColour(ExampleResult.ColourValue)
                 Print #filenum, "Border bottom color [Long]: " & ExampleResult.ColourValue
@@ -6664,7 +6664,7 @@ Sub ListCustomStylesToTxt()
                 Print #filenum, "Border bottom line style: "; style.Table.borders(wdBorderBottom).LineStyle
                 Print #filenum, "Border bottom line width [pt]: "; style.Table.borders(wdBorderBottom).LineWidth
                                 
-                Call InitializeColourDetails(MyVar:=ExampleResult)
+                Call Macros_ms.Theme.InitializeColourDetails(MyVar:=ExampleResult)
                 ExampleResult.ColourValue = style.Table.borders(wdBorderVertical).color
                 ExampleResult = QueryColour(ExampleResult.ColourValue)
                 Print #filenum, "Border vertical color [Long]: " & ExampleResult.ColourValue
@@ -6709,15 +6709,15 @@ Sub ListCustomStylesToTxt()
         style.NameLocal = "TOC 9" Then
         If style.Type = wdStyleTypeParagraph Then
             Print #filenum, "----------------------------------------"
-            Call PrintStyleBasicProperties(filenum, style)
+            Call Macros_ms.StylesM.PrintStyleBasicProperties(filenum, style)
             Print #filenum, "Automatically update: " & style.AutomaticallyUpdate
             Print #filenum, "Language ID: " & style.LanguageId
 
             ' Font:
-            Call PrintFontProperties(filenum, style)
+            Call Macros_ms.Theme.PrintFontProperties(filenum, style)
             
             ' Paragraph:
-            Call PrintParagraphProperties(filenum, style)
+            Call Macros_ms.Theme.PrintParagraphProperties(filenum, style)
         End If
     End If
     
@@ -6783,7 +6783,7 @@ Private Sub PrintFontProperties(filenum As Integer, style As style)
     Print #filenum, "Font Hidden: " & GetBooleanName(style.font.Hidden)
     Print #filenum, "Font Strikethrough: " & GetBooleanName(style.font.Strikethrough)
     ' Initialize variable
-    Call InitializeColourDetails(MyVar:=ExampleResult)
+    Call Macros_ms.Theme.InitializeColourDetails(MyVar:=ExampleResult)
     ExampleResult.ColourValue = style.font.TextColor.RGB
     ExampleResult = QueryColour(ExampleResult.ColourValue)
     Print #filenum, "Font Color [Long]: " & ExampleResult.ColourValue
@@ -6799,7 +6799,7 @@ Private Sub PrintFontProperties(filenum As Integer, style As style)
         Print #filenum, "Font Color Green: " & ExampleResult.Green
         Print #filenum, "Font Color Blue: " & ExampleResult.Blue
     End If
-    Call InitializeColourDetails(MyVar:=ExampleResult)
+    Call Macros_ms.Theme.InitializeColourDetails(MyVar:=ExampleResult)
     ExampleResult.ColourValue = style.font.shading.BackgroundPatternColor
     ExampleResult = QueryColour(ExampleResult.ColourValue)
     Print #filenum, "Shading Font Color [Long]: " & ExampleResult.ColourValue
@@ -6873,8 +6873,8 @@ End Function
 ' Combo for validation of styling.
 ' 2025-03-07 by ms
 Sub ShowNonComplientStyling()
-    Call ShowNonCompliantStylingInParagraphs ' in module: Styles
-    Call ShowNonComplientStylingInTables ' in module: Styles
+    Call Macros_ms.StylesM.ShowNonCompliantStylingInParagraphs
+    Call Macros_ms.StylesM.ShowNonComplientStylingInTables
 End Sub
 
 ' Shows in every paragraph except tables as yellow highlighting all paragraphs which are not compliant to styles " ms" and TOCs.
@@ -6901,7 +6901,7 @@ Private Sub ShowNonCompliantStylingInParagraphs()
     ' Initialize collection
     Set msStyleCollection = New Collection
     ' Collect styles with " ms" suffix
-    Call CollectmsStylesAndTOC(msStyleCollection)
+    Call Macros_ms.StylesM.CollectmsStylesAndTOC(msStyleCollection)
     
     ' Initialize counters
     NoTotalPar = ActiveDocument.Paragraphs.count
@@ -6917,7 +6917,7 @@ Private Sub ShowNonCompliantStylingInParagraphs()
             Buttons:=vbYesNo + vbQuestion, _
         Title:=MsgBoxTitle)
 
-    Call AddLastCursorPositionBookmark
+    Call Macros_ms.Tools.AddLastCursorPositionBookmark
 
     ' Initialization of the dedicated Form
     TemplateStyleValidation_Form.Show vbModeless ' sets ShowModal to False in the corresponding Form
@@ -6955,7 +6955,7 @@ Private Sub ShowNonCompliantStylingInParagraphs()
     Next i
     
     Unload TemplateStyleValidation_Form
-    Call RemoveLastCursorPositionBookmark
+    Call Macros_ms.Tools.RemoveLastCursorPositionBookmark
     
     ' Display summary
     summaryMessage = "Total number of paragraphs: " & NoTotalPar & vbCrLf & _
@@ -7015,7 +7015,7 @@ Private Sub ShowNonComplientStylingInTables()
     ' Initialize collection
     Set msStyleCollection = New Collection
     ' Collect styles with " ms" suffix
-    Call CollectmsStylesAndTOC(msStyleCollection)
+    Call Macros_ms.Theme.CollectmsStylesAndTOC(msStyleCollection)
     
     ' Loop through all tables in the document
     For TblIndex = 1 To ActiveDocument.Tables.count
@@ -7116,9 +7116,9 @@ Sub DeleteNCHighlighting()
     Dim MacroName As String:     MacroName = "DeleteNCHighlighting"
     Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    Call MacroBeginning
-    Call AddLastCursorPositionBookmark
-    Call CheckMicrosoftWordVersion(MacroName)
+    Call Macros_ms.Validation.MacroBeginning
+    Call Macros_ms.Tools.AddLastCursorPositionBookmark
+    Call Macros_ms.Tools.CheckMicrosoftWordVersion(MacroName)
     
     NoTotalPar = ActiveDocument.Paragraphs.count
         
@@ -7140,8 +7140,8 @@ Sub DeleteNCHighlighting()
     Next i
     
     Unload TemplateStyleValidation_Form
-    Call MacroFinish
-    Call RemoveLastCursorPositionBookmark
+    Call Macros_ms.Validation.MacroFinish
+    Call Macros_ms.Tools.RemoveLastCursorPositionBookmark
 
     MsgBox _
         Prompt:="Finished processing.", _
@@ -7188,10 +7188,10 @@ Public Sub DeleteCustomStyles_KeepOnlyDefined()
     WhichDeleted = ""
     
     ' 1) Initialize the four tables
-    Call InitParagraphStyles
-    Call InitCharacterStyles
-    Call InitTableStyles
-    Call InitListTemplates
+    Call Macros_ms.Constants.InitParagraphStyles
+    Call Macros_ms.Constants.InitCharacterStyles
+    Call Macros_ms.Constants.InitTableStyles
+    Call Macros_ms.Constants.InitListTemplates
     
     ' Optional confirmation (destructive operation!)
     Beep

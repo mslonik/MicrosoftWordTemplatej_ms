@@ -46,10 +46,8 @@ Sub ResetDistanceBetweenNumberingAndHeading()
         Exit Sub
     End If
     
-    Call InitializeConstants
-    
-    ' Origin module: Styles
-    Call RemoveTextFromBeginningOfListParagraphs(textToRemove:=BetweenNumberAndText)
+    Call Macros_ms.Scenarios.InitializeConstants
+    Call Macros_ms.StylesM.RemoveTextFromBeginningOfListParagraphs(textToRemove:=BetweenNumberAndText)
 End Sub
 
 ' This macro is linked to Ctrl + S keyboard shortcut. Each time user runs it, it enters specific text character (em space) at the beginning of each paragraph style type list.
@@ -57,14 +55,14 @@ End Sub
 ' 2025-03-09 by ms and AI
 ' 2026-01-17 by ms
 Sub ApplyDistanceBetweenNumberingAndHeading()
-    Dim FileName As String:    FileName = C_F_Macros
+    Dim FileName As String:      FileName = C_F_Macros
     Dim ModuleName As String:    ModuleName = C_M_Scenarios
-    Dim MacroName As String:    MacroName = "ApplyDistanceBetweenNumberingAndHeading"
-    Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim MacroName As String:     MacroName = "ApplyDistanceBetweenNumberingAndHeading"
+    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     ' Initialize em space constant as BetweenNumberAndText
-'    Call InitializeConstants
-'    Call InsertTextAtBeginningOfListParagraphs(textToInsert:=BetweenNumberAndText)  ' in Styles
+'    Call Macros_ms.Scenarios.InitializeConstants
+'    Call Macros_ms.StylesM.InsertTextAtBeginningOfListParagraphs(textToInsert:=BetweenNumberAndText)
     
     ' Enable error handling in case that user presses 'Cancel' button.
     On Error Resume Next
@@ -80,7 +78,7 @@ End Sub
 ' Associated to keyboard shortcut Ctrl + W.
 ' 2025-03-15
 Sub UpdateAllFieldsAndCloseFile()
-    Call UpdateAllFields            ' in module Validation
+    Call Macros_ms.Validation.UpdateAllFields
     If Not CheckFieldsAgainstErrors Then  ' in module Validation
         Exit Sub                    ' exits if error was found
     End If
@@ -90,28 +88,21 @@ End Sub
 ' Combo fall forward: update all fields and then show print preview
 ' 2025-03-15
 Sub CustomizedPrintPreviewAndPrint()
-    Call UpdateAllFields    ' in module Validation
+    Call Macros_ms.Validation.UpdateAllFields
     Application.CommandBars.ExecuteMso "PrintPreviewAndPrint"   ' call built-in Microsoft Word command
 End Sub
 
 ' Insert full content: cover page, last page and example content: 3 sections in total.
 ' 2025-03-19 ms and AI
 Sub NewFileConfAndContent()
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Scenarios
-    
-    Dim MacroName As String
-    MacroName = "NewFileConfAndContent"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Scenarios
+    Dim MacroName As String:    MacroName = "NewFileConfAndContent"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
             
     ' Check if the add-in template is enabled
     Dim TemplateIndex As Integer
-    TemplateIndex = GetTemplateIndex(C_F_BuildingBlocks)                 ' module: BuildingBlocks
+    TemplateIndex = Macros_ms.BuildingBlocks.GetTemplateIndex(C_F_BuildingBlocks)
       
     Dim UserDecision As VbMsgBoxResult
     Dim QuestionCounter As Byte
@@ -128,7 +119,7 @@ Sub NewFileConfAndContent()
         Buttons:=vbQuestion + vbYesNo + vbDefaultButton1, _
         Title:=MsgBoxTitle)
     If UserDecision = vbYes Then
-        Call CreateActiveDocumentMacroShortcuts                     ' module: Shortcuts
+        Call Macros_ms.Shortcuts.CreateActiveDocumentMacroShortcuts
     End If
     
     ' 2. Inserting customized styles
@@ -141,7 +132,7 @@ Sub NewFileConfAndContent()
         Buttons:=vbQuestion + vbYesNo + vbDefaultButton1, _
         Title:=MsgBoxTitle)
     If UserDecision = vbYes Then
-        Call CreateCustomStyles                                     ' module: Styles
+        Call Macros_ms.StylesM.CreateCustomStyles
     End If
     
     ' 3. Setting up Theme file
@@ -155,7 +146,7 @@ Sub NewFileConfAndContent()
         Buttons:=vbQuestion + vbYesNo + vbDefaultButton1, _
         Title:=MsgBoxTitle)
     If UserDecision = vbYes Then
-        Call AttachTheme                    ' module: Theme
+        Call Macros_ms.Theme.AttachTheme
     End If
     
     ' 4. Setting up customized Microsoft Word options
@@ -167,7 +158,7 @@ Sub NewFileConfAndContent()
         Buttons:=vbYesNo + vbQuestion + vbDefaultButton1, _
         Title:=MsgBoxTitle)
     If UserDecision = vbYes Then
-        Call WordOptionsCustomize            ' module: Tools
+        Call Macros_ms.Tools.WordOptionsCustomize
     End If
     
     ' 5. Setting of active document margins
@@ -179,7 +170,7 @@ Sub NewFileConfAndContent()
         Buttons:=vbYesNo + vbQuestion + vbDefaultButton1, _
         Title:=MsgBoxTitle)
     If UserDecision = vbYes Then
-        Call SetMarginsDefault       ' module: Tools
+        Call Macros_ms.Tools.SetMarginsDefault
     End If
     
     ' 6. Setting of active document custom properties
@@ -193,7 +184,7 @@ Sub NewFileConfAndContent()
         Buttons:=vbYesNo + vbQuestion + vbDefaultButton1, _
         Title:=MsgBoxTitle)
     If UserDecision = vbYes Then
-        Call DocPropertiesUpdate            ' module: Tools
+        Call Macros_ms.Tools.DocPropertiesUpdate
         DocPropertiesFlag = msoTrue
     End If
     If UserDecision = vbNo Then
@@ -211,8 +202,8 @@ Sub NewFileConfAndContent()
             Buttons:=vbYesNo + vbQuestion + vbDefaultButton1, _
             Title:=MsgBoxTitle)
         If UserDecision = vbYes Then
-            Call CaptionLabelDeleteCustomized  ' module: Tools
-            Call CapationAddCustomized       ' module: Tools
+            Call Macros_ms.Tools.CaptionLabelDeleteCustomized
+            Call Macros_ms.Tools.CapationAddCustomized
         End If
     End If
     
@@ -225,7 +216,7 @@ Sub NewFileConfAndContent()
         Buttons:=vbYesNo + vbQuestion + vbDefaultButton1, _
         Title:=MsgBoxTitle)
     If UserDecision = vbYes Then
-        Call SetHyphenation                 ' module: Tools
+        Call Macros_ms.Tools.SetHyphenation
     End If
 
     ' 9. Insertion of example content to the current document
@@ -241,10 +232,10 @@ Sub NewFileConfAndContent()
     
     ' If basic content is selected, call the following set of macros
     If UserDecision = vbNo Then
-        Call InsertBasicContent(TemplateIndex) ' in module Scenarios
-        Call BB_RemoveDefParagraphs             ' in module BuildingBlocks
+        Call Macros_ms.Scenarios.InsertBasicContent(TemplateIndex)
+        Call Macros_ms.BuildingBlocks.BB_RemoveDefParagraphs
         If DocPropertiesFlag = msoTrue Then
-            Call DocPropertiesUserInput                 ' in module Tools, calls UpdateAllFields in module Validation
+            Call Macros_ms.Tools.DocPropertiesUserInput
         End If
         Exit Sub
     End If
@@ -263,10 +254,10 @@ Sub NewFileConfAndContent()
                 Title:=MsgBoxTitle
             Exit Sub
         End If
-        Call InsertFullContent(TemplateIndex)  ' in module Scenarios
-        Call BB_RemoveDefParagraphs             ' in module BuildingBlocks
+        Call Macros_ms.Scenarios.InsertFullContent(TemplateIndex)
+        Call Macros_ms.BuildingBlocks.BB_RemoveDefParagraphs
         If DocPropertiesFlag = msoTrue Then
-            Call DocPropertiesUserInput                 ' in module Tools, calls UpdateAllFields in module Validation
+            Call Macros_ms.Tools.DocPropertiesUserInput
         End If
     End If
 
@@ -280,10 +271,10 @@ Sub NewFileConfAndContent()
         Buttons:=vbQuestion + vbDefaultButton1 + vbYesNo, _
         Title:=MsgBoxTitle)
     If UserDecision = vbYes Then
-        Call SetPageColorToCustom                   'file: C_F_Macros, module: Tools
+        Call Macros_ms.Tools.SetPageColorToCustom
     End If
     If UserDecision = vbNo Then
-        Call RestoreDefaultPageColor                'file: C_F_Macros, module: Tools
+        Call Macros_ms.Tools.RestoreDefaultPageColor
     End If
     
     ' The following line is in my opinion bug in Microsoft Word. For unknown reason the C_S_ParNormal is set to AutomaticallyUpdate. So I prevent it silently.
