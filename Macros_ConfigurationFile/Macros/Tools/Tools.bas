@@ -396,7 +396,6 @@ Sub SetMarginsDefault()
         Title:=MsgBoxTitle
 End Sub
 
-
 ' Switches active document view properties in a loop, 4x views are available.
 ' Keyboard shortcut: F4.
 ' Settings are stored within ActiveDocument to restore them next time document is opened.
@@ -409,7 +408,7 @@ Sub ToggleSpecificFormatting()
     Dim MacroName As String:      MacroName = "ToggleSpecificFormatting"
     Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    Call Macros_ms.Tools.CheckMicrosoftWordVersion(MacroName)    ' in module 'Tools' 'Application.Run C_P_Macros & "." & C_M_Tools & "." & "CheckMicrosoftWordVersion", MacroName
+    Call Macros_ms.Validation.CheckMicrosoftWordVersion(MacroName)    ' alternative: Application.Run C_P_Macros & "." & C_M_Validation & "." & "CheckMicrosoftWordVersion", MacroName
     
     Dim oView As View
     Set oView = ActiveDocument.ActiveWindow.View
@@ -489,9 +488,9 @@ Sub ToggleSpecificFormatting()
     
     If ViewMode = 2 Then
         If FormattingToggle = False Then
-            Call SetPageColorToCustom               ' in module Tools
+            Call Macros_ms.Tools.SetPageColorToCustom
         Else
-            Call RestoreDefaultPageColor            ' in module Tools
+            Call Macros_ms.Tools.RestoreDefaultPageColor
         End If
         MsgBox _
             Prompt:="Specific formatting was just toggled: " & ViewMode & vbNewLine & vbNewLine & _
@@ -531,9 +530,9 @@ Sub ToggleSpecificFormatting()
     
     If ViewMode = 4 Then
         If FormattingToggle = False Then
-            Call SetPageColorToCustom               ' in module Tools
+            Call Macros_ms.Tools.SetPageColorToCustom
         Else
-            Call RestoreDefaultPageColor            ' in module Tools
+            Call Macros_ms.Tools.RestoreDefaultPageColor
         End If
         MsgBox _
             Prompt:="Specific formatting was just toggled: " & ViewMode & vbNewLine & vbNewLine & _
@@ -547,21 +546,6 @@ Sub ToggleSpecificFormatting()
     ' Clear object variables
     Set oView = Nothing
     
-End Sub
-
-Private Sub CheckMicrosoftWordVersion(MacroName As String)
-    Dim FileName As String:      FileName = C_F_Macros
-    Dim ModuleName As String:    ModuleName = C_M_Tools
-    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-
-    If Application.Version <> "14.0" And Application.Version <> "16.0" Then
-        MsgBox _
-            Prompt:="This macro is not compatible to this version of Office!", _
-            Buttons:=vbCritical + vbOKOnly, _
-            Title:=MsgBoxTitle
-        Exit Sub ' Exit the subroutine
-    End If
-
 End Sub
 
 ' Sets the margins of all text boxes to 0
@@ -580,14 +564,14 @@ Sub CanvaFormatTextBoxes()
     Dim MacroName As String:    MacroName = "CanvaFormatTextBoxes"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    Call CheckMicrosoftWordVersion(MacroName)
+    Call Macros_ms.Validation.CheckMicrosoftWordVersion(MacroName)
     
     ' When Application.ScreenUpdating is set to False, it turns off screen updating, which can significantly speed up the execution of a macro by preventing the screen from refreshing until the macro has finished running. This is particularly useful for macros that perform a lot of operations, as it reduces the time spent on rendering the screen.
     Application.ScreenUpdating = False
     Application.DisplayAlerts = wdAlertsNone
     
     ' Saves last cursor position as a temporary bookmark
-    Call AddLastCursorPositionBookmark
+    Call Macros_ms.Tools.AddLastCursorPositionBookmark
     
     i = ActiveDocument.Shapes.count
     j = 0
@@ -658,7 +642,7 @@ Sub CanvaFormatTextBoxes()
     Application.ScreenRefresh
     
     ' Goes to a place where temporary bookmark was located and removes it afterwards
-    Call RemoveLastCursorPositionBookmark
+    Call Macros_ms.Tools.RemoveLastCursorPositionBookmark
     
     MsgBox _
         Prompt:="Processing is finished.", _
@@ -814,9 +798,9 @@ End Sub
 ' 2025-03-08 by ms, separated macro code from shortcut
 ' 2025-03-27 by ms, Range instead of Select
 Sub CustomizedToggleFieldCodes()
-    Call AddLastCursorPositionBookmark
+    Call Macros_ms.Tools.AddLastCursorPositionBookmark
     Application.Run "ViewFieldCodes" ' call built-in Microsoft Word command
-    Call RemoveLastCursorPositionBookmark
+    Call Macros_ms.Tools.RemoveLastCursorPositionBookmark
 End Sub
 
 ' 2025-08-19 by ms and AI
@@ -1113,7 +1097,7 @@ Sub ParDistAtNewSectionReduce()
     Application.ScreenUpdating = True
     
     ' Saves last cursor position as a temporary bookmark
-    Call AddLastCursorPositionBookmark
+    Call Macros_ms.Tools.AddLastCursorPositionBookmark
 
     CounterFound = 0
     CounterChanged = 0
@@ -1157,7 +1141,7 @@ Sub ParDistAtNewSectionReduce()
     Application.ScreenUpdating = False
 
     ' Goes to a place where temporary bookmark was located and removes it afterwards
-    Call RemoveLastCursorPositionBookmark
+    Call Macros_ms.Tools.RemoveLastCursorPositionBookmark
     ActiveWindow.View.Type = wdPrintView
     
     ' Clear object variable
@@ -1184,7 +1168,7 @@ Sub ParDistAtNewSectionRestore()
     Application.ScreenUpdating = True
     
     ' Saves last cursor position as a temporary bookmark
-    Call AddLastCursorPositionBookmark
+    Call Macros_ms.Tools.AddLastCursorPositionBookmark
     
     For Each Bm In ActiveDocument.Bookmarks
         If Bm.Name Like C_BM_ReducedDistance & "*" Then
@@ -1212,7 +1196,7 @@ Sub ParDistAtNewSectionRestore()
     Next Bm
     
     ' Goes to a place where temporary bookmark was located and removes it afterwards
-    Call RemoveLastCursorPositionBookmark
+    Call Macros_ms.Tools.RemoveLastCursorPositionBookmark
     Application.ScreenUpdating = False
     MsgBox _
         Prompt:="Number of paragraphs restored to default formatting: " & CounterRestored & vbCrLf & _
@@ -1649,7 +1633,7 @@ Sub CanvaToggleBorder()
             
             If UserDecision = vbYes Then
                 ' If user answers yes and the current canvas line has set the line color, switch it off
-                Call ToggleCanvaBrightness(MyCanvas)
+                Call Macros_ms.Tools.ToggleCanvaBrightness(MyCanvas)
             End If
             RngAnchor.HighlightColorIndex = wdNoHighlight
         End If
@@ -1752,7 +1736,7 @@ Sub InsertSVNCommitNumber()
     ' Store the commit number in a document custom property named ms_SVN_Revision
     Set doc = ActiveDocument
     doc.CustomDocumentProperties(DocCP_SVN_Revision).Value = CommitNumber
-    Call UpdateAllFields    ' module: Validation
+    Call Macros_ms.Validation.UpdateAllFields
     
     ' Clear object data
     Set doc = Nothing
@@ -2179,13 +2163,13 @@ Public Sub AttachBuildingBlocks()
         Templates.LoadBuildingBlocks
         If AddIns.count <> 0 Then
             AddInsIndex = ReturnAddInsIndex()
-            Call EnableAddIns(AddInsIndex)
+            Call Macros_ms.Tools.EnableAddIns(AddInsIndex)
         Else
             ' enable BuildingBlocks template "C_F_BuildingBlocks"
-            Call LoadBuildingBlocksFromUserTemplate
+            Call Macros_ms.Tools.LoadBuildingBlocksFromUserTemplate
             AddInsIndex = ReturnAddInsIndex()
             If AddInsIndex <> 0 Then
-                Call EnableAddIns(AddInsIndex)
+                Call Macros_ms.Tools.EnableAddIns(AddInsIndex)
             End If
         End If
     End If
@@ -2316,7 +2300,7 @@ Private Sub InsertCrossReferences_Headings()
     
     Dim StyleNameArray As Variant
     ' Initilaize StyleNameArray
-    Call InitializeStyleNameArray(StyleNameArray)
+    Call Macros_ms.Tools.InitializeStyleNameArray(StyleNameArray)
     ' Fill in text string matrix with header content
     HeaderMatrix = BuildHeaderArray(StyleNameArray)
     
@@ -3086,7 +3070,7 @@ ErrExit:
         
         Dim StyleNameArray As Variant
         If RefType = RefTypeNotDefined Then
-            Call InitializeStyleNameArray(StyleNameArray)
+            Call Macros_ms.Tools.InitializeStyleNameArray(StyleNameArray)
             RefList = BuildHeaderArray(StyleNameArray)
             RefType = RefTypeHeading
             FullList = ActiveDocument.GetCrossReferenceItems(wdRefTypeNumberedItem)
@@ -3183,7 +3167,7 @@ ErrExit:
             ' Chages formatting of a new added field to hyperlink
             Dim aField As Field
             For Each aField In RngBefore.Fields
-                Call RefFormatToHyperlink(aField)
+                Call Macros_ms.Tools.RefFormatToHyperlink(aField)
             Next aField
             
         Else
@@ -3479,7 +3463,7 @@ Sub CustomizedPrinting()
             Title:=MsgBoxTitle _
             )
         If UserDecision = vbYes Then
-            Call SetPrintingOptionsDisplay
+            Call Macros_ms.Tools.SetPrintingOptionsDisplay
         End If
     End If
     
@@ -3492,7 +3476,7 @@ Sub CustomizedPrinting()
             Title:=MsgBoxTitle _
             )
         If UserDecision = vbYes Then
-            Call SetPrintingOptionsAdvanced
+            Call Macros_ms.Tools.SetPrintingOptionsAdvanced
         End If
     End If
     
@@ -3506,7 +3490,7 @@ Sub CustomizedPrinting()
             Title:=MsgBoxTitle _
             )
     Else
-        Call UpdateAllFields    ' module: Validation
+        Call Macros_ms.Validation.UpdateAllFields
         ' Show the Print Dialog Box via VBA. Unfortunately it is not possible from VBA to set by default "print what" to "document".
         Dialogs(wdDialogFilePrint).Show
         Exit Sub
@@ -3517,7 +3501,7 @@ Sub CustomizedPrinting()
         ActiveDocument.Background.Fill.Visible = msoFalse
     End If
     
-    Call UpdateAllFields    ' module: Validation
+    Call Macros_ms.Validation.UpdateAllFields
     ' Show the Print Dialog Box via VBA. Unfortunately it is not possible from VBA to set by default "print what" to "document".
     Dialogs(wdDialogFilePrint).Show
 End Sub
@@ -3539,7 +3523,7 @@ Sub CustomizedSaveAs()
         Title:=MsgBoxTitle _
         )
     If UserDecision = vbYes Then
-        Call SaveDocumentAsPDFWithSettings
+        Call Macros_ms.Tools.SaveDocumentAsPDFWithSettings
         Exit Sub
     End If
     
@@ -3622,24 +3606,24 @@ End Function
 ' It loops over all paragraphs in the document and then exchanges specific character strings with references.
 ' 2025-04-18 by ms
 Sub InsertCrossReferences()
-    Call InsertCrossReferences_Headings     ' in module Tools
+    Call Macros_ms.Tools.InsertCrossReferences_Headings
     DoEvents    ' Force a screen refresh
-    Call InsertCrossReferences_Pictures     ' in module Tools
+    Call Macros_ms.Tools.InsertCrossReferences_Pictures
     DoEvents    ' Force a screen refresh
-    Call InsertCrossReferences_Tables       ' in module Tools
+    Call Macros_ms.Tools.InsertCrossReferences_Tables
     DoEvents    ' Force a screen refresh
-    Call InsertCrossReferences_References   ' in module Tools
+    Call Macros_ms.Tools.InsertCrossReferences_References
 End Sub
 
 ' 2025-04-18 by ms
 Sub DeleteCrossReferences()
-    Call DeleteCrossReference_Headings      ' in module Tools
+    Call Macros_ms.Tools.DeleteCrossReference_Headings
     DoEvents    ' Force a screen refresh
-    Call DeleteCrossReferences_Pictures     ' in module Tools
+    Call Macros_ms.Tools.DeleteCrossReferences_Pictures
     DoEvents    ' Force a screen refresh
-    Call DeleteCrossReferences_Tables       ' in module Tools
+    Call Macros_ms.Tools.DeleteCrossReferences_Tables
     DoEvents    ' Force a screen refresh
-    Call DeleteCrossReferences_References   ' in module Tools
+    Call Macros_ms.Tools.DeleteCrossReferences_References
 End Sub
 
 ' Formats the currently selected table, but only if the selection

@@ -125,7 +125,7 @@ Sub ReplaceUnwantedTextstrings()
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Application.ScreenUpdating = True
-    Call AddLastCursorPositionBookmark
+    Call Macros_ms.Validation.AddLastCursorPositionBookmark
 
     Summary = "Finished processing." _
         & vbNewLine
@@ -158,9 +158,9 @@ Sub ReplaceUnwantedTextstrings()
     replaceText = "?"
     ReplacePattern findText, replaceText, Summary, MsgBoxTitle
     
-    Call DeleteEmptyParagraphs(Summary, MsgBoxTitle)
-    Call RemoveLastCursorPositionBookmark
-    Call Logging(Summary, MsgBoxTitle)
+    Call Macros_ms.Validation.DeleteEmptyParagraphs(Summary, MsgBoxTitle)
+    Call Macros_ms.Validation.RemoveLastCursorPositionBookmark
+    Call Macros_ms.Validation.Logging(Summary, MsgBoxTitle)
     MsgBox _
         Prompt:=Summary, _
         Buttons:=vbInformation, _
@@ -341,8 +341,8 @@ Sub UpdateAllFields()
     Dim MacroName As String:    MacroName = "UpdateAllFields"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
-    Call MacroBeginning                     ' in module Validation
-    Call AddLastCursorPositionBookmark      ' in module Validation
+    Call Macros_ms.Validation.MacroBeginning
+    Call Macros_ms.Validation.AddLastCursorPositionBookmark
 
     UpdateAllFields_Form.ProgressLabel = "Macro UpdateAllFields is running..."
     UpdateAllFields_Form.ProgressLabel.font = "Consolas"
@@ -366,9 +366,9 @@ Sub UpdateAllFields()
     Next toC
     
     ' end of macro
-    Call MacroFinish                        ' in module Validation
-    Call RemoveLastCursorPositionBookmark   ' in module Validation
-    Call UpdateHeadersFootersSub            ' in module Validation
+    Call Macros_ms.Validation.MacroFinish
+    Call Macros_ms.Validation.RemoveLastCursorPositionBookmark
+    Call Macros_ms.Validation.UpdateHeadersFootersSub
     Unload UpdateAllFields_Form
         
     MsgBox _
@@ -400,7 +400,7 @@ Function CheckFieldsAgainstErrors() As Boolean
             Buttons:=vbCritical, _
             Title:=MsgBoxTitle
         Summary = Summary & vbNewLine & "Finished processing with error: zero reference."
-        Call Logging(Summary, MsgBoxTitle)      ' in module Validation
+        Call Macros_ms.Validation.Logging(Summary, MsgBoxTitle)
         CheckFieldsAgainstErrors = False
         Exit Function
     End If
@@ -412,7 +412,7 @@ Function CheckFieldsAgainstErrors() As Boolean
             Buttons:=vbCritical, _
             Title:=MsgBoxTitle
         Summary = Summary & vbNewLine & "Finished processing with error: error reference."
-        Call Logging(Summary, MsgBoxTitle)      ' in module Validation
+        Call Macros_ms.Validation.Logging(Summary, MsgBoxTitle)
         CheckFieldsAgainstErrors = False
         Exit Function
     End If
@@ -422,7 +422,7 @@ Function CheckFieldsAgainstErrors() As Boolean
         Prompt:=Summary, _
         Buttons:=vbInformation, _
         Title:=MsgBoxTitle
-    Call Logging(Summary, MsgBoxTitle)      ' in module Validation
+    Call Macros_ms.Validation.Logging(Summary, MsgBoxTitle)
 End Function
 
 Private Sub RemoveLastCursorPositionBookmark()
@@ -483,10 +483,10 @@ Private Sub RefToHyperlinks()
     Dim MacroName As String:    MacroName = "RefToHyperlinks"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    Call CheckMicrosoftWordVersion(MacroName)
+    Call Macros_ms.Validation.CheckMicrosoftWordVersion(MacroName)
     
-    Call MacroBeginning
-    Call AddLastCursorPositionBookmark
+    Call Macros_ms.Validation.MacroBeginning
+    Call Macros_ms.Validation.AddLastCursorPositionBookmark
     
     i = ActiveDocument.Fields.count
     j = 0
@@ -494,7 +494,7 @@ Private Sub RefToHyperlinks()
     RefToHyperlinks_Form.ProgressLabel = "Finished: " & j & " out of " & i
     RefToHyperlinks_Form.Show vbModeless ' this means ShowModal is set to False in the corresponding Form
     For Each aField In oSource.Fields
-        Call RefFormatToHyperlink(aField)   ' in module Tools
+        Call Macros_ms.Tools.RefFormatToHyperlink(aField)
         ' only the numbering in ToC is shown as a hyperlink (wdFieldPageRef); alternative: wdFieldHyperlink
         If (aField.Type = wdFieldPageRef) Then
             aField.Select
@@ -509,10 +509,10 @@ Private Sub RefToHyperlinks()
     Next aField
     
     Unload RefToHyperlinks_Form
-    Call MacroFinish
-    Call RemoveLastCursorPositionBookmark
+    Call Macros_ms.Validation.MacroFinish
+    Call Macros_ms.Validation.RemoveLastCursorPositionBookmark
     
-    Call Logging("Finished processing.", MsgBoxTitle)
+    Call Macros_ms.Validation.Logging("Finished processing.", MsgBoxTitle)
     
     MsgBox _
         Prompt:="Finished processing.", _
@@ -602,7 +602,7 @@ Sub Tables_Format()
     Dim MacroName As String:    MacroName = "Tables_Format"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    Call CheckMicrosoftWordVersion(MacroName)
+    Call Macros_ms.Validation.CheckMicrosoftWordVersion(MacroName)
 
     TotalNoTables = ActiveDocument.Tables.count
     If TotalNoTables = 0 Then
@@ -614,7 +614,7 @@ Sub Tables_Format()
     End If
 
     ' Macro to set last position of the cursor
-    Call AddLastCursorPositionBookmark
+    Call Macros_ms.Validation.AddLastCursorPositionBookmark
     
     ' Switch to Print View mode of operation
     ActiveWindow.View.Type = wdPrintView
@@ -639,7 +639,7 @@ Sub Tables_Format()
         YesCenterCellsVertically = YesCenterCellsVertically + Table_CenterCellsVertically(tbl:=tbl, MsgBoxHeader:=MsgBoxTitle)  ' 4. Center cells vertically
     Next tbl
     
-    Call RemoveLastCursorPositionBookmark
+    Call Macros_ms.Validation.RemoveLastCursorPositionBookmark
     
      Summary = "Total number of tables: " & TotalNoTables & vbNewLine & _
               "Number of tables with header row set: " & YesHeaderCount & vbNewLine & _
@@ -647,7 +647,7 @@ Sub Tables_Format()
               "Number of tables with set prohibited breaking the content across pages: " & YesAllowBreakAcrossPages & vbNewLine & _
               "Number of tables with cells centered vertically: " & YesCenterCellsVertically & vbNewLine & _
               "Finished processing."
-    Call Logging(Summary:=Summary, MsgBoxHeader:=MsgBoxTitle)  ' this module
+    Call Macros_ms.Validation.Logging(Summary:=Summary, MsgBoxHeader:=MsgBoxTitle)  ' this module
     MsgBox _
         Prompt:=Summary, _
         Buttons:=vbInformation, _
@@ -771,8 +771,8 @@ Sub InsertNoBrakeSpace()
     Dim MacroName As String:    MacroName = "InsertNoBrakeSpace"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
-    Call MacroBeginning
-    Call AddLastCursorPositionBookmark
+    Call Macros_ms.Validation.MacroBeginning
+    Call Macros_ms.Validation.AddLastCursorPositionBookmark
 
     If StyleExists(C_S_PictureLegend) Or StyleExists(C_S_TableLegend) Then
         ' ^s = non breaking space
@@ -819,17 +819,17 @@ Sub InsertNoBrakeSpace()
         Next toC
     End If
     
-    Call MacroFinish
-    Call RemoveLastCursorPositionBookmark
+    Call Macros_ms.Validation.MacroFinish
+    Call Macros_ms.Validation.RemoveLastCursorPositionBookmark
     
-    Call Logging("Finished processing.", MsgBoxTitle)
+    Call Macros_ms.Validation.Logging("Finished processing.", MsgBoxTitle)
 
     MsgBox _
         Prompt:="Finished processing.", _
         Buttons:=vbInformation, _
         Title:=MsgBoxTitle
         
-    Call UpdateAllFields
+    Call Macros_ms.Validation.UpdateAllFields
 End Sub
 
 ' Determines whether or not the target style exists in the active document.
@@ -1103,7 +1103,7 @@ Private Sub AddModifiedRefCaption()
     Dim MacroName As String:    MacroName = "AddModifiedRefCaption"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    Call AddLastCursorPositionBookmark
+    Call Macros_ms.Validation.AddLastCursorPositionBookmark
     
     Set doc = ActiveDocument
     foundCount = 0
@@ -1178,7 +1178,7 @@ Private Sub AddModifiedRefCaption()
         End If
     Next fld
     
-    Call RemoveLastCursorPositionBookmark
+    Call Macros_ms.Validation.RemoveLastCursorPositionBookmark
     DoEvents    ' Force a screen refresh
     ' Display a message indicating the process is complete
     MsgBox _
@@ -1459,7 +1459,7 @@ Sub FindParagraphStyling()
     NomsNotCompliantPar = 0
     NoParInTable = 0
 
-    Call AddLastCursorPositionBookmark
+    Call Macros_ms.Validation.AddLastCursorPositionBookmark
 
     ' Initialization of the dedicated Form
     TemplateStyleValidation_Form.Show vbModeless ' sets ShowModal to False in the corresponding Form
@@ -1497,7 +1497,7 @@ Sub FindParagraphStyling()
     Next i
 
     Unload TemplateStyleValidation_Form
-    Call RemoveLastCursorPositionBookmark
+    Call Macros_ms.Validation.RemoveLastCursorPositionBookmark
 
     ' Display summary
     summaryMessage = "Total number of paragraphs: " & NoTotalPar & vbCrLf & _
@@ -1727,15 +1727,15 @@ Sub ModifyReferencesToPicTab()
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Origin module: Validation
-    Call AddBookmarksToCaptions
+    Call Macros_ms.Validation.AddBookmarksToCaptions
     ' Origin module: Validation
-    Call ModifyRefFields
+    Call Macros_ms.Validation.ModifyRefFields
     ' Origin module: Validation
-    Call AddModifiedRefCaption
+    Call Macros_ms.Validation.AddModifiedRefCaption
     ' Origin module: Validation
-    Call AddHyperlinkToModRefFields
+    Call Macros_ms.Validation.AddHyperlinkToModRefFields
     ' Origin module: Validation
-    Call DeleteHiddenText
+    Call Macros_ms.Validation.DeleteHiddenText
     
     MsgBox _
         Prompt:="Processing is finished", _
