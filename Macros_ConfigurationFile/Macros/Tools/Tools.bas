@@ -11,8 +11,13 @@ Attribute VB_Name = "Tools"
 '| 1  | DocPropertiesUpdate           | Tools_ms    | DocProperties   | AttachTheme                   |
 '| 2  | DocPropertiesUserInput        | Tools_ms    | DocProperties   | DocPropertiesUserInput        |
 '+----+-------------------------------+-------------+-----------------+-------------------------------+
-'| 3  | SetMargins_A4V_1_2            | Tools_ms    | Document        | SetMargins_A4V_1_2            |
-'| 4  | SetMargins_Minimal            | Tools_ms    | Document        | SetMargins_Minimal            |
+'|    | SetPageLayout_A4_V_1_2        | Tools_ms    | Layout          | SetPageLayout_A4_V_1_2        |
+'|    | SetPageLayout_A4_H_1_2        | Tools_ms    | Layout          | SetPageLayout_A4_H_1_2        |
+'|    | SetPageLayout_A4_H_minimal    | Tools_ms    | Layout          | SetPageLayout_A4_H_minimal    |
+'|    | AddBlankPages                 | Tools_ms    | Layout          | AddBlankPages                 |
+'|    | DeleteTempBlankPages          | Tools_ms    | Layout          | DeleteTempBlankPages          |
+'|    | AddSectionAndKillLinkToPrevious | Tools_ms  | Layout          | AddSectionAndKillLinkToPrevious|
+'|    | UnlinkAllHeadersFooters       | Tools_ms    | Layout          | UnlinkAllHeadersFooters       |
 '| 5  | SetHyphenation                | Tools_ms    | Document        | SetHyphenation                |
 '| 6  | SetLanguageToEnglishUS        | Tools_ms    | Document        | SetLanguageToEnglishUS        |
 '| 7  | SetPageColorToCustom          | Tools_ms    | Document        | SetPageColorToCustom          |
@@ -104,6 +109,158 @@ End Enum
 Dim WordAppEvents As ClsAppEvents
 ' For sleep / delay function
 Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As LongPtr)
+
+' Borrowed from https://wordribbon.tips.net/T013280_Unlinking_All_Headers_and_Footers.html
+' 2026-03-02  by ms
+Sub UnlinkAllHeadersFooters()
+    Dim s As Section
+
+    For Each sec In ActiveDocument.Sections
+        s.Headers(wdHeaderFooterPrimary).LinkToPrevious = False
+        s.Footers(wdHeaderFooterPrimary).LinkToPrevious = False
+        s.Headers(wdHeaderFooterEvenPages).LinkToPrevious = False
+        s.Footers(wdHeaderFooterEvenPages).LinkToPrevious = False
+        s.Headers(wdHeaderFooterFirstPage).LinkToPrevious = False
+        s.Footers(wdHeaderFooterFirstPage).LinkToPrevious = False
+    Next
+    
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Macros
+    Dim MacroName As String:    MacroName = "UnlinkAllHeadersFooters"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
+    MsgBox _
+        Prompt:="All headers and footers are now unlinked." & vbNewLine, _
+        Buttons:=vbInformation + vbOKOnly, _
+        Title:=MsgBoxTitle
+End Sub
+
+
+' Adds vertical A4
+' 2026-03-02 by ms
+Sub AddHorizontal_A4()
+    Dim firstAddedSecIndex As Long
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "AddHorizontal_A4"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+
+    ' Force Word to finish any pending background tasks
+'    ActiveDocument.Repaginate
+'    DoEvents
+
+    ' 1. Add the first new section
+    AddSectionAndKillLinkToPrevious
+    
+    ' Record the index of the section we just created
+    ' (This is the section where the cursor is currently located)
+    firstAddedSecIndex = Selection.Sections(1).Index
+    
+    ' 2. Add the second new section immediately after
+    AddSectionAndKillLinkToPrevious
+    
+    ' 3. Move the cursor back to the FIRST added section to apply margins
+    ' We use the index we recorded to ensure we hit the right spot
+    ActiveDocument.Sections(firstAddedSecIndex).Range.Select
+    Selection.Collapse wdCollapseStart
+    
+    ' --- THE STABILITY TRICK ---
+    ' Briefly switch views to force the layout engine to refresh the margin handles
+'    Dim currentView As Long: currentView = ActiveWindow.View.Type
+'    ActiveWindow.View.Type = wdNormalView
+'    DoEvents
+    
+    ' 4. Apply the Layout (Modified version of SetMargins_A4H_1_2)
+    ApplyA4H_Layout Selection.Sections(1)
+
+    ' Restore original view and force final update
+'    ActiveWindow.View.Type = currentView
+'    ActiveDocument.Repaginate
+'    DoEvents
+
+    MsgBox _
+        Prompt:="Two sections added. The first added section (Section " & firstAddedSecIndex & ") " & _
+                "has been configured with Landscape A4 margins.", _
+        Buttons:=vbInformation + vbOKOnly, _
+        Title:=MsgBoxTitle
+End Sub
+
+' Order of properties is essential.
+' 2026-03-02 by ms and AI
+Private Sub ApplyA4H_Layout(targetSec As Word.Section)
+    Dim vMarginSize As Single:          vMarginSize = 1.2           ' cm
+    Dim vVirtualGutter As Single:       vVirtualGutter = 1#         ' cm
+    Dim vLeftMargin As Single:          vLeftMargin = vMarginSize   ' cm
+    Dim vRightMargin As Single:         vRightMargin = vMarginSize  ' cm
+    Dim vTopMargin As Single:           vTopMargin = vMarginSize + vVirtualGutter   ' cm
+    Dim vBottomMargin As Single:        vBottomMargin = vMarginSize ' cm
+    Dim vHDistance As Single:           vHDistance = 0.5 + vVirtualGutter ' Header distance; cm
+    Dim vFDistance As Single:           vFDistance = 0.5            ' cm
+    Dim vGutterSize As Single:          vGutterSize = 0#            ' cm
+
+    With targetSec.PageSetup
+        .PaperSize = wdPaperA4
+        .Orientation = wdOrientLandscape
+        
+        .TopMargin = CentimetersToPoints(vTopMargin)
+        .BottomMargin = CentimetersToPoints(vBottomMargin)
+        .LeftMargin = CentimetersToPoints(vLeftMargin)
+        .RightMargin = CentimetersToPoints(vRightMargin)
+        
+        .MirrorMargins = True
+        .Gutter = CentimetersToPoints(vGutterSize)
+        .GutterPos = wdGutterPosLeft
+        
+        .OddAndEvenPagesHeaderFooter = True
+        .HeaderDistance = CentimetersToPoints(vHDistance)
+        .FooterDistance = CentimetersToPoints(vFDistance)
+        
+        .SectionStart = wdSectionNewPage
+        .VerticalAlignment = wdAlignVerticalTop
+    End With
+End Sub
+' Copied from https://gregmaxey.com/word_tip_pages/add_section_break_and_unlink_headers.html
+' 2026-03-02 by ms
+Sub AddSectionAndKillLinkToPrevious()
+    Dim myRng As Word.Range
+    Dim i As Long
+    Dim j As Long
+  
+    Selection.InsertBreak Type:=wdSectionBreakNextPage
+    'Get the index number of the added section
+    i = ActiveDocument.Range(0, Selection.Sections(1).Range.End).Sections.count
+    With ActiveDocument.Sections(i)
+        For j = 1 To 3
+            .Headers(j).LinkToPrevious = False
+            .Footers(j).LinkToPrevious = False
+        Next j
+    End With
+    'Note: j provides the constant value to unlink all three header\footer types.
+lbl_Exit:
+Exit Sub
+End Sub
+
+' Copied from https://gregmaxey.com/word_tip_pages/add_section_break_and_unlink_headers.html
+' 2026-03-02 by ms
+Sub RelinkSections()
+    Dim myRng As Word.Range
+    Dim oDoc As Document
+    Set oDoc = ActiveDocument
+    
+    Dim i As Long
+    Dim j As Long
+
+    For i = 1 To oDoc.Sections.count
+        With oDoc.Sections(i)
+            For j = 1 To 3
+                .Headers(j).LinkToPrevious = True
+                .Footers(j).LinkToPrevious = True
+            Next j
+        End With
+    Next i
+lbl_Exit:
+Exit Sub
+End Sub
 
 ' Inserts PNG files from the specified folder.
 ' ms and AI on 2025-02-07
@@ -296,42 +453,168 @@ Private Function GetPNGFilesInFolder(folderPath As String) As Collection
     Set folder = Nothing
 End Function
 
+' Atomatic Blank Pages at the end of a section
+' 2026-03-01 by ms
+Sub AddBlankPages()
+    Dim iSec As Integer
+    Dim oRng As Range
+    Dim oTemplate As Template
+    Dim bBlock As BuildingBlock
+    Dim iStartPage As Integer
+    Dim iEndPage As Integer
+    Dim iSecPageCount As Integer
+    
+    ' Constants and Title setup
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "AddBlankPages"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
+    Call Macros_ms.Tools.DeleteTempBlankPages
+    
+    Dim iBMCounter As Integer: iBMCounter = 0
+    Const LC_BB_Standard As String = "A4_Ver_BlankPage"
+    Const LC_BB_Final As String = "A4_Ver_LastBlankPage"
+    Const C_BM_BlankPage As String = "TB_BlankPage_"
+    Dim sTargetBB As String
+            
+    ' Locate the Building Block Template
+    For Each oTemplate In Templates
+        If InStr(1, oTemplate.Name, C_F_BuildingBlocks, vbTextCompare) > 0 Then
+            Exit For
+        End If
+    Next oTemplate
+    
+    If oTemplate Is Nothing Then
+        MsgBox Prompt:="Add-in template " & C_F_BuildingBlocks & " not found", _
+               Buttons:=vbCritical + vbOKOnly, Title:=MsgBoxTitle
+        Exit Sub
+    End If
+    
+    With ActiveDocument
+        .Repaginate
+        
+        For iSec = 1 To .Sections.count
+            ' 1. Get the page number where the section starts
+            Set oRng = .Sections(iSec).Range
+            oRng.Collapse wdCollapseStart
+            iStartPage = oRng.Information(wdActiveEndAdjustedPageNumber)
+            
+            ' 2. Get the page number where the section ends
+            Set oRng = .Sections(iSec).Range
+            iEndPage = oRng.Characters.Last.Information(wdActiveEndAdjustedPageNumber)
+            
+            ' 3. Calculate total pages in section
+            iSecPageCount = (iEndPage - iStartPage) + 1
+            
+            ' 4. If odd, determine insertion point and Building Block
+            If (iSecPageCount Mod 2) <> 0 Then
+                iBMCounter = iBMCounter + 1
+                Set oRng = .Sections(iSec).Range
+                
+                If iSec < .Sections.count Then
+                    ' --- BEHAVIOR FOR MIDDLE SECTIONS ---
+                    sTargetBB = LC_BB_Standard
+                    oRng.Collapse Direction:=wdCollapseEnd
+                    oRng.MoveEnd Unit:=wdCharacter, count:=-1
+                Else
+                    ' --- SPECIAL BEHAVIOR FOR THE LAST SECTION ---
+                    sTargetBB = LC_BB_Final
+                    ' Move to the start of the last page
+                    oRng.Collapse Direction:=wdCollapseEnd
+                    Do While oRng.Information(wdActiveEndAdjustedPageNumber) = iEndPage And oRng.Start > .Sections(iSec).Range.Start
+                        oRng.MoveStart Unit:=wdCharacter, count:=-1
+                        oRng.Collapse Direction:=wdCollapseStart
+                    Loop
+                End If
+                
+                ' Attempt to grab the correct Building Block
+                Set bBlock = Nothing
+                On Error Resume Next
+                Set bBlock = oTemplate.BuildingBlockEntries(sTargetBB)
+                On Error GoTo 0
+                
+                If Not bBlock Is Nothing Then
+                    ' Insert and capture the range for bookmarking
+                    Set oRng = bBlock.Insert(Where:=oRng, RichText:=True)
+                    .Bookmarks.Add Name:=C_BM_BlankPage & iBMCounter, Range:=oRng
+                    
+                    ' Update layout for next section calculation
+                    .Repaginate
+                Else
+                    MsgBox Prompt:="Building Block " & sTargetBB & " not found in" & vbNewLine & oTemplate.Name, _
+                           Buttons:=vbExclamation, Title:=MsgBoxTitle
+                End If
+            End If
+        Next iSec
+    End With
+    
+    Set oRng = Nothing
+    Set bBlock = Nothing
+End Sub
+' 2026-03-02 by ms
+Sub DeleteTempBlankPages()
+    Dim i As Long
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "DeleteTempBlankPages"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
+    Const C_BM_BlankPage As String = "TB_BlankPage_"
+    ' Loop backwards through bookmarks to avoid index shifting during deletion
+    With ActiveDocument
+        For i = .Bookmarks.count To 1 Step -1
+            ' Check if the bookmark name starts with your specific prefix
+            If InStr(1, .Bookmarks(i).Name, C_BM_BlankPage, vbTextCompare) = 1 Then
+                
+                ' 1. Select the range of the bookmark
+                ' 2. Delete the content (the Range itself)
+                ' Note: Deleting the range content automatically removes the bookmark too
+                .Bookmarks(i).Range.Delete
+                
+            End If
+        Next i
+    End With
+    
+    ' Optional: Confirmation for the user
+    MsgBox _
+        Prompt:="All temporary blank pages and their bookmarks have been removed.", _
+        Buttons:=vbInformation + vbOKOnly, _
+        Title:=MsgBoxTitle
+End Sub
+
 ' Minimal headers and footers, mainly to print pictures.
 ' 2025-08-21 by ms
 ' 2026-02-28 by ms, adjusted settings
-Sub SetMargins_Minimal()
-    Dim MarginSize As Double
-    Dim HFDistance As Double
-    Dim GutterSize As Double
+Sub SetPageLayout_A4_H_minimal()
+    Dim MarginSize As Single:   MarginSize = 0.5    ' cm
+    Dim HFDistance As Single:   HFDistance = 0#     ' cm
+    Dim GutterSize As Single:   GutterSize = 0#     ' cm
 
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Tools
-    Dim MacroName As String:    MacroName = "SetMargins_Minimal"
+    Dim MacroName As String:    MacroName = "SetPageLayout_A4_H_minimal"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
         
-    MarginSize = 0.5    ' cm
-    HFDistance = 0#     ' cm
-    GutterSize = 0#     ' cm
-     
-     With Selection.Sections(1).PageSetup
-        .MirrorMargins = False
-        .TopMargin = CentimetersToPoints(MarginSize)
-        .BottomMargin = CentimetersToPoints(MarginSize)
-        .LeftMargin = CentimetersToPoints(MarginSize) ' This sets the inside margin
-        .RightMargin = CentimetersToPoints(MarginSize) ' This sets the outside margin
-        .Gutter = CentimetersToPoints(GutterSize)
-        .GutterPos = wdGutterPosLeft
-        .GutterStyle = wdGutterStyleLatin
-        .OddAndEvenPagesHeaderFooter = False
-        .HeaderDistance = CentimetersToPoints(HFDistance)
-        .FooterDistance = CentimetersToPoints(HFDistance)
-        
+    With Selection.Sections(1).PageSetup
         .PaperSize = wdPaperA4
-        .LayoutMode = wdLayoutModeDefault
         .Orientation = wdOrientLandscape
-        .VerticalAlignment = wdAlignVerticalTop
-        .SectionDirection = wdSectionDirectionLtr
+        
+        .TopMargin = CentimetersToPoints(vTopMargin)
+        .BottomMargin = CentimetersToPoints(vBottomMargin)
+        .LeftMargin = CentimetersToPoints(vLeftMargin)
+        .RightMargin = CentimetersToPoints(vRightMargin)
+        
+        .MirrorMargins = True
+        .Gutter = CentimetersToPoints(vGutterSize)
+        .GutterPos = wdGutterPosLeft
+        
+        .OddAndEvenPagesHeaderFooter = True
+        .HeaderDistance = CentimetersToPoints(vHDistance)
+        .FooterDistance = CentimetersToPoints(vFDistance)
+        
         .SectionStart = wdSectionNewPage
+        .VerticalAlignment = wdAlignVerticalTop
     End With
     
     MsgBox _
@@ -340,16 +623,16 @@ Sub SetMargins_Minimal()
             "bottom margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.BottomMargin), 2) & " cm" & vbNewLine & _
             "left margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.LeftMargin), 2) & " cm" & vbNewLine & _
             "right margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.RightMargin), 2) & " cm" & vbNewLine & vbNewLine & _
-            "mirror margins = " & Selection.Sections(1).PageSetup.MirrorMargins & vbNewLine & vbNewLine & _
+            "mirror margins = " & GetStateMirrorMargin(Selection.Sections(1).PageSetup.MirrorMargins) & vbNewLine & vbNewLine & _
             "header distance = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.HeaderDistance), 2) & " cm" & vbNewLine & _
             "footer distance = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.FooterDistance), 2) & " cm" & vbNewLine & _
             "gutter size = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.Gutter), 2) & " cm" & vbNewLine & _
-            "gutter position = " & Selection.Sections(1).PageSetup.GutterPos & vbNewLine & vbNewLine, _
+            "gutter position = " & GetGutterPos(Selection.Sections(1).PageSetup.GutterPos) & vbNewLine & vbNewLine, _
         Buttons:=vbInformation + vbOKOnly, _
         Title:=MsgBoxTitle
 End Sub
 
-' Sets nominal values of margins, header and footer, A4 Vertical to section where cursor is set.
+' Sets nominal values of margins, header and footer, A4 Vertical to section where cursor is set. Set to 1.2 cm (1_2).
 ' Unfortunately, this is one of two ways to store information about such parametersi in the template file.
 ' (Second way is to apply Document Variables, which is nearly identical).
 ' 2025-02-02 by ms and AI
@@ -357,48 +640,41 @@ End Sub
 ' 2025-08-05 by ms added gutter size
 ' 2026-01-27 by ms exchanged outside with inside
 ' 2026-02-28 by ms added gutter
-Sub SetMargins_A4V_1_2()
+Sub SetPageLayout_A4_V_1_2()
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Tools
-    Dim MacroName As String:    MacroName = "SetMargins_A4V_1_2"
+    Dim MacroName As String:    MacroName = "SetPageLayout_A4_V_1_2"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
         
-    Dim vMarginSize As Single
-    vMarginSize = 1.2    ' cm
-    Dim vVirtualGutter As Single
-    vVirtualGutter = 1#  ' cm
-    Dim vLeftMargin As Single
-    Dim vRightMargin As Single
-    Dim vTopMargin As Single
-    Dim vBottomMargin As Single
-    vLeftMargin = vMarginSize + vVirtualGutter
-    vRightMargin = vMarginSize
-    vTopMargin = vMarginSize
-    vBottomMargin = vMarginSize
-    Dim vHDistance As Double
-    vHDistance = 0.5    ' Header distance; cm
-    Dim vFDistance As Single
-    vFDistance = vHDistance    ' Footer distance; cm
-    Dim vGutterSize As Double
-    vGutterSize = 0#     ' cm
+    Dim vMarginSize As Single:      vMarginSize = 1.2    ' cm
+    Dim vVirtualGutter As Single:   vVirtualGutter = 1#  ' cm
+    Dim vLeftMargin  As Single:     vLeftMargin = vMarginSize + vVirtualGutter
+    Dim vRightMargin As Single:     vRightMargin = vMarginSize
+    Dim vTopMargin As Single:       vTopMargin = vMarginSize
+    Dim vBottomMargin As Single:    vBottomMargin = vMarginSize
+    Dim vHDistance As Single:       vHDistance = 0.5    ' Header distance; cm
+    Dim vFDistance As Single:       vFDistance = vHDistance    ' Footer distance; cm
+    Dim vGutterSize As Single:      vGutterSize = 0#     ' cm
      
      With Selection.Sections(1).PageSetup               ' current cursor position
-        .MirrorMargins = True
+        .PaperSize = wdPaperA4
+        .Orientation = wdOrientLandscape
+        
         .TopMargin = CentimetersToPoints(vTopMargin)
         .BottomMargin = CentimetersToPoints(vBottomMargin)
-        .LeftMargin = CentimetersToPoints(vLeftMargin) ' This sets the inside margin
-        .RightMargin = CentimetersToPoints(vRightMargin) ' This sets the outside margin
+        .LeftMargin = CentimetersToPoints(vLeftMargin)
+        .RightMargin = CentimetersToPoints(vRightMargin)
+        
+        .MirrorMargins = True
         .Gutter = CentimetersToPoints(vGutterSize)
+        .GutterPos = wdGutterPosLeft
+        
         .OddAndEvenPagesHeaderFooter = True
         .HeaderDistance = CentimetersToPoints(vHDistance)
         .FooterDistance = CentimetersToPoints(vFDistance)
         
-        .PaperSize = wdPaperA4
-        .LayoutMode = wdLayoutModeDefault
-        .Orientation = wdOrientPortrait
-        .VerticalAlignment = wdAlignVerticalTop
-        .SectionDirection = wdSectionDirectionLtr
         .SectionStart = wdSectionNewPage
+        .VerticalAlignment = wdAlignVerticalTop
     End With
     
     MsgBox _
@@ -407,61 +683,78 @@ Sub SetMargins_A4V_1_2()
             "bottom margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.BottomMargin), 2) & " cm" & vbNewLine & _
             "left margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.LeftMargin), 2) & " cm" & vbNewLine & _
             "right margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.RightMargin), 2) & " cm" & vbNewLine & vbNewLine & _
-            "mirror margins = " & Selection.Sections(1).PageSetup.MirrorMargins & vbNewLine & vbNewLine & _
+            "mirror margins = " & GetStateMirrorMargin(Selection.Sections(1).PageSetup.MirrorMargins) & vbNewLine & vbNewLine & _
             "header distance = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.HeaderDistance), 2) & " cm" & vbNewLine & _
             "footer distance = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.FooterDistance), 2) & " cm" & vbNewLine & _
             "gutter size = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.Gutter), 2) & " cm" & vbNewLine & _
-            "gutter position = " & Selection.Sections(1).PageSetup.GutterPos & vbNewLine & vbNewLine, _
+            "gutter position = " & GetGutterPos(Selection.Sections(1).PageSetup.GutterPos) & vbNewLine & vbNewLine, _
         Buttons:=vbInformation + vbOKOnly, _
         Title:=MsgBoxTitle
 End Sub
 
-' Sets nominal values of margins, header and footer, A4 Horizontal to section where cursor is set.
+' 2026-03-01 by ms
+Private Function GetStateMirrorMargin(MirrorMargins As Long) As String
+    Select Case MirrorMargins
+        Case True
+            GetStateMirrorMargin = "True"
+        Case False
+            GetStateMirrorMargin = "False"
+        Case wdUndefined
+            GetStateMirrorMargin = "Undefined"
+    End Select
+End Function
+
+' 2026-03-01 by ms
+Private Function GetGutterPos(GutterPos As WdGutterStyle) As String
+    Select Case GutterPos
+        Case wdGutterPosLeft
+             GetGutterPos = "Left"
+        Case wdGutterPosRight
+             GetGutterPos = "Right"
+        Case wdGutterPosTop
+            GetGutterPos = "Top"
+    End Select
+End Function
+
+' Sets nominal values of margins, header and footer, A4 Horizontal to section where cursor is set.Set to 1.2 cm (1_2).
 ' Unfortunately, this is one of two ways to store information about such parametersi in the template file.
 ' (Second way is to apply Document Variables, which is nearly identical).
 ' 2026-02-28 by ms
-Sub SetMargins_A4H_1_2()
+Sub SetPageLayout_A4_H_1_2()
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Tools
-    Dim MacroName As String:    MacroName = "SetMargins_A4H_1_2"
+    Dim MacroName As String:    MacroName = "SetPageLayout_A4_H_1_2"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
         
-    Dim vMarginSize As Single
-    vMarginSize = 1.2    ' cm
-    Dim vVirtualGutter As Single
-    vVirtualGutter = 1#  ' cm
-    Dim vLeftMargin As Single
-    Dim vRightMargin As Single
-    Dim vTopMargin As Single
-    Dim vBottomMargin As Single
-    vLeftMargin = vMarginSize
-    vRightMargin = vMarginSize
-    vTopMargin = vMarginSize + vVirtualGutter
-    vBottomMargin = vMarginSize
-    Dim vHDistance As Double
-    vHDistance = 0.5 + vVirtualGutter   ' Header Footer distance; cm
-    Dim vFDistance As Single
-    vFDistance = 0.5
-    Dim vGutterSize As Double
-    vGutterSize = 0#     ' cm
+    Dim vMarginSize As Single:          vMarginSize = 1.2           ' cm
+    Dim vVirtualGutter As Single:       vVirtualGutter = 1#         ' cm
+    Dim vLeftMargin As Single:          vLeftMargin = vMarginSize   ' cm
+    Dim vRightMargin As Single:         vRightMargin = vMarginSize  ' cm
+    Dim vTopMargin As Single:           vTopMargin = vMarginSize + vVirtualGutter   ' cm
+    Dim vBottomMargin As Single:        vBottomMargin = vMarginSize ' cm
+    Dim vHDistance As Single:           vHDistance = 0.5 + vVirtualGutter ' Header distance; cm
+    Dim vFDistance As Single:           vFDistance = 0.5            ' cm
+    Dim vGutterSize As Single:          vGutterSize = 0#            ' cm
           
-     With Selection.Sections(1).PageSetup               ' current cursor position
-        .MirrorMargins = True
+     With Selection.Sections(1).PageSetup                           ' current cursor position
+        .PaperSize = wdPaperA4
+        .Orientation = wdOrientLandscape
+        
         .TopMargin = CentimetersToPoints(vTopMargin)
         .BottomMargin = CentimetersToPoints(vBottomMargin)
-        .LeftMargin = CentimetersToPoints(vLeftMargin) ' This sets the inside margin
-        .RightMargin = CentimetersToPoints(vRightMargin) ' This sets the outside margin
+        .LeftMargin = CentimetersToPoints(vLeftMargin)
+        .RightMargin = CentimetersToPoints(vRightMargin)
+        
+        .MirrorMargins = True
         .Gutter = CentimetersToPoints(vGutterSize)
+        .GutterPos = wdGutterPosLeft
+        
         .OddAndEvenPagesHeaderFooter = True
         .HeaderDistance = CentimetersToPoints(vHDistance)
         .FooterDistance = CentimetersToPoints(vFDistance)
         
-        .PaperSize = wdPaperA4
-        .LayoutMode = wdLayoutModeDefault
-        .Orientation = wdOrientLandscape
-        .VerticalAlignment = wdAlignVerticalTop
-        .SectionDirection = wdSectionDirectionLtr
         .SectionStart = wdSectionNewPage
+        .VerticalAlignment = wdAlignVerticalTop
     End With
     
     MsgBox _
@@ -470,11 +763,11 @@ Sub SetMargins_A4H_1_2()
             "bottom margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.BottomMargin), 2) & " cm" & vbNewLine & _
             "left margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.LeftMargin), 2) & " cm" & vbNewLine & _
             "right margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.RightMargin), 2) & " cm" & vbNewLine & vbNewLine & _
-            "mirror margins = " & Selection.Sections(1).PageSetup.MirrorMargins & vbNewLine & vbNewLine & _
+            "mirror margins = " & GetStateMirrorMargin(Selection.Sections(1).PageSetup.MirrorMargins) & vbNewLine & vbNewLine & _
             "header distance = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.HeaderDistance), 2) & " cm" & vbNewLine & _
             "footer distance = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.FooterDistance), 2) & " cm" & vbNewLine & _
             "gutter size = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.Gutter), 2) & " cm" & vbNewLine & _
-            "gutter position = " & Selection.Sections(1).PageSetup.GutterPos & vbNewLine & vbNewLine, _
+            "gutter position = " & GetGutterPos(Selection.Sections(1).PageSetup.GutterPos) & vbNewLine & vbNewLine, _
         Buttons:=vbInformation + vbOKOnly, _
         Title:=MsgBoxTitle
 End Sub
@@ -1371,7 +1664,7 @@ Sub SaveDocumentAsPDFWithSettings()
         OptimizeFor:=wdExportOptimizeForPrint, _
         Range:=wdExportAllDocument, _
         From:=1, _
-        to:=1, _
+        To:=1, _
         item:=wdExportDocumentContent, _
         IncludeDocProps:=False, _
         KeepIRM:=True, _
