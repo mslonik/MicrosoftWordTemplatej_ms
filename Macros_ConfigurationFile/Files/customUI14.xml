@@ -1,0 +1,127 @@
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui">
+  <ribbon>
+    <tabs>
+      <tab idMso="TabView">
+        <group idMso="GroupMacros" visible="false" />          
+      </tab>
+
+      <tab id="Custom_Layout" label="Layout_ms">
+        <group id="CG_Formats" 
+                label="Page Size"
+                visible="true"
+                screentip=" "
+                supertip=" ">
+          <menu id="Menu1" 
+                label="Page Size" 
+                imageMso="PageSetup"
+                size="large" 
+                itemSize="large"
+                screentip="Applies for single section"
+                supertip="Choose from the list of predefined formats. This will apply margins, orientation."
+                keytip="SL"> 
+            <button id="Btn_A4_V_12" 
+                    label="SetPageLayout_A4_V_1_2" 
+                    imageMso="AddInManager" 
+                    onAction="RibbonControl.BttnPgFormats"
+                    screentip="A4 Vertical Layout"
+                    supertip="The default layout. Sets the current section to A4 Portrait with 1.2 cm mirrored margins." />
+            <button id="Btn_A4_H_12" 
+                    label="SetPageLayout_A4_H_1_2" 
+                    imageMso="AnimationDelay" 
+                    onAction="RibbonControl.BttnPgFormats"
+                    screentip="A4 Horizontal Layout"
+                    supertip="A4 Landscape orientation with mirrored margins equal to 1.2 cm." />              
+            <button id="Btn_A4_H_05" 
+                    label="SetPageLayout_A4_H_0_5" 
+                    imageMso="AdvancedMode" 
+                    onAction="RibbonControl.BttnPgFormats" 
+                    screentip="A4 Horizontal Layout"
+                    supertip="A4 Landscape orientation without mirrored margins equal to 0.5 cm."/>
+            <button id="Btn_A3_H_05" 
+                    label="SetPageLayout_A3_H_0_5" 
+                    imageMso="AlignJustifyMenu" 
+                    onAction="RibbonControl.BttnPgFormats" 
+                    screentip="A3 Horizontal Layout"
+                    supertip="A3 Landscape orientation without mirrored margins equal to 0.5 cm."/>
+            <button id="Btn_A3_V_1_2" 
+                    label="SetPageLayout_A3_V_1_2" 
+                    imageMso="ArrangeByAvailability" 
+                    onAction="RibbonControl.BttnPgFormats" 
+                    screentip="A3 Horizontal Layout"
+                    supertip="A3 Landscape orientation with mirrored margins equal to 1.2 cm."/>
+          </menu>
+        </group>
+
+        <group id="CG_BlankPages" 
+                label="Blank Pages"
+                visible="true"
+                screentip=" "
+                supertip=" ">
+          <menu id="Menu_BlankPages" 
+                label="Manage Pages" 
+                imageMso="Chart3DView" 
+                size="large" 
+                itemSize="large"
+                screentip="Add / remove blank pages at the end of sections"
+                supertip="Whenever number of pages in a document section is odd, blank page may be added to get even number of pages.">
+            <button id="Btn_AddBlank" 
+                    label="Add Blank Page" 
+                    imageMso="ChartFormatLegendEntry" 
+                    onAction="RibbonControl.BttnBlankPages" 
+                    screentip="Insert Blank Page(s)" 
+                    supertip="Inserts the A4_Ver_BlankPage building block."/> 
+            <button id="Btn_DelBlank" 
+                    label="Delete Blank Pages" 
+                    imageMso="ChartPlacement" 
+                    onAction="RibbonControl.BttnBlankPages" 
+                    screentip="Remove Blank Pages" 
+                    supertip="Removes all building blocks marked with the TB_BlankPage bookmark."/>
+          </menu>
+        </group>
+
+        <group id="CG_SectionTools" 
+                label="Section Tools"
+                visible="true"
+                screentip=" "
+                supertip=" ">
+          <button id="Btn_AddSection" 
+                label="Add Section" 
+                imageMso="ChartShowBigPicture" 
+                size="large"
+                onAction="RibbonControl.BttnSectionTools" 
+                screentip="Adds new sectio and breaks linking for H/F" 
+                supertip="Inserts a next Page section break at the cursor, breaks linking for headers and footers." />
+          <button id="Btn_UnlinkHF" 
+                label="Unlink all H/F" 
+                imageMso="ColumnActionsRemove" 
+                size="large"
+                onAction="RibbonControl.BttnSectionTools" 
+                screentip="Unlinks H/F for all sections" 
+                supertip="Unlinks all headers and footers in the current document." />
+        </group>
+
+<group id="CG_DocProperties" 
+        label="DocProperties"
+        visible="true"
+        screentip=" "
+        supertip=" ">
+          <button id="Btn_UpdateProps" 
+                label="Add" 
+                imageMso="ConvertTextToTable" 
+                size="large"
+                onAction="RibbonControl.BttnDocProps" 
+                screentip="Add specific DocProperties to ActiveDocument" 
+                supertip="Add custom document properties DocProperties and displays them on screen." />
+          <button id="Btn_UserInput" 
+                label="Edit" 
+                imageMso="CreateSubroutine" 
+                size="large"
+                onAction="RibbonControl.BttnDocProps" 
+                screentip="Edit customized DocProperties" 
+                supertip="Opens a user input form to edit document variables." />
+        </group>
+            
+      </tab>
+    </tabs>
+  </ribbon>
+</customUI>

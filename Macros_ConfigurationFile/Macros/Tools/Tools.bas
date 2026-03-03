@@ -13,7 +13,9 @@ Attribute VB_Name = "Tools"
 '+----+-------------------------------+-------------+-----------------+-------------------------------+
 '|    | SetPageLayout_A4_V_1_2        | Tools_ms    | Layout          | SetPageLayout_A4_V_1_2        |
 '|    | SetPageLayout_A4_H_1_2        | Tools_ms    | Layout          | SetPageLayout_A4_H_1_2        |
-'|    | SetPageLayout_A4_H_minimal    | Tools_ms    | Layout          | SetPageLayout_A4_H_minimal    |
+'|    | SetPageLayout_A4_H_0_5        | Tools_ms    | Layout          | SetPageLayout_A4_H_0_5        |
+'|    | SetPageLayout_A3_H_0_5
+'|    | SetPageLayout_A3_V_1_2
 '|    | AddBlankPages                 | Tools_ms    | Layout          | AddBlankPages                 |
 '|    | DeleteTempBlankPages          | Tools_ms    | Layout          | DeleteTempBlankPages          |
 '|    | AddSectionAndKillLinkToPrevious | Tools_ms  | Layout          | AddSectionAndKillLinkToPrevious|
@@ -115,7 +117,7 @@ Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As LongPtr)
 Sub UnlinkAllHeadersFooters()
     Dim s As Section
 
-    For Each sec In ActiveDocument.Sections
+    For Each s In ActiveDocument.Sections
         s.Headers(wdHeaderFooterPrimary).LinkToPrevious = False
         s.Footers(wdHeaderFooterPrimary).LinkToPrevious = False
         s.Headers(wdHeaderFooterEvenPages).LinkToPrevious = False
@@ -125,7 +127,7 @@ Sub UnlinkAllHeadersFooters()
     Next
     
     Dim FileName As String:     FileName = C_F_Macros
-    Dim ModuleName As String:   ModuleName = C_M_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
     Dim MacroName As String:    MacroName = "UnlinkAllHeadersFooters"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
@@ -134,7 +136,6 @@ Sub UnlinkAllHeadersFooters()
         Buttons:=vbInformation + vbOKOnly, _
         Title:=MsgBoxTitle
 End Sub
-
 
 ' Adds vertical A4
 ' 2026-03-02 by ms
@@ -586,32 +587,32 @@ End Sub
 ' Minimal headers and footers, mainly to print pictures.
 ' 2025-08-21 by ms
 ' 2026-02-28 by ms, adjusted settings
-Sub SetPageLayout_A4_H_minimal()
+Sub SetPageLayout_A4_H_0_5()
     Dim MarginSize As Single:   MarginSize = 0.5    ' cm
     Dim HFDistance As Single:   HFDistance = 0#     ' cm
     Dim GutterSize As Single:   GutterSize = 0#     ' cm
 
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Tools
-    Dim MacroName As String:    MacroName = "SetPageLayout_A4_H_minimal"
+    Dim MacroName As String:    MacroName = "SetPageLayout_A4_H_0_5"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
         
     With Selection.Sections(1).PageSetup
         .PaperSize = wdPaperA4
         .Orientation = wdOrientLandscape
         
-        .TopMargin = CentimetersToPoints(vTopMargin)
-        .BottomMargin = CentimetersToPoints(vBottomMargin)
-        .LeftMargin = CentimetersToPoints(vLeftMargin)
-        .RightMargin = CentimetersToPoints(vRightMargin)
+        .TopMargin = CentimetersToPoints(MarginSize)
+        .BottomMargin = CentimetersToPoints(MarginSize)
+        .LeftMargin = CentimetersToPoints(MarginSize)
+        .RightMargin = CentimetersToPoints(MarginSize)
         
         .MirrorMargins = True
-        .Gutter = CentimetersToPoints(vGutterSize)
+        .Gutter = CentimetersToPoints(GutterSize)
         .GutterPos = wdGutterPosLeft
         
         .OddAndEvenPagesHeaderFooter = True
-        .HeaderDistance = CentimetersToPoints(vHDistance)
-        .FooterDistance = CentimetersToPoints(vFDistance)
+        .HeaderDistance = CentimetersToPoints(HFDistance)
+        .FooterDistance = CentimetersToPoints(HFDistance)
         
         .SectionStart = wdSectionNewPage
         .VerticalAlignment = wdAlignVerticalTop
@@ -619,6 +620,8 @@ Sub SetPageLayout_A4_H_minimal()
     
     MsgBox _
         Prompt:="Margins, headers and footers were set to the required values:" & vbNewLine & vbNewLine & _
+            "paper size = " & GetPaperSize(Selection.Sections(1).PageSetup.PaperSize) & vbNewLine & _
+            "orientation = " & GetPageOrientation(Selection.Sections(1).PageSetup.Orientation) & vbNewLine & _
             "top margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.TopMargin), 2) & " cm" & vbNewLine & _
             "bottom margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.BottomMargin), 2) & " cm" & vbNewLine & _
             "left margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.LeftMargin), 2) & " cm" & vbNewLine & _
@@ -631,6 +634,57 @@ Sub SetPageLayout_A4_H_minimal()
         Buttons:=vbInformation + vbOKOnly, _
         Title:=MsgBoxTitle
 End Sub
+
+' A3: Minimal headers and footers, mainly to print pictures.
+' 2026-03-03 by ms
+Sub SetPageLayout_A3_H_0_5()
+    Dim MarginSize As Single:   MarginSize = 0.5    ' cm
+    Dim HFDistance As Single:   HFDistance = 0#     ' cm
+    Dim GutterSize As Single:   GutterSize = 0#     ' cm
+
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "SetPageLayout_A4_H_0_5"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+        
+    With Selection.Sections(1).PageSetup
+        .PaperSize = wdPaperA3
+        .Orientation = wdOrientLandscape
+        
+        .TopMargin = CentimetersToPoints(MarginSize)
+        .BottomMargin = CentimetersToPoints(MarginSize)
+        .LeftMargin = CentimetersToPoints(MarginSize)
+        .RightMargin = CentimetersToPoints(MarginSize)
+        
+        .MirrorMargins = True
+        .Gutter = CentimetersToPoints(GutterSize)
+        .GutterPos = wdGutterPosLeft
+        
+        .OddAndEvenPagesHeaderFooter = True
+        .HeaderDistance = CentimetersToPoints(HFDistance)
+        .FooterDistance = CentimetersToPoints(HFDistance)
+        
+        .SectionStart = wdSectionNewPage
+        .VerticalAlignment = wdAlignVerticalTop
+    End With
+    
+    MsgBox _
+        Prompt:="Margins, headers and footers were set to the required values:" & vbNewLine & vbNewLine & _
+            "paper size = " & GetPaperSize(Selection.Sections(1).PageSetup.PaperSize) & vbNewLine & _
+            "orientation = " & GetPageOrientation(Selection.Sections(1).PageSetup.Orientation) & vbNewLine & _
+            "top margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.TopMargin), 2) & " cm" & vbNewLine & _
+            "bottom margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.BottomMargin), 2) & " cm" & vbNewLine & _
+            "left margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.LeftMargin), 2) & " cm" & vbNewLine & _
+            "right margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.RightMargin), 2) & " cm" & vbNewLine & vbNewLine & _
+            "mirror margins = " & GetStateMirrorMargin(Selection.Sections(1).PageSetup.MirrorMargins) & vbNewLine & vbNewLine & _
+            "header distance = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.HeaderDistance), 2) & " cm" & vbNewLine & _
+            "footer distance = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.FooterDistance), 2) & " cm" & vbNewLine & _
+            "gutter size = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.Gutter), 2) & " cm" & vbNewLine & _
+            "gutter position = " & GetGutterPos(Selection.Sections(1).PageSetup.GutterPos) & vbNewLine & vbNewLine, _
+        Buttons:=vbInformation + vbOKOnly, _
+        Title:=MsgBoxTitle
+End Sub
+
 
 ' Sets nominal values of margins, header and footer, A4 Vertical to section where cursor is set. Set to 1.2 cm (1_2).
 ' Unfortunately, this is one of two ways to store information about such parametersi in the template file.
@@ -679,6 +733,8 @@ Sub SetPageLayout_A4_V_1_2()
     
     MsgBox _
         Prompt:="Margins, headers and footers were set to the required values:" & vbNewLine & vbNewLine & _
+            "paper size = " & GetPaperSize(Selection.Sections(1).PageSetup.PaperSize) & vbNewLine & _
+            "orientation = " & GetPageOrientation(Selection.Sections(1).PageSetup.Orientation) & vbNewLine & _
             "top margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.TopMargin), 2) & " cm" & vbNewLine & _
             "bottom margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.BottomMargin), 2) & " cm" & vbNewLine & _
             "left margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.LeftMargin), 2) & " cm" & vbNewLine & _
@@ -691,6 +747,84 @@ Sub SetPageLayout_A4_V_1_2()
         Buttons:=vbInformation + vbOKOnly, _
         Title:=MsgBoxTitle
 End Sub
+
+' 2026-03-03 by ms
+Sub SetPageLayout_A3_V_1_2()
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "SetPageLayout_A4_V_1_2"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+        
+    Dim vMarginSize As Single:      vMarginSize = 1.2    ' cm
+    Dim vVirtualGutter As Single:   vVirtualGutter = 1#  ' cm
+    Dim vLeftMargin  As Single:     vLeftMargin = vMarginSize + vVirtualGutter
+    Dim vRightMargin As Single:     vRightMargin = vMarginSize
+    Dim vTopMargin As Single:       vTopMargin = vMarginSize
+    Dim vBottomMargin As Single:    vBottomMargin = vMarginSize
+    Dim vHDistance As Single:       vHDistance = 0.5    ' Header distance; cm
+    Dim vFDistance As Single:       vFDistance = vHDistance    ' Footer distance; cm
+    Dim vGutterSize As Single:      vGutterSize = 0#     ' cm
+     
+     With Selection.Sections(1).PageSetup               ' current cursor position
+        .PaperSize = wdPaperA3
+        .Orientation = wdOrientLandscape
+        
+        .TopMargin = CentimetersToPoints(vTopMargin)
+        .BottomMargin = CentimetersToPoints(vBottomMargin)
+        .LeftMargin = CentimetersToPoints(vLeftMargin)
+        .RightMargin = CentimetersToPoints(vRightMargin)
+        
+        .MirrorMargins = True
+        .Gutter = CentimetersToPoints(vGutterSize)
+        .GutterPos = wdGutterPosLeft
+        
+        .OddAndEvenPagesHeaderFooter = True
+        .HeaderDistance = CentimetersToPoints(vHDistance)
+        .FooterDistance = CentimetersToPoints(vFDistance)
+        
+        .SectionStart = wdSectionNewPage
+        .VerticalAlignment = wdAlignVerticalTop
+    End With
+    
+    MsgBox _
+        Prompt:="Margins, headers and footers were set to the required values:" & vbNewLine & vbNewLine & _
+            "paper size = " & GetPaperSize(Selection.Sections(1).PageSetup.PaperSize) & vbNewLine & _
+            "orientation = " & GetPageOrientation(Selection.Sections(1).PageSetup.Orientation) & vbNewLine & _
+            "top margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.TopMargin), 2) & " cm" & vbNewLine & _
+            "bottom margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.BottomMargin), 2) & " cm" & vbNewLine & _
+            "left margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.LeftMargin), 2) & " cm" & vbNewLine & _
+            "right margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.RightMargin), 2) & " cm" & vbNewLine & vbNewLine & _
+            "mirror margins = " & GetStateMirrorMargin(Selection.Sections(1).PageSetup.MirrorMargins) & vbNewLine & vbNewLine & _
+            "header distance = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.HeaderDistance), 2) & " cm" & vbNewLine & _
+            "footer distance = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.FooterDistance), 2) & " cm" & vbNewLine & _
+            "gutter size = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.Gutter), 2) & " cm" & vbNewLine & _
+            "gutter position = " & GetGutterPos(Selection.Sections(1).PageSetup.GutterPos) & vbNewLine & vbNewLine, _
+        Buttons:=vbInformation + vbOKOnly, _
+        Title:=MsgBoxTitle
+End Sub
+
+
+' 2026-03-03 by ms
+Private Function GetPageOrientation(Orientation As WdOrientation)
+    Select Case Orientation
+        Case wdOrientLandscape
+            GetPageOrientation = "landscape"
+        Case wdOrientPortrait
+            GetPageOrientation = "portrait"
+    End Select
+End Function
+
+' 2026-03-03 by ms
+Private Function GetPaperSize(PaperSize As WdPaperSize)
+    Select Case PaperSize
+        Case wdPaperA4
+            GetPaperSize = "A4"
+        Case wdPaperA3
+            GetPaperSize = "A3"
+        Case Else
+            GetPaperSize = "unknown"
+    End Select
+End Function
 
 ' 2026-03-01 by ms
 Private Function GetStateMirrorMargin(MirrorMargins As Long) As String
@@ -759,6 +893,8 @@ Sub SetPageLayout_A4_H_1_2()
     
     MsgBox _
         Prompt:="Margins, headers and footers were set to the required values:" & vbNewLine & vbNewLine & _
+            "paper size = " & GetPaperSize(Selection.Sections(1).PageSetup.PaperSize) & vbNewLine & _
+            "orientation = " & GetPageOrientation(Selection.Sections(1).PageSetup.Orientation) & vbNewLine & _
             "top margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.TopMargin), 2) & " cm" & vbNewLine & _
             "bottom margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.BottomMargin), 2) & " cm" & vbNewLine & _
             "left margin = " & Round(PointsToCentimeters(Selection.Sections(1).PageSetup.LeftMargin), 2) & " cm" & vbNewLine & _
