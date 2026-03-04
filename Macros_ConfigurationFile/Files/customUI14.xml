@@ -8,16 +8,15 @@
       <tab id="Custom_Layout" label="Layout_ms">
         <group id="CG_Formats" 
                 label="Page Size"
-                visible="true"
-                screentip="Page Size"
-                supertip="Layout of the specific document section, set of customized properties.">
+                visible="true">
+
           <menu id="Menu1" 
                 label="Page Size" 
                 imageMso="PageSetup"
                 size="large" 
                 itemSize="large"
                 screentip="Applies for single document section"
-                supertip="Choose from the list of predefined formats. This will apply margins, header, footer, page orientation."
+                supertip="Choose from the list of predefined formats. This will apply to margins, header, footer, page orientation."
                 keytip="SL"> 
             <button id="Btn_A4_V_12" 
                     label="A4 Portait, mirrored margins 1.2 cm" 
@@ -54,16 +53,15 @@
 
         <group id="CG_BlankPages" 
                 label="Blank Pages"
-                visible="true"
-                screentip="Blank Pages"
-                supertip="If document section has odd number of pages, additional page is inserted with text explaining purpose of the blank page.">
+                visible="true">
+
           <menu id="Menu_BlankPages" 
                 label="Blank Pages" 
                 imageMso="Chart3DView" 
                 size="large" 
                 itemSize="large"
-                screentip="Add / remove blank pages at the end of document section(s)"
-                supertip="Whenever number of pages in a document section is odd, blank page may be added to get even number of pages.">
+                screentip="Blank Pages"
+                supertip="If document section has odd number of pages, additional page might be inserted with text explaining purpose of the blank page.">
             <button id="Btn_AddBlank" 
                     label="Add Blank Page" 
                     imageMso="ChartFormatLegendEntry" 
@@ -81,9 +79,8 @@
 
         <group id="CG_SectionTools" 
                 label="Section Tools"
-                visible="true"
-                screentip=" "
-                supertip=" ">
+                visible="true">
+
           <button id="Btn_AddSection" 
                 label="Add Section" 
                 imageMso="ChartShowBigPicture" 
@@ -102,16 +99,15 @@
 
         <group id="CG_DocProperties" 
                 label="DocProperties"
-                visible="true"
-                screentip=" "
-                supertip=" ">
+                visible="true">
+
           <menu id="Menu_DocProperties" 
                 label="DocProperties" 
                 imageMso="Chart3DView" 
                 size="large" 
                 itemSize="large"
                 screentip="Customized Document Properties"
-                supertip="10x specific document properties">
+                supertip="To vew: File > Info > Properties > Advanced Properties > Custom. 10x specific document properties">
               <button id="Btn_UpdateProps" 
                     label="Add" 
                     imageMso="ConvertTextToTable" 
@@ -139,6 +135,344 @@
                     
           </menu>
         </group>
+
+        <group id="CG_Document" 
+                label="Document"
+                visible="true">
+
+          <menu id="Menu_Document" 
+                label="Document" 
+                imageMso="CreateMasterPage" 
+                size="large" 
+                itemSize="large"
+                screentip="Document"
+                supertip="Various functions useful for document content">
+              <button id="Btn_Hyphenation" 
+                    label="Set Hyphenation" 
+                    imageMso="ConvertTextToTable" 
+                    onAction="RibbonControl.BttnDocument" 
+                    screentip="Set Hyphenation" 
+                    supertip="Set automatic hyphenation in content of this document" />
+              <button id="Btn_LangEngilshUS" 
+                    label="Language English US" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnDocument" 
+                    screentip="Language English US" 
+                    supertip="Sets language of the document content to English US" />
+              <button id="Btn_BckgrColor" 
+                    label="Background color" 
+                    imageMso="CreateCodeSnippet" 
+                    onAction="RibbonControl.BttnDocument" 
+                    screentip="Background color" 
+                    supertip="Sets background color of the page to grey" />
+              <button id="Btn_ShowTemplates" 
+                    label="Show all templates" 
+                    imageMso="ConvertDatabaseFormat" 
+                    onAction="RibbonControl.BttnDocument" 
+                    screentip="Show all templates" 
+                    supertip="Show all available templates (DOTM, DOTX) in the system" />
+                    
+          </menu>
+        </group>
+
+        <group id="CG_Theme" 
+                label="Theme"
+                visible="true">
+
+              <button id="Btn_ThemeAttach" 
+                    label="Attach Theme" 
+                    size="normal"
+                    imageMso="ConvertTextToTable" 
+                    onAction="RibbonControl.BttnTheme" 
+                    screentip="Attach Theme" 
+                    supertip="Attach default theme to ActiveDocument" />
+                    
+        </group>
+
+        <group id="CG_DocVariables" 
+                label="DocVariables"
+                visible="true">
+
+          <menu id="Menu_DocVariables" 
+                label="DocVariables" 
+                imageMso="CreateMasterPage" 
+                size="large" 
+                itemSize="large"
+                screentip="Document Variables"
+                supertip="There is no UI in Microsoft Word to manage DocVariables">
+              <button id="Btn_ShowDocVariables" 
+                    label="Show DocVariables" 
+                    imageMso="ConvertTextToTable" 
+                    onAction="RibbonControl.BttnDocVar" 
+                    screentip="Show DocVariables" 
+                    supertip="Show Document Variables in ActiveDocument" />
+              <button id="Btn_DeleteDocVariables" 
+                    label="Delete DocVariables" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnDocVar" 
+                    screentip="Delete DocVariables" 
+                    supertip="Delete all Document Variables from ActiveDocument" />
+                    
+          </menu>
+        </group>
+
+        <group id="CG_Comments" 
+                label="Comments"
+                visible="true">
+
+          <menu id="Menu_Comments" 
+                label="Comments" 
+                imageMso="CreateMasterPage" 
+                size="large" 
+                itemSize="large"
+                screentip="Comments"
+                supertip="Management of comments in ActiveDocument">
+              <button id="Btn_CommAddNumber" 
+                    label="Add number" 
+                    imageMso="ConvertTextToTable" 
+                    onAction="RibbonControl.BttnComment" 
+                    screentip="Add number" 
+                    supertip="Add unique number to all comments in the ActiveDocument" />
+              <button id="Btn_CommDelete" 
+                    label="Delete Number" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnComment" 
+                    screentip="Delete Number" 
+                    supertip="Delete all unique numbers from ActiveDocument" />
+              <button id="Btn_CommCountByUser" 
+                    label="Count by user" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnComment" 
+                    screentip="Count by user" 
+                    supertip="Show MsgBox with statistics, how many comments were issued by specific user" />
+                    
+          </menu>
+        </group>
+
+        <group id="CG_Canva" 
+                label="Canva"
+                visible="true">
+
+          <menu id="Menu_Canva" 
+                label="Canva" 
+                imageMso="CreateMasterPage" 
+                size="large" 
+                itemSize="large"
+                screentip="Canva"
+                supertip="Specific functions applicable to canvas">
+              <button id="Btn_CanvaToggleBorder" 
+                    label="Toggle Border" 
+                    imageMso="ConvertTextToTable" 
+                    onAction="RibbonControl.BttnCanva" 
+                    screentip="Toggle Border" 
+                    supertip="Toggles (enables / disables) border line over canva" />
+              <button id="Btn_CanvaInsertPNGfiles" 
+                    label="Insert PNG files to canvas" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnCanva" 
+                    screentip="Insert PNG files to canvas" 
+                    supertip="Import PNG files, each file to single canva. Shows UI to select folder where are PNG files" />
+              <button id="Btn_CanvaFormatTextBoxes" 
+                    label="Format text boxes" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnCanva" 
+                    screentip="Format text boxes" 
+                    supertip="All text boxes within selected canva will be formatted in the same way" />
+                    
+          </menu>
+        </group>
+
+        <group id="CG_Captions" 
+                label="Captions"
+                visible="true">
+
+          <menu id="Menu_Captions" 
+                label="Captions" 
+                imageMso="CreateMasterPage" 
+                size="large" 
+                itemSize="large"
+                screentip="Captions"
+                supertip="Specific functions applicable to captions. Captions show up as labels for tables and pictures.">
+              <button id="Btn_CaptionShow" 
+                    label="Caption Show" 
+                    imageMso="ConvertTextToTable" 
+                    onAction="RibbonControl.BttnCaption" 
+                    screentip="Show captions" 
+                    supertip="Show in MsgBox all existing captions" />
+              <button id="Btn_CaptionAddCustom" 
+                    label="Add customized captions" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnCaption" 
+                    screentip="Add customized captions" 
+                    supertip="Add customized captions: Tab. and Pic." />
+              <button id="Btn_CaptionDelCustom" 
+                    label="Delete Customized" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnCaption" 
+                    screentip="Delete Customized" 
+                    supertip="Delete customized captions from Microsoft Word" />
+                    
+          </menu>
+        </group>
+
+        <group id="CG_WordOptions" 
+                label="Word Options"
+                visible="true">
+
+          <menu id="Menu_WordOptions" 
+                label="Word Options" 
+                imageMso="CreateMasterPage" 
+                size="large" 
+                itemSize="large"
+                screentip="Microsoft Word options"
+                supertip="Macros which apply several settins at once">
+              <button id="Btn_WO_Customize" 
+                    label="Customize" 
+                    imageMso="ConvertTextToTable" 
+                    onAction="RibbonControl.BttnWO" 
+                    screentip="Customize" 
+                    supertip="Set of customized Microsoft Word options. Result is displayed in MsgBox. You can restore all those settings thanks to the next macro." />
+              <button id="Btn_WO_Restore" 
+                    label="Restore to defaults" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnWO" 
+                    screentip="Restore to defaults" 
+                    supertip="Restores Word options to default" />
+              <button id="Btn_WO_DisAutoFormat" 
+                    label="Disable AutoFormat" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnWO" 
+                    screentip="Disable AutoFormat" 
+                    supertip="Disable various AutoFormat settings. Result is displayed in MsgBox. You can restore all those settings thanks to the next macro." />
+              <button id="Btn_WO_ResAutoFormat" 
+                    label="Restore AutoFormat" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnWO" 
+                    screentip="Restore AutoFormat" 
+                    supertip="Restore AutoFormat to defaults" />
+              <button id="Btn_WO_DisAutoCorrect" 
+                    label="Disable AutoCorrect" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnWO" 
+                    screentip="Disable AutoCorrect" 
+                    supertip="Disable various AutoCorrect settings. Result is displayed in MsgBox. You can restore all those settings thanks to the next macro." />
+              <button id="Btn_WO_ToggAutoCorrect" 
+                    label="Toggle AutoCorrect" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnWO" 
+                    screentip="Toggle AutoCorrect" 
+                    supertip="Toggle (enable / disable) various AutoCorrect settings. Result is displayed in MsgBox." />
+                    
+          </menu>
+        </group>
+
+        <group id="CG_BefPrinting" 
+                label="Before Printing"
+                visible="true">
+
+          <menu id="Menu_BefPrinting" 
+                label="Before Printing" 
+                imageMso="CreateMasterPage" 
+                size="large" 
+                itemSize="large"
+                screentip="Before Printing"
+                supertip="Macros to be run manually upon ActiveDocument print out">
+              <button id="Btn_BP_DelBookmarks" 
+                    label="Delete Custom Bookmarks" 
+                    imageMso="ConvertTextToTable" 
+                    onAction="RibbonControl.BttnBP" 
+                    screentip="Delete Custom Bookmarks" 
+                    supertip="Delete custom bookmarks which could be still present in the ActiveDocument content" />
+              <button id="Btn_BP_DistCheck" 
+                    label="Check Distance" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnBP" 
+                    screentip="Check Distance" 
+                    supertip="Check how many places there are in ActiveDocument where there is big distance between header and top of the page, which can be reduced with next macro." />
+              <button id="Btn_BP_DistReduce" 
+                    label="Reduce Distance" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnBP" 
+                    screentip="Reduce Distance" 
+                    supertip="Reduce distance between header and top of the page at new sections. This process is reversable with next macro." />
+              <button id="Btn_BP_DistRestore" 
+                    label="Restore Distance" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnBP" 
+                    screentip="Restore Distance" 
+                    supertip="Restore distance between header and top of the page at new sections." />
+                    
+          </menu>
+        </group>
+
+        <group id="CG_Tables" 
+                label="Tables"
+                visible="true">
+
+              <button id="Btn_Tab_Cust" 
+                    label="Customize Formatting" 
+                    size="normal"
+                    imageMso="ConvertTextToTable" 
+                    onAction="RibbonControl.BttnBP" 
+                    screentip="Customize Formatting" 
+                    supertip="Apply customized formatting to the specific table. Helpful on time of moving tables from Excel to Word." />
+              <button id="Btn_Tab_KeepOnPage" 
+                    label="Keep on one page" 
+                    size="normal"
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnBP" 
+                    screentip="Keep on one page" 
+                    supertip="Applies formatting to the table to keep it on the same page" />
+                    
+        </group>
+
+        <group id="CG_Fonts" 
+                label="Fonts"
+                visible="true">
+
+              <button id="Btn_Fonts_ShowUsed" 
+                    label="Show Used Fonts" 
+                    size="normal"
+                    imageMso="ConvertTextToTable" 
+                    onAction="RibbonControl.BttnFonts" 
+                    screentip="Show Used Fonts" 
+                    supertip="Show fonts used in the ActiveDocument." />
+                    
+        </group>
+
+        <group id="CG_Tabulators" 
+                label="Tabulators"
+                visible="true">
+
+          <menu id="Menu_Tabulators" 
+                label="Tabulators" 
+                imageMso="CreateMasterPage" 
+                size="large" 
+                itemSize="large"
+                screentip="Tabulators"
+                supertip="Functions to control position of tabulators">
+              <button id="Btn_Tabs_Show" 
+                    label="Show positions" 
+                    imageMso="ConvertTextToTable" 
+                    onAction="RibbonControl.Tabs" 
+                    screentip="Show positions" 
+                    supertip="Show current positions of default tabulators" />
+              <button id="Btn_Tabs_SetCustom" 
+                    label="Set Custom" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.Tabs" 
+                    screentip="Set Custom" 
+                    supertip="Set custom positions of tabulators. It can be restored with next function,." />
+              <button id="Btn_Tabs_Restore" 
+                    label="Restore" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.Tabs" 
+                    screentip="Restore" 
+                    supertip="Restore default postions of tabulators" />
+                    
+          </menu>
+        </group>
+
             
       </tab>
     </tabs>
