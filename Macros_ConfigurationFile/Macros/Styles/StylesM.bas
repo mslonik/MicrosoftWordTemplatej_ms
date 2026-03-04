@@ -5486,13 +5486,15 @@ Private Function CreateStyle_ParPictureCanvaMs() As Boolean
         End With
 
 '       === Add keyboard shortcut for the style ===
-'       On Error GoTo ShortcutError
-'       CustomizationContext = ActiveDocument
-'       KeyBindings.Add _
-'            KeyCategory:=wdKeyCategoryStyle, _
-'            Command:=C_S_ParSourceCode, _
-'            KeyCode:=BuildKeyCode(wdKeyControl, wdKeyAlt, wdKeyS)
-'       On Error GoTo 0
+       On Error GoTo ShortcutError
+       CustomizationContext = ActiveDocument
+       KeyBindings.Add _
+            KeyCategory:=wdKeyCategoryStyle, _
+            Command:=C_S_ParPictureCanva, _
+            KeyCode:=BuildKeyCode(wdKeyAlt, wdKeyP), _
+            KeyCode2:=wdKeyC
+            
+       On Error GoTo 0
 
     CreateStyle_ParPictureCanvaMs = True
     End If
