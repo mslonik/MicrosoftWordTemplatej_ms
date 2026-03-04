@@ -44,6 +44,7 @@ Public Const C_M_Theme = "Theme"
 Public Const C_M_Tools = "Tools"
 Public Const C_M_Validation = "Validation"
 Public Const C_M_ThisDocument = "ThisDocument"
+Public Const C_M_Forms = "Forms"
 
 ' C_S, C = Constant, S = Style
 ' paragraph styles:

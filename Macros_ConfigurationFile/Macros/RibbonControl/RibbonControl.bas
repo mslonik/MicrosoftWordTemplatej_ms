@@ -43,4 +43,17 @@ Sub BttnSectionTools(control As IRibbonControl)
     End Select
 End Sub
 
+' 2026-03-03 by ms
+Sub BttnDocProps(control As IRibbonControl)
+    Select Case control.ID
+        Case "Btn_UpdateProps"
+            Call Macros_ms.Tools.DocPropertiesAddCustom
+        Case "Btn_UserInput"
+            Call Macros_ms.Tools.DocPropertiesUICustomEdit
+        Case "Btn_DelCust"
+            Call Macros_ms.Tools.DocPropertiesDeleteCustom
+        Case "Btn_DelAll"
+            Call Macros_ms.Tools.DocPropertiesDeleteAll
+    End Select
+End Sub
 

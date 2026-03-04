@@ -8,18 +8,20 @@ Attribute VB_Name = "Tools"
 '+----+-------------------------------+-------------+-----------------+-------------------------------+
 '| No | Sub name                      | Ribbon name | Ribbon section  | Ribbon button name            |
 '+----+-------------------------------+-------------+-----------------+-------------------------------+
-'| 1  | DocPropertiesUpdate           | Tools_ms    | DocProperties   | AttachTheme                   |
-'| 2  | DocPropertiesUserInput        | Tools_ms    | DocProperties   | DocPropertiesUserInput        |
+'| 1  | DocPropertiesAddCustom        | Layout      | DocProperties   | DocPropertiesAddCustom        |
+'| 2  | DocPropertiesUICustomEdit     | Layout      | DocProperties   | DocPropertiesUICustomEdit     |
+'|    | DocPropertiesDeleteCustom     | Layout      | DocProperties   | DocPropertiesDeleteCustom     |
+'|    | DocPropertiesDeleteAll        | Layout      | DocProperties   | DocPropertiesDeleteAll        |
 '+----+-------------------------------+-------------+-----------------+-------------------------------+
-'|    | SetPageLayout_A4_V_1_2        | Tools_ms    | Layout          | SetPageLayout_A4_V_1_2        |
-'|    | SetPageLayout_A4_H_1_2        | Tools_ms    | Layout          | SetPageLayout_A4_H_1_2        |
-'|    | SetPageLayout_A4_H_0_5        | Tools_ms    | Layout          | SetPageLayout_A4_H_0_5        |
-'|    | SetPageLayout_A3_H_0_5
-'|    | SetPageLayout_A3_V_1_2
-'|    | AddBlankPages                 | Tools_ms    | Layout          | AddBlankPages                 |
-'|    | DeleteTempBlankPages          | Tools_ms    | Layout          | DeleteTempBlankPages          |
-'|    | AddSectionAndKillLinkToPrevious | Tools_ms  | Layout          | AddSectionAndKillLinkToPrevious|
-'|    | UnlinkAllHeadersFooters       | Tools_ms    | Layout          | UnlinkAllHeadersFooters       |
+'|    | SetPageLayout_A4_V_1_2        | Layout      | Page Size       | SetPageLayout_A4_V_1_2        |
+'|    | SetPageLayout_A4_H_1_2        | Layout      | Page Size       | SetPageLayout_A4_H_1_2        |
+'|    | SetPageLayout_A4_H_0_5        | Layout      | Page Size       | SetPageLayout_A4_H_0_5        |
+'|    | SetPageLayout_A3_H_0_5        | Layout      | Page Size       | SetPageLayout_A3_H_0_5        |
+'|    | SetPageLayout_A3_V_1_2        | Layout      | Page Size       | SetPageLayout_A3_V_1_2        |
+'|    | AddBlankPages                 | Layout      | Manage          | AddBlankPages                 |
+'|    | DeleteTempBlankPages          | Layout      | Manage          | DeleteTempBlankPages          |
+'|    | AddSectionAndKillLinkToPrevious | Layout    | Section Tools   | AddSectionAndKillLinkToPrevious|
+'|    | UnlinkAllHeadersFooters       | Layout      | Section Tools   | UnlinkAllHeadersFooters       |
 '| 5  | SetHyphenation                | Tools_ms    | Document        | SetHyphenation                |
 '| 6  | SetLanguageToEnglishUS        | Tools_ms    | Document        | SetLanguageToEnglishUS        |
 '| 7  | SetPageColorToCustom          | Tools_ms    | Document        | SetPageColorToCustom          |
@@ -1822,7 +1824,7 @@ End Sub
 ' 3. Remove all other custom properties
 ' 2025-03-14 by ms
 ' 2025-07-18 by ms
-Sub DocPropertiesUpdate()
+Sub DocPropertiesAddCustom()
     Dim doc As Document
     Dim Prop As Variant
     Dim PropToDelete As Boolean
@@ -1830,7 +1832,7 @@ Sub DocPropertiesUpdate()
     
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Tools
-    Dim MacroName As String:    MacroName = "DocPropertiesUpdate"
+    Dim MacroName As String:    MacroName = "DocPropertiesAddCustom"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Set the document to the currently opened document
@@ -1908,6 +1910,108 @@ Sub DocPropertiesUpdate()
         Title:=MsgBoxTitle
 
     ' Clear the object variables
+    Set doc = Nothing
+End Sub
+
+' Sub complementary to the DocPropertiesAddCustom(). Deletes custom Document Propertis.
+' 2026-03-03 by ms and AI
+Sub DocPropertiesDeleteCustom()
+    Dim doc As Document
+    Dim Prop As Variant
+    
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "DocPropertiesDeleteCustom"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
+    Dim UserDecision As VbMsgBoxResult
+    UserDecision = MsgBox( _
+                        Prompt:="Are you sure to delete 10x custom document properties from the current ActiveDocument?", _
+                        Buttons:=vbQuestion + vbYesNo, _
+                        Title:=MsgBoxTitle)
+    
+    If UserDecision = vbNo Then
+        Exit Sub
+    End If
+    
+    Set doc = ActiveDocument
+    
+    ' List of properties to be removed
+    Dim requiredProperties As Variant
+    requiredProperties = Array( _
+        C_CPN_1, C_CPN_2, C_CPN_3, C_CPN_4, C_CPN_5, _
+        C_CPN_6, C_CPN_7, C_CPN_8, C_CPN_9, C_CPN_10 _
+    )
+    
+    ' Iterate and delete if they exist
+    For Each Prop In requiredProperties
+        On Error Resume Next
+        doc.CustomDocumentProperties(Prop).Delete
+        On Error GoTo 0
+    Next Prop
+    
+    ' Prepare summary for user
+    Dim InfoForUser As String
+    InfoForUser = "The following properties were targeted for removal:" & vbNewLine
+    InfoForUser = InfoForUser & Join(requiredProperties, vbNewLine)
+        
+    MsgBox _
+        Prompt:="Deleted document custom properties in:" & vbNewLine & _
+            ActiveDocument.Name & vbNewLine & vbNewLine & _
+            InfoForUser, _
+        Buttons:=vbInformation, _
+        Title:=MsgBoxTitle
+
+    ' Clear the object variables
+    Set doc = Nothing
+End Sub
+
+' Deletes all custom document properties
+' 2026-03-03 by ms
+Sub DocPropertiesDeleteAll()
+    Dim doc As Document
+    Dim i As Long
+    Dim propCount As Long
+    
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "DocPropertiesDeleteAll"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
+    Dim UserDecision As VbMsgBoxResult
+    UserDecision = MsgBox( _
+                        Prompt:="Are you sure to delete all document properties from the current ActiveDocument?", _
+                        Buttons:=vbQuestion + vbYesNo, _
+                        Title:=MsgBoxTitle)
+    
+    If UserDecision = vbNo Then
+        Exit Sub
+    End If
+    
+    
+    Set doc = ActiveDocument
+    propCount = doc.CustomDocumentProperties.count
+    
+    ' Check if there are any properties to delete first
+    If propCount > 0 Then
+        ' Loop backwards to safely delete from a collection
+        For i = propCount To 1 Step -1
+            doc.CustomDocumentProperties(i).Delete
+        Next i
+        
+        MsgBox _
+            Prompt:="All custom document properties (" & propCount & ") have been successfully deleted from:" & vbNewLine & _
+                doc.Name, _
+            Buttons:=vbInformation, _
+            Title:=MsgBoxTitle
+    Else
+        MsgBox _
+            Prompt:="No custom document properties found in:" & vbNewLine & _
+                doc.Name, _
+            Buttons:=vbExclamation, _
+            Title:=MsgBoxTitle
+    End If
+
     Set doc = Nothing
 End Sub
 
@@ -2653,10 +2757,40 @@ Sub WordOptionsToggleAutoCorrect()
 End Sub
 
 ' 2025-04-06 by ms and AI
-Sub DocPropertiesUserInput()
-    ' Before Show method, the InputDocProperties_Form > Private Sub UserForm_Initialize() is run automatically.
+' 2026-03-03 by ms and AI
+Sub DocPropertiesUICustomEdit()
+    Dim doc As Document: Set doc = ActiveDocument
+    
+    ' 1. Run the validation BEFORE touching the form
+    If Not AllRequiredPropertiesExist(doc) Then
+        Dim MsgBoxTitle As String: MsgBoxTitle = C_F_Macros & " : Validation Error"
+        MsgBox Prompt:="Required custom properties are missing. " & vbNewLine & _
+                      "Please add them first.", _
+               Buttons:=vbCritical, _
+               Title:=MsgBoxTitle
+        Exit Sub ' Stop here! Don't even load the form.
+    End If
+
+    ' 2. If validation passed, show the form
     InputDocProperties_Form.Show
+    Set doc = Nothing
 End Sub
+
+Private Function AllRequiredPropertiesExist(doc As Document) As Boolean
+    On Error Resume Next
+    Dim test As String
+    ' We check the 6 critical properties you defined
+    test = doc.CustomDocumentProperties(C_CPN_1).Name
+    test = doc.CustomDocumentProperties(C_CPN_2).Name
+    test = doc.CustomDocumentProperties(C_CPN_3).Name
+    test = doc.CustomDocumentProperties(C_CPN_4).Name
+    test = doc.CustomDocumentProperties(C_CPN_5).Name
+    test = doc.CustomDocumentProperties(C_CPN_7).Name
+    
+    ' If Err Number is 0, all exist. If not 0, at least one is missing.
+    AllRequiredPropertiesExist = (Err.Number = 0)
+    On Error GoTo 0
+End Function
 
 ' 2025-06-19 by ms
 Public Sub AttachBuildingBlocks()

@@ -170,7 +170,7 @@ Sub NewFileConfAndContent()
         Buttons:=vbYesNo + vbQuestion + vbDefaultButton1, _
         Title:=MsgBoxTitle)
     If UserDecision = vbYes Then
-        Call Macros_ms.Tools.SetMarginsDefault
+        Call Macros_ms.Tools.SetPageLayout_A4_V_1_2
     End If
     
     ' 6. Setting of active document custom properties
@@ -184,7 +184,7 @@ Sub NewFileConfAndContent()
         Buttons:=vbYesNo + vbQuestion + vbDefaultButton1, _
         Title:=MsgBoxTitle)
     If UserDecision = vbYes Then
-        Call Macros_ms.Tools.DocPropertiesUpdate
+        Call Macros_ms.Tools.DocPropertiesAddCustom
         DocPropertiesFlag = msoTrue
     End If
     If UserDecision = vbNo Then
@@ -235,7 +235,7 @@ Sub NewFileConfAndContent()
         Call Macros_ms.Scenarios.InsertBasicContent(TemplateIndex)
         Call Macros_ms.BuildingBlocks.BB_RemoveDefParagraphs
         If DocPropertiesFlag = msoTrue Then
-            Call Macros_ms.Tools.DocPropertiesUserInput
+            Call Macros_ms.Tools.DocPropertiesAddCustom
         End If
         Exit Sub
     End If
@@ -257,7 +257,7 @@ Sub NewFileConfAndContent()
         Call Macros_ms.Scenarios.InsertFullContent(TemplateIndex)
         Call Macros_ms.BuildingBlocks.BB_RemoveDefParagraphs
         If DocPropertiesFlag = msoTrue Then
-            Call Macros_ms.Tools.DocPropertiesUserInput
+            Call Macros_ms.Tools.DocPropertiesAddCustom
         End If
     End If
 

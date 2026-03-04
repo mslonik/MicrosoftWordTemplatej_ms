@@ -197,7 +197,6 @@ Sub RemoveActiveDocumentMacroShortcuts()
     Call Macros_ms.Shortcuts.DestroyFormHotMacros
 End Sub
 
-
 Private Sub HotMacrosObject_Initialize()
     ' The New modifier in VBA (Visual Basic for Applications) is used to create a new instance of an object. When you declare an object variable with the New keyword, VBA automatically creates a new instance of the object when the variable is first used.
     Set frmHotMacros = New Hots_UniversalForm  ' initialization of variable frmHotstring as an new instance / object of type Hots_UniversalForm
@@ -327,7 +326,6 @@ Sub DestroyFormHotkeys()
         Set frmHotkey = Nothing
     End If
 End Sub
-
 
 Private Function HotstringUserForm_Initialize(HotkeyHotkey As String) As Boolean
     ' true = error, false = no error
@@ -478,7 +476,6 @@ Public Function ReturnBuildingBlockEntries() As BuildingBlockEntries
 
 End Function
 
-
 ' 2025-03-07 by ms
 Private Function GetBBKeyBindings(ByRef MyBBName() As String, _
                                     ByRef MyBBDescription() As String, _
@@ -543,12 +540,25 @@ Private Sub HotMacrosUserForm_Initialize(HotkeyHotkey As String)
     
     ' Populate the ListBox
     Dim i As Integer
-    For i = LBound(MyStyleName) To UBound(MyStyleName)
-        ListBox1.AddItem
-        ListBox1.List(i, 0) = MyStyleName(i)
-        ListBox1.List(i, 1) = MyShortcut(i)
-    Next i
+    If IsArrayAllocated(MyStyleName) Then
+        For i = LBound(MyStyleName) To UBound(MyStyleName)
+            ListBox1.AddItem
+            ListBox1.List(i, 0) = MyStyleName(i)
+            ListBox1.List(i, 1) = MyShortcut(i)
+        Next i
+    End If
 End Sub
+
+' 2026-03-04 by ms
+Private Function IsArrayAllocated(arr As Variant) As Boolean
+    Dim ub As Long
+    
+    On Error Resume Next
+    ub = UBound(arr)
+    ' This is clever trick: to IsArrayAllocated assign result of logic comparison, if Err.Number is equal to 0
+    IsArrayAllocated = (Err.Number = 0)
+    On Error GoTo 0
+End Function
 
 ' Prepare arrays containing macro name and macro shortcut.
 ' 2025-08-02 by ms
@@ -562,11 +572,15 @@ Private Sub GetMacrosKeyBindings(ByRef MyStyleName, ByRef MyShortcut)
     Dim MacroName As String:     MacroName = "GetMacrosKeyBindings"
     Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
    
-    CustomizationContext = ActiveDocument
+    Application.CustomizationContext = ActiveDocument
    
     ' Initialize the data array with an initial size
-    ReDim MyStyleName(0 To Application.KeyBindings.count - 1)
-    ReDim MyShortcut(0 To Application.KeyBindings.count - 1)
+    If Application.KeyBindings.count > 0 Then
+        ReDim MyStyleName(0 To Application.KeyBindings.count - 1)
+        ReDim MyShortcut(0 To Application.KeyBindings.count - 1)
+    Else
+        Exit Sub
+    End If
    
     ' Initialize the shortcut text
     shortcutText = "User Defined Shortcuts:" & vbCrLf & vbCrLf
@@ -584,7 +598,7 @@ Private Sub GetMacrosKeyBindings(ByRef MyStyleName, ByRef MyShortcut)
     DataIndex = 0
     For Each kb In Application.KeyBindings
         ' Check if the key binding belongs to the command category
-        If (kb.KeyCategory = wdKeyCategoryCommand) And (kb.Context.Name = CustomizationContext) Then
+        If (kb.KeyCategory = wdKeyCategoryCommand) And (kb.Context.Name = Application.CustomizationContext) Then
             MyStyleName(DataIndex) = kb.Command
             MyShortcut(DataIndex) = kb.KeyString
             ' Add the command name and its shortcut to the text
@@ -602,7 +616,7 @@ Private Sub GetMacrosKeyBindings(ByRef MyStyleName, ByRef MyShortcut)
     For Each kb In Application.KeyBindings
         ' Check if the key binding belongs to the macro category
         ' Shorten macro name, e.g. from default ame TemplateProject.Tools.CustomizedOvertype make just CustomizedOvertype.
-        If (kb.KeyCategory = wdKeyCategoryMacro) And (kb.Context.Name = CustomizationContext) Then
+        If (kb.KeyCategory = wdKeyCategoryMacro) And (kb.Context.Name = Application.CustomizationContext) Then
             LastDotPos = InStrRev(kb.Command, ".")
             If LastDotPos > 0 Then
                 TextResult = Mid(kb.Command, LastDotPos + 1)
@@ -706,7 +720,7 @@ Private Function GetKeyBinding(styleName As String) As String
     Dim Shortcut As String
     Dim key As keyBinding
     
-    CustomizationContext = ActiveDocument
+    Application.CustomizationContext = ActiveDocument
     
     ' Check if the style has a key binding
     For Each key In KeyBindings
@@ -951,7 +965,7 @@ Private Sub ShowActiveDocumentMacroShortcuts()
     Dim shortcutText As String
    
     ' This line is essential to get access to information stored actually in the currently attached template
-    CustomizationContext = ActiveDocument
+    Application.CustomizationContext = ActiveDocument
    
     ' Initialize the shortcut text
     shortcutText = "User Defined Shortcuts:" & vbCrLf & vbCrLf
@@ -1012,7 +1026,7 @@ Private Sub Set_CommandShortcuts(ByVal IfMsgBox As String)
             Title:=MsgBoxTitle
     End If
     
-    Word.CustomizationContext = ActiveDocument
+    Application.CustomizationContext = ActiveDocument
     
     ' Assign Alt + Ctrl + H to NavPane
     KeyBindings.Add _
@@ -1142,7 +1156,7 @@ Sub ListAllShortcutsToTxt()
     StyleCounter = 0
     SymbolCounter = 0
     
-    Word.CustomizationContext = ActiveDocument
+    Application.CustomizationContext = ActiveDocument
     
     ' 1. Loop through all key bindings for AutoText category
     For Each kb In Application.KeyBindings
@@ -1326,7 +1340,7 @@ Private Sub SetKeyBindingMacro(ByVal KeybShortcut As String, _
             MsgBox _
                 Prompt:="Keybinding for " & KeybShortcut & " has been set to " & WhichMacro & "." & _
                     "Customization context:" & vbNewLine & vbNewLine & _
-                    CustomizationContext, _
+                    Application.CustomizationContext, _
                 Buttons:=vbInformation + vbOKOnly, _
                 Title:=MsgBoxTitle
             Exit Sub
@@ -1335,7 +1349,7 @@ Private Sub SetKeyBindingMacro(ByVal KeybShortcut As String, _
         MsgBox _
             Prompt:="Keybinding for " & KeybShortcut & " was not set." & vbNewLine & vbNewLine & _
                 "Customization context:" & vbNewLine & vbNewLine & _
-                CustomizationContext, _
+                Application.CustomizationContext, _
             Buttons:=vbExclamation + vbOKOnly, _
             Title:=MsgBoxTitle
     End If
@@ -1365,7 +1379,7 @@ Private Sub SetKeyBindingStyle(KeybShortcut As String, WhichStyle As String)
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Set the customization context to the current template. This is conscious exception.
-    CustomizationContext = ActiveDocument.AttachedTemplate
+    Application.CustomizationContext = ActiveDocument.AttachedTemplate
     
     MyCode1 = ParseKeyCode1(KeybShortcut)
     MyCode2 = ParseKeyCode2(KeybShortcut)
@@ -1443,14 +1457,14 @@ Private Sub DeleteKeyBinding(KeybShortcut As String)
     FoundFlag = False
     If MyCode2 <> 0 Then
         For Each kb In KeyBindings
-            If kb.KeyCode = MyCode1 And kb.KeyCode2 = MyCode2 And kb.Context.Name = CustomizationContext Then
+            If kb.KeyCode = MyCode1 And kb.KeyCode2 = MyCode2 And kb.Context.Name = Application.CustomizationContext Then
                 kb.Clear
                 FoundFlag = True
             End If
         Next kb
     Else
         For Each kb In KeyBindings
-            If kb.KeyCode = MyCode1 And kb.Context.Name = CustomizationContext Then
+            If kb.KeyCode = MyCode1 And kb.Context.Name = Application.CustomizationContext Then
                 kb.Clear
                 FoundFlag = True
             End If
@@ -1461,13 +1475,13 @@ Private Sub DeleteKeyBinding(KeybShortcut As String)
         MsgBox _
             Prompt:="Keybinding for " & KeybShortcut & " has been deleted." & vbNewLine & _
                 "from the current context:" & vbNewLine & vbNewLine & _
-                CustomizationContext, _
+                Application.CustomizationContext, _
             Buttons:=vbInformation + vbOKOnly, _
             Title:=MsgBoxTitle
     Else
         MsgBox _
             Prompt:="Keybinding for " & KeybShortcut & " was not found in the current context:" & vbNewLine & _
-                CustomizationContext, _
+                Application.CustomizationContext, _
             Buttons:=vbInformation + vbOKOnly, _
             Title:=MsgBoxTitle
     End If
@@ -1962,7 +1976,7 @@ Sub ClearActiveDocumentMacroShortcuts()
         Exit Sub
     End If
     
-    CustomizationContext = ActiveDocument
+    Application.CustomizationContext = ActiveDocument
     
     Dim MacroShortcutCounter As Byte
     MacroShortcutCounter = 0
@@ -2006,7 +2020,7 @@ Sub ClearActiveDocumentStyleShortcuts()
         Exit Sub
     End If
     
-    CustomizationContext = ActiveDocument
+    Application.CustomizationContext = ActiveDocument
     
     Dim StyleShortcutCounter As Byte
     StyleShortcutCounter = 0
