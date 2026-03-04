@@ -13,6 +13,10 @@ Attribute VB_Name = "DocVariables"
 '
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '
+' Used to enforce the explicit declaration of all variables in a module. When you include Option Explicit at the beginning of a module, it ensures that you must
+' declare all variables using the Dim, Private, Public, ReDim, or Static statements before using them. This helps prevent errors caused by typos or
+' undeclared variables.
+Option Explicit
 
 ' List document variables (no. 10 set of information stored within template)
 ' 2025-03-02 by ms and AI

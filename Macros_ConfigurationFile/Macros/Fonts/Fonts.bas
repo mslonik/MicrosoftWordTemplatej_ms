@@ -12,6 +12,10 @@ Attribute VB_Name = "Fonts"
 '
 ' ShowSubstitutedFonts() called automatically from Class Module.
 '
+' Used to enforce the explicit declaration of all variables in a module. When you include Option Explicit at the beginning of a module, it ensures that you must
+' declare all variables using the Dim, Private, Public, ReDim, or Static statements before using them. This helps prevent errors caused by typos or
+' undeclared variables.
+Option Explicit
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 ' List in a MsgBox fonts used in this document.
 ' There is no way to list embedded fonts by VBA in Microsoft Word.
@@ -131,17 +135,10 @@ Sub ShowSubstitutedFonts(ByVal TargetDoc As Word.Document)
         End If
     Next i
 
-    Dim FileName As String
-    FileName = C_F_Macros
-    
-    Dim ModuleName As String
-    ModuleName = C_M_Fonts
-    
-    Dim MacroName As String
-    MacroName = "ShowSubstitutedFonts"
-    
-    Dim MsgBoxTitle As String
-    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Fonts
+    Dim MacroName As String:    MacroName = "ShowSubstitutedFonts"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     ' Show results
     If missingFonts <> "" Then

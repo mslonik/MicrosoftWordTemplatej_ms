@@ -1,16 +1,13 @@
 <customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui">
   <ribbon>
     <tabs>
-      <tab idMso="TabView">
-        <group idMso="GroupMacros" visible="false" />          
-      </tab>
-
-      <tab id="Custom_Layout" label="Layout_ms">
-        <group id="CG_Formats" 
+      <tab id="Custom_Tools" 
+            label="Tools_ms">
+        <group id="CG_PageSize" 
                 label="Page Size"
                 visible="true">
 
-          <menu id="Menu1" 
+          <menu id="Menu_PageSize" 
                 label="Page Size" 
                 imageMso="PageSetup"
                 size="large" 
@@ -413,14 +410,14 @@
                     label="Customize Formatting" 
                     size="normal"
                     imageMso="ConvertTextToTable" 
-                    onAction="RibbonControl.BttnBP" 
+                    onAction="RibbonControl.BttnTables" 
                     screentip="Customize Formatting" 
                     supertip="Apply customized formatting to the specific table. Helpful on time of moving tables from Excel to Word." />
               <button id="Btn_Tab_KeepOnPage" 
                     label="Keep on one page" 
                     size="normal"
                     imageMso="CreateSubroutine" 
-                    onAction="RibbonControl.BttnBP" 
+                    onAction="RibbonControl.BttnTables" 
                     screentip="Keep on one page" 
                     supertip="Applies formatting to the table to keep it on the same page" />
                     
@@ -454,19 +451,19 @@
               <button id="Btn_Tabs_Show" 
                     label="Show positions" 
                     imageMso="ConvertTextToTable" 
-                    onAction="RibbonControl.Tabs" 
+                    onAction="RibbonControl.BttnTabulators" 
                     screentip="Show positions" 
                     supertip="Show current positions of default tabulators" />
               <button id="Btn_Tabs_SetCustom" 
                     label="Set Custom" 
                     imageMso="CreateSubroutine" 
-                    onAction="RibbonControl.Tabs" 
+                    onAction="RibbonControl.BttnTabulators" 
                     screentip="Set Custom" 
                     supertip="Set custom positions of tabulators. It can be restored with next function,." />
               <button id="Btn_Tabs_Restore" 
                     label="Restore" 
                     imageMso="CreateSubroutine" 
-                    onAction="RibbonControl.Tabs" 
+                    onAction="RibbonControl.BttnTabulators" 
                     screentip="Restore" 
                     supertip="Restore default postions of tabulators" />
                     
