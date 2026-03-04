@@ -714,7 +714,7 @@ Sub SetPageLayout_A4_V_1_2()
      
      With Selection.Sections(1).PageSetup               ' current cursor position
         .PaperSize = wdPaperA4
-        .Orientation = wdOrientLandscape
+        .Orientation = wdOrientPortrait
         
         .TopMargin = CentimetersToPoints(vTopMargin)
         .BottomMargin = CentimetersToPoints(vBottomMargin)
@@ -2761,9 +2761,13 @@ End Sub
 Sub DocPropertiesUICustomEdit()
     Dim doc As Document: Set doc = ActiveDocument
     
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "DocPropertiesUICustomEdit"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
     ' 1. Run the validation BEFORE touching the form
     If Not AllRequiredPropertiesExist(doc) Then
-        Dim MsgBoxTitle As String: MsgBoxTitle = C_F_Macros & " : Validation Error"
         MsgBox Prompt:="Required custom properties are missing. " & vbNewLine & _
                       "Please add them first.", _
                Buttons:=vbCritical, _
