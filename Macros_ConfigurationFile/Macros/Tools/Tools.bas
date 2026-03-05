@@ -18,8 +18,8 @@ Attribute VB_Name = "Tools"
 '|    | SetPageLayout_A4_H_0_5        | Layout      | Page Size       | SetPageLayout_A4_H_0_5        |
 '|    | SetPageLayout_A3_H_0_5        | Layout      | Page Size       | SetPageLayout_A3_H_0_5        |
 '|    | SetPageLayout_A3_V_1_2        | Layout      | Page Size       | SetPageLayout_A3_V_1_2        |
-'|    | AddBlankPages                 | Layout      | Manage          | AddBlankPages                 |
-'|    | DeleteTempBlankPages          | Layout      | Manage          | DeleteTempBlankPages          |
+'|    | AddBlankPages                 | Layout      | Blank Pages     | AddBlankPages                 |
+'|    | DeleteTempBlankPages          | Layout      | Blank Pages     | DeleteTempBlankPages          |
 '|    | AddSectionAndKillLinkToPrevious | Layout    | Section Tools   | AddSectionAndKillLinkToPrevious|
 '|    | UnlinkAllHeadersFooters       | Layout      | Section Tools   | UnlinkAllHeadersFooters       |
 '| 5  | SetHyphenation                | Tools_ms    | Document        | SetHyphenation                |
@@ -910,51 +910,29 @@ Sub SetPageLayout_A4_H_1_2()
         Title:=MsgBoxTitle
 End Sub
 
-
 ' Switches active document view properties in a loop, 4x views are available.
 ' Keyboard shortcut: F4.
 ' Settings are stored within ActiveDocument to restore them next time document is opened.
 ' Reworked by ms on 2025-02-11
 ' Reworked by ms on 2025-07-29
 ' 2025-12-31 by ms
+' 2026-03-05 by ms and AI
 Sub ToggleSpecificFormatting()
     Dim FileName As String:       FileName = C_F_Macros
     Dim ModuleName As String:     ModuleName = C_M_Tools
     Dim MacroName As String:      MacroName = "ToggleSpecificFormatting"
     Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    Call Macros_ms.Validation.CheckMicrosoftWordVersion(MacroName)    ' alternative: Application.Run C_P_Macros & "." & C_M_Validation & "." & "CheckMicrosoftWordVersion", MacroName
-    
-    Dim oView As View
-    Set oView = ActiveDocument.ActiveWindow.View
-    
-    Static FormattingToggle As Boolean      ' static initial value: false
-    ' View Mode = local counter: <1, 4>.
-    ' 1 = toggle formatting, visibility of gridline.
-    ' 2 = toggle page color: grey / white.
-    ' 3 = toggle formatting, visibility of gridline.
-    ' 4 = toggle page color: grey / white.
-    Static ViewMode As Byte                 ' static initial value: 0
-    
     Dim DocVarName As String: DocVarName = "DocVarToggleSpecificFormatting"
-    Dim DocVarTemp As Variable
-    Dim FlagDocVarExists As Boolean:    FlagDocVarExists = False
-    Dim FlagUpdateDocVar As Boolean:    FlagUpdateDocVar = False
+    Dim ViewMode As Integer
     
-    ' Check if document variable named DocVarToggleSpecificFormatting exists in ActiveDocument.
-    For Each DocVarTemp In ActiveDocument.Variables
-        If DocVarTemp.Name = DocVarName Then
-            FlagDocVarExists = True
-            Exit For
-        End If
-    Next DocVarTemp
-    
+    ' 1. Get current DocVariable safely
     Dim UserDecision As VbMsgBoxResult
-    If FlagDocVarExists Then
-        ViewMode = CByte(ActiveDocument.Variables(DocVarName).Value)
-        FlagUpdateDocVar = True
-    Else
-        ' If such document variable doesn't exist, ask user if it should be created and saved
+    On Error Resume Next
+    ViewMode = CInt(ActiveDocument.Variables(DocVarName).Value)
+    If Err.Number <> 0 Then
+        ' If it doesn't exist, ask to create (your existing logic)
+        ViewMode = 0
         Beep
         UserDecision = MsgBox( _
                             Prompt:="Document variable: " & DocVarName & " doesn't exist in the ActiveDocument." & vbNewLine & vbNewLine & _
@@ -968,99 +946,85 @@ Sub ToggleSpecificFormatting()
                 Value:=ViewMode
         End If
     End If
+    On Error GoTo 0
     
+    ' 2. Increment and wrap around (1 to 4)
     ViewMode = ViewMode + 1
-    If FlagUpdateDocVar Then ActiveDocument.Variables(DocVarName).Value = ViewMode
+    If ViewMode > 4 Then ViewMode = 1
     
-    If ViewMode = 1 Then
-        FormattingToggle = Not FormattingToggle
-        If FormattingToggle = False Then
+    ' 3. Save the new mode
+    ActiveDocument.Variables(DocVarName).Value = ViewMode
+    
+    ' 4. Apply the view and show the notification
+    Call Macros_ms.Tools.ApplyViewMode(ViewMode:=ViewMode)
+End Sub
+
+' 2026-03-05 by ms and AI
+Sub ApplyViewMode(ViewMode As Integer)
+    Dim FileName As String:       FileName = C_F_Macros
+    Dim ModuleName As String:     ModuleName = C_M_Tools
+    Dim MacroName As String:      MacroName = "ApplyViewMode"
+    Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
+    Dim oView As View: Set oView = ActiveDocument.ActiveWindow.View
+    
+    ' Define logic based on your 1-4 cycle
+    ' Mode 1 & 3: Toggle Formatting / Mode 2 & 4: Toggle Color
+    Select Case ViewMode
+        Case 1
             oView.ShowTextBoundaries = True
             oView.FieldShading = wdFieldShadingAlways
             oView.ShowHiddenText = True
             oView.ShowAll = True
             ActiveWindow.View.TableGridlines = True
             ActiveWindow.View.ShowCropMarks = True
-        Else
+        
+            MsgBox _
+                Prompt:="Specific formatting was just toggled: " & ViewMode & vbNewLine & vbNewLine & _
+                    "ShowTextBoundaries: " & oView.ShowTextBoundaries & vbNewLine & _
+                    "FieldShading: " & oView.FieldShading & vbNewLine & _
+                    "ShowHiddenText: " & oView.ShowHiddenText & vbNewLine & _
+                    "ShowAll: " & oView.ShowAll & vbNewLine & _
+                    "TableGridlines: " & ActiveWindow.View.TableGridlines & vbNewLine & _
+                    "ShowCropMarks: " & ActiveWindow.View.ShowCropMarks, _
+                Buttons:=vbInformation + vbOKOnly, _
+                Title:=MsgBoxTitle
+                
+        Case 2
+            Call Macros_ms.Tools.SetPageColorToCustom
+            MsgBox _
+                Prompt:="Specific formatting was just toggled: " & ViewMode & vbNewLine & vbNewLine & _
+                    "Page background color was just set to custom.", _
+                Buttons:=vbInformation + vbOKOnly, _
+                Title:=MsgBoxTitle
+        
+        Case 3
             oView.ShowTextBoundaries = False
             oView.FieldShading = wdFieldShadingWhenSelected
             oView.ShowHiddenText = False
             oView.ShowAll = False
             ActiveWindow.View.TableGridlines = False
             ActiveWindow.View.ShowCropMarks = False
-        End If
-        MsgBox _
-            Prompt:="Specific formatting was just toggled: " & ViewMode & vbNewLine & vbNewLine & _
-                "ShowTextBoundaries" & vbNewLine & _
-                "FieldShading" & vbNewLine & _
-                "ShowHiddenText" & vbNewLine & _
-                "ShowAll" & vbNewLine & _
-                "TableGridlines" & vbNewLine & _
-                "ShowCropMarks", _
-            Buttons:=vbInformation + vbOKOnly, _
-            Title:=MsgBoxTitle
-    End If
-    
-    If ViewMode = 2 Then
-        If FormattingToggle = False Then
-            Call Macros_ms.Tools.SetPageColorToCustom
-        Else
+        
+            MsgBox _
+                Prompt:="Specific formatting was just toggled: " & ViewMode & vbNewLine & vbNewLine & _
+                    "ShowTextBoundaries: " & oView.ShowTextBoundaries & vbNewLine & _
+                    "FieldShading: " & oView.FieldShading & vbNewLine & _
+                    "ShowHiddenText: " & oView.ShowHiddenText & vbNewLine & _
+                    "ShowAll: " & oView.ShowAll & vbNewLine & _
+                    "TableGridlines: " & ActiveWindow.View.TableGridlines & vbNewLine & _
+                    "ShowCropMarks: " & ActiveWindow.View.ShowCropMarks, _
+                Buttons:=vbInformation + vbOKOnly, _
+                Title:=MsgBoxTitle
+        
+        Case 4
             Call Macros_ms.Tools.RestoreDefaultPageColor
-        End If
-        MsgBox _
-            Prompt:="Specific formatting was just toggled: " & ViewMode & vbNewLine & vbNewLine & _
-                "Page background color was just toggled.", _
-            Buttons:=vbInformation + vbOKOnly, _
-            Title:=MsgBoxTitle
-    End If
-    
-    If ViewMode = 3 Then
-        FormattingToggle = Not FormattingToggle
-        If FormattingToggle = False Then
-            oView.ShowTextBoundaries = True
-            oView.FieldShading = wdFieldShadingAlways
-            oView.ShowHiddenText = True
-            oView.ShowAll = True
-            ActiveWindow.View.TableGridlines = True
-            ActiveWindow.View.ShowCropMarks = True
-        Else
-            oView.ShowTextBoundaries = False
-            oView.FieldShading = wdFieldShadingWhenSelected
-            oView.ShowHiddenText = False
-            oView.ShowAll = False
-            ActiveWindow.View.TableGridlines = False
-            ActiveWindow.View.ShowCropMarks = False
-        End If
-        MsgBox _
-            Prompt:="Specific formatting was just toggled: " & ViewMode & vbNewLine & vbNewLine & _
-                "ShowTextBoundaries" & vbNewLine & _
-                "FieldShading" & vbNewLine & _
-                "ShowHiddenText" & vbNewLine & _
-                "ShowAll" & vbNewLine & _
-                "TableGridlines" & vbNewLine & _
-                "ShowCropMarks", _
-            Buttons:=vbInformation + vbOKOnly, _
-            Title:=MsgBoxTitle
-    End If
-    
-    If ViewMode = 4 Then
-        If FormattingToggle = False Then
-            Call Macros_ms.Tools.SetPageColorToCustom
-        Else
-            Call Macros_ms.Tools.RestoreDefaultPageColor
-        End If
-        MsgBox _
-            Prompt:="Specific formatting was just toggled: " & ViewMode & vbNewLine & vbNewLine & _
-                "Page background color was just toggled.", _
-            Buttons:=vbInformation + vbOKOnly, _
-            Title:=MsgBoxTitle
-        ViewMode = 0
-        If FlagUpdateDocVar Then ActiveDocument.Variables(DocVarName).Value = ViewMode
-    End If
-    
-    ' Clear object variables
-    Set oView = Nothing
-    
+            MsgBox _
+                Prompt:="Specific formatting was just toggled: " & ViewMode & vbNewLine & vbNewLine & _
+                    "Page background color was just set to default.", _
+                Buttons:=vbInformation + vbOKOnly, _
+                Title:=MsgBoxTitle
+    End Select
 End Sub
 
 ' Sets the margins of all text boxes to 0
