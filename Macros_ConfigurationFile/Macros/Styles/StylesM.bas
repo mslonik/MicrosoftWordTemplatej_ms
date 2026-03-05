@@ -2724,7 +2724,7 @@ Private Function CreateStyle_ParTextBoxesMs() As Boolean
                 .Size = C_BaseFontSize - 1
                 .Bold = False
                 .Italic = False
-                .color = wdColorAutomatic
+                .color = wdColorBlack       ' conscious exception; for some reasons Microsoft Word applies white color to text boxes
             End With
             
             ' Paragraph formatting
