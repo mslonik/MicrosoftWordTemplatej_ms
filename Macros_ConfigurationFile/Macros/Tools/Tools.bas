@@ -4,26 +4,26 @@ Attribute VB_Name = "Tools"
 '
 '   License: MIT License.
 '
-'
 '+----+-------------------------------+-------------+-----------------+-------------------------------+
 '| No | Sub name                      | Ribbon name | Ribbon section  | Ribbon button name            |
 '+----+-------------------------------+-------------+-----------------+-------------------------------+
-'| 1  | DocPropertiesAddCustom        | Layout      | DocProperties   | DocPropertiesAddCustom        |
-'| 2  | DocPropertiesUICustomEdit     | Layout      | DocProperties   | DocPropertiesUICustomEdit     |
-'|    | DocPropertiesDeleteCustom     | Layout      | DocProperties   | DocPropertiesDeleteCustom     |
-'|    | DocPropertiesDeleteAll        | Layout      | DocProperties   | DocPropertiesDeleteAll        |
+'| 1  | DocPropertiesAddCustom        | Tools_ms    | DocProperties   | DocPropertiesAddCustom        |
+'| 2  | DocPropertiesUICustomEdit     | Tools_ms    | DocProperties   | DocPropertiesUICustomEdit     |
+'|    | DocPropertiesDeleteCustom     | Tools_ms    | DocProperties   | DocPropertiesDeleteCustom     |
+'|    | DocPropertiesDeleteAll        | Tools_ms    | DocProperties   | DocPropertiesDeleteAll        |
 '+----+-------------------------------+-------------+-----------------+-------------------------------+
-'|    | SetPageLayout_A4_V_1_2        | Layout      | Page Size       | SetPageLayout_A4_V_1_2        |
-'|    | SetPageLayout_A4_H_1_2        | Layout      | Page Size       | SetPageLayout_A4_H_1_2        |
-'|    | SetPageLayout_A4_H_0_5        | Layout      | Page Size       | SetPageLayout_A4_H_0_5        |
-'|    | SetPageLayout_A3_H_0_5        | Layout      | Page Size       | SetPageLayout_A3_H_0_5        |
-'|    | SetPageLayout_A3_V_1_2        | Layout      | Page Size       | SetPageLayout_A3_V_1_2        |
-'|    | AddBlankPages                 | Layout      | Blank Pages     | AddBlankPages                 |
-'|    | DeleteTempBlankPages          | Layout      | Blank Pages     | DeleteTempBlankPages          |
-'|    | SectionAddNewAndUnlinkHF      | Layout      | Section Tools   | SectionAddNewAndUnlinkHF      |
-'|    | SectionUnlinkAllHF            | Layout      | Section Tools   | SectionUnlinkAllHF            |
-'|    | SectionRelinkHF               | Layout      | Section Tools   | SectionRelinkHF               |
+'|    | SetPageLayout_A4_V_1_2        | Tools_ms    | Page Size       | SetPageLayout_A4_V_1_2        |
+'|    | SetPageLayout_A4_H_1_2        | Tools_ms    | Page Size       | SetPageLayout_A4_H_1_2        |
+'|    | SetPageLayout_A4_H_0_5        | Tools_ms    | Page Size       | SetPageLayout_A4_H_0_5        |
+'|    | SetPageLayout_A3_H_0_5        | Tools_ms    | Page Size       | SetPageLayout_A3_H_0_5        |
+'|    | SetPageLayout_A3_V_1_2        | Tools_ms    | Page Size       | SetPageLayout_A3_V_1_2        |
+'|    | AddBlankPages                 | Tools_ms    | Blank Pages     | AddBlankPages                 |
+'|    | DeleteTempBlankPages          | Tools_ms    | Blank Pages     | DeleteTempBlankPages          |
+'|    | SectionAddNewAndUnlinkHF      | Tools_ms    | Section Tools   | SectionAddNewAndUnlinkHF      |
+'|    | SectionUnlinkAllHF            | Tools_ms    | Section Tools   | SectionUnlinkAllHF            |
+'|    | SectionRelinkHF               | Tools_ms    | Section Tools   | SectionRelinkHF               |
 '| 5  | SetHyphenation                | Tools_ms    | Document        | SetHyphenation                |
+'|    | ResetHyphenation              |
 '| 6  | SetLanguageToEnglishUS        | Tools_ms    | Document        | SetLanguageToEnglishUS        |
 '| 7  | SetPageColorToCustom          | Tools_ms    | Document        | SetPageColorToCustom          |
 '| 8  | ShowAllTemplates              | Tools_ms    | Document        | ShowAllTemplates              |
@@ -47,10 +47,14 @@ Attribute VB_Name = "Tools"
 '+----+-------------------------------+-------------+-----------------+-------------------------------+
 '| 22 | WordOptionsCustomize          | Tools_ms    | Word Options    | WordOptionsCustomize          |
 '| 23 | WordOptionsRestore            | Tools_ms    | Word Options    | WordOptionsRestore            |
-'| 24 | WordOptionsDisableAutoFormat  | Tools_ms    | Word Options    | WordOptionsDisableAutoFormat  |
-'| 25 | WordOptionsRestoreAutoFormat  | Tools_ms    | Word Options    | WordOptionsRestoreAutoFormat  |
-'| 26 | WordOptionsDisableAutoCorrect | Tools_ms    | Word Options    | WordOptionsDisableAutoCorrect |
-'| 27 | WordOptionsToggleAutoCorrect  | Tools_ms    | Word Options    | WordOptionsToggleAutoCorrect  |
+'|    | WordOptionsAutoFormatEnable   | Tools_ms    | Word Options    |
+'|    | WordOptionsAutoFormatDisable  | Tools_ms    | Word Options    |
+'|    | WordOptionsAutoFormatAsYouTypeDisable | Tools_ms    | Word Options    |
+'|    | WordOptionsAutoFormatAsYouTypeEnable  | Tools_ms    | Word Options    |
+'|    | WordOptionsAutoCorrectEnable  | Tools_ms    | Word Options    |
+'|    | WordOptionsAutoCorrectDisable | Tools_ms    | Word Options    |
+'|    | WordOptionsAutoCorrectAllEnable  | Tools_ms    | Word Options    |
+'|    | WordOptionsAutoCorrectAllDisable | Tools_ms    | Word Options    |
 '+----+-------------------------------+-------------+-----------------+-------------------------------+
 '| 28 | Table_CustomizeFormatting     | Tools_ms    | Tables          | Table_CustomizeFormatting     |
 '| 29 | Table_KeepOnOnePage           | Tools_ms    | Tables          | Table_KeepOnOnePage           |
@@ -93,7 +97,6 @@ Attribute VB_Name = "Tools"
 '   53. InsertSVNCommitNumber()
 '   54. AttachBuildingBlocks()
 '   55. AutoExec()
-'   56. ResetHyphenation()
 '   57. RestoreDefaultPageColor()
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '
@@ -975,6 +978,7 @@ Sub ApplyViewMode(ViewMode As Integer)
         Case 1
             oView.ShowTextBoundaries = True
             oView.FieldShading = wdFieldShadingAlways
+            oView.ShowBookmarks = True
             oView.ShowHiddenText = True
             oView.ShowAll = True
             ActiveWindow.View.TableGridlines = True
@@ -1002,6 +1006,7 @@ Sub ApplyViewMode(ViewMode As Integer)
         Case 3
             oView.ShowTextBoundaries = False
             oView.FieldShading = wdFieldShadingWhenSelected
+            oView.ShowBookmarks = False
             oView.ShowHiddenText = False
             oView.ShowAll = False
             ActiveWindow.View.TableGridlines = False
@@ -2320,132 +2325,6 @@ Sub InsertSVNCommitNumber()
         Title:=MsgBoxTitle
 End Sub
 
-' Restore customized Microsoft Word options.
-' 2025-08-17 by ms
-Sub WordOptionsRestore()
-    ActiveWindow.View.FieldShading = wdFieldShadingWhenSelected
-    ActiveWindow.View.ShowDrawings = msoTrue
-    ActiveWindow.View.ShowBookmarks = msoFalse
-    ActiveWindow.View.ShowTextBoundaries = msoFalse
-    ActiveWindow.View.ShowCropMarks = msoFalse
-    ActiveWindow.StyleAreaWidth = 0
-    ActiveDocument.Compatibility(wdSuppressBottomSpacing) = msoFalse
-    ActiveDocument.Compatibility(wdSuppressTopSpacing) = msoFalse
-    ActiveWindow.View.PageMovementType = wdVertical
-    
-    Dim FileName As String:     FileName = C_F_Macros
-    Dim ModuleName As String:   ModuleName = C_M_Tools
-    Dim MacroName As String:    MacroName = "WordOptionsRestore"
-    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
-    MsgBox _
-        Prompt:="The following Microsoft Word properties have been set to default:" & vbNewLine & vbNewLine & _
-            "ActiveWindow.View.FieldShading: " & ActiveWindow.View.FieldShading & vbNewLine & _
-            "ActiveWindow.View.ShowDrawings: " & ActiveWindow.View.ShowDrawings & vbNewLine & _
-            "ActiveWindow.View.ShowBookmarks: " & ActiveWindow.View.ShowBookmarks & vbNewLine & _
-            "ActiveWindow.View.ShowTextBoundaries: " & ActiveWindow.View.ShowTextBoundaries & vbNewLine & _
-            "ActiveWindow.View.ShowCropMarks: " & ActiveWindow.View.ShowCropMarks & vbNewLine & _
-            "ActiveWindow.StyleAreaWidth: " & ActiveWindow.StyleAreaWidth & vbNewLine & _
-            "ActiveDocument.Compatibility(wdSuppressBottomSpacing): " & ActiveDocument.Compatibility(wdSuppressBottomSpacing) & vbNewLine & _
-            "ActiveDocument.Compatibility(wdSuppressTopSpacing): " & ActiveDocument.Compatibility(wdSuppressTopSpacing) & vbNewLine & _
-            "ActiveWindow.View.PageMovementType: " & ActiveWindow.View.PageMovementType, _
-        Buttons:=vbInformation, _
-        Title:=MsgBoxTitle
-    
-End Sub
-
-' If returns true, then all options were already set as expected.
-' 2025-08-14 by ms
-' 2025-10-02 by ms CheckCustomizeWordOptions -> WordOptionsSetAsExpected
-Private Function WordOptionsSetAsExpected() As Boolean
-    WordOptionsSetAsExpected = True
-    
-    Dim FileName As String:     FileName = C_F_Macros
-    Dim ModuleName As String:   ModuleName = C_M_Tools
-    Dim MacroName As String:    MacroName = "WordOptionsSetAsExpected"
-    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-       
-    If ActiveWindow.View.FieldShading <> wdFieldShadingAlways Then
-        WordOptionsSetAsExpected = False
-        MsgBox _
-            Prompt:="ActiveWindow.View.FieldShading <> wdFieldShadingAlways", _
-            Buttons:=vbExclamation + vbOKOnly, _
-            Title:=MsgBoxTitle
-    End If
-    
-    If Not ActiveWindow.View.ShowDrawings = True Then
-        WordOptionsSetAsExpected = False
-        MsgBox _
-            Prompt:="Not ActiveWindow.View.ShowDrawings = True", _
-            Buttons:=vbExclamation + vbOKOnly, _
-            Title:=MsgBoxTitle
-    End If
-    
-    If Not ActiveWindow.View.ShowBookmarks = True Then
-        WordOptionsSetAsExpected = False
-        MsgBox _
-            Prompt:="Not ActiveWindow.View.ShowBookmarks = True", _
-            Buttons:=vbExclamation + vbOKOnly, _
-            Title:=MsgBoxTitle
-    End If
-    
-    If Not ActiveWindow.View.ShowTextBoundaries = True Then
-        WordOptionsSetAsExpected = False
-        MsgBox _
-            Prompt:="Not ActiveWindow.View.ShowTextBoundaries = True", _
-            Buttons:=vbExclamation + vbOKOnly, _
-            Title:=MsgBoxTitle
-    End If
-    
-    If Not ActiveWindow.View.ShowCropMarks = True Then
-        WordOptionsSetAsExpected = False
-        MsgBox _
-            Prompt:="Not ActiveWindow.View.ShowCropMarks = True", _
-            Buttons:=vbExclamation + vbOKOnly, _
-            Title:=MsgBoxTitle
-    End If
-    
-    ' Int truncates the decimal
-    If ActiveWindow.StyleAreaWidth <> Int(CentimetersToPoints(5.3)) Then
-        WordOptionsSetAsExpected = False
-        MsgBox _
-            Prompt:="ActiveWindow.StyleAreaWidth <> Int(CentimetersToPoints(5.3))", _
-            Buttons:=vbExclamation + vbOKOnly, _
-            Title:=MsgBoxTitle
-    End If
-    
-    If ActiveDocument.Compatibility(wdSuppressBottomSpacing) Then
-        WordOptionsSetAsExpected = False
-        MsgBox _
-            Prompt:="Not ActiveDocument.Compatibility(wdSuppressBottomSpacing)", _
-            Buttons:=vbExclamation + vbOKOnly, _
-            Title:=MsgBoxTitle
-    End If
-    
-    If ActiveDocument.Compatibility(wdSuppressTopSpacing) Then
-        WordOptionsSetAsExpected = False
-        MsgBox _
-            Prompt:="Not ActiveDocument.Compatibility(wdSuppressTopSpacing)", _
-            Buttons:=vbExclamation + vbOKOnly, _
-            Title:=MsgBoxTitle
-    End If
-    
-    With ActiveWindow.View
-        If .Type <> wdPrintView Then
-            .Type = wdPrintView
-        End If
-    
-        If .PageMovementType <> wdSideToSide Then
-            WordOptionsSetAsExpected = False
-            MsgBox _
-                Prompt:="ActiveWindow.View.PageMovementType <> wdSideToSide", _
-                Buttons:=vbExclamation + vbOKOnly, _
-                Title:=MsgBoxTitle
-        End If
-    End With
-    
-End Function
-
 ' Microsoft Word customized settings
 ' 2025-04-02 by ms and AI
 Sub WordOptionsCustomize()
@@ -2454,262 +2333,306 @@ Sub WordOptionsCustomize()
     Dim MacroName As String:    MacroName = "WordOptionsCustomize"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    ' File -> Options -> Advanced -> Editing options, Default paragraph style: "ParNormal ms". This setting refers to the default paragraph style defined in the Normal template (Normal.dotm).
-    ' Se even if "ParNormal ms" is used in the current document, Word still considers "Normal" as the defaultstyle globally unless you modify the Normal.dotm template.
-    ' In other words this setting is irrelevant. There is no easy way to change it from VBA code.
-
-    ' File -> Options -> Advanced -> Show document content: Field shading: Always
-     ActiveWindow.View.FieldShading = wdFieldShadingAlways
-    
-    ' File -> Options -> Advanced ->  Image size and qualty, default resolution: 330 PPI
-    ' impossible to set in VBA
-    ActiveWindow.View.ShowDrawings = True                           ' Show drawings and text boxes on screen
-    ActiveWindow.View.ShowBookmarks = True                          ' Show bookmarks
-    ActiveWindow.View.ShowTextBoundaries = True                     ' Show text boundaries
-    ActiveWindow.View.ShowCropMarks = True                          ' Show crop marks
     Options.MeasurementUnit = wdCentimeters                         ' Show measurements in units of centimeters
-    
     ActiveWindow.View.Type = wdNormalView
     ActiveWindow.StyleAreaWidth = CentimetersToPoints(5.3)          ' Set Style area pane width in Draft and Outline view to 5.3 cm
-    ' Allow hyphenation between pages or columns
-    ' impossible in VBA
     ActiveDocument.Compatibility(wdSuppressBottomSpacing) = False   ' Suppress extra line spacing at bottom of page
     ActiveDocument.Compatibility(wdSuppressTopSpacing) = False      ' Suppress extra line spacing at top of page
     
-    ActiveWindow.View.Type = wdPrintView
-    ActiveWindow.View.Zoom.Percentage = 100
-    On Error Resume Next
-        ActiveWindow.View.PageMovementType = wdSideToSide
-    If Err.Number <> 0 Then
-        ActiveWindow.View.PageMovementType = wdVertical
-    End If
-    On Error GoTo 0
-    
     MsgBox _
         Prompt:="Microsoft Word options customized successfully:" & vbNewLine & vbNewLine & _
-            "Show drawings and text boxes on screen: " & ActiveWindow.View.ShowDrawings & vbNewLine & _
-            "Show bookmarks: " & ActiveWindow.View.ShowBookmarks & vbNewLine & _
-            "Show text boundaries: " & ActiveWindow.View.ShowTextBoundaries & vbNewLine & _
-            "Show crop marks: " & ActiveWindow.View.ShowCropMarks & vbNewLine & _
             "Show measurements in units of centimeters: " & Options.MeasurementUnit & vbNewLine & _
             "Set Style area pane width in Draft and Outline view to 5.3 cm: " & ActiveWindow.StyleAreaWidth & vbNewLine & _
             "Suppress extra line spacing at bottom of page: " & ActiveDocument.Compatibility(wdSuppressBottomSpacing) & vbNewLine & _
-            "Suppress extra line spacing at top of page: " & ActiveDocument.Compatibility(wdSuppressTopSpacing) & vbNewLine & _
-            "Set page movement from 'Vertical' to 'Side to Side': " & ActiveWindow.View.PageMovementType, _
+            "Suppress extra line spacing at top of page: " & ActiveDocument.Compatibility(wdSuppressTopSpacing), _
         Buttons:=vbInformation + vbOKOnly, _
         Title:=MsgBoxTitle
 End Sub
 
-' Check settings of Autocorrect options. If true then all areoff.
-' 2025-08-14 by ms
-Private Function CheckIfAutocorrectAreOff() As Boolean
-    CheckIfAutocorrectAreOff = True
+' Restore customized Microsoft Word options.
+' 2025-08-17 by ms
+Sub WordOptionsRestore()
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "WordOptionsRestore"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    If Not AutoCorrect.CorrectSentenceCaps = True Then
-        CheckIfAutocorrectAreOff = False
-    End If
-    If Not AutoCorrect.CorrectDays = True Then
-        CheckIfAutocorrectAreOff = False
-    End If
-    If Not AutoCorrect.TwoInitialCapsAutoAdd = True Then
-        CheckIfAutocorrectAreOff = False
-    End If
-    If Not AutoCorrect.CorrectCapsLock = True Then
-        CheckIfAutocorrectAreOff = False
-    End If
-    If Not AutoCorrect.CorrectInitialCaps = True Then
-        CheckIfAutocorrectAreOff = False
-    End If
-    If Not AutoCorrect.CorrectSentenceCaps = True Then
-        CheckIfAutocorrectAreOff = False
-    End If
-    If Not AutoCorrect.CorrectTableCells = True Then
-        CheckIfAutocorrectAreOff = False
-    End If
-    If Not AutoCorrect.replaceText = True Then
-        CheckIfAutocorrectAreOff = False
-    End If
-End Function
+    Options.MeasurementUnit = wdCentimeters                         ' Show measurements in units of centimeters
+    ActiveWindow.View.Type = wdNormalView
+    ActiveWindow.StyleAreaWidth = CentimetersToPoints(2.5)          ' Set Style area pane width in Draft and Outline view to 5.3 cm
+    ActiveDocument.Compatibility(wdSuppressBottomSpacing) = True    ' Suppress extra line spacing at bottom of page
+    ActiveDocument.Compatibility(wdSuppressTopSpacing) = True       ' Suppress extra line spacing at top of page
+    
+    MsgBox _
+        Prompt:="Microsoft Word options customized successfully:" & vbNewLine & vbNewLine & _
+            "Show measurements in units of centimeters: " & Options.MeasurementUnit & vbNewLine & _
+            "Set Style area pane width in Draft and Outline view to 5.3 cm: " & ActiveWindow.StyleAreaWidth & vbNewLine & _
+            "Suppress extra line spacing at bottom of page: " & ActiveDocument.Compatibility(wdSuppressBottomSpacing) & vbNewLine & _
+            "Suppress extra line spacing at top of page: " & ActiveDocument.Compatibility(wdSuppressTopSpacing), _
+        Buttons:=vbInformation + vbOKOnly, _
+        Title:=MsgBoxTitle
+        
+    MsgBox _
+        Prompt:="Microsoft Word options customized successfully:" & vbNewLine & vbNewLine & _
+            "Show measurements in units of centimeters: " & Options.MeasurementUnit & vbNewLine & _
+            "Set Style area pane width in Draft and Outline view to 5.3 cm: " & ActiveWindow.StyleAreaWidth & vbNewLine & _
+            "Suppress extra line spacing at bottom of page: " & ActiveDocument.Compatibility(wdSuppressBottomSpacing) & vbNewLine & _
+            "Suppress extra line spacing at top of page: " & ActiveDocument.Compatibility(wdSuppressTopSpacing), _
+        Buttons:=vbInformation + vbOKOnly, _
+        Title:=MsgBoxTitle
+End Sub
 
 ' Personal preferences of ms
 ' 2025-06-18 by ms
-Sub WordOptionsDisableAutoCorrect()
-    AutoCorrect.CorrectSentenceCaps = False
-    AutoCorrect.CorrectDays = False
+' 2026-03-06 by ms
+Sub WordOptionsAutoCorrectDisable()
     AutoCorrect.TwoInitialCapsAutoAdd = False
-    AutoCorrect.CorrectCapsLock = False
-    AutoCorrect.CorrectInitialCaps = False
     AutoCorrect.CorrectSentenceCaps = False
     AutoCorrect.CorrectTableCells = False
+    AutoCorrect.CorrectDays = False
+    AutoCorrect.CorrectCapsLock = False
+    AutoCorrect.CorrectInitialCaps = False
+
     AutoCorrect.replaceText = False
 
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Tools
-    Dim MacroName As String:    MacroName = "WordOptionsDisableAutoCorrect"
+    Dim MacroName As String:    MacroName = "WordOptionsAutoCorrectDisable"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     MsgBox _
-        Prompt:="Microsoft Word options related to Autocorrect were switched off (all).", _
+        Prompt:="Microsoft Word File > Options > Proofing > AutoCorrect options... > AutoCorrect:" & vbNewLine & vbNewLine & _
+            "Correct TWo INitial CApitals (TwoInitialCapsAutoAdd): " & AutoCorrect.TwoInitialCapsAutoAdd & vbNewLine & _
+            "Capitalize first letter of sentences (CorrectSentenceCaps, CorrectInitialCaps): " & AutoCorrect.CorrectSentenceCaps & " " & AutoCorrect.CorrectInitialCaps & vbNewLine & _
+            "Capitalize first letter of table cells (CorrectTableCells): " & AutoCorrect.CorrectTableCells & vbNewLine & _
+            "Capitalize names of days (CorrectDays): " & AutoCorrect.CorrectDays & vbNewLine & _
+            "Correct accidental usage of cAPS LOCK key (CorrectCapsLock): " & AutoCorrect.CorrectCapsLock & vbNewLine & _
+            "Replace text as you type (replaceText): " & AutoCorrect.replaceText, _
         Buttons:=vbInformation + vbOKOnly, _
         Title:=MsgBoxTitle
 End Sub
 
-' Restore AutoFormat options of Microsoft Word to default values.
-' 2025-08-17 by ms
-Sub WordOptionsRestoreAutoFormat()
+' Complementary sub to WordOptionsAutoCorrectDisable()
+' 2026-03-06 by ms
+Sub WordOptionsAutoCorrectEnable()
+    AutoCorrect.TwoInitialCapsAutoAdd = True
+    AutoCorrect.CorrectSentenceCaps = True
+    AutoCorrect.CorrectTableCells = True
+    AutoCorrect.CorrectDays = True
+    AutoCorrect.CorrectCapsLock = True
+    AutoCorrect.CorrectInitialCaps = True
+
+    AutoCorrect.replaceText = True
+
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Tools
-    Dim MacroName As String:    MacroName = "WordOptionsRestoreAutoFormat"
+    Dim MacroName As String:    MacroName = "WordOptionsAutoCorrectEnable"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
+    MsgBox _
+        Prompt:="Microsoft Word File > Options > Proofing > AutoCorrect options... > AutoCorrect:" & vbNewLine & vbNewLine & _
+            "Correct TWo INitial CApitals (TwoInitialCapsAutoAdd): " & AutoCorrect.TwoInitialCapsAutoAdd & vbNewLine & _
+            "Capitalize first letter of sentences (CorrectSentenceCaps, CorrectInitialCaps): " & AutoCorrect.CorrectSentenceCaps & " " & AutoCorrect.CorrectInitialCaps & vbNewLine & _
+            "Capitalize first letter of table cells (CorrectTableCells): " & AutoCorrect.CorrectTableCells & vbNewLine & _
+            "Capitalize names of days (CorrectDays): " & AutoCorrect.CorrectDays & vbNewLine & _
+            "Correct accidental usage of cAPS LOCK key (CorrectCapsLock): " & AutoCorrect.CorrectCapsLock & vbNewLine & _
+            "Replace text as you type (replaceText): " & AutoCorrect.replaceText, _
+        Buttons:=vbInformation + vbOKOnly, _
+        Title:=MsgBoxTitle
+End Sub
+
+' 2026-03-06 by ms
+Sub WordOptionsAutoFormatAsYouTypeEnable()
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "WordOptionsAutoFormatAsYouTypeEnable"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     With Application.Options
-        ' AutoCorrect -> AutoFormat -> Apply: Built-in Heading styles
-        .AutoFormatApplyHeadings = True
-        ' AutoCorrect -> AutoFormat -> Apply: List styles
-        .AutoFormatApplyLists = True
-       ' AutoCorrect -> AutoFormat -> Apply: Automatic bulleted lists
-        .AutoFormatApplyBulletedLists = True
-        ' AutoCorrect -> AutoFormat -> Apply: Other paragraph styles
-        .AutoFormatApplyOtherParas = False
-
-         ' AutoCorrect -> AutoFormat -> Replace: "Straight quotes" with "smart quotes"
-        .AutoFormatReplaceQuotes = True
-        ' AutoCorrect -> AutoFormat -> Replace: Ordinals (1st) with superscript
-        .AutoFormatReplaceOrdinals = True
-        ' AutoCorrect -> AutoFormat -> Replace: Fractions (1/2) with fraction character
-        .AutoFormatReplaceFractions = True
-        ' AutoCorrect -> AutoFormat -> Replace: Hyphens (--) with dash (—)
-        .AutoFormatReplaceFarEastDashes = True
-        
-        ' AutoCorrect -> AutoFormat As You Type: "Straight quotes" with "smart quotes"
+        ' Straight quotes" with "smart quotes"
         .AutoFormatAsYouTypeReplaceQuotes = True
-        ' AutoCorrect -> AutoFormat As You Type: Fractions (1/2) with fraction characte
+        ' Fractions (1/2) with fraction characte
         .AutoFormatAsYouTypeReplaceFractions = True
-        ' AutoCorrect -> AutoFormat As You Type: Ordinals (1st) with superscript
+        ' Ordinals (1st) with superscript
         .AutoFormatAsYouTypeReplaceOrdinals = True
-        ' AutoCorrect -> AutoFormat As You Type: Hyphens (--) with dash (—)
+        ' Hyphens (--) with dash (—)
         .AutoFormatAsYouTypeReplaceSymbols = True
+        
+        ' Automatic bulleted lists
+        .AutoFormatAsYouTypeApplyBulletedLists = True
+        ' Automatic numbered lists
+        .AutoFormatAsYouTypeApplyNumberedLists = True
+        ' Border lines
+        .AutoFormatAsYouTypeApplyBorders = True
+        ' Tables
+        .AutoFormatAsYouTypeApplyTables = True
+        ' Built-in Heading styles
+        .AutoFormatAsYouTypeApplyHeadings = True
     End With
     
     MsgBox _
-        Prompt:="File -> Options -> Proofing -> AutoCorrect Options -> AutoFormat:" & vbNewLine & vbNewLine & _
-            "AutoFormatApplyHeadings = " & Application.Options.AutoFormatApplyHeadings & vbNewLine & _
-            ".AutoFormatApplyLists = " & Application.Options.AutoFormatApplyLists & vbNewLine & _
-            ".AutoFormatApplyBulletedLists = " & Application.Options.AutoFormatApplyBulletedLists & vbNewLine & _
-            ".AutoFormatApplyOtherParas = " & Application.Options.AutoFormatApplyOtherParas & vbNewLine & _
-            ".AutoFormatReplaceQuotes = " & Application.Options.AutoFormatReplaceQuotes & vbNewLine & _
-            ".AutoFormatReplaceOrdinals = " & Application.Options.AutoFormatReplaceOrdinals & vbNewLine & _
-            ".AutoFormatReplaceFractions = " & Application.Options.AutoFormatReplaceFractions & vbNewLine & _
-            ".AutoFormatReplaceFarEastDashes = " & Application.Options.AutoFormatReplaceFarEastDashes & vbNewLine & vbNewLine & _
-            "File -> Options -> Proofing -> AutoCorrect Options -> AutoFormat As You Type:" & vbNewLine & vbNewLine & _
-            ".AutoFormatAsYouTypeReplaceQuotes = " & Application.Options.AutoFormatAsYouTypeReplaceQuotes & vbNewLine & _
-            ".AutoFormatAsYouTypeReplaceFractions = " & Application.Options.AutoFormatAsYouTypeReplaceFractions & vbNewLine & _
-            ".AutoFormatAsYouTypeReplaceOrdinals = " & Application.Options.AutoFormatAsYouTypeReplaceOrdinals & vbNewLine & _
-            ".AutoFormatAsYouTypeReplaceSymbols = " & Application.Options.AutoFormatAsYouTypeReplaceSymbols & vbNewLine & vbNewLine & _
+        Prompt:="File -> Options -> Proofing -> AutoCorrect Options -> AutoFormat As You Type:" & vbNewLine & vbNewLine & _
+            "Straight quotes with smart quotes (AutoFormatAsYouTypeReplaceQuotes): " & Application.Options.AutoFormatAsYouTypeReplaceQuotes & vbNewLine & vbNewLine & _
+            "Fractions (1/2) with fraction character (AutoFormatAsYouTypeReplaceFractions): " & Application.Options.AutoFormatAsYouTypeReplaceFractions & vbNewLine & vbNewLine & _
+            "Ordinals (1st) with superscript (AutoFormatAsYouTypeReplaceOrdinals): " & Application.Options.AutoFormatAsYouTypeReplaceOrdinals & vbNewLine & vbNewLine & _
+            "Hyphens (--) with dash (AutoFormatAsYouTypeReplaceSymbols): " & Application.Options.AutoFormatAsYouTypeReplaceSymbols & vbNewLine & vbNewLine & _
+            "Automatic bulleted lists (AutoFormatAsYouTypeApplyBulletedLists): " & Application.Options.AutoFormatAsYouTypeApplyBulletedLists & vbNewLine & vbNewLine & _
+            "Automatic numbered lists (AutoFormatAsYouTypeApplyNumberedLists): " & Application.Options.AutoFormatAsYouTypeApplyNumberedLists & vbNewLine & vbNewLine & _
+            "Border lines (AutoFormatAsYouTypeApplyBorders): " & Application.Options.AutoFormatAsYouTypeApplyBorders & vbNewLine & vbNewLine & _
+            "Tables (AutoFormatAsYouTypeApplyTables): " & Application.Options.AutoFormatAsYouTypeApplyTables & vbNewLine & vbNewLine & _
+            "Built-in Heading styles (AutoFormatAsYouTypeApplyHeadings): " & Application.Options.AutoFormatAsYouTypeApplyHeadings & vbNewLine & vbNewLine & _
             "Finished processing.", _
         Buttons:=vbInformation, _
         Title:=MsgBoxTitle
-
 End Sub
 
-' 2025-04-02 by ms and AI
-' 2025-07-16 by ms, AutoFormat is batch processing, not available directly from ribbon menu
-' AutoFormat as you type is fully automatic. This macro disables both.
-Sub WordOptionsDisableAutoFormat()
+' 2026-03-06 by ms
+Sub WordOptionsAutoFormatAsYouTypeDisable()
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Tools
-    Dim MacroName As String:    MacroName = "WordOptionsDisableAutoFormat"
+    Dim MacroName As String:    MacroName = "WordOptionsAutoFormatAsYouTypeDisable"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     With Application.Options
-        ' AutoCorrect -> AutoFormat -> Apply: Built-in Heading styles
+        ' Straight quotes" with "smart quotes"
+        .AutoFormatAsYouTypeReplaceQuotes = False
+        ' Fractions (1/2) with fraction characte
+        .AutoFormatAsYouTypeReplaceFractions = False
+        ' Ordinals (1st) with superscript
+        .AutoFormatAsYouTypeReplaceOrdinals = False
+        ' Hyphens (--) with dash (—)
+        .AutoFormatAsYouTypeReplaceSymbols = False
+        
+        ' Automatic bulleted lists
+        .AutoFormatAsYouTypeApplyBulletedLists = False
+        ' Automatic numbered lists
+        .AutoFormatAsYouTypeApplyNumberedLists = False
+        ' Border lines
+        .AutoFormatAsYouTypeApplyBorders = False
+        ' Tables
+        .AutoFormatAsYouTypeApplyTables = False
+        ' Built-in Heading styles
+        .AutoFormatAsYouTypeApplyHeadings = False
+    End With
+    
+    MsgBox _
+        Prompt:="File -> Options -> Proofing -> AutoCorrect Options -> AutoFormat As You Type:" & vbNewLine & vbNewLine & _
+            "Straight quotes with smart quotes (AutoFormatAsYouTypeReplaceQuotes): " & Application.Options.AutoFormatAsYouTypeReplaceQuotes & vbNewLine & vbNewLine & _
+            "Fractions (1/2) with fraction character (AutoFormatAsYouTypeReplaceFractions): " & Application.Options.AutoFormatAsYouTypeReplaceFractions & vbNewLine & vbNewLine & _
+            "Ordinals (1st) with superscript (AutoFormatAsYouTypeReplaceOrdinals): " & Application.Options.AutoFormatAsYouTypeReplaceOrdinals & vbNewLine & vbNewLine & _
+            "Hyphens (--) with dash (AutoFormatAsYouTypeReplaceSymbols): " & Application.Options.AutoFormatAsYouTypeReplaceSymbols & vbNewLine & vbNewLine & _
+            "Automatic bulleted lists (AutoFormatAsYouTypeApplyBulletedLists): " & Application.Options.AutoFormatAsYouTypeApplyBulletedLists & vbNewLine & vbNewLine & _
+            "Automatic numbered lists (AutoFormatAsYouTypeApplyNumberedLists): " & Application.Options.AutoFormatAsYouTypeApplyNumberedLists & vbNewLine & vbNewLine & _
+            "Border lines (AutoFormatAsYouTypeApplyBorders): " & Application.Options.AutoFormatAsYouTypeApplyBorders & vbNewLine & vbNewLine & _
+            "Tables (AutoFormatAsYouTypeApplyTables): " & Application.Options.AutoFormatAsYouTypeApplyTables & vbNewLine & vbNewLine & _
+            "Built-in Heading styles (AutoFormatAsYouTypeApplyHeadings): " & Application.Options.AutoFormatAsYouTypeApplyHeadings & vbNewLine & vbNewLine & _
+            "Finished processing.", _
+        Buttons:=vbInformation, _
+        Title:=MsgBoxTitle
+End Sub
+
+' AutoFormat is batch processing, not available directly from ribbon menu
+' 2025-04-02 by ms and AI
+' 2025-07-16 by ms
+Sub WordOptionsAutoFormatDisable()
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "WordOptionsAutoFormatDisable"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
+    With Application.Options
+        ' Built-in Heading styles
         .AutoFormatApplyHeadings = False
-        ' AutoCorrect -> AutoFormat -> Apply: List styles
+        ' List styles
         .AutoFormatApplyLists = False
-       ' AutoCorrect -> AutoFormat -> Apply: Automatic bulleted lists
+       ' Automatic bulleted lists
         .AutoFormatApplyBulletedLists = False
-        ' AutoCorrect -> AutoFormat -> Apply: Other paragraph styles
+        ' Other paragraph styles
         .AutoFormatApplyOtherParas = False
 
-         ' AutoCorrect -> AutoFormat -> Replace: "Straight quotes" with "smart quotes"
+         ' "Straight quotes" with "smart quotes"
         .AutoFormatReplaceQuotes = False
-        ' AutoCorrect -> AutoFormat -> Replace: Ordinals (1st) with superscript
+        ' Ordinals (1st) with superscript
         .AutoFormatReplaceOrdinals = False
-        ' AutoCorrect -> AutoFormat -> Replace: Fractions (1/2) with fraction character
+        ' Fractions (1/2) with fraction character
         .AutoFormatReplaceFractions = False
-        ' AutoCorrect -> AutoFormat -> Replace: Hyphens (--) with dash (—)
+        ' Hyphens (--) with dash (—)
         .AutoFormatReplaceFarEastDashes = False
-        
-        ' AutoCorrect -> AutoFormat As You Type: "Straight quotes" with "smart quotes"
-        .AutoFormatAsYouTypeReplaceQuotes = False
-        ' AutoCorrect -> AutoFormat As You Type: Fractions (1/2) with fraction characte
-        .AutoFormatAsYouTypeReplaceFractions = False
-        ' AutoCorrect -> AutoFormat As You Type: Ordinals (1st) with superscript
-        .AutoFormatAsYouTypeReplaceOrdinals = False
-        ' AutoCorrect -> AutoFormat As You Type: Hyphens (--) with dash (—)
-        .AutoFormatAsYouTypeReplaceSymbols = False
     End With
     
     MsgBox _
         Prompt:="File -> Options -> Proofing -> AutoCorrect Options -> AutoFormat:" & vbNewLine & vbNewLine & _
-            "AutoFormatApplyHeadings = False" & vbNewLine & _
-            ".AutoFormatApplyLists = False" & vbNewLine & _
-            ".AutoFormatApplyBulletedLists = False" & vbNewLine & _
-            ".AutoFormatApplyOtherParas = False" & vbNewLine & _
-            ".AutoFormatReplaceQuotes = False" & vbNewLine & _
-            ".AutoFormatReplaceOrdinals = False" & vbNewLine & _
-            ".AutoFormatReplaceFractions = False" & vbNewLine & _
-            ".AutoFormatReplaceFarEastDashes = False" & vbNewLine & vbNewLine & _
-            "File -> Options -> Proofing -> AutoCorrect Options -> AutoFormat As You Type:" & vbNewLine & vbNewLine & _
-            ".AutoFormatAsYouTypeReplaceQuotes = False" & _
-            ".AutoFormatAsYouTypeReplaceFractions = False" & vbNewLine & _
-            ".AutoFormatAsYouTypeReplaceOrdinals = False" & vbNewLine & _
-            ".AutoFormatAsYouTypeReplaceSymbols = False" & vbNewLine & vbNewLine & _
+            "Built-in Heading styles (AutoFormatApplyHeadings): " & Application.Options.AutoFormatApplyHeadings & vbNewLine & vbNewLine & _
+            "List styles (AutoFormatApplyLists): " & Application.Options.AutoFormatApplyLists & vbNewLine & vbNewLine & _
+            "Automatic bulleted lists (AutoFormatApplyBulletedLists): " & Application.Options.AutoFormatApplyBulletedLists & vbNewLine & vbNewLine & _
+            "Other paragraph styles (AutoFormatApplyOtherParas): " & Application.Options.AutoFormatApplyOtherParas & vbNewLine & vbNewLine & _
+            "Straight quotes with smart quotes (AutoFormatReplaceQuotes): " & Application.Options.AutoFormatReplaceQuotes & vbNewLine & vbNewLine & _
+            "Ordinals (1st) with superscript (AutoFormatReplaceOrdinals): " & Application.Options.AutoFormatReplaceOrdinals & vbNewLine & vbNewLine & _
+            "Fractions (1/2) with fraction character (AutoFormatReplaceFractions): " & Application.Options.AutoFormatReplaceFractions & vbNewLine & vbNewLine & _
+            "Hyphens (--) with dash (AutoFormatReplaceFarEastDashes): " & Application.Options.AutoFormatReplaceFarEastDashes & vbNewLine & vbNewLine & _
             "Finished processing.", _
         Buttons:=vbInformation, _
         Title:=MsgBoxTitle
 End Sub
 
-Sub WordOptionsToggleAutoCorrect()
+' 2025-07-16 by ms
+Sub WordOptionsAutoFormatEnable()
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Tools
-    Dim MacroName As String:    MacroName = "WordOptionsToggleAutoCorrect"
+    Dim MacroName As String:    MacroName = "WordOptionsAutoFormatEnable"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     With Application.Options
-        ' AutoCorrect -> AutoFormat -> Apply: Built-in Heading styles
-        .AutoFormatApplyHeadings = Not .AutoFormatApplyHeadings
-        ' AutoCorrect -> AutoFormat -> Apply: List styles
-        .AutoFormatApplyLists = Not .AutoFormatApplyLists
-        ' AutoCorrect -> AutoFormat -> Apply: Automatic bulleted lists
-        .AutoFormatApplyBulletedLists = Not .AutoFormatApplyBulletedLists
-        ' AutoCorrect -> AutoFormat -> Apply: Other paragraph styles
-        .AutoFormatApplyOtherParas = Not .AutoFormatApplyOtherParas
+        ' Built-in Heading styles
+        .AutoFormatApplyHeadings = True
+        ' List styles
+        .AutoFormatApplyLists = True
+       ' Automatic bulleted lists
+        .AutoFormatApplyBulletedLists = True
+        ' Other paragraph styles
+        .AutoFormatApplyOtherParas = True
 
-        ' AutoCorrect -> AutoFormat -> Replace: "Straight quotes" with "smart quotes"
-        .AutoFormatReplaceQuotes = Not .AutoFormatReplaceQuotes
-        ' AutoCorrect -> AutoFormat -> Replace: Ordinals (1st) with superscript
-        .AutoFormatReplaceOrdinals = Not .AutoFormatReplaceOrdinals
-        ' AutoCorrect -> AutoFormat -> Replace: Fractions (1/2) with fraction character
-        .AutoFormatReplaceFractions = Not .AutoFormatReplaceFractions
-        ' AutoCorrect -> AutoFormat -> Replace: Hyphens (--) with dash (—)
-        .AutoFormatReplaceFarEastDashes = Not .AutoFormatReplaceFarEastDashes
-        
-        ' AutoCorrect -> AutoFormat As You Type: "Straight quotes" with "smart quotes"
-        .AutoFormatAsYouTypeReplaceQuotes = Not .AutoFormatAsYouTypeReplaceQuotes
-        ' AutoCorrect -> AutoFormat As You Type: Fractions (1/2) with fraction characte
-        .AutoFormatAsYouTypeReplaceFractions = Not .AutoFormatAsYouTypeReplaceFractions
-        ' AutoCorrect -> AutoFormat As You Type: Ordinals (1st) with superscript
-        .AutoFormatAsYouTypeReplaceOrdinals = Not .AutoFormatAsYouTypeReplaceOrdinals
-        ' AutoCorrect -> AutoFormat As You Type: Hyphens (--) with dash (—)
-        .AutoFormatAsYouTypeReplaceSymbols = Not .AutoFormatAsYouTypeReplaceSymbols
+         ' "Straight quotes" with "smart quotes"
+        .AutoFormatReplaceQuotes = True
+        ' Ordinals (1st) with superscript
+        .AutoFormatReplaceOrdinals = True
+        ' Fractions (1/2) with fraction character
+        .AutoFormatReplaceFractions = True
+        ' Hyphens (--) with dash (—)
+        .AutoFormatReplaceFarEastDashes = True
     End With
     
     MsgBox _
-        Prompt:="Finished processing.", _
+        Prompt:="File -> Options -> Proofing -> AutoCorrect Options -> AutoFormat:" & vbNewLine & vbNewLine & _
+            "Built-in Heading styles (AutoFormatApplyHeadings): " & Application.Options.AutoFormatApplyHeadings & vbNewLine & vbNewLine & _
+            "List styles (AutoFormatApplyLists): " & Application.Options.AutoFormatApplyLists & vbNewLine & vbNewLine & _
+            "Automatic bulleted lists (AutoFormatApplyBulletedLists): " & Application.Options.AutoFormatApplyBulletedLists & vbNewLine & vbNewLine & _
+            "Other paragraph styles (AutoFormatApplyOtherParas): " & Application.Options.AutoFormatApplyOtherParas & vbNewLine & vbNewLine & _
+            "Straight quotes with smart quotes (AutoFormatReplaceQuotes): " & Application.Options.AutoFormatReplaceQuotes & vbNewLine & vbNewLine & _
+            "Ordinals (1st) with superscript (AutoFormatReplaceOrdinals): " & Application.Options.AutoFormatReplaceOrdinals & vbNewLine & vbNewLine & _
+            "Fractions (1/2) with fraction character (AutoFormatReplaceFractions): " & Application.Options.AutoFormatReplaceFractions & vbNewLine & vbNewLine & _
+            "Hyphens (--) with dash (AutoFormatReplaceFarEastDashes): " & Application.Options.AutoFormatReplaceFarEastDashes & vbNewLine & vbNewLine & _
+            "Finished processing.", _
         Buttons:=vbInformation, _
         Title:=MsgBoxTitle
 End Sub
+
+' Combo function, enable
+' 2026-03-06 by ms
+Sub WordOptionsAutoCorrectAllEnable()
+    Call Macros_ms.Tools.WordOptionsAutoFormatEnable
+    Call Macros_ms.Tools.WordOptionsAutoFormatAsYouTypeEnable
+    Call Macros_ms.Tools.WordOptionsAutoCorrectEnable
+End Sub
+
+' Combo function, disable
+' 2026-03-06 by ms
+Sub WordOptionsAutoCorrectAllDisable()
+    Call Macros_ms.Tools.WordOptionsAutoFormatDisable
+    Call Macros_ms.Tools.WordOptionsAutoFormatAsYouTypeDisable
+    Call Macros_ms.Tools.WordOptionsAutoCorrectDisable
+End Sub
+
 
 ' 2025-04-06 by ms and AI
 ' 2026-03-03 by ms and AI

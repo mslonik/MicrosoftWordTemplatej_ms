@@ -76,8 +76,10 @@ End Sub
 ' 2026-03-04 by ms
 Sub BttnDocument(control As IRibbonControl)
     Select Case control.ID
-        Case "Btn_Hyphenation"
+        Case "Btn_SetHyphenation"
             Call Macros_ms.Tools.SetHyphenation
+        Case "Btn_ResetHyphenation"
+            Call Macros_ms.Tools.ResetHyphenation
         Case "Btn_LangEngilshUS"
             Call Macros_ms.Tools.SetLanguageToEnglishUS
         Case "Btn_BckgrColor"
@@ -156,18 +158,22 @@ End Sub
 ' 2026-03-04 by ms
 Sub BttnWO(control As IRibbonControl)
     Select Case control.ID
-        Case "Btn_WO_Customize"
-            Call Macros_ms.Tools.WordOptionsCustomize
-        Case "Btn_WO_Restore"
-            Call Macros_ms.Tools.WordOptionsRestore
-        Case "Btn_WO_DisAutoFormat"
-            Call Macros_ms.Tools.WordOptionsDisableAutoFormat
-        Case "Btn_WO_ResAutoFormat"
-            Call Macros_ms.Tools.WordOptionsRestoreAutoFormat
+        Case "Btn_WO_DisAll"
+            Call Macros_ms.Tools.WordOptionsAutoCorrectAllDisable
+        Case "Btn_WO_EnAll"
+            Call Macros_ms.Tools.WordOptionsAutoCorrectAllEnable
+        Case "Btn_WO_DisAutoFormatAsYouType"
+            Call Macros_ms.Tools.WordOptionsAutoFormatAsYouTypeDisable
+        Case "Btn_WO_EnDisAutoFormatAsYouType"
+            Call Macros_ms.Tools.WordOptionsAutoFormatAsYouTypeEnable
         Case "Btn_WO_DisAutoCorrect"
-            Call Macros_ms.Tools.WordOptionsDisableAutoCorrect
-        Case "Btn_WO_ToggAutoCorrect"
-            Call Macros_ms.Tools.WordOptionsToggleAutoCorrect
+            Call Macros_ms.Tools.WordOptionsAutoCorrectDisable
+        Case "Btn_WO_EnAutoCorrect"
+            Call Macros_ms.Tools.WordOptionsAutoCorrectEnable
+        Case "Btn_WO_DisAutoFormat"
+            Call Macros_ms.Tools.WordOptionsAutoFormatDisable
+        Case "Btn_WO_EnAutoFormat"
+            Call Macros_ms.Tools.WordOptionsAutoFormatEnable
     End Select
 End Sub
 
