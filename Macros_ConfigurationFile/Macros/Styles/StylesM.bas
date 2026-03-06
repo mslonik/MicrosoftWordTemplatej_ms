@@ -32,13 +32,9 @@ Attribute VB_Name = "StylesM"
 '
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '
-'   16. InsertTextAtBeginningOfListParagraphs() -> RemoveTextFromBeginningOfListParagraphs()
-'   18. ToggleCharBoldStyle()
-'   19. ToggleCharItalicStyle()
-'   20. ToggleCharUnderlineStyle()
-'   21. ToggleCharCrossoutStyle()
-'   22. ToggleCharHiddenStyle()
-'   23. ToggleCharSourceCode()
+'   19. InsertTextAtBeginningOfListParagraphs() -> RemoveTextFromBeginningOfListParagraphs()
+'   20. ToggleCharHiddenStyle()
+'   21. ToggleCharSourceCode()
 '
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '
@@ -1085,53 +1081,6 @@ Sub RemoveTextFromBeginningOfListParagraphs(textToRemove As String)
     Next para
 End Sub
 
-' 2025-03-20 by ms and AI
-' 2025-08-07 by ms
-' 2026-01-15 by ms
-Sub ToggleCharBoldStyle()
-    Dim CurrentStyle As String
-    
-    ' Surprisingly this is enough to proceed further. If user selects few paragraphs with different styling, then Selectio.style.NameLocal is empty.
-    On Error Resume Next
-        CurrentStyle = Selection.style.NameLocal
-    On Error GoTo 0
-    
-    Dim FileName As String:     FileName = C_F_Macros
-    Dim ModuleName As String:   ModuleName = C_M_Styles
-    Dim MacroName As String:    MacroName = "ToggleCharBoldStyle"
-    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
-    ' Check if the styles exist
-    If Not StyleExists(C_S_Bold) Or Not StyleExists(C_S_CharDefault) Then
-        MsgBox _
-            Prompt:="One or both of the required styles do not exist in this document:" & vbNewLine & vbNewLine & _
-                C_S_Bold & " or " & C_S_CharDefault, _
-            Buttons:=vbExclamation, _
-            Title:=MsgBoxTitle
-        Exit Sub
-    End If
-    
-    Dim rng As Word.Range
-    Set rng = Selection.Range
-    
-    ' Toggle styles
-    If rng.font.Bold = False Then
-        ' TURN ON: Apply the specific Character Style
-        rng.style = ActiveDocument.Styles(C_S_Bold)
-        Application.statusBar = MsgBoxTitle & " > Applied: " & C_S_Bold
-    Else
-        ' TURN OFF: Clear back to Default Paragraph Font
-        ' Note: Using wdStyleDefaultParagraphFont is safer than a custom string
-        rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
-        ' IMPORTANT: Remove direct italic formatting in case it was applied manually
-        rng.font.Bold = False
-        Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
-    End If
-    
-    Set rng = Nothing
-    
-End Sub
-
 ' 2025-08-05 by ms and ai
 Function StyleExists(styleName As String) As Boolean
     On Error Resume Next
@@ -1139,137 +1088,7 @@ Function StyleExists(styleName As String) As Boolean
     On Error GoTo 0
 End Function
 
-' 2025-03-20 by ms and AI
-' 2025-08-06 by ms
-' 2026-01-14 by ms
-Sub ToggleCharItalicStyle()
-    Dim CurrentStyle As String
-    
-    ' Surprisingly this is enough to proceed further. If user selects few paragraphs with different styling, then Selectio.style.NameLocal is empty.
-    On Error Resume Next
-        CurrentStyle = Selection.style.NameLocal
-    On Error GoTo 0
-    
-    Dim FileName As String:      FileName = C_F_Macros
-    Dim ModuleName As String:    ModuleName = C_M_Styles
-    Dim MacroName As String:     MacroName = "ToggleCharItalicStyle"
-    Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
-    ' Check if the styles exist
-    If Not StyleExists(C_S_Italic) Or Not StyleExists(C_S_CharDefault) Then
-        MsgBox _
-            Prompt:="One or both of the required styles do not exist in this document:" & vbNewLine & vbNewLine & _
-                C_S_Italic & " or " & C_S_CharDefault, _
-            Buttons:=vbExclamation, _
-            Title:=MsgBoxTitle
-        Exit Sub
-    End If
-    
-    Dim rng As Word.Range
-    Set rng = Selection.Range
-    
-    ' Toggle styles
-    If rng.font.Italic = False Then
-        ' TURN ON: Apply the specific Character Style
-        rng.style = ActiveDocument.Styles(C_S_Italic)
-        Application.statusBar = MsgBoxTitle & " > Applied: " & C_S_Italic
-    Else
-        ' TURN OFF: Clear back to Default Paragraph Font
-        ' Note: Using wdStyleDefaultParagraphFont is safer than a custom string
-        rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
-        ' IMPORTANT: Remove direct italic formatting in case it was applied manually
-        rng.font.Italic = False
-        Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
-    End If
-    
-    Set rng = Nothing
-End Sub
-
-' 2025-03-20 by ms and AI
-' 2025-08-06 by ms
-' 2026-01-14 by ms and AI
-Sub ToggleCharUnderlineStyle()
-    Dim FileName As String:       FileName = C_F_Macros
-    Dim ModuleName As String:     ModuleName = C_M_Styles
-    Dim MacroName As String:      MacroName = "ToggleCharUnderlineStyle"
-    Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
-    ' Check if the styles exist
-    If Not StyleExists(C_S_Underline) Or Not StyleExists(C_S_CharDefault) Then
-        MsgBox _
-            Prompt:="One or both of the required styles do not exist in this document:" & vbNewLine & vbNewLine & _
-                C_S_Underline & " or " & C_S_CharDefault, _
-            Buttons:=vbExclamation, _
-            Title:=MsgBoxTitle
-        Exit Sub
-    End If
-    
-    Dim rng As Word.Range
-    Set rng = Selection.Range
-    
-    ' Toggle styles
-    Select Case rng.font.Underline
-        Case wdUnderlineNone, wdUndefined
-            ' turn on: apply the character style that only sets underline
-            rng.style = ActiveDocument.Styles(C_S_Underline)
-            Application.statusBar = MsgBoxTitle & " > " & C_S_Underline
-        Case Else
-            ' turn off: clear the character-style overlay back to "default char"
-            rng.style = ActiveDocument.Styles(C_S_CharDefault)
-            ' ensure direct underline is off (if user applied underline directly)
-            rng.font.Underline = wdUnderlineNone
-            Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
-    End Select
-    Set rng = Nothing
-End Sub
-
-' 2025-03-21 by ms
-' 2025-08-06 by ms
-' 2026-01-15 by ms
-Sub ToggleCharCrossoutStyle()
-    Dim CurrentStyle As String
-    
-    ' Surprisingly this is enough to proceed further. If user selects few paragraphs with different styling, then Selectio.style.NameLocal is empty.
-    On Error Resume Next
-        CurrentStyle = Selection.style.NameLocal
-    On Error GoTo 0
-    
-    Dim FileName As String:     FileName = C_F_Macros
-    Dim ModuleName As String:   ModuleName = C_M_Styles
-    Dim MacroName As String:    MacroName = "ToggleCharCrossoutStyle"
-    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
-    ' Check if the styles exist
-    If Not StyleExists(C_S_CharCrossout) Or Not StyleExists(C_S_CharDefault) Then
-        MsgBox _
-            Prompt:="One or both of the required styles do not exist in this document:" & vbNewLine & vbNewLine & _
-                C_S_CharCrossout & " or " & C_S_CharDefault, _
-            Buttons:=vbExclamation, _
-            Title:=MsgBoxTitle
-        Exit Sub
-    End If
-    
-    Dim rng As Word.Range
-    Set rng = Selection.Range
-    
-    ' Toggle styles
-    If rng.font.Strikethrough = False Then
-        ' TURN ON: Apply the specific Character Style
-        rng.style = ActiveDocument.Styles(C_S_CharCrossout)
-        Application.statusBar = MsgBoxTitle & " > Applied: " & C_S_CharCrossout
-    Else
-        ' TURN OFF: Clear back to Default Paragraph Font
-        ' Note: Using wdStyleDefaultParagraphFont is safer than a custom string
-        rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
-        ' IMPORTANT: Remove direct italic formatting in case it was applied manually
-        rng.font.Strikethrough = False
-        Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
-    End If
-    
-    Set rng = Nothing
-End Sub
-
-' Trick is, only extra Sub enableschange of the background shading. The VBA for character styles does not.
+' Trick is, only extra Sub enables change of the background shading. The VBA for character styles does not support this feature.
 ' 2025-03-21 by ms
 ' 2025-08-06 by ms
 ' 2026-01-15 by ms
@@ -1304,14 +1123,14 @@ Sub ToggleCharHiddenStyle()
         ' TURN ON: Apply the specific Character Style
         rng.style = ActiveDocument.Styles(C_S_CharHidden)
         Selection.Range.shading.BackgroundPatternColor = RGB(246, 192, 192)
-        Application.statusBar = MsgBoxTitle & " > Applied: " & C_S_CharHidden
+        Application.StatusBar = MsgBoxTitle & " > Applied: " & C_S_CharHidden
     Else
         ' TURN OFF: Clear back to Default Paragraph Font
         ' Note: Using wdStyleDefaultParagraphFont is safer than a custom string
         rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
         ' IMPORTANT: Remove direct italic formatting in case it was applied manually
         rng.font.Hidden = False
-        Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
+        Application.StatusBar = MsgBoxTitle & " > Reset to default paragraph style font"
     End If
     
     Set rng = Nothing
@@ -1351,13 +1170,13 @@ Sub ToggleCharSourceCode()
     If rng.style <> C_S_CharSourceCode Then
         ' TURN ON: Apply the specific Character Style
         rng.style = ActiveDocument.Styles(C_S_CharSourceCode)
-        Application.statusBar = MsgBoxTitle & " > Applied: " & C_S_CharSourceCode
+        Application.StatusBar = MsgBoxTitle & " > Applied: " & C_S_CharSourceCode
     Else
         ' TURN OFF: Clear back to Default Paragraph Font
         ' Note: Using wdStyleDefaultParagraphFont is safer than a custom string
         rng.style = ActiveDocument.Styles(wdStyleDefaultParagraphFont)
         ' IMPORTANT: Remove direct italic formatting in case it was applied manually
-        Application.statusBar = MsgBoxTitle & " > Reset to default paragraph style font"
+        Application.StatusBar = MsgBoxTitle & " > Reset to default paragraph style font"
     End If
     
     Set rng = Nothing
@@ -1826,7 +1645,6 @@ Sub CreateCustomStyles()
             Title:=MsgBoxTitle
         Exit Sub
     Else
-        ActiveDocument.Variables(C_S_Bold).Value = True
         CharCounter = CharCounter + 1
     End If
     
@@ -1838,7 +1656,6 @@ Sub CreateCustomStyles()
             Title:=MsgBoxTitle
         Exit Sub
     Else
-        ActiveDocument.Variables(C_S_CharCrossout).Value = True
         CharCounter = CharCounter + 1
     End If
     
@@ -1861,7 +1678,6 @@ Sub CreateCustomStyles()
             Title:=MsgBoxTitle
         Exit Sub
     Else
-        ActiveDocument.Variables(C_S_CharHidden).Value = True
         CharCounter = CharCounter + 1
     End If
     
@@ -1874,7 +1690,6 @@ Sub CreateCustomStyles()
         
         Exit Sub
     Else
-        ActiveDocument.Variables(C_S_Italic).Value = False
         CharCounter = CharCounter + 1
     End If
         
@@ -1909,7 +1724,6 @@ Sub CreateCustomStyles()
             Title:=MsgBoxTitle
         Exit Sub
     Else
-        ActiveDocument.Variables(C_S_Underline).Value = True
         CharCounter = CharCounter + 1
     End If
         

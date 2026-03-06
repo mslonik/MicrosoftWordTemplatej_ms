@@ -1664,10 +1664,9 @@ End Sub
 
 ' 2025-03-20 by ms
 Private Sub SetShortcut_ToggleCharBoldStyle(ByVal IfMsgBox As String)
-    ActiveDocument.Variables(C_S_Bold).Value = False
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_CtrlB, _
-        WhichMacro:="Macros_ms.StylesM.ToggleCharBoldStyle", _
+        WhichMacro:="Macros_ms.Tools.Bold", _
         IfMsgBox:=IfMsgBox)
 End Sub
 
@@ -1675,15 +1674,13 @@ End Sub
 ' 2025-03-20 by ms
 Private Sub ResetShortcut_ToggleCharBoldStyle()
     Call Macros_ms.Shortcuts.DeleteKeyBinding(KeybShortcut:=C_SC_CtrlB)
-    ActiveDocument.Variables(C_S_Bold).Value = False
 End Sub
 
 ' 2025-03-20 by ms
 Private Sub SetShortcut_ToggleCharItalicStyle(ByVal IfMsgBox As String)
-    ActiveDocument.Variables(C_S_Italic).Value = False
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_CtrlI, _
-        WhichMacro:="Macros_ms.StylesM.ToggleCharItalicStyle", _
+        WhichMacro:="Macros_ms.Tools.Italic", _
         IfMsgBox:=IfMsgBox)
 End Sub
 
@@ -1691,15 +1688,13 @@ End Sub
 ' 2025-03-20 by ms
 Private Sub ResetShortcut_ToggleCharItalicStyle()
     Call Macros_ms.Shortcuts.DeleteKeyBinding(KeybShortcut:=C_SC_CtrlI)
-    ActiveDocument.Variables(C_S_Italic).Value = False
 End Sub
 
 ' 2025-03-20 by ms
 Private Sub SetShortcut_ToggleCharUnderlineStyle(ByVal IfMsgBox As String)
-    ActiveDocument.Variables(C_S_Underline).Value = False
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_CtrlU, _
-        WhichMacro:="Macros_ms.StylesM.ToggleCharUnderlineStyle", _
+        WhichMacro:="Macros_ms.Tools.Underline", _
         IfMsgBox:=IfMsgBox)
 End Sub
 
@@ -1707,17 +1702,15 @@ End Sub
 ' 2025-03-20 by ms
 Private Sub ResetShortcut_ToggleCharUnderlineStyle()
     Call Macros_ms.Shortcuts.DeleteKeyBinding(KeybShortcut:=C_SC_CtrlU)
-    ActiveDocument.Variables(C_S_Underline).Value = False
 End Sub
 
 ' 2025-03-21 by ms
 ' It is strange and not yet clarified. This function always returns run-time error '5346': Word cannot change the function of the specified key.
 ' But when shortcut is set manually to the macro "ToggleCharCrossoutStyle", it works. So this is unclear why this error is set.
 Private Sub SetShortcut_ToggleCharCrossoutStyle(ByVal IfMsgBox As String)
-    ActiveDocument.Variables(C_S_CharCrossout).Value = False
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_ShiftCtrlX, _
-        WhichMacro:="Macros_ms.StylesM.ToggleCharCrossoutStyle", _
+        WhichMacro:="Macros_ms.Tools.Strikethrough", _
         IfMsgBox:=IfMsgBox)
 End Sub
 
@@ -1725,12 +1718,10 @@ End Sub
 Private Sub ResetShortcut_ToggleCharCrossoutStyle()
     Call Macros_ms.Shortcuts.DeleteKeyBinding(KeybShortcut:=C_SC_ShiftCtrlX)
     Call Macros_ms.Shortcuts.SetKeyBindingStyle(KeybShortcut:=C_SC_ShiftCtrlX, WhichStyle:=C_S_CharCrossout)
-    ActiveDocument.Variables(C_S_CharCrossout).Value = False
 End Sub
 
 ' 2025-03-21 by ms
 Private Sub SetShortcut_ToggleCharHiddenStyle(ByVal IfMsgBox As String)
-    ActiveDocument.Variables(C_S_CharHidden).Value = False
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_ShiftCtrlH, _
         WhichMacro:="Macros_ms.StylesM.ToggleCharHiddenStyle", _
@@ -1742,7 +1733,6 @@ End Sub
 Private Sub ResetShortcut_ToggleCharHiddenStyle()
     Call Macros_ms.Shortcuts.DeleteKeyBinding(KeybShortcut:=C_SC_ShiftCtrlH)
     Call Macros_ms.Shortcuts.SetKeyBindingStyle(KeybShortcut:=C_SC_ShiftCtrlH, WhichStyle:=C_S_CharHidden)
-    ActiveDocument.Variables(C_S_CharHidden).Value = False
 End Sub
 
 Private Sub SetShortcut_ToggleSpecificFormatting(ByVal IfMsgBox As String)
@@ -1770,7 +1760,6 @@ End Sub
 ' Original Microsoft Word command: SmallCaps
 Private Sub ResetShortcut_ToggleCharSourceCode()
     Call Macros_ms.Shortcuts.DeleteKeyBinding(KeybShortcut:=C_SC_ShiftCtrlK)
-    ActiveDocument.Variables(C_S_CharHidden).Value = False
 End Sub
 
 ' 2025-04-14 by ms

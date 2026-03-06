@@ -2044,143 +2044,139 @@ Sub ResetHyphenation()
         Title:=MsgBoxTitle
 End Sub
 
+' Callback of original Bold Microsoft Word function.
 ' 2025-03-27 by ms and AI
-' Applies the style "CharBold ms" to the selected content if not already applied
+' 2026-03-06 by ms
 Sub Bold()
-    Dim CharBoldExists As Boolean
-    Dim var As Variable
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "Bold"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    CharBoldExists = False
+    Dim StyleExists As Boolean
+    
+    ' 1. Check if the custom Bold style exists in the document
     On Error Resume Next
-    ' Check if the document variable "CharBold_ms" exists
-    For Each var In ActiveDocument.Variables
-        If var.Name = C_S_Bold Then
-            CharBoldExists = True
-            Exit For
-        End If
-    Next var
+    StyleExists = Not ActiveDocument.Styles(C_S_Bold) Is Nothing
+    On Error GoTo 0
     
-    ' If the document variable doesn't exist or is set to False, run the "Bold" command
-    If Not CharBoldExists Or ActiveDocument.Variables(C_S_Bold).Value = False Then
+    ' 2. If the style DOES NOT exist, use the native Word Bold toggle
+    If Not StyleExists Then
         Selection.font.Bold = wdToggle
+        Application.StatusBar = MsgBoxTitle & " > Native Bold Toggled (Style Missing)"
         Exit Sub
     End If
     
-    ' If the document variable exists and is set to True, proceed with applying styles
-    On Error GoTo 0
-    If ActiveDocument.Variables(C_S_Bold).Value = True Then
-        If Selection.Type <> wdNoSelection Then
-            If Selection.style = C_S_Bold Then
-                Selection.style = C_S_CharDefault
-            Else
-                Selection.style = C_S_Bold
-            End If
-        End If
+    ' 3. If the style DOES exist, proceed with your custom logic
+    ' Note: We can simplify your code since the logic for IP and Selection is the same
+    If Selection.style = C_S_Bold Then
+        Selection.style = C_S_CharDefault
+        Application.StatusBar = MsgBoxTitle & " > off"
+    Else
+        Selection.style = C_S_Bold
+        Application.StatusBar = MsgBoxTitle & " > on"
     End If
 End Sub
 
+' Callback of original Bold Microsoft Word function.
 ' 2025-03-27 by ms and AI
+' 2026-03-06 by ms
 Sub Underline()
-    Dim CharUnderlineExists As Boolean
-    Dim var As Variable
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "Underline"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
+    Dim StyleExists As Boolean
+    
+    ' 1. Check if the custom Bold style exists in the document
     On Error Resume Next
-    ' Check if the document variable "CharUnderline_ms" exists
-    CharUnderlineExists = False
-    For Each var In ActiveDocument.Variables
-        If var.Name = C_S_Underline Then
-            CharUnderlineExists = True
-            Exit For
-        End If
-    Next var
+    StyleExists = Not ActiveDocument.Styles(C_S_Underline) Is Nothing
+    On Error GoTo 0
     
-    ' If the document variable doesn't exist or is set to False, run the "Underline" command
-    If Not CharUnderlineExists Or ActiveDocument.Variables(C_S_Underline).Value = False Then
+    ' 2. If the style DOES NOT exist, use the native Word Bold toggle
+    If Not StyleExists Then
         Selection.font.Underline = wdToggle
+        Application.StatusBar = MsgBoxTitle & " > Native Underline Toggled (Style Missing)"
         Exit Sub
     End If
     
-    ' If the document variable exists and is set to True, proceed with applying styles
-    On Error GoTo 0
-    If ActiveDocument.Variables(C_S_Underline).Value = True Then
-        If Selection.Type <> wdNoSelection Then
-            If Selection.style = C_S_Underline Then
-                Selection.style = C_S_CharDefault
-            Else
-                Selection.style = C_S_Underline
-            End If
-        End If
+    ' 3. If the style DOES exist, proceed with your custom logic
+    ' Note: We can simplify your code since the logic for IP and Selection is the same
+    If Selection.style = C_S_Underline Then
+        Selection.style = C_S_CharDefault
+        Application.StatusBar = MsgBoxTitle & " > off"
+    Else
+        Selection.style = C_S_Underline
+        Application.StatusBar = MsgBoxTitle & " > on"
     End If
 End Sub
 
+' Callback of original Italic Microsoft Word function.
 ' 2025-03-27 by ms and AI
+' 2026-03-06 by ms
 Sub Italic()
-    Dim CharItalicExists As Boolean
-    Dim var As Variable
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "Italic"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
+    Dim StyleExists As Boolean
+    
+    ' 1. Check if the custom Bold style exists in the document
     On Error Resume Next
-    ' Check if the document variable "CharUnderline_ms" exists
-    CharItalicExists = False
-    For Each var In ActiveDocument.Variables
-        If var.Name = C_S_Italic Then
-            CharItalicExists = True
-            Exit For
-        End If
-    Next var
+    StyleExists = Not ActiveDocument.Styles(C_S_Italic) Is Nothing
+    On Error GoTo 0
     
-    ' If the document variable doesn't exist or is set to False, run the "Underline" command
-    If Not CharItalicExists Or ActiveDocument.Variables(C_S_Italic).Value = False Then
+    ' 2. If the style DOES NOT exist, use the native Word Bold toggle
+    If Not StyleExists Then
         Selection.font.Italic = wdToggle
+        Application.StatusBar = MsgBoxTitle & " > Native Italic Toggled (Style Missing)"
         Exit Sub
     End If
     
-    ' If the document variable exists and is set to True, proceed with applying styles
-    On Error GoTo 0
-    If ActiveDocument.Variables(C_S_Italic).Value = True Then
-        If Selection.Type <> wdNoSelection Then
-            If Selection.style = C_S_Italic Then
-                Selection.style = C_S_CharDefault
-            Else
-                Selection.style = C_S_Italic
-            End If
-        End If
+    ' 3. If the style DOES exist, proceed with your custom logic
+    ' Note: We can simplify your code since the logic for IP and Selection is the same
+    If Selection.style = C_S_Italic Then
+        Selection.style = C_S_CharDefault
+        Application.StatusBar = MsgBoxTitle & " > off"
+    Else
+        Selection.style = C_S_Italic
+        Application.StatusBar = MsgBoxTitle & " > on"
     End If
 End Sub
 
-' Check if the document variable "CharStrikethrough_ms" exists
-' If the document variable doesn't exist or is set to False, run the "Strikethrough" command
-' If the document variable exists and is set to True, proceed with applying styles
+' Callback of original Strikethrough Microsoft Word function.
 ' 2025-03-27 by ms and AI
+' 2026-03-06 by ms
 Sub Strikethrough()
-    Dim CharStrikethrough As Boolean
-    Dim var As Variable
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "Strikethrough"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
+    Dim StyleExists As Boolean
+    
+    ' 1. Check if the custom Bold style exists in the document
     On Error Resume Next
-    ' Check if the document variable "CharStrikethrough_ms" exists
-    CharStrikethrough = False
-    For Each var In ActiveDocument.Variables
-        If var.Name = C_S_CharCrossout Then
-            CharStrikethrough = True
-            Exit For
-        End If
-    Next var
+    StyleExists = Not ActiveDocument.Styles(C_S_CharCrossout) Is Nothing
+    On Error GoTo 0
     
-    ' If the document variable doesn't exist or is set to False, run the "Strikethrough" command
-    If Not CharStrikethrough Or ActiveDocument.Variables(C_S_CharCrossout).Value = False Then
+    ' 2. If the style DOES NOT exist, use the native Word Bold toggle
+    If Not StyleExists Then
         Selection.font.Strikethrough = wdToggle
+        Application.StatusBar = MsgBoxTitle & " > Native Strikethrough Toggled (Style Missing)"
         Exit Sub
     End If
     
-    ' If the document variable exists and is set to True, proceed with applying styles
-    On Error GoTo 0
-    If ActiveDocument.Variables(C_S_CharCrossout).Value = True Then
-        If Selection.Type <> wdNoSelection Then
-            If Selection.style = C_S_CharCrossout Then
-                Selection.style = C_S_CharDefault
-            Else
-                Selection.style = C_S_CharCrossout
-            End If
-        End If
+    ' 3. If the style DOES exist, proceed with your custom logic
+    ' Note: We can simplify your code since the logic for IP and Selection is the same
+    If Selection.style = C_S_CharCrossout Then
+        Selection.style = C_S_CharDefault
+        Application.StatusBar = MsgBoxTitle & " > off"
+    Else
+        Selection.style = C_S_CharCrossout
+        Application.StatusBar = MsgBoxTitle & " > on"
     End If
 End Sub
 
@@ -3046,11 +3042,11 @@ Sub ToggleApplyStyles()
     ToggleBit = Not ToggleBit
     If ToggleBit Then
         Application.Run "StyleApplyPane"
-        Application.statusBar = MsgBoxTitle & " > " & "on"
+        Application.StatusBar = MsgBoxTitle & " > " & "on"
     Else
         If CommandBars("Apply Styles").Enabled Then
             CommandBars("Apply Styles").Visible = False
-            Application.statusBar = MsgBoxTitle & " > " & "off"
+            Application.StatusBar = MsgBoxTitle & " > " & "off"
         End If
     End If
 End Sub
@@ -3598,7 +3594,7 @@ Sub InsertCrossRef()
     Dim MacroName As String:    MacroName = "InsertCrossRef"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
-    Application.statusBar = MsgBoxTitle & " > " & "is running..."
+    Application.StatusBar = MsgBoxTitle & " > " & "is running..."
 
     On Error GoTo ErrExit
     With Selection.Range
@@ -3799,7 +3795,7 @@ ErrExit:
     Set RngBefore = Nothing
     Set RngAfter = Nothing
     
-    Application.statusBar = False
+    Application.StatusBar = False
 End Sub
 
 ' 2025-08-02 by ms
@@ -3860,7 +3856,7 @@ Sub RestartListNumbering()
             ContinuePreviousList:=False, _
             ApplyTo:=wdListApplyToWholeList, _
             DefaultListBehavior:=wdWord10ListBehavior
-        Application.statusBar = MsgBoxTitle & " > " & "is running..."
+        Application.StatusBar = MsgBoxTitle & " > " & "is running..."
     Else
             MsgBox _
                 Prompt:="The current paragraph is not part of a numbered list.", _
@@ -4067,7 +4063,7 @@ Sub CustomizedPrinting()
     Dim MacroName As String:    MacroName = "CustomizedPrinting"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    Application.statusBar = MsgBoxTitle & " > " & "is running..."
+    Application.StatusBar = MsgBoxTitle & " > " & "is running..."
     
     If Not CheckPrintingOptionsDisplay() Then
         Beep
@@ -4161,7 +4157,7 @@ Sub CustomizedCopyFormat()
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Application.Run "CopyFormat"    ' call built-in Microsoft Word command
-    Application.statusBar = MsgBoxTitle & " > " & C_SC_ShiftCtrlC
+    Application.StatusBar = MsgBoxTitle & " > " & C_SC_ShiftCtrlC
 End Sub
 
 ' 2025-10-02 by ms
@@ -4172,7 +4168,7 @@ Sub CustomizedPasteFormat()
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Application.Run "PasteFormat"   ' call built-in Microsoft Word command
-    Application.statusBar = MsgBoxTitle & " > " & C_SC_ShiftCtrlV
+    Application.StatusBar = MsgBoxTitle & " > " & C_SC_ShiftCtrlV
 End Sub
 
 ' Counts all templates and shows full path of all templates.
