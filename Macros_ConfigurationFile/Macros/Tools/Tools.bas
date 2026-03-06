@@ -21,7 +21,7 @@ Attribute VB_Name = "Tools"
 '|    | AddBlankPages                 | Layout      | Blank Pages     | AddBlankPages                 |
 '|    | DeleteTempBlankPages          | Layout      | Blank Pages     | DeleteTempBlankPages          |
 '|    | SectionAddNewAndUnlinkHF      | Layout      | Section Tools   | SectionAddNewAndUnlinkHF      |
-'|    | SectionUnlinkAllHF       | Layout      | Section Tools   | SectionUnlinkAllHF       |
+'|    | SectionUnlinkAllHF            | Layout      | Section Tools   | SectionUnlinkAllHF            |
 '|    | SectionRelinkHF               | Layout      | Section Tools   | SectionRelinkHF               |
 '| 5  | SetHyphenation                | Tools_ms    | Document        | SetHyphenation                |
 '| 6  | SetLanguageToEnglishUS        | Tools_ms    | Document        | SetLanguageToEnglishUS        |
@@ -1031,105 +1031,99 @@ End Sub
 ' Sets the margins of all text boxes to 0
 ' The style of text boxes is hardcoded to C_S_TextBoxes
 ' 2025-02-11 by ms
+' 2026-03-06 by ms
 Sub CanvaFormatTextBoxes()
-    Dim MyShape As Shape
-    Dim canvasitem As Object
-    Dim groupitem As Object
-    Dim Pole As Field
-    Dim i As Integer
-    Dim j As Integer
-    
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Tools
-    Dim MacroName As String:    MacroName = "CanvaFormatTextBoxes"
+    Dim MacroName As String:    MacroName = "FormatSelectedCanvasItems"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    Call Macros_ms.Validation.CheckMicrosoftWordVersion(MacroName)
+    Dim targetCanvas As Shape
+    Dim canvasItem As Shape
+    Dim groupItem As Shape
     
-    ' When Application.ScreenUpdating is set to False, it turns off screen updating, which can significantly speed up the execution of a macro by preventing the screen from refreshing until the macro has finished running. This is particularly useful for macros that perform a lot of operations, as it reduces the time spent on rendering the screen.
+    ' 1. Check if a shape is selected at all
+    If Selection.ShapeRange.count = 0 Then
+        MsgBox _
+            Prompt:="Please select a Drawing Canvas or an object inside one.", _
+            Buttons:=vbExclamation, _
+            Title:=MsgBoxTitle
+        Exit Sub
+    End If
+    
+    ' 2. Determine if the selection is the Canvas or an item inside it
+    Set targetCanvas = GetParentCanvas(Selection.ShapeRange(1))
+    
+    ' 3. Validate result
+    If targetCanvas Is Nothing Then
+        MsgBox _
+            Prompt:="The selected object is not a Drawing Canvas, nor is it inside one.", _
+            Buttons:=vbExclamation, _
+            Title:=MsgBoxTitle
+        Exit Sub
+    End If
+    
+    ' 4. Process items within the Canvas
     Application.ScreenUpdating = False
-    Application.DisplayAlerts = wdAlertsNone
     
-    ' Saves last cursor position as a temporary bookmark
-    Call Macros_ms.Tools.AddLastCursorPositionBookmark
-    
-    i = ActiveDocument.Shapes.count
-    j = 0
-    CanvaFormatTextBoxes_Form.ProgressLabel = "Finished: " & j & " out of " & i
-    ' ShowModal must be set to False in the corresponding Form
-    CanvaFormatTextBoxes_Form.Show vbModeless
-
-    For Each MyShape In ActiveDocument.Shapes
-        If MyShape.Type = msoAutoShape Or MyShape.Type = msoTextBox Then
-               With MyShape.TextFrame
-                    .MarginBottom = 0
-                    .MarginLeft = 0
-                    .MarginRight = 0
-                    .MarginTop = 0
-                    .TextRange.Select
-               End With
-               Selection.style = C_S_TextBoxes
+    For Each canvasItem In targetCanvas.CanvasItems
+        If canvasItem.Type = msoGroup Then
+            For Each groupItem In canvasItem.GroupItems
+                ProcessCanvasShape groupItem
+            Next groupItem
+        Else
+            ProcessCanvasShape canvasItem
         End If
-        
-        If MyShape.Type = msoCanvas Then
-            For Each canvasitem In MyShape.CanvasItems
-                If canvasitem.Type = msoGroup Then
-                    For Each groupitem In canvasitem.GroupItems
-                        If groupitem.Type = msoTextBox Or groupitem.Type = msoAutoShape Then
-                            With groupitem.TextFrame
-                                .MarginBottom = 0
-                                .MarginLeft = 0
-                                .MarginRight = 0
-                                .MarginTop = 0
-                                .TextRange.Select
-                            End With
-                            Selection.style = C_S_TextBoxes
-                        End If
-                    Next
-                End If
-            
-                If canvasitem.Type = msoTextBox Then
-                    With canvasitem.TextFrame
-                        .MarginBottom = 0
-                        .MarginLeft = 0
-                        .MarginRight = 0
-                        .MarginTop = 0
-                        .TextRange.Select
-                    End With
-                    Selection.style = C_S_TextBoxes
-                End If
-
-                If canvasitem.Type = msoAutoShape Then
-                    With canvasitem.TextFrame
-                        .MarginBottom = 0
-                        .MarginLeft = 0
-                        .MarginRight = 0
-                        .MarginTop = 0
-                        .TextRange.Select
-                    End With
-                    Selection.style = C_S_TextBoxes
-                End If
-            On Error Resume Next
-            Next canvasitem
-        End If
-        CanvaFormatTextBoxes_Form.ProgressLabel = "Finished: " & j & " out of " & i
-        j = j + 1
-        DoEvents
-    Next MyShape
+    Next canvasItem
     
-    Unload CanvaFormatTextBoxes_Form
-    ActiveWindow.View.Type = wdPrintView
-    Application.ScreenRefresh
-    
-    ' Goes to a place where temporary bookmark was located and removes it afterwards
-    Call Macros_ms.Tools.RemoveLastCursorPositionBookmark
-    
-    MsgBox _
-        Prompt:="Processing is finished.", _
-        Buttons:=vbInformation + vbOKOnly, _
-        Title:=MsgBoxTitle
+    Application.ScreenUpdating = True
+    Application.StatusBar = MsgBoxTitle & " > Canvas formatting complete: " & targetCanvas.Name
 End Sub
 
+' Function to climb the "Parent" tree until a Canvas is found
+Private Function GetParentCanvas(shp As Shape) As Shape
+    Dim currentShp As Object
+    Set currentShp = shp
+    
+    Do While Not currentShp Is Nothing
+        ' If the object is a Shape and its type is msoCanvas, we found it
+        If TypeName(currentShp) = "Shape" Then
+            If currentShp.Type = msoCanvas Then
+                Set GetParentCanvas = currentShp
+                Exit Function
+            End If
+        End If
+        
+        ' Try to move up to the parent (CanvasItems have a Parent property)
+        On Error Resume Next
+        Set currentShp = currentShp.Parent
+        If Err.Number <> 0 Then Set currentShp = Nothing: Err.Clear
+        On Error GoTo 0
+        
+        ' Safety: If we reach the Document level, stop
+        If TypeName(currentShp) = "Document" Then Set currentShp = Nothing
+    Loop
+    Set GetParentCanvas = Nothing
+End Function
+
+Private Sub ProcessCanvasShape(shp As Shape)
+    On Error Resume Next
+    ' Only process shapes that actually support text (ignores your PNGs)
+    If shp.Type = msoTextBox Or shp.Type = msoAutoShape Then
+        With shp.TextFrame
+            .MarginBottom = 0
+            .MarginLeft = 0
+            .MarginRight = 0
+            .MarginTop = 0
+            .VerticalAnchor = msoAnchorMiddle
+            
+            If .HasText Then
+                .TextRange.style = C_S_TextBoxes
+            End If
+        End With
+    End If
+    On Error GoTo 0
+End Sub
 ' Numbering of comments.
 ' 2025-03-01 by ms and AI
 Sub CommentAddNumber()
