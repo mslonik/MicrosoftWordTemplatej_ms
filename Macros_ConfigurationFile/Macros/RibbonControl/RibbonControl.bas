@@ -26,14 +26,6 @@ Sub BttnPgFormats(control As IRibbonControl)
             Call Macros_ms.Tools.SetPageLayout_A3_H_0_5
         Case "Btn_A3_V_1_2"
             Call Macros_ms.Tools.SetPageLayout_A3_V_1_2
-        Case "Btn_AddBlank"
-            Call Macros_ms.Tools.AddBlankPages
-        Case "Btn_DelBlank"
-            Call Macros_ms.Tools.DeleteTempBlankPages
-        Case "Btn_AddSection"
-            Call Macros_ms.Tools.AddSectionAndKillLinkToPrevious
-        Case "Btn_UnlinkHF"
-            Call Macros_ms.Tools.UnlinkAllHeadersFooters
     End Select
 End Sub
 
@@ -55,9 +47,11 @@ End Sub
 Sub BttnSectionTools(control As IRibbonControl)
     Select Case control.ID
         Case "Btn_AddSection"
-            Call Macros_ms.Tools.AddSectionAndKillLinkToPrevious
+            Call Macros_ms.Tools.SectionAddNewAndUnlinkHF
         Case "Btn_UnlinkHF"
-            Call Macros_ms.Tools.UnlinkAllHeadersFooters
+            Call Macros_ms.Tools.SectionUnlinkAllHF
+        Case "Btn_RelinkHF"
+            Call Macros_ms.Tools.SectionRelinkHF
     End Select
 End Sub
 

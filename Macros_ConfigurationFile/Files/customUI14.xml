@@ -92,6 +92,13 @@
                 onAction="RibbonControl.BttnSectionTools" 
                 screentip="Unlinks H/F for all sections" 
                 supertip="Unlinks all headers and footers in the current document." />
+          <button id="Btn_RelinkHF" 
+                label="Relink all H/F" 
+                imageMso="ColumnActionsRemove" 
+                size="large"
+                onAction="RibbonControl.BttnSectionTools" 
+                screentip="Relinks H/F for all sections" 
+                supertip="Relinks all headers and footers in the current document." />
         </group>
 
         <group id="CG_DocProperties" 

@@ -20,8 +20,9 @@ Attribute VB_Name = "Tools"
 '|    | SetPageLayout_A3_V_1_2        | Layout      | Page Size       | SetPageLayout_A3_V_1_2        |
 '|    | AddBlankPages                 | Layout      | Blank Pages     | AddBlankPages                 |
 '|    | DeleteTempBlankPages          | Layout      | Blank Pages     | DeleteTempBlankPages          |
-'|    | AddSectionAndKillLinkToPrevious | Layout    | Section Tools   | AddSectionAndKillLinkToPrevious|
-'|    | UnlinkAllHeadersFooters       | Layout      | Section Tools   | UnlinkAllHeadersFooters       |
+'|    | SectionAddNewAndUnlinkHF      | Layout      | Section Tools   | SectionAddNewAndUnlinkHF      |
+'|    | SectionUnlinkAllHF       | Layout      | Section Tools   | SectionUnlinkAllHF       |
+'|    | SectionRelinkHF               | Layout      | Section Tools   | SectionRelinkHF               |
 '| 5  | SetHyphenation                | Tools_ms    | Document        | SetHyphenation                |
 '| 6  | SetLanguageToEnglishUS        | Tools_ms    | Document        | SetLanguageToEnglishUS        |
 '| 7  | SetPageColorToCustom          | Tools_ms    | Document        | SetPageColorToCustom          |
@@ -116,7 +117,7 @@ Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As LongPtr)
 
 ' Borrowed from https://wordribbon.tips.net/T013280_Unlinking_All_Headers_and_Footers.html
 ' 2026-03-02  by ms
-Sub UnlinkAllHeadersFooters()
+Sub SectionUnlinkAllHF()
     Dim s As Section
 
     For Each s In ActiveDocument.Sections
@@ -130,7 +131,7 @@ Sub UnlinkAllHeadersFooters()
     
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Tools
-    Dim MacroName As String:    MacroName = "UnlinkAllHeadersFooters"
+    Dim MacroName As String:    MacroName = "SectionUnlinkAllHF"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     MsgBox _
@@ -153,14 +154,14 @@ Sub AddHorizontal_A4()
 '    DoEvents
 
     ' 1. Add the first new section
-    AddSectionAndKillLinkToPrevious
+    SectionAddNewAndUnlinkHF
     
     ' Record the index of the section we just created
     ' (This is the section where the cursor is currently located)
     firstAddedSecIndex = Selection.Sections(1).Index
     
     ' 2. Add the second new section immediately after
-    AddSectionAndKillLinkToPrevious
+    SectionAddNewAndUnlinkHF
     
     ' 3. Move the cursor back to the FIRST added section to apply margins
     ' We use the index we recorded to ensure we hit the right spot
@@ -224,7 +225,7 @@ Private Sub ApplyA4H_Layout(targetSec As Word.Section)
 End Sub
 ' Copied from https://gregmaxey.com/word_tip_pages/add_section_break_and_unlink_headers.html
 ' 2026-03-02 by ms
-Sub AddSectionAndKillLinkToPrevious()
+Sub SectionAddNewAndUnlinkHF()
     Dim myRng As Word.Range
     Dim i As Long
     Dim j As Long
@@ -245,7 +246,7 @@ End Sub
 
 ' Copied from https://gregmaxey.com/word_tip_pages/add_section_break_and_unlink_headers.html
 ' 2026-03-02 by ms
-Sub RelinkSections()
+Sub SectionRelinkHF()
     Dim myRng As Word.Range
     Dim oDoc As Document
     Set oDoc = ActiveDocument
