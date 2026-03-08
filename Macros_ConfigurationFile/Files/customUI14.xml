@@ -151,12 +151,18 @@
                 itemSize="large"
                 screentip="Document"
                 supertip="Various functions useful for document content">
-              <button id="Btn_Hyphenation" 
+              <button id="Btn_SetHyphenation" 
                     label="Set Hyphenation" 
                     imageMso="ConvertTextToTable" 
                     onAction="RibbonControl.BttnDocument" 
                     screentip="Set Hyphenation" 
                     supertip="Set automatic hyphenation in content of this document" />
+              <button id="Btn_ResetHyphenation" 
+                    label="Reset Hyphenation" 
+                    imageMso="ConvertTextToTable" 
+                    onAction="RibbonControl.BttnDocument" 
+                    screentip="Reset Hyphenation" 
+                    supertip="Reset hyphenation in content of this document" />
               <button id="Btn_LangEngilshUS" 
                     label="Language English US" 
                     imageMso="CreateSubroutine" 
@@ -330,42 +336,54 @@
                 itemSize="large"
                 screentip="Microsoft Word options"
                 supertip="Macros which apply several settins at once">
-              <button id="Btn_WO_Customize" 
-                    label="Customize" 
+              <button id="Btn_WO_DisAll" 
+                    label="Disable all AutoCorrect" 
                     imageMso="ConvertTextToTable" 
                     onAction="RibbonControl.BttnWO" 
-                    screentip="Customize" 
-                    supertip="Set of customized Microsoft Word options. Result is displayed in MsgBox. You can restore all those settings thanks to the next macro." />
-              <button id="Btn_WO_Restore" 
-                    label="Restore to defaults" 
+                    screentip="Disable all AutoCorrect" 
+                    supertip="Dsables all AutoCorrect options: Auto Format As You Type, AutoCorrect, AutoFormat." />
+              <button id="Btn_WO_EnAll" 
+                    label="Enable all AutoCorrect" 
                     imageMso="CreateSubroutine" 
                     onAction="RibbonControl.BttnWO" 
-                    screentip="Restore to defaults" 
-                    supertip="Restores Word options to default" />
-              <button id="Btn_WO_DisAutoFormat" 
-                    label="Disable AutoFormat" 
+                    screentip="Enable all AutoCorrect" 
+                    supertip="Enables all AutoCorrect options: Auto Format As You Type, AutoCorrect, AutoFormat." />
+              <button id="Btn_WO_DisAutoFormatAsYouType" 
+                    label="Disable AutoFormatAsYouType" 
                     imageMso="CreateSubroutine" 
                     onAction="RibbonControl.BttnWO" 
-                    screentip="Disable AutoFormat" 
-                    supertip="Disable various AutoFormat settings. Result is displayed in MsgBox. You can restore all those settings thanks to the next macro." />
-              <button id="Btn_WO_ResAutoFormat" 
-                    label="Restore AutoFormat" 
+                    screentip="Disable AutoFormatAsYouType" 
+                    supertip="Disable all AutoFormat As You Type settings. Result is displayed in MsgBox." />
+              <button id="Btn_WO_EnDisAutoFormatAsYouType" 
+                    label="Enable AutoFormatAsYouType" 
                     imageMso="CreateSubroutine" 
                     onAction="RibbonControl.BttnWO" 
-                    screentip="Restore AutoFormat" 
-                    supertip="Restore AutoFormat to defaults" />
+                    screentip="Enable AutoFormatAsYouType" 
+                    supertip="Enable all AutoFormat As You Type settings. Result is displayed in MsgBox." />
               <button id="Btn_WO_DisAutoCorrect" 
                     label="Disable AutoCorrect" 
                     imageMso="CreateSubroutine" 
                     onAction="RibbonControl.BttnWO" 
                     screentip="Disable AutoCorrect" 
-                    supertip="Disable various AutoCorrect settings. Result is displayed in MsgBox. You can restore all those settings thanks to the next macro." />
-              <button id="Btn_WO_ToggAutoCorrect" 
-                    label="Toggle AutoCorrect" 
+                    supertip="Disable AutoCorrect settings. Result is displayed in MsgBox." />
+              <button id="Btn_WO_EnAutoCorrect" 
+                    label="Enable AutoCorrect" 
                     imageMso="CreateSubroutine" 
                     onAction="RibbonControl.BttnWO" 
-                    screentip="Toggle AutoCorrect" 
-                    supertip="Toggle (enable / disable) various AutoCorrect settings. Result is displayed in MsgBox." />
+                    screentip="Enable AutoCorrect" 
+                    supertip="Enable AutoCorrect settings. Result is displayed in MsgBox." />
+              <button id="Btn_WO_DisAutoFormat" 
+                    label="Disable AutoFormat" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnWO" 
+                    screentip="Disable AutoFormat" 
+                    supertip="Disable AutoFormat settings. Result is displayed in MsgBox." />
+              <button id="Btn_WO_EnAutoFormat" 
+                    label="Enable AutoFormat" 
+                    imageMso="CreateSubroutine" 
+                    onAction="RibbonControl.BttnWO" 
+                    screentip="Enable AutoFormat" 
+                    supertip="Enable AutoFormat settings. Result is displayed in MsgBox." />
                     
           </menu>
         </group>
@@ -476,9 +494,304 @@
                     
           </menu>
         </group>
-
-            
       </tab>
+          
+      <tab id="Macros_Tools" 
+            label="Macros_ms">
+        <group id="CG_ImportExport" 
+                label="Import Export"
+                visible="true">
+
+            <button id="Btn_MacrosImport" 
+                    size="large"
+                    label="Import VBA modules" 
+                    imageMso="EnterpriseResourcesImport" 
+                    onAction="RibbonControl.BttnMacros"
+                    screentip="Import VBA modules"
+                    supertip="Import VBA modules source code (.bas files) from selected folder." />
+            <button id="Btn_MacrosExport" 
+                    size="large"
+                    label="Export VBA modules" 
+                    imageMso="ExportLotus" 
+                    onAction="RibbonControl.BttnMacros"
+                    screentip="Export VBA modules"
+                    supertip="Export VBA modules source code (.bas files) from selected folder." />
+            <button id="Btn_MacrosDelExcept" 
+                    size="large"
+                    label="Delete except Macros" 
+                    imageMso="DataFormDeleteRecord" 
+                    onAction="RibbonControl.BttnMacros" 
+                    screentip="Delete all except Macros"
+                    supertip="Delete all VBA modules source code from current ActiveDocument, except Macros module."/>
+            <button id="Btn_MacrosDelAll" 
+                    size="large"
+                    label="Delete all modules" 
+                    imageMso="DeleteAll" 
+                    onAction="RibbonControl.BttnPgFormats" 
+                    screentip="Delete all modules"
+                    supertip="Delete all VBA modules source code from current ActiveDocument."/>
+        </group>
+
+        <group id="CG_Tools" 
+                label="Tools"
+                visible="true">
+
+            <button id="Btn_MacrosCounter" 
+                    size="large"
+                    label="Show Counter" 
+                    imageMso="InsertNumberAlternate" 
+                    onAction="RibbonControl.BttnMacros"
+                    screentip="Show Counter"
+                    supertip="Show MsgBox with macro counter." />
+            <button id="Btn_MacrosList" 
+                    size="large"
+                    label="List Macros" 
+                    imageMso="LinkToExistingList" 
+                    onAction="RibbonControl.BttnMacros"
+                    screentip="List Macros"
+                    supertip="Export list of available macros to .txt file stored in default output folder." />
+            <button id="AsianLayoutCombineCharacters" 
+                    size="large"
+                    label="Scan project for Non-Ascii" 
+                    imageMso="AdvancedMode" 
+                    onAction="RibbonControl.BttnMacros" 
+                    screentip="Scan project for Non-Ascii"
+                    supertip="Scan VBA project (all the source code) for presence of non-ASCII characters."/>
+        </group>
+    </tab>
+
+    <tab id="BB_Tools" 
+         label="BuildingBlocks_ms">
+        <group id="CG_BBTools" 
+                label="Tools"
+                visible="true">
+
+            <button id="Btn_BBExportAll" 
+                    size="large"
+                    label="Export All" 
+                    imageMso="ExportFile" 
+                    onAction="RibbonControl.BttnBB"
+                    screentip="Export All"
+                    supertip="Export all building blocks from ActiveDocument to dedicated DOCX file saved in the default user folder." />
+            <button id="Btn_BBExportSel" 
+                    size="large"
+                    label="Export selected" 
+                    imageMso="ExportLotus" 
+                    onAction="RibbonControl.BttnBB"
+                    screentip="Export selected"
+                    supertip="Export selected categories of building blocks from ActiveDocument to dedicated DOCX file saved in the default user folder." />
+            <button id="Btn_BBOpenBuiltIn" 
+                    size="large"
+                    label="Open built-in" 
+                    imageMso="BlogOpenExisting" 
+                    onAction="RibbonControl.BttnBB" 
+                    screentip="Open built-in"
+                    supertip="Open the file 'Built-In Building Blocks.dotx', the file generated automatically by Microsoft Word."/>
+            <button id="Btn_BBDelAll" 
+                    size="large"
+                    label="Delete all" 
+                    imageMso="DataFormDeleteRecord" 
+                    onAction="RibbonControl.BttnBB" 
+                    screentip="Delete all"
+                    supertip="Delete all building blocks from the current ActiveDocument. Save document."/>
+            <button id="Btn_BBList" 
+                    size="large"
+                    label="List all" 
+                    imageMso="LinkToExistingList" 
+                    onAction="RibbonControl.BttnBB" 
+                    screentip="List all"
+                    supertip="Export list of available building blocks from ActiveDocument to .txt  file stored in default output folder."/>
+        </group>
+
+        <group id="CG_BBEdit" 
+                label="Edit"
+                visible="true">
+
+            <button id="Btn_BBAdd" 
+                    size="large"
+                    label="Add" 
+                    imageMso="DownloadAddressBook" 
+                    onAction="RibbonControl.BttnBB"
+                    screentip="Add"
+                    supertip="Add selected text as building block to 'BB_ms'." />
+            <button id="Btn_BBTemp" 
+                    size="large"
+                    label="Insert BB header" 
+                    imageMso="MessageHeaderToggle" 
+                    onAction="RibbonControl.BttnBB"
+                    screentip="Insert BB header"
+                    supertip="Insert building block header. Such header is required by 'Add' macro." />
+            <button id="Btn_BBRemHead" 
+                    size="large"
+                    label="Remove header" 
+                    imageMso="HeaderFooterRemoveFooterWord" 
+                    onAction="RibbonControl.BttnBB" 
+                    screentip="Remove header"
+                    supertip="Remove building block headers from content of DOCX file."/>
+        </group>
+            
+        <group id="CB_BBBuiltIn"
+                label="Built-in"
+                visible="true">
+            <button idMso="ContentControlBuildingBlockGallery" 
+                    size="large"
+                    label="Content Control Building Block Gallery"
+                    screentip="Content Control Building Block Gallery"
+                    supertip="Enables inserting a building block as a content control"/>
+            <button idMso="BuildingBlocksOrganizer" 
+                    size="large"
+                    label="Organizer"
+                    screentip="Building Block Organizer"
+                    supertip="Small inscallable window to manage building blocks."/>
+            <button idMso="FieldInsert"
+                    size="large"
+                    label="Insert Field"
+                    screentip="Insert Field"
+                    supertip="Insert in the content one of the Microsoft Word variables, named also fields."/>
+            
+        </group>
+    
+    </tab>
+        
+    <tab id="Shortcuts" 
+         label="Shortcuts_ms">
+        <group id="CG_ShowOnScreen" 
+                label="Show"
+                visible="true">
+          <menu id="Menu_ShowOnScreen" 
+                label="Show Windows" 
+                imageMso="WindowNew" 
+                size="large" 
+                itemSize="large"
+                screentip="Show Windows"
+                supertip="Show dedicated windows to remind you about shortcuts">
+            <button id="Btn_HotMacros" 
+                    label="Macros Shortcuts" 
+                    imageMso="HelpKeyboardShortcuts" 
+                    onAction="RibbonControl.BttnShortcuts"
+                    screentip="Macros shortcuts"
+                    supertip="Displays dedicated window, which contains keyboard shortcuts to call specific macros." />
+            <button id="Btn_HotHotstrings" 
+                    label="BuildingBlocks Hotstrings" 
+                    imageMso="BuildingBlockLibrary" 
+                    onAction="RibbonControl.BttnShortcuts"
+                    screentip="BuildingBlocks Hotstrings"
+                    supertip="Displays dedicated window, which contains keyboard Hotstrings (texts) to call specific Building Blocks." />
+            <button id="Btn_HotHotkeys" 
+                    label="Styles Shortcuts" 
+                    imageMso="DsaStyleMode" 
+                    onAction="RibbonControl.BttnShortcuts"
+                    screentip="Styles Shortcuts"
+                    supertip="Displays dedicated window, which contains keyboard shortcuts to call specific styles." />
+                    
+            </menu>
+        </group>
+
+        <group id="CG_Delete" 
+                label="Delete"
+                visible="true">
+          <menu id="Menu_DeleteShortcuts" 
+                label="Delete Shortcuts" 
+                imageMso="ActionDelete" 
+                size="large" 
+                itemSize="large"
+                screentip="Delete Shortcuts"
+                supertip="Delete Shortcuts from ActiveDocument">
+            <button id="Btn_DelStyleShortcuts" 
+                    label="Del. Styles Shortcuts" 
+                    imageMso="AfterDelete" 
+                    onAction="RibbonControl.BttnShortcuts"
+                    screentip="Delete Styles Shortcuts"
+                    supertip="Deletes styles shortcuts from ActiveDocument." />
+            <button id="Btn_DelMacroShortcuts" 
+                    label="Del. Macros Shortcuts" 
+                    imageMso="DataFormDeleteRecord" 
+                    onAction="RibbonControl.BttnShortcuts"
+                    screentip="Del. Macros Shortcuts"
+                    supertip="Deletes macros shortcuts from ActiveDocument." />
+            <button id="Btn_DefMacroFullShortcuts" 
+                    label="Del. Macros Shortcuts Full" 
+                    imageMso="DeleteAppointmentGallery" 
+                    onAction="RibbonControl.BttnShortcuts"
+                    screentip="Del. Macros Shortcuts Full"
+                    supertip="Deletes macros shortcuts, one by one, with MsgBox for each, from ActiveDocument." />
+                    
+            </menu>
+        </group>
+
+        <group id="CG_Add" 
+                label="Add"
+                visible="true">
+            <button id="Btn_AddMacroShortcuts" 
+                    size="large"
+                    label="Add Macro Shortcuts" 
+                    imageMso="SmartArtAddShape" 
+                    onAction="RibbonControl.BttnShortcuts"
+                    screentip="Add Macro Shortcuts"
+                    supertip="Add Macro Shortcuts to ActiveDocument." />
+        </group>
+
+        <group id="CG_List" 
+                label="List"
+                visible="true">
+          <menu id="Menu_ListWindows" 
+                label="List Windows" 
+                imageMso="CreateMacro" 
+                size="large" 
+                itemSize="large"
+                screentip="List Windows"
+                supertip="List content of the shortcut windows to text files.">
+            <button id="Btn_ListStyles" 
+                    label="List Styles Shortcuts" 
+                    imageMso="BeforeChange" 
+                    onAction="RibbonControl.BttnShortcuts"
+                    screentip="List Styles Shortcuts"
+                    supertip="Create .txt file with list of styles shortcuts, the same as displayed in dedicated window." />
+            <button id="Btn_ListMacros" 
+                    label="List Macros Shortcuts" 
+                    imageMso="BorderDrawMenu" 
+                    onAction="RibbonControl.BttnShortcuts"
+                    screentip="List Macros Shortcuts"
+                    supertip="Create .txt file with list of macros shortcuts, the same as displayed in dedicated window." />
+            <button id="Btn_ListHotstrings" 
+                    label="List BB Hotstrings" 
+                    imageMso="BlogPublishDraft" 
+                    onAction="RibbonControl.BttnShortcuts"
+                    screentip="List BB Hotstrings"
+                    supertip="Create .txt file with list of building block hotstrings, the same as displayed in dedicated window." />
+            <button id="Btn_ListAllHots" 
+                    label="List All Shortcuts Categories" 
+                    imageMso="BorderColorPickerExcel" 
+                    onAction="RibbonControl.BttnShortcuts"
+                    screentip="List All Shortcuts Categories"
+                    supertip="Create .txt file with list of shortcuts categories in ActiveDocument." />
+                    
+            </menu>
+          <menu id="Menu_ListMW" 
+                label="Lists of Microsoft Word" 
+                imageMso="CreateMacro" 
+                size="large" 
+                itemSize="large"
+                screentip="Lists of Microsoft Word"
+                supertip="Lists shortcuts or commands of Microsoft Word.">
+            <button id="Btn_ListCommands" 
+                    label="List Commands" 
+                    imageMso="BeforeChange" 
+                    onAction="RibbonControl.BttnShortcuts"
+                    screentip="List Commands"
+                    supertip="Create DOCX file with list of all Microsoft Word commands." />
+            <button id="Btn_ListShortcuts" 
+                    label="List Shortcuts" 
+                    imageMso="BorderDrawMenu" 
+                    onAction="RibbonControl.BttnShortcuts"
+                    screentip="List Shortcuts"
+                    supertip="Created DOCX file with list of all Microsoft Word shortcuts." />
+                    
+            </menu>
+        </group>
+
+    </tab>
+          
     </tabs>
   </ribbon>
 </customUI>

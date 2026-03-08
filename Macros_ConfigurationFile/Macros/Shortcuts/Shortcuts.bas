@@ -1368,72 +1368,6 @@ ShortcutError:
         Title:=MsgBoxTitle
 End Sub
 
-Private Sub SetKeyBindingStyle(KeybShortcut As String, WhichStyle As String)
-    Dim kb As keyBinding
-    Dim MyCode1 As Long
-    Dim MyCode2 As Integer
-    
-    Dim FileName As String:     FileName = C_F_Macros
-    Dim ModuleName As String:   ModuleName = C_M_Shortcuts
-    Dim MacroName As String:    MacroName = "SetKeyBindingStyle"
-    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
-    ' Set the customization context to the current template. This is conscious exception.
-    Application.CustomizationContext = ActiveDocument.AttachedTemplate
-    
-    MyCode1 = ParseKeyCode1(KeybShortcut)
-    MyCode2 = ParseKeyCode2(KeybShortcut)
-    
-    ' Loop through all key bindings
-    For Each kb In Application.KeyBindings
-        ' Check if the key binding belongs to the menu category
-        If InStr(1, kb.Command, WhichStyle) And kb.KeyCode = MyCode1 Then
-            If kb.KeyCode2 <> 0 And kb.KeyCode2 = MyCode2 Then
-                ' Such keybinding already exists
-                MsgBox _
-                    Prompt:="Such keybindg already exists:" & vbNewLine & _
-                    KeybShortcut & " : " & MacroName & vbNewLine & vbNewLine & "Exiting.", _
-                    Buttons:=vbInformation + vbOKOnly + vbDefaultButton1, _
-                    Title:=MsgBoxTitle
-                Exit Sub
-            Else
-                MsgBox _
-                    Prompt:="Such keybindg already exists:" & vbNewLine & _
-                    KeybShortcut & " : " & MacroName & vbNewLine & vbNewLine & "Exiting.", _
-                    Buttons:=vbInformation + vbOKOnly + vbDefaultButton1, _
-                    Title:=MsgBoxTitle
-                Exit Sub
-            End If
-        End If
-    Next kb
-    
-    If MyCode2 <> 0 Then
-        Set kb = KeyBindings.Add(KeyCategory:=wdKeyCategoryStyle, _
-                    Command:=WhichStyle, _
-                    KeyCode:=MyCode1, _
-                    KeyCode2:=MyCode2)
-    Else
-        Set kb = KeyBindings.Add(KeyCategory:=wdKeyCategoryStyle, _
-                    Command:=WhichStyle, _
-                    KeyCode:=MyCode1)
-    End If
-    
-    If Not kb Is Nothing Then
-        MsgBox _
-            Prompt:="Keybinding for " & KeybShortcut & " has been set to " & WhichStyle, _
-            Buttons:=vbInformation + vbOKOnly, _
-            Title:=MsgBoxTitle
-    Else
-        MsgBox _
-            Prompt:="Keybinding for " & KeybShortcut & " not set.", _
-            Buttons:=vbInformation + vbOKOnly, _
-            Title:=MsgBoxTitle
-    End If
-    
-    ' Clear object variables
-    Set kb = Nothing
-End Sub
-
 ' 2025-08-02 by ms
 ' Added checking of CustomizationContext on time of deletion.
 ' The issue is that KeyBindings collection contains all keybindings from all contexts and I need to check if the keybinding comes from the right context.
@@ -1717,7 +1651,6 @@ End Sub
 ' 2025-03-21 by ms
 Private Sub ResetShortcut_ToggleCharCrossoutStyle()
     Call Macros_ms.Shortcuts.DeleteKeyBinding(KeybShortcut:=C_SC_ShiftCtrlX)
-    Call Macros_ms.Shortcuts.SetKeyBindingStyle(KeybShortcut:=C_SC_ShiftCtrlX, WhichStyle:=C_S_CharCrossout)
 End Sub
 
 ' 2025-03-21 by ms
@@ -1732,7 +1665,6 @@ End Sub
 ' This function works only if object was defined by the macro "SetShortcut_ToggleCharHiddenStyle". So it must be run just after.
 Private Sub ResetShortcut_ToggleCharHiddenStyle()
     Call Macros_ms.Shortcuts.DeleteKeyBinding(KeybShortcut:=C_SC_ShiftCtrlH)
-    Call Macros_ms.Shortcuts.SetKeyBindingStyle(KeybShortcut:=C_SC_ShiftCtrlH, WhichStyle:=C_S_CharHidden)
 End Sub
 
 Private Sub SetShortcut_ToggleSpecificFormatting(ByVal IfMsgBox As String)

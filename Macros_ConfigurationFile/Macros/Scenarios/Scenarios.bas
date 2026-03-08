@@ -9,11 +9,12 @@ Attribute VB_Name = "Scenarios"
 '+----+-----------------------------------------+--------------+----------------+-----------------------------------------+
 '| 1  | ApplyDistanceBetweenNumberingAndHeading | Scenarios_ms | Combos         | ApplyDistanceBetweenNumberingAndHeading |
 '| 2  | ResetDistanceBetweenNumberingAndHeading | Scenarios_ms | Combos         | ResetDistanceBetweenNumberingAndHeading |
-'| 3  | UpdateAllFieldsAndCloseFile             | Scenarios_ms | Combos         | UpdateAllFieldsAndCloseFile             |
-'| 4  | DeleteAllVBAModulesExceptMacros         | Scenarios_ms | Combos         | DeleteAllVBAModulesExceptMacros         |
-'| 5  | CustomizedPrintPreviewAndPrint          | Scenarios_ms | Combos         | CustomizedPrintPreviewAndPrint          |
-'| 6  | NewFileConfAndContent                   | Scenarios_ms | Combos         | NewFileConfAndContent                   |
+'| 3  | NewFileConfAndContent                   | Scenarios_ms | Combos         | NewFileConfAndContent                   |
 '+----+-----------------------------------------+--------------+----------------+-----------------------------------------+
+'
+' Subs related to keyboard shortcuts:
+'| Ctrl + W  | UpdateAllFieldsAndCloseFile             |
+'| Ctrl + F2 | CustomizedPrintPreviewAndPrint          |
 '
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 Option Explicit
@@ -70,7 +71,7 @@ Sub ApplyDistanceBetweenNumberingAndHeading()
     ActiveDocument.Save
     ' This statement turns off the error handling that was set by On Error Resume Next. It restores the default error handling behavior, which means that if an error occurs after this point, VBA will stop execution and display an error message.
     On Error GoTo 0
-    Application.statusBar = MsgBoxTitle & " > " & "was running..."
+    Application.StatusBar = MsgBoxTitle & " > " & "was running..."
     
 End Sub
 
