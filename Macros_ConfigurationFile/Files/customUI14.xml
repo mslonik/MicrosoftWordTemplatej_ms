@@ -600,7 +600,7 @@
                     imageMso="LinkToExistingList" 
                     onAction="RibbonControl.BttnBB" 
                     screentip="List all"
-                    supertip="Export list of available building blocks from ActiveDocument to .txt  file stored in default output folder."/>
+                    supertip="Export list of available building blocks from ActiveDocument to DOCX file saved in default output folder."/>
         </group>
 
         <group id="CG_BBEdit" 
@@ -735,35 +735,35 @@
                 label="List"
                 visible="true">
           <menu id="Menu_ListWindows" 
-                label="List Windows" 
+                label="Output content to .txt" 
                 imageMso="CreateMacro" 
                 size="large" 
                 itemSize="large"
-                screentip="List Windows"
-                supertip="List content of the shortcut windows to text files.">
+                screentip="Output content to .txt"
+                supertip="Output content of the shortcut windows to text files.">
             <button id="Btn_ListStyles" 
-                    label="List Styles Shortcuts" 
+                    label="Output Styles Shortcuts" 
                     imageMso="BeforeChange" 
                     onAction="RibbonControl.BttnShortcuts"
-                    screentip="List Styles Shortcuts"
+                    screentip="Output Styles Shortcuts"
                     supertip="Create .txt file with list of styles shortcuts, the same as displayed in dedicated window." />
             <button id="Btn_ListMacros" 
-                    label="List Macros Shortcuts" 
+                    label="Output Macros Shortcuts" 
                     imageMso="BorderDrawMenu" 
                     onAction="RibbonControl.BttnShortcuts"
-                    screentip="List Macros Shortcuts"
+                    screentip="Output Macros Shortcuts"
                     supertip="Create .txt file with list of macros shortcuts, the same as displayed in dedicated window." />
             <button id="Btn_ListHotstrings" 
-                    label="List BB Hotstrings" 
+                    label="Output BB Hotstrings" 
                     imageMso="BlogPublishDraft" 
                     onAction="RibbonControl.BttnShortcuts"
-                    screentip="List BB Hotstrings"
+                    screentip="Output BB Hotstrings"
                     supertip="Create .txt file with list of building block hotstrings, the same as displayed in dedicated window." />
             <button id="Btn_ListAllHots" 
-                    label="List All Shortcuts Categories" 
+                    label="Output All Shortcuts Categories" 
                     imageMso="BorderColorPickerExcel" 
                     onAction="RibbonControl.BttnShortcuts"
-                    screentip="List All Shortcuts Categories"
+                    screentip="Output All Shortcuts Categories"
                     supertip="Create .txt file with list of shortcuts categories in ActiveDocument." />
                     
             </menu>
@@ -772,24 +772,273 @@
                 imageMso="CreateMacro" 
                 size="large" 
                 itemSize="large"
-                screentip="Lists of Microsoft Word"
-                supertip="Lists shortcuts or commands of Microsoft Word.">
+                screentip="Output of Microsoft Word"
+                supertip="Output shortcuts or commands of Microsoft Word to DOCX.">
             <button id="Btn_ListCommands" 
-                    label="List Commands" 
+                    label="Output Commands" 
                     imageMso="BeforeChange" 
                     onAction="RibbonControl.BttnShortcuts"
-                    screentip="List Commands"
+                    screentip="Output Commands"
                     supertip="Create DOCX file with list of all Microsoft Word commands." />
             <button id="Btn_ListShortcuts" 
-                    label="List Shortcuts" 
+                    label="Output Shortcuts" 
                     imageMso="BorderDrawMenu" 
                     onAction="RibbonControl.BttnShortcuts"
-                    screentip="List Shortcuts"
+                    screentip="Output Shortcuts"
                     supertip="Created DOCX file with list of all Microsoft Word shortcuts." />
                     
             </menu>
         </group>
+    </tab>
 
+    <tab id="Styles" 
+         label="Styles_ms">
+        <group id="CG_StylesDelete" 
+                label="Delete"
+                visible="true">
+            <button id="Btn_DelUnused" 
+                    label="Del. unused" 
+                    size="large"
+                    imageMso="Delete" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Delete unused"
+                    supertip="Delete all unused styles from ActiveDocument. For example styles which are not assigned to any paragraph." />
+        </group>
+            
+        <group id="CG_StylesSwitchOffAutoupdate"
+                label="Switch off Autoupdate"
+                visible="true">
+            <button id="Btn_SwitchOffAuto" 
+                    label="Switch off Autoupdate" 
+                    size="large"
+                    imageMso="BaselineClear" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Switch off Autoupdate"
+                    supertip="Set autoupdate feature for all dedicated 'ms' styles to off." />
+        </group>
+
+        <group id="CG_StylesNonCompliant"
+                label="Search Non-compliant"
+                visible="true">
+          <menu id="Menu_StylesNonCompliant" 
+                label="Search Styles" 
+                imageMso="OutlookTaskLater" 
+                size="large" 
+                itemSize="large"
+                screentip="Search Non-compliant"
+                supertip="Search for styles not belonging to defined 'ms' set.">
+            <button id="Btn_ShowNoncompliant" 
+                    label="Show non-compliant par." 
+                    imageMso="PictureBrightnessGallery" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Show non-compliant par."
+                    supertip="Mark non-compliant styles (not present in 'ms' set) in content of ActiveDocument with yellow background." />
+            <button id="Btn_DelNCStylingBookmarks" 
+                    label="Del. non-compliant bookmarks" 
+                    imageMso="AudioBookmarkRemove" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Del. non-compliant bookmarks"
+                    supertip="Delete non-compliant bookmarks (where style not present in 'ms' set was found) in content of ActiveDocument." />
+            <button id="Btn_DelNCHighlighting" 
+                    label="Del. non-compliant highlight." 
+                    imageMso="ColumnActionsReadOnly" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Delete non-compliant highlighting"
+                    supertip="Delete yellow highlighting of non-compliant (not present in 'ms' set) content in ActiveDocument." />
+            </menu>
+        </group>
+
+        <group id="CG_StylesAddCompliant"
+                label="Manage 'ms' styles"
+                visible="true">
+            <button id="Btn_AddCompliant" 
+                    label="Add 'ms' styles" 
+                    size="large"
+                    imageMso="AddAccount" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Add 'ms' styles"
+                    supertip="Add compliant set of custom made 'ms' styles to ActiveDocument." />
+            <button id="Btn_DelNonCompliant" 
+                    label="Del. non-compliant" 
+                    size="large"
+                    imageMso="Delete" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Delete non-compliant styles"
+                    supertip="Delete non-compliant styles, not belonging to 'ms' set from ActiveDocument." />
+        </group>
+
+        <group id="CG_ApplyTheme"
+                label="Apply 'ms' theme"
+                visible="true">
+            <button id="Btn_ApplyTheme" 
+                    label="Apply 'ms' theme" 
+                    size="large"
+                    imageMso="PasteSourceTheme" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Apply 'ms' theme"
+                    supertip="Apply 'ms' theme to ActiveDocument." />
+        </group>
+
+        <group id="CG_StylesTxtOutput"
+                label="Output .txt files"
+                visible="true">
+          <menu id="Menu_StylesTxtOutput" 
+                label="Output .txt files" 
+                imageMso="CreateMacro" 
+                size="large" 
+                itemSize="large"
+                screentip="Output .txt files"
+                supertip="Create .txt files with specific set of styles.">
+            <button id="Btn_OutputInUse" 
+                    label="Styles in use" 
+                    imageMso="SlideShowUsePresenterView" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Styles in use"
+                    supertip="Create .txt file containing only styles which are in use in ActiveDocument." />
+            <button id="Btn_Compliant" 
+                    label="Compliant 'ms' styles" 
+                    imageMso="ReadingViewAllowMultiplePages" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Compliant 'ms' styles"
+                    supertip="Create .txt file containing only compliant 'ms' styles." />
+            <button id="Btn_Builtin" 
+                    label="Built-in styles" 
+                    imageMso="CompareProjectsShowLegend" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Built-in styles"
+                    supertip="Create .txt file containing built-in Microsoft Word styles." />
+            <button id="Btn_StylesCustom" 
+                    label="Custom styles" 
+                    imageMso="CustomBibliographyGallery" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Custom styles"
+                    supertip="Create .txt file containing all custom styles (all but built-in)." />
+            </menu>
+        </group>
+
+        <group id="CG_StylesReapply"
+                label="Reapply"
+                visible="true">
+          <menu id="Menu_StylesReapply" 
+                label="Reapply" 
+                imageMso="FilterReapply" 
+                size="large" 
+                itemSize="large"
+                screentip="Reapply"
+                supertip="Reapply styles from compliant 'ms' set.">
+            <button id="Btn_ReapplySimple" 
+                    label="Reapply Simple" 
+                    imageMso="Filters" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Reapply Simple"
+                    supertip="Reapply, simple, quick version. Previously applied styles are just reapplied." />
+            <button id="Btn_ReapplyFull" 
+                    label="Reapply Full" 
+                    imageMso="PivotChartFilterShow" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Reapply Full"
+                    supertip="Reapply styles from the AttachedTemplate." />
+            </menu>
+        </group>
+
+        <group id="CG_ListTemplates"
+                label="List Templates"
+                visible="true">
+          <menu id="Menu_ListTemplates" 
+                label="List Templates" 
+                imageMso="WindowNew" 
+                size="large" 
+                itemSize="large"
+                screentip="List Templates"
+                supertip="Reapply styles from compliant 'ms' set.">
+            <button id="Btn_ListTemplatesShowNamed" 
+                    label="Show Named" 
+                    imageMso="HelpKeyboardShortcuts" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Show Named"
+                    supertip="Show in MsgBox only those List Templates, which have assigned names." />
+            <button id="Btn_ListTemplatesShowAll" 
+                    label="Show All" 
+                    imageMso="HelpKeyboardShortcuts" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Show All"
+                    supertip="Show in MsgBox all List Templates." />
+            <button id="Btn_ListTemplatesResetLists" 
+                    label="Reset List Galleries" 
+                    imageMso="HelpKeyboardShortcuts" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Reset List Galleries"
+                    supertip="Reset all list galleries related to List Templates." />
+            </menu>
+        </group>
+
+        <group id="CG_TemplateStyles" 
+                label="Template Styles"
+                visible="true">
+          <menu id="Menu_TemplateStyles" 
+                label="Template Styles" 
+                imageMso="UpdateFolderList" 
+                size="large" 
+                itemSize="large"
+                screentip="Template Styles"
+                supertip="Management of styles from attached template file (DOTM or DOTX).">
+            <button id="Btn_TemplateAdd" 
+                    label="Add" 
+                    imageMso="AddAccount" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Add"
+                    supertip="Add styles to ActiveDocument from attached template file." />
+            <button id="Btn_TemplateDelOther" 
+                    label="Del. other" 
+                    imageMso="Delete" 
+                    onAction="RibbonControl.BttnStyles"
+                    screentip="Delete other than in attached file"
+                    supertip="Delete all styles from ActiveDocument other than in the attached template file." />
+             </menu>
+        </group>
+
+        <group id="CB_StylesBuiltIn"
+                label="Built-in"
+                visible="true">
+            <button idMso="DocumentTemplate" 
+                    size="large"
+                    label="Document Template and Built-ins"
+                    screentip="Document Template and Built-ins"
+                    supertip="Management of document template and built-ins (DOTM and DOTX)"/>
+            <button idMso="Organizer" 
+                    size="large"
+                    label="Organizer"
+                    screentip="Styles Organizer"
+                    supertip="Management of styles and macros."/>
+            <button idMso="StylesStyleVisibility"
+                    size="large"
+                    label="Style Pane Options"
+                    screentip="Style Pane Options"
+                    supertip="Style pane options management."/>
+            <button idMso="StylesPane"
+                    size="large"
+                    label="Styles Pane"
+                    screentip="Style Pane"/>
+            <button idMso="StylesManageStyles"
+                    size="large"
+                    label="Manage Styles"
+                    screentip="Manage Styles"
+                    supertip="Manage Styles."/>
+            <button idMso="RevealFormatting"
+                    size="large"
+                    label="Reveal Formatting"
+                    screentip="Reveal Formatting pane"
+                    supertip="Reveal Formatting pane."/>
+        </group>
+
+        <group id="CB_StylesGallery"
+                label="Built-in"
+                visible="true">
+            <gallery idMso="QuickStylesGallery"
+                    label="Styles"
+                    size="large"/>
+        </group>
+            
     </tab>
           
     </tabs>
