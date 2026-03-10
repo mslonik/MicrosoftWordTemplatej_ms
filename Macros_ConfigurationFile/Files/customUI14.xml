@@ -779,13 +779,13 @@
                     imageMso="BeforeChange" 
                     onAction="RibbonControl.BttnShortcuts"
                     screentip="Output Commands"
-                    supertip="Create DOCX file with list of all Microsoft Word commands." />
+                    supertip="Create DOCX file with list of all Microsoft Word commands. Macro: ListAllMWCommandsToDOCX." />
             <button id="Btn_ListShortcuts" 
                     label="Output Shortcuts" 
                     imageMso="BorderDrawMenu" 
                     onAction="RibbonControl.BttnShortcuts"
                     screentip="Output Shortcuts"
-                    supertip="Created DOCX file with list of all Microsoft Word shortcuts." />
+                    supertip="Created DOCX file with list of all Microsoft Word shortcuts. Macro: ListMWShortcutsToDOCX." />
                     
             </menu>
         </group>
@@ -802,7 +802,7 @@
                     imageMso="Delete" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Delete unused"
-                    supertip="Delete all unused styles from ActiveDocument. For example styles which are not assigned to any paragraph." />
+                    supertip="Delete all unused styles from ActiveDocument. For example styles which are not assigned to any paragraph. Macro: DeleteUnusedStyles." />
         </group>
             
         <group id="CG_StylesSwitchOffAutoupdate"
@@ -814,7 +814,7 @@
                     imageMso="BaselineClear" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Switch off Autoupdate"
-                    supertip="Set autoupdate feature for all dedicated 'ms' styles to off." />
+                    supertip="Set autoupdate feature for all dedicated 'ms' styles to off. Macro: SwitchOffAutoupdate." />
         </group>
 
         <group id="CG_StylesNonCompliant"
@@ -832,19 +832,19 @@
                     imageMso="PictureBrightnessGallery" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Show non-compliant par."
-                    supertip="Mark non-compliant styles (not present in 'ms' set) in content of ActiveDocument with yellow background." />
+                    supertip="Mark non-compliant styles (not present in 'ms' set) in content of ActiveDocument with yellow background. Macro: ShowNonComplientStyling." />
             <button id="Btn_DelNCStylingBookmarks" 
                     label="Del. non-compliant bookmarks" 
                     imageMso="AudioBookmarkRemove" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Del. non-compliant bookmarks"
-                    supertip="Delete non-compliant bookmarks (where style not present in 'ms' set was found) in content of ActiveDocument." />
+                    supertip="Delete non-compliant bookmarks (where style not present in 'ms' set was found) in content of ActiveDocument. Macro: DeleteAllNCstylingBookmarks." />
             <button id="Btn_DelNCHighlighting" 
                     label="Del. non-compliant highlight." 
                     imageMso="ColumnActionsReadOnly" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Delete non-compliant highlighting"
-                    supertip="Delete yellow highlighting of non-compliant (not present in 'ms' set) content in ActiveDocument." />
+                    supertip="Delete yellow highlighting of non-compliant (not present in 'ms' set) content in ActiveDocument. Macro: DeleteNCHighlighting." />
             </menu>
         </group>
 
@@ -857,14 +857,14 @@
                     imageMso="AddAccount" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Add 'ms' styles"
-                    supertip="Add compliant set of custom made 'ms' styles to ActiveDocument." />
+                    supertip="Add compliant set of custom made 'ms' styles to ActiveDocument. Macro: AddCompliantStyles." />
             <button id="Btn_DelNonCompliant" 
                     label="Del. non-compliant" 
                     size="large"
                     imageMso="Delete" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Delete non-compliant styles"
-                    supertip="Delete non-compliant styles, not belonging to 'ms' set from ActiveDocument." />
+                    supertip="Delete non-compliant styles, not belonging to 'ms' set from ActiveDocument. Macro: DeleteNonCompliantStyles." />
         </group>
 
         <group id="CG_ApplyTheme"
@@ -876,7 +876,7 @@
                     imageMso="PasteSourceTheme" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Apply 'ms' theme"
-                    supertip="Apply 'ms' theme to ActiveDocument." />
+                    supertip="Apply 'ms' theme to ActiveDocument. Macro: ApplyTheme." />
         </group>
 
         <group id="CG_StylesTxtOutput"
@@ -889,30 +889,30 @@
                 itemSize="large"
                 screentip="Output .txt files"
                 supertip="Create .txt files with specific set of styles.">
-            <button id="Btn_OutputInUse" 
+            <button id="Btn_OutputTxtInUse" 
                     label="Styles in use" 
                     imageMso="SlideShowUsePresenterView" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Styles in use"
-                    supertip="Create .txt file containing only styles which are in use in ActiveDocument." />
-            <button id="Btn_Compliant" 
+                    supertip="Create .txt file containing only styles which are in use in ActiveDocument. Macro: ListStylesCurrentlyInUse." />
+            <button id="Btn_OutputTxtCompliant" 
                     label="Compliant 'ms' styles" 
                     imageMso="ReadingViewAllowMultiplePages" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Compliant 'ms' styles"
-                    supertip="Create .txt file containing only compliant 'ms' styles." />
-            <button id="Btn_Builtin" 
+                    supertip="Create .txt file containing only compliant 'ms' styles. Macro: ListCompliantStyles." />
+            <button id="Btn_OutputTxtBuiltin" 
                     label="Built-in styles" 
                     imageMso="CompareProjectsShowLegend" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Built-in styles"
-                    supertip="Create .txt file containing built-in Microsoft Word styles." />
-            <button id="Btn_StylesCustom" 
+                    supertip="Create .txt file containing built-in Microsoft Word styles. Macro: ListBuiltinStyles." />
+            <button id="Btn_OutputTxtStylesCustom" 
                     label="Custom styles" 
                     imageMso="CustomBibliographyGallery" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Custom styles"
-                    supertip="Create .txt file containing all custom styles (all but built-in)." />
+                    supertip="Create .txt file containing all custom styles (all but built-in). Macro: ListCustomStyles." />
             </menu>
         </group>
 
@@ -931,13 +931,13 @@
                     imageMso="Filters" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Reapply Simple"
-                    supertip="Reapply, simple, quick version. Previously applied styles are just reapplied." />
+                    supertip="Reapply, simple, quick version. Previously applied styles are just reapplied. Macro: ReapplyStylesFromTemplateSimple." />
             <button id="Btn_ReapplyFull" 
                     label="Reapply Full" 
                     imageMso="PivotChartFilterShow" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Reapply Full"
-                    supertip="Reapply styles from the AttachedTemplate." />
+                    supertip="Reapply styles from the AttachedTemplate. Macro: ReapplyStylesFromTemplateFull." />
             </menu>
         </group>
 
@@ -956,19 +956,19 @@
                     imageMso="HelpKeyboardShortcuts" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Show Named"
-                    supertip="Show in MsgBox only those List Templates, which have assigned names." />
+                    supertip="Show in MsgBox only those List Templates, which have assigned names. Macro: ListTemplatesShowNamed." />
             <button id="Btn_ListTemplatesShowAll" 
                     label="Show All" 
                     imageMso="HelpKeyboardShortcuts" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Show All"
-                    supertip="Show in MsgBox all List Templates." />
+                    supertip="Save in .txt file all List Templates. Macro: ListTemplatesListAll." />
             <button id="Btn_ListTemplatesResetLists" 
                     label="Reset List Galleries" 
                     imageMso="HelpKeyboardShortcuts" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Reset List Galleries"
-                    supertip="Reset all list galleries related to List Templates." />
+                    supertip="Reset all list galleries related to List Templates. Macro: ResetAllListGalleries." />
             </menu>
         </group>
 
@@ -987,13 +987,13 @@
                     imageMso="AddAccount" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Add"
-                    supertip="Add styles to ActiveDocument from attached template file." />
+                    supertip="Add styles to ActiveDocument from attached template file. Macro: AddStylesFromTemplateFile." />
             <button id="Btn_TemplateDelOther" 
                     label="Del. other" 
                     imageMso="Delete" 
                     onAction="RibbonControl.BttnStyles"
                     screentip="Delete other than in attached file"
-                    supertip="Delete all styles from ActiveDocument other than in the attached template file." />
+                    supertip="Delete all styles from ActiveDocument other than in the attached template file. Macro: DeleteStylesOtherThanInTemplateFile." />
              </menu>
         </group>
 

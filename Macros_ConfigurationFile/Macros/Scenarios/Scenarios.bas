@@ -7,14 +7,16 @@ Attribute VB_Name = "Scenarios"
 '+----+-----------------------------------------+--------------+----------------+-----------------------------------------+
 '| No | Sub name                                | Ribbon name  | Ribbon section | Ribbon button name                      |
 '+----+-----------------------------------------+--------------+----------------+-----------------------------------------+
-'| 1  | ApplyDistanceBetweenNumberingAndHeading | Scenarios_ms | Combos         | ApplyDistanceBetweenNumberingAndHeading |
-'| 2  | ResetDistanceBetweenNumberingAndHeading | Scenarios_ms | Combos         | ResetDistanceBetweenNumberingAndHeading |
 '| 3  | NewFileConfAndContent                   | Scenarios_ms | Combos         | NewFileConfAndContent                   |
 '+----+-----------------------------------------+--------------+----------------+-----------------------------------------+
 '
 ' Subs related to keyboard shortcuts:
 '| Ctrl + W  | UpdateAllFieldsAndCloseFile             |
 '| Ctrl + F2 | CustomizedPrintPreviewAndPrint          |
+'
+' Outdated (no longer used):
+'| 1  | ApplyDistanceBetweenNumberingAndHeading | Scenarios_ms | Combos         | ApplyDistanceBetweenNumberingAndHeading |
+'| 2  | ResetDistanceBetweenNumberingAndHeading | Scenarios_ms | Combos         | ResetDistanceBetweenNumberingAndHeading |
 '
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 Option Explicit
@@ -133,7 +135,7 @@ Sub NewFileConfAndContent()
         Buttons:=vbQuestion + vbYesNo + vbDefaultButton1, _
         Title:=MsgBoxTitle)
     If UserDecision = vbYes Then
-        Call Macros_ms.StylesM.CreateCustomStyles
+        Call Macros_ms.StylesM.AddCompliantStyles
     End If
     
     ' 3. Setting up Theme file

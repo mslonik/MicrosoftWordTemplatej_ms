@@ -8,20 +8,21 @@ Attribute VB_Name = "StylesM"
 '+----+------------------------------------+-------------+------------------+------------------------------------+
 '| No | Sub name                           | Ribbon name | Ribbon section   | Ribbon button name                 |
 '+----+------------------------------------+-------------+------------------+------------------------------------+
-'| 1  | DeleteStylesOtherThanInTemplate    | Styles_ms   | custom (no name) | DeleteStylesOtherThanInTemplate    |
+'| 3  | AddStylesFromTemplateFile          | Styles_ms   | custom (no name) | AddStylesFromTemplateFile   |
+'| 1  | DeleteStylesOtherThanInTemplateFile| Styles_ms   | custom (no name) | DeleteStylesOtherThanInTemplateFile    |
 '| 2  | DeleteUnusedStyles                 | Styles_ms   | custom (no name) | DeleteUnusedStyles                 |
-'| 3  | CopyStylesFromTemplateToThisFile   | Styles_ms   | custom (no name) | CopyStylesFromTemplateToThisFile   |
 '| 4  | SwitchOffAutoupdate                | Styles_ms   | custom (no name) | SwitchOffAutoupdate                |
+'|    | ShowNonComplientStyling
 '| 5  | DeleteAllNCstylingBookmarks        | Styles_ms   | custom (no name) | DeleteAllNCstylingBookmarks        |
 '| 6  | DeleteNCHighlighting               | Styles_ms   | custom (no name) | DeleteNCHighlighting               |
-'| 7  | DeleteCustomStyles_KeepOnlyDefined | Styles_ms   | custom (no name) | DeleteCustomStyles_KeepOnlyDefined |
+'| 7  | DeleteNonCompliantStyles           | Styles_ms   | custom (no name) | DeleteNonCompliantStyles |
 '| 8  | ListBuiltInStyles                  | Styles_ms   | TextOutput       | ListBuiltInStyles                  |
-'| 9  | ListNonBuiltInAndSuffixStyles      | Styles_ms   | TextOutput       | ListNonBuiltInAndSuffixStyles      |
+'| 9  | ListCompliantStyles                | Styles_ms   | TextOutput       | ListCompliantStyles      |
 '| 10 | ListStylesCurrentlyInUse           | Styles_ms   | TextOutput       | ListStylesCurrentlyInUse           |
-'| 11 | ListCustomStylesToTxt              | Styles_ms   | TextOutput       | ListCustomStylesToTxt              |
-'| 12 | ReapplyStylesFromTemplate          | Styles_ms   | Reapply          | ReapplyStylesFromTemplate          |
+'| 11 | ListCustomStyles                   | Styles_ms   | TextOutput       | ListCustomStyles              |
+'| 12 | ReapplyStylesFromTemplateFull      | Styles_ms   | Reapply          | ReapplyStylesFromTemplateFull          |
 '| 13 | ReapplyStylesFromTemplateSimple    | Styles_ms   | Reapply          | ReapplyStylesFromTemplateSimple    |
-'| 14 | CreateCustomStyles                 | Styles_ms   | custom (no name) | CreateCustomStyles                 |
+'| 14 | AddCompliantStyles                 | Styles_ms   | custom (no name) | AddCompliantStyles                 |
 '+----+------------------------------------+-------------+------------------+------------------------------------+
 '| 15 | AttachTheme                        | Styles_ms   | Theme            | AttachTheme                        |
 '+----+------------------------------------+-------------+------------------+------------------------------------+
@@ -118,7 +119,7 @@ Dim ExampleResult As ColourDetails
 '   3. Review content of the DOCX file created by BuildingBlocks_ExportAll(), if there are unwanted styles.
 ' Created by AI and ms on 2025-02-18.
 
-Sub DeleteStylesOtherThanInTemplate()
+Sub DeleteStylesOtherThanInTemplateFile()
     Dim TemplatePath As String
     Dim style As style
     Dim deletedStyles As String
@@ -129,7 +130,7 @@ Sub DeleteStylesOtherThanInTemplate()
     
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Styles
-    Dim MacroName As String:    MacroName = "DeleteStylesOtherThanInTemplate"
+    Dim MacroName As String:    MacroName = "DeleteStylesOtherThanInTemplateFile"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Check if the currently opened document is a template file
@@ -338,7 +339,7 @@ End Function
 ' Lists / logs only style names which contain the suffix C_StyleSuffix (" ms") in currently active document.
 ' Created by AI and ms on 2025-01-28.
 ' 2025-10-08 by ms, added additional conditions. Simplified sub.
-Sub ListNonBuiltInAndSuffixStyles()
+Sub ListCompliantStyles()
     Dim doc As Document
     Dim TemplatePath As String
     Dim style As style
@@ -359,7 +360,7 @@ Sub ListNonBuiltInAndSuffixStyles()
     
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Styles
-    Dim MacroName As String:    MacroName = "ListNonBuiltInAndSuffixStylesInTemplate"
+    Dim MacroName As String:    MacroName = "ListCompliantStylesInTemplate"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Get the currently active document
@@ -508,7 +509,7 @@ End Sub
 ' Warning: as side effect the additional styling added by a user will be lost. You've been warned.
 ' The recommended practice is to not change paragraph type styles. If you really need to do that, define a new style.
 ' 2025-02-13 by ms and AI
-Sub ReapplyStylesFromTemplate()
+Sub ReapplyStylesFromTemplateFull()
     Dim para As Paragraph
     Dim sec As Section
     Dim hdr As HeaderFooter
@@ -523,7 +524,7 @@ Sub ReapplyStylesFromTemplate()
     
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Styles
-    Dim MacroName As String:    MacroName = "ReapplyStylesFromTemplate"
+    Dim MacroName As String:    MacroName = "ReapplyStylesFromTemplateFull"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Display warning message
@@ -573,7 +574,7 @@ Sub ReapplyStylesFromTemplate()
         End If
         ' Increment checked paragraphs counter
         checkedParagraphs = checkedParagraphs + 1
-        ReapplyStylesFromTemplate_Form.ProgressLabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
+        ReapplyStylesFromTemplate_Form.progresslabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
         ' The DoEvents function in Visual Basic for Applications (VBA) for Microsoft Word is used to yield execution so that the operating system can process other events. This function allows the operating system to handle other tasks, such as updating the screen, responding to user inputs, or processing other events in the queue, while your macro is running
         DoEvents
     Next para
@@ -594,7 +595,7 @@ Sub ReapplyStylesFromTemplate()
                 End If
                 ' Increment checked paragraphs counter
                 checkedParagraphs = checkedParagraphs + 1
-                ReapplyStylesFromTemplate_Form.ProgressLabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
+                ReapplyStylesFromTemplate_Form.progresslabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
                 ' The DoEvents function in Visual Basic for Applications (VBA) for Microsoft Word is used to yield execution so that the operating system can process other events. This function allows the operating system to handle other tasks, such as updating the screen, responding to user inputs, or processing other events in the queue, while your macro is running
                 DoEvents
             Next para
@@ -614,7 +615,7 @@ Sub ReapplyStylesFromTemplate()
                 End If
                 ' Increment checked paragraphs counter
                 checkedParagraphs = checkedParagraphs + 1
-                ReapplyStylesFromTemplate_Form.ProgressLabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
+                ReapplyStylesFromTemplate_Form.progresslabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
                 ' The DoEvents function in Visual Basic for Applications (VBA) for Microsoft Word is used to yield execution so that the operating system can process other events. This function allows the operating system to handle other tasks, such as updating the screen, responding to user inputs, or processing other events in the queue, while your macro is running
                 DoEvents
             Next para
@@ -691,7 +692,7 @@ End Sub
 
 ' Restores or reapplies settings of a style assigned to paragraph. Each paragraph has assigned certain paragraph type style. Such style can be altered on time of editing by a user. The purpose of this macro is to restore original settings of style which was ssigned to the paragraph.
 ' Warning: as side effect the additional styling added by a user will be lost. You've been warned.
-' This is simplified version of the sub ReapplyStylesFromTemplate(), which do not ask additional question and there is no progress bar.
+' This is simplified version of the sub ReapplyStylesFromTemplateFull(), which do not ask additional question and there is no progress bar.
 ' 2025-02-13 by ms
 Sub ReapplyStylesFromTemplateSimple()
     Dim para As Paragraph
@@ -878,7 +879,7 @@ End Sub
 ' Copy or replace styles from currentlty attached template file in currently active document.
 ' All styles which names are finished with " ms" C_StyleSuffix and additionaly "TOC 1", "TOC 2", "TOC 3", "TOC 4"
 ' 2025-02-20 by ms and AI
-Sub CopyStylesFromTemplateToThisFile()
+Sub AddStylesFromTemplateFile()
     Dim TemplateDoc As Document
     Dim activeDoc As Document
     Dim styleName As String
@@ -890,7 +891,7 @@ Sub CopyStylesFromTemplateToThisFile()
     
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Styles
-    Dim MacroName As String:    MacroName = "CopyStylesFromTemplateToThisFile"
+    Dim MacroName As String:    MacroName = "AddStylesFromTemplateFile"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Define the TOC styles
@@ -1211,7 +1212,7 @@ End Sub
 ' 2025-11-16 by ms
 ' 2025-12-28 by ms
 ' 2026-01-15 by ms
-Sub CreateCustomStyles()
+Sub AddCompliantStyles()
     Dim IsSuccessful As Boolean
     IsSuccessful = False
     Dim CharCounter As Byte
@@ -1225,7 +1226,7 @@ Sub CreateCustomStyles()
     
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Styles
-    Dim MacroName As String:    MacroName = "CreateCustomStyles"
+    Dim MacroName As String:    MacroName = "AddCompliantStyles"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Paragraph Styles:
@@ -6335,7 +6336,7 @@ End Function
 ' There are numerous resons for that statement to be true at 2025.
 ' Work in progress.
 ' 2025-02-16 by ms
-Sub ListCustomStylesToTxt()
+Sub ListCustomStyles()
     Dim style As style
     Dim FilePath As String
     Dim filenum As Integer
@@ -6344,7 +6345,7 @@ Sub ListCustomStylesToTxt()
 
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Template
-    Dim MacroName As String:    MacroName = "ListCustomStylesToTxt"
+    Dim MacroName As String:    MacroName = "ListCustomStyles"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     ' Set the CustomizationContext to the currently active document
@@ -6759,7 +6760,7 @@ Private Sub ShowNonCompliantStylingInParagraphs()
 
         ' Update progress label
         PerVal = (i / NoTotalPar) * 100 ' Calculate percentage value
-        TemplateStyleValidation_Form.ProgressLabel = "Paragraph counter: " & i & " out of " & NoTotalPar & _
+        TemplateStyleValidation_Form.progresslabel = "Paragraph counter: " & i & " out of " & NoTotalPar & _
             " (" & Int(PerVal) & "%)" & vbNewLine & _
             "Compliant paragraph counter: " & NomsCompliantPar & vbNewLine & _
             "Non-compliant paragraph counter: " & NomsNotCompliantPar & vbNewLine & _
@@ -6949,7 +6950,7 @@ Sub DeleteNCHighlighting()
         
         ' Update progress label
         PerVal = (i / NoTotalPar) * 100 ' Calculate percentage value
-        TemplateStyleValidation_Form.ProgressLabel = "Paragraph counter: " & i & " out of " & NoTotalPar & _
+        TemplateStyleValidation_Form.progresslabel = "Paragraph counter: " & i & " out of " & NoTotalPar & _
             " (" & Int(PerVal) & "%)"
         ' The DoEvents function in Visual Basic for Applications (VBA) for Microsoft Word is used to yield execution so that the operating system can process other events. This function allows the operating system to handle other tasks, such as updating the screen, responding to user inputs, or processing other events in the queue, while your macro is running
         DoEvents
@@ -6987,13 +6988,13 @@ End Sub
 
 ' 2025-12-08 by ms and AI
 ' 2025-12-28 by ms
-Public Sub DeleteCustomStyles_KeepOnlyDefined()
+Public Sub DeleteNonCompliantStyles()
     Dim deletedStyles As Long, skippedStyles As Long, errStyles As Long
     Dim deletedLists  As Long, skippedLists  As Long, errLists  As Long
     
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Styles
-    Dim MacroName As String:    MacroName = "DeleteCustomStyles_KeepOnlyDefined"
+    Dim MacroName As String:    MacroName = "DeleteNonCompliantStyles"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Dim sty As style

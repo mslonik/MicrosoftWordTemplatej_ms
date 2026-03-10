@@ -11,7 +11,7 @@ Attribute VB_Name = "RibbonControl"
 ' undeclared variables.
 Option Explicit
 
-' tab: Layout_ms
+' tab: Custom_Tools
 ' group: CG_PageSize
 ' 2026-03-03 by ms
 Sub BttnPgFormats(control As IRibbonControl)
@@ -29,7 +29,7 @@ Sub BttnPgFormats(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Layout_ms
+' tab: Custom_Tools
 ' group: CG_BlankPages
 ' 2026-03-03 by ms
 Sub BttnBlankPages(control As IRibbonControl)
@@ -41,7 +41,7 @@ Sub BttnBlankPages(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Layout_ms
+' tab: Custom_Tools
 ' group: CG_SectionTools
 ' 2026-03-03 by ms
 Sub BttnSectionTools(control As IRibbonControl)
@@ -55,7 +55,7 @@ Sub BttnSectionTools(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Layout_ms
+' tab: Custom_Tools
 ' group: CG_DocProperties
 ' 2026-03-04 by ms
 Sub BttnDocProps(control As IRibbonControl)
@@ -71,7 +71,7 @@ Sub BttnDocProps(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Layout_ms
+' tab: Custom_Tools
 ' group: CG_Document
 ' 2026-03-04 by ms
 Sub BttnDocument(control As IRibbonControl)
@@ -89,7 +89,7 @@ Sub BttnDocument(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Layout_ms
+' tab: Custom_Tools
 ' group: CG_Theme
 ' 2026-03-04 by ms
 Sub BttnTheme(control As IRibbonControl)
@@ -99,7 +99,7 @@ Sub BttnTheme(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Layout_ms
+' tab: Custom_Tools
 ' group: CG_DocVariables
 ' 2026-03-04 by ms
 Sub BttnDocVar(control As IRibbonControl)
@@ -111,7 +111,7 @@ Sub BttnDocVar(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Layout_ms
+' tab: Custom_Tools
 ' group: CG_Comments
 ' 2026-03-04 by ms
 Sub BttnComment(control As IRibbonControl)
@@ -125,7 +125,7 @@ Sub BttnComment(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Layout_ms
+' tab: Custom_Tools
 ' group: CG_Canva
 ' 2026-03-04 by ms
 Sub BttnCanva(control As IRibbonControl)
@@ -139,7 +139,7 @@ Sub BttnCanva(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Layout_ms
+' tab: Custom_Tools
 ' group: CG_Captions
 ' 2026-03-04 by ms
 Sub BttnCaption(control As IRibbonControl)
@@ -153,7 +153,7 @@ Sub BttnCaption(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Layout_ms
+' tab: Custom_Tools
 ' group: CG_WordOptions
 ' 2026-03-04 by ms
 Sub BttnWO(control As IRibbonControl)
@@ -177,7 +177,7 @@ Sub BttnWO(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Layout_ms
+' tab: Custom_Tools
 ' group: CG_BefPrinting
 ' 2026-03-04 by ms
 Sub BttnBP(control As IRibbonControl)
@@ -193,7 +193,7 @@ Sub BttnBP(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Layout_ms
+' tab: Custom_Tools
 ' group: CG_Tables
 ' 2026-03-04 by ms
 Sub BttnTables(control As IRibbonControl)
@@ -205,7 +205,7 @@ Sub BttnTables(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Layout_ms
+' tab: Custom_Tools
 ' group: CG_Fonts
 ' 2026-03-04 by ms
 Sub BttnFonts(control As IRibbonControl)
@@ -215,7 +215,7 @@ Sub BttnFonts(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Layout_ms
+' tab: Custom_Tools
 ' group: CG_Fonts
 ' 2026-03-04 by ms
 Sub BttnTabulators(control As IRibbonControl)
@@ -229,4 +229,139 @@ Sub BttnTabulators(control As IRibbonControl)
     End Select
 End Sub
 
+' tab: Macros_Tools
+' 2026-03-09 by ms
+Sub BttnMacros(control As IRibbonControl)
+    Select Case control.ID
+        Case "Btn_MacrosImport"
+            Call Macros_ms.Macros.ImportAllVBAModules
+        Case "Btn_MacrosExport"
+            Call Macros_ms.Macros.ExportAllVBAModules
+        Case "Btn_MacrosDelExcept"
+            Call Macros_ms.Macros.DeleteAllVBAModulesExceptMacros
+        Case "Btn_MacrosDelAll"
+            Call Macros_ms.Macros.DeleteAllVBAModules
+    
+        Case "Btn_MacrosCounter"
+            Call Macros_ms.Macros.ShowMacrosCounter
+        Case "Btn_MacrosList"
+            Call Macros_ms.Macros.ListMacros
+        Case "Btn_MacrosNonAscii"
+            Call Macros_ms.Macros.ScanProjectForNonAscii
+    End Select
+End Sub
+
+' tab: BB_Tools
+' 2026-03-09 by ms
+Sub BttnBB(control As IRibbonControl)
+    Select Case control.ID
+        Case "Btn_BBExportAll"
+            Call Macros_ms.BuildingBlocks.BB_ExportAll
+        Case "Btn_BBExportSel"
+            Call Macros_ms.BuildingBlocks.BB_ExportSelectedCategories
+        Case "Btn_BBOpenBuiltIn"
+            Call Macros_ms.BuildingBlocks.BB_OpenBuiltInTemplate
+        Case "Btn_BBDelAll"
+            Call Macros_ms.BuildingBlocks.BB_DeleteAll
+        Case "Btn_BBList"
+            Call Macros_ms.BuildingBlocks.BB_List
+            
+        Case "Btn_BBAdd"
+            Call Macros_ms.BuildingBlocks.BB_Add
+        Case "Btn_BBTemp"
+            Call Macros_ms.BuildingBlocks.BB_InsertBBTemplate
+        Case "Btn_BBRemHead"
+            Call Macros_ms.BuildingBlocks.BB_RemoveDefParagraphs
+    End Select
+End Sub
+
+' tab: Shortcuts
+' 2026-03-09 by ms
+Sub BttnShortcuts(control As IRibbonControl)
+    Select Case control.ID
+        Case "Btn_HotMacros"
+            Call Macros_ms.Shortcuts.ShowFormHotMacros
+        Case "Btn_HotHotstrings"
+            Call Macros_ms.Shortcuts.ShowFormHotstrings
+        Case "Btn_HotHotkeys"
+            Call Macros_ms.Shortcuts.ShowFormHotkeys
+        
+        Case "Btn_DelStyleShortcuts"
+            Call Macros_ms.Shortcuts.ClearActiveDocumentStyleShortcuts
+        Case "Btn_DelMacroShortcuts"
+            Call Macros_ms.Shortcuts.ClearActiveDocumentMacroShortcuts
+        Case "Btn_DefMacroFullShortcuts"
+            Call Macros_ms.Shortcuts.RemoveActiveDocumentMacroShortcuts
+        
+        Case "Btn_AddMacroShortcuts"
+            Call Macros_ms.Shortcuts.CreateActiveDocumentMacroShortcuts
+        
+        Case "Btn_ListStyles"
+            Call Macros_ms.Shortcuts.ListHotkeysToTxt
+        Case "Btn_ListMacros"
+            Call Macros_ms.Shortcuts.ListHotMacrosToTxt
+        Case "Btn_ListHotstrings"
+            Call Macros_ms.Shortcuts.ListHotstringsToTxt
+        Case "Btn_ListAllHots"
+            Call Macros_ms.Shortcuts.ListAllShortcutsToTxt
+    
+        Case "Btn_ListCommands"
+            Call Macros_ms.Shortcuts.ListAllMWCommandsToDOCX
+        Case "Btn_ListShortcuts"
+            Call Macros_ms.Shortcuts.ListMWShortcutsToDOCX
+    End Select
+End Sub
+
+' tab: Styles
+' 2026-03-10 by ms
+Sub BttnStyles(control As IRibbonControl)
+    Select Case control.ID
+        Case "Btn_DelUnused"
+            Call Macros_ms.StylesM.DeleteUnusedStyles
+        
+        Case "Btn_SwitchOffAuto"
+            Call Macros_ms.StylesM.SwitchOffAutoupdate
+        
+        Case "Btn_ShowNoncompliant"
+            Call Macros_ms.StylesM.ShowNonComplientStyling
+        Case "Btn_DelNCStylingBookmarks"
+            Call Macros_ms.StylesM.DeleteAllNCstylingBookmarks
+        Case "Btn_DelNCHighlighting"
+            Call Macros_ms.StylesM.DeleteNCHighlighting
+        
+        Case "Btn_AddCompliant"
+            Call Macros_ms.StylesM.AddCompliantStyles
+        Case "Btn_DelNonCompliant"
+            Call Macros_ms.StylesM.DeleteNonCompliantStyles
+        
+        Case "Btn_ApplyTheme"
+            Call Macros_ms.Theme.AttachTheme
+            
+        Case "Btn_OutputTxtInUse"
+            Call Macros_ms.StylesM.ListStylesCurrentlyInUse
+        Case "Btn_OutputTxtCompliant"
+            Call Macros_ms.StylesM.ListCompliantStyles
+        Case "Btn_OutputTxtBuiltin"
+            Call Macros_ms.StylesM.ListBuiltInStyles
+        Case "Btn_OutputTxtStylesCustom"
+            Call Macros_ms.StylesM.ListCustomStyles
+            
+        Case "Btn_ReapplySimple"
+            Call Macros_ms.StylesM.ReapplyStylesFromTemplateSimple
+        Case "Btn_ReapplyFull"
+            Call Macros_ms.StylesM.ReapplyStylesFromTemplateFull
+    
+        Case "Btn_ListTemplatesShowNamed"
+            Call Macros_ms.StylesM.ListTemplatesShowNamed
+        Case "Btn_ListTemplatesShowAll"
+            Call Macros_ms.StylesM.ListTemplatesListAll
+        Case "Btn_ListTemplatesResetLists"
+            Call Macros_ms.StylesM.ResetAllListGalleries
+    
+        Case "Btn_TemplateAdd"
+            Call Macros_ms.StylesM.ReapplyStylesFromTemplateSimple
+        Case "Btn_TemplateDelOther"
+            Call Macros_ms.StylesM.ReapplyStylesFromTemplateFull
+    End Select
+End Sub
 
