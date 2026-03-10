@@ -390,3 +390,11 @@ Sub BttnVal(control As IRibbonControl)
     End Select
 End Sub
 
+' tab: Content_ms
+' 2026-03-10 by ms
+Sub BttnContent(control As IRibbonControl)
+    Select Case control.ID
+        Case "Btn_NewFile"
+            Call Macros_ms.Content.NewFileContent
+    End Select
+End Sub

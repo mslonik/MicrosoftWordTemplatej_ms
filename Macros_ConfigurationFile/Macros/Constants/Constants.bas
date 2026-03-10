@@ -216,7 +216,7 @@ Public Const C_SC_AltCtrlP As String = "Alt + Ctrl + P"         ' FormatParagrap
 Public Const C_SC_AltCtrlSqOpen As String = "Alt + Ctrl + ["    ' ToggleHeading
 
 ' C_DV = Constant DocumentVariable
-Public Const C_DV_NewFileConfAndContent As String = "NewFileConfAndContent"
+Public Const C_DV_NewFileContent As String = "NewFileContent"
 
 ' Characters to flag explicitly, used in module Macros ->
 Public Const ZWSP   As Long = &H200B

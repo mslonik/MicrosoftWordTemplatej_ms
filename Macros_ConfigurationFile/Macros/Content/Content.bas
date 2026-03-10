@@ -1,5 +1,5 @@
-Attribute VB_Name = "Scenarios"
-' VBA Module name: Scenarios.bas
+Attribute VB_Name = "Content"
+' VBA Module name: Content.bas
 ' https://github.com/mslonik/Microsoft-Word-Configuration
 '
 '   License: MIT License.
@@ -7,7 +7,7 @@ Attribute VB_Name = "Scenarios"
 '+----+-----------------------------------------+--------------+----------------+-----------------------------------------+
 '| No | Sub name                                | Ribbon name  | Ribbon section | Ribbon button name                      |
 '+----+-----------------------------------------+--------------+----------------+-----------------------------------------+
-'| 3  | NewFileConfAndContent                   | Scenarios_ms | Combos         | NewFileConfAndContent                   |
+'| 3  | NewFileContent                          | Scenarios_ms | Combos         | NewFileContent                          |
 '+----+-----------------------------------------+--------------+----------------+-----------------------------------------+
 '
 ' Subs related to keyboard shortcuts:
@@ -68,11 +68,11 @@ Sub ApplyDistanceBetweenNumberingAndHeading()
 '    Call Macros_ms.StylesM.InsertTextAtBeginningOfListParagraphs(textToInsert:=BetweenNumberAndText)
     
     ' Enable error handling in case that user presses 'Cancel' button.
-    On Error Resume Next
+'    On Error Resume Next
     ' Execute the built-in Save command
     ActiveDocument.Save
     ' This statement turns off the error handling that was set by On Error Resume Next. It restores the default error handling behavior, which means that if an error occurs after this point, VBA will stop execution and display an error message.
-    On Error GoTo 0
+'    On Error GoTo 0
     Application.StatusBar = MsgBoxTitle & " > " & "was running..."
     
 End Sub
@@ -97,10 +97,10 @@ End Sub
 
 ' Insert full content: cover page, last page and example content: 3 sections in total.
 ' 2025-03-19 ms and AI
-Sub NewFileConfAndContent()
+Sub NewFileContent()
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Scenarios
-    Dim MacroName As String:    MacroName = "NewFileConfAndContent"
+    Dim MacroName As String:    MacroName = "NewFileContent"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
             
     ' Check if the add-in template is enabled
