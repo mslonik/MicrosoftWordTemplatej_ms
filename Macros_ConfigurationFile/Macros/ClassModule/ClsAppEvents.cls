@@ -9,9 +9,11 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 ' This trick enables checking of substituted fonts in every newly opened file in Microsoft Word.
 ' 2025-08-28 by ms and AI
+' 2026-03-10 by ms
 Public WithEvents appWord As Word.Application
 Attribute appWord.VB_VarHelpID = -1
 
 Private Sub AppWord_DocumentOpen(ByVal doc As Word.Document)
-    Call ShowSubstitutedFonts(doc)   ' in module Fonts
+    Call Macros_ms.Fonts.ShowSubstitutedFonts(doc)
+    Call Macros_ms.Tools.UpdateDisplayStateOnFileOpen
 End Sub

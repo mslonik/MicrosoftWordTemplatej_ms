@@ -49,7 +49,7 @@ Sub ResetDistanceBetweenNumberingAndHeading()
         Exit Sub
     End If
     
-    Call Macros_ms.Scenarios.InitializeConstants
+    Call Macros_ms.Content.InitializeConstants
     Call Macros_ms.StylesM.RemoveTextFromBeginningOfListParagraphs(textToRemove:=BetweenNumberAndText)
 End Sub
 
@@ -235,7 +235,7 @@ Sub NewFileContent()
     
     ' If basic content is selected, call the following set of macros
     If UserDecision = vbNo Then
-        Call Macros_ms.Scenarios.InsertBasicContent(TemplateIndex)
+        Call Macros_ms.Content.InsertBasicContent(TemplateIndex)
         Call Macros_ms.BuildingBlocks.BB_RemoveDefParagraphs
         If DocPropertiesFlag = msoTrue Then
             Call Macros_ms.Tools.DocPropertiesAddCustom
@@ -257,7 +257,7 @@ Sub NewFileContent()
                 Title:=MsgBoxTitle
             Exit Sub
         End If
-        Call Macros_ms.Scenarios.InsertFullContent(TemplateIndex)
+        Call Macros_ms.Content.InsertFullContent(TemplateIndex)
         Call Macros_ms.BuildingBlocks.BB_RemoveDefParagraphs
         If DocPropertiesFlag = msoTrue Then
             Call Macros_ms.Tools.DocPropertiesAddCustom
