@@ -7,7 +7,7 @@ Attribute VB_Name = "Content"
 '+----+-----------------------------------------+--------------+----------------+-----------------------------------------+
 '| No | Sub name                                | Ribbon name  | Ribbon section | Ribbon button name                      |
 '+----+-----------------------------------------+--------------+----------------+-----------------------------------------+
-'| 3  | NewFileContent                          | Scenarios_ms | Combos         | NewFileContent                          |
+'| 3  | NewFileContent                          | Content_ms | Combos         | NewFileContent                          |
 '+----+-----------------------------------------+--------------+----------------+-----------------------------------------+
 '
 ' Subs related to keyboard shortcuts:
@@ -15,8 +15,8 @@ Attribute VB_Name = "Content"
 '| Ctrl + F2 | CustomizedPrintPreviewAndPrint          |
 '
 ' Outdated (no longer used):
-'| 1  | ApplyDistanceBetweenNumberingAndHeading | Scenarios_ms | Combos         | ApplyDistanceBetweenNumberingAndHeading |
-'| 2  | ResetDistanceBetweenNumberingAndHeading | Scenarios_ms | Combos         | ResetDistanceBetweenNumberingAndHeading |
+'| 1  | ApplyDistanceBetweenNumberingAndHeading | Content_ms | Combos         | ApplyDistanceBetweenNumberingAndHeading |
+'| 2  | ResetDistanceBetweenNumberingAndHeading | Content_ms | Combos         | ResetDistanceBetweenNumberingAndHeading |
 '
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 Option Explicit
@@ -32,7 +32,7 @@ End Sub
 ' 2025-03-09 by ms
 Sub ResetDistanceBetweenNumberingAndHeading()
     Dim FileName As String:     FileName = C_F_Macros
-    Dim ModuleName As String:   ModuleName = C_M_Scenarios
+    Dim ModuleName As String:   ModuleName = C_M_Content
     Dim MacroName As String:    MacroName = "ResetDistanceBetweenNumberingAndHeading"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
@@ -59,12 +59,12 @@ End Sub
 ' 2026-01-17 by ms
 Sub ApplyDistanceBetweenNumberingAndHeading()
     Dim FileName As String:      FileName = C_F_Macros
-    Dim ModuleName As String:    ModuleName = C_M_Scenarios
+    Dim ModuleName As String:    ModuleName = C_M_Content
     Dim MacroName As String:     MacroName = "ApplyDistanceBetweenNumberingAndHeading"
     Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     ' Initialize em space constant as BetweenNumberAndText
-'    Call Macros_ms.Scenarios.InitializeConstants
+'    Call Macros_ms.Content.InitializeConstants
 '    Call Macros_ms.StylesM.InsertTextAtBeginningOfListParagraphs(textToInsert:=BetweenNumberAndText)
     
     ' Enable error handling in case that user presses 'Cancel' button.
@@ -99,7 +99,7 @@ End Sub
 ' 2025-03-19 ms and AI
 Sub NewFileContent()
     Dim FileName As String:     FileName = C_F_Macros
-    Dim ModuleName As String:   ModuleName = C_M_Scenarios
+    Dim ModuleName As String:   ModuleName = C_M_Content
     Dim MacroName As String:    MacroName = "NewFileContent"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
             

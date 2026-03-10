@@ -1554,7 +1554,7 @@ End Sub
 Private Sub SetShortcut_SaveFileApplyNumberingDistance(ByVal IfMsgBox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_CtrlS, _
-        WhichMacro:="Macros_ms.Scenarios.ApplyDistanceBetweenNumberingAndHeading", _
+        WhichMacro:="Macros_ms.Content.ApplyDistanceBetweenNumberingAndHeading", _
         IfMsgBox:=IfMsgBox)
 End Sub
 
@@ -1570,7 +1570,7 @@ End Sub
 Private Sub SetShortcut_CloseFileApplyUpdateFields(ByVal IfMsgBox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_CtrlW, _
-        WhichMacro:="Macros_ms.Scenarios.UpdateAllFieldsAndCloseFile", _
+        WhichMacro:="Macros_ms.Content.UpdateAllFieldsAndCloseFile", _
         IfMsgBox:=IfMsgBox)
 End Sub
 
@@ -1586,7 +1586,7 @@ End Sub
 Private Sub SetShortcut_CustomizedPrintPreviewAndPrint(ByVal IfMsgBox As String)
     Call SetKeyBindingMacro( _
         KeybShortcut:=C_SC_CtrlF2, _
-        WhichMacro:="Macros_ms.Scenarios.CustomizedPrintPreviewAndPrint", _
+        WhichMacro:="Macros_ms.Content.CustomizedPrintPreviewAndPrint", _
         IfMsgBox:=IfMsgBox)
 End Sub
 
