@@ -11,7 +11,7 @@ Attribute VB_Name = "RibbonControl"
 ' undeclared variables.
 Option Explicit
 
-' tab: Custom_Tools
+' tab: Tools_ms
 ' group: CG_PageSize
 ' 2026-03-03 by ms
 Sub BttnPgFormats(control As IRibbonControl)
@@ -29,7 +29,7 @@ Sub BttnPgFormats(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Custom_Tools
+' tab: Tools_ms
 ' group: CG_BlankPages
 ' 2026-03-03 by ms
 Sub BttnBlankPages(control As IRibbonControl)
@@ -41,7 +41,7 @@ Sub BttnBlankPages(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Custom_Tools
+' tab: Tools_ms
 ' group: CG_SectionTools
 ' 2026-03-03 by ms
 Sub BttnSectionTools(control As IRibbonControl)
@@ -55,7 +55,7 @@ Sub BttnSectionTools(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Custom_Tools
+' tab: Tools_ms
 ' group: CG_DocProperties
 ' 2026-03-04 by ms
 Sub BttnDocProps(control As IRibbonControl)
@@ -71,7 +71,7 @@ Sub BttnDocProps(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Custom_Tools
+' tab: Tools_ms
 ' group: CG_Document
 ' 2026-03-04 by ms
 Sub BttnDocument(control As IRibbonControl)
@@ -89,7 +89,7 @@ Sub BttnDocument(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Custom_Tools
+' tab: Tools_ms
 ' group: CG_Theme
 ' 2026-03-04 by ms
 Sub BttnTheme(control As IRibbonControl)
@@ -99,7 +99,7 @@ Sub BttnTheme(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Custom_Tools
+' tab: Tools_ms
 ' group: CG_DocVariables
 ' 2026-03-04 by ms
 Sub BttnDocVar(control As IRibbonControl)
@@ -111,7 +111,7 @@ Sub BttnDocVar(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Custom_Tools
+' tab: Tools_ms
 ' group: CG_Comments
 ' 2026-03-04 by ms
 Sub BttnComment(control As IRibbonControl)
@@ -125,7 +125,7 @@ Sub BttnComment(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Custom_Tools
+' tab: Tools_ms
 ' group: CG_Canva
 ' 2026-03-04 by ms
 Sub BttnCanva(control As IRibbonControl)
@@ -139,7 +139,7 @@ Sub BttnCanva(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Custom_Tools
+' tab: Tools_ms
 ' group: CG_Captions
 ' 2026-03-04 by ms
 Sub BttnCaption(control As IRibbonControl)
@@ -153,7 +153,7 @@ Sub BttnCaption(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Custom_Tools
+' tab: Tools_ms
 ' group: CG_WordOptions
 ' 2026-03-04 by ms
 Sub BttnWO(control As IRibbonControl)
@@ -177,7 +177,7 @@ Sub BttnWO(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Custom_Tools
+' tab: Tools_ms
 ' group: CG_BefPrinting
 ' 2026-03-04 by ms
 Sub BttnBP(control As IRibbonControl)
@@ -193,7 +193,7 @@ Sub BttnBP(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Custom_Tools
+' tab: Tools_ms
 ' group: CG_Tables
 ' 2026-03-04 by ms
 Sub BttnTables(control As IRibbonControl)
@@ -205,7 +205,7 @@ Sub BttnTables(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Custom_Tools
+' tab: Tools_ms
 ' group: CG_Fonts
 ' 2026-03-04 by ms
 Sub BttnFonts(control As IRibbonControl)
@@ -215,7 +215,7 @@ Sub BttnFonts(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Custom_Tools
+' tab: Tools_ms
 ' group: CG_Fonts
 ' 2026-03-04 by ms
 Sub BttnTabulators(control As IRibbonControl)
@@ -229,7 +229,7 @@ Sub BttnTabulators(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Macros_Tools
+' tab: Macros_ms
 ' 2026-03-09 by ms
 Sub BttnMacros(control As IRibbonControl)
     Select Case control.ID
@@ -251,7 +251,7 @@ Sub BttnMacros(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: BB_Tools
+' tab: BB_Tools_ms
 ' 2026-03-09 by ms
 Sub BttnBB(control As IRibbonControl)
     Select Case control.ID
@@ -275,7 +275,7 @@ Sub BttnBB(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Shortcuts
+' tab: Shortcuts_ms
 ' 2026-03-09 by ms
 Sub BttnShortcuts(control As IRibbonControl)
     Select Case control.ID
@@ -312,7 +312,7 @@ Sub BttnShortcuts(control As IRibbonControl)
     End Select
 End Sub
 
-' tab: Styles
+' tab: Styles_ms
 ' 2026-03-10 by ms
 Sub BttnStyles(control As IRibbonControl)
     Select Case control.ID
@@ -362,6 +362,31 @@ Sub BttnStyles(control As IRibbonControl)
             Call Macros_ms.StylesM.ReapplyStylesFromTemplateSimple
         Case "Btn_TemplateDelOther"
             Call Macros_ms.StylesM.ReapplyStylesFromTemplateFull
+    End Select
+End Sub
+
+' tab: Validation_ms
+' 2026-03-10 by ms
+Sub BttnVal(control As IRibbonControl)
+    Select Case control.ID
+        Case "Btn_TablesFormat"
+            Call Macros_ms.Validation.Tables_Format
+        Case "Btn_TablesCheckNesting"
+            Call Macros_ms.Validation.Tables_CheckNestingLevel
+        
+        Case "Btn_UpdateAllFields"
+            Call Macros_ms.Validation.UpdateAllFields
+        Case "Btn_NoBrakeSpace"
+            Call Macros_ms.Validation.InsertNoBrakeSpace
+        Case "Btn_ReplaceUnwanted"
+            Call Macros_ms.Validation.ReplaceUnwantedTextstrings
+        Case "Btn_ModifyReferences"
+            Call Macros_ms.Validation.ModifyReferencesToPicTab
+            
+        Case "Btn_FindCharStyle"
+            Call Macros_ms.Validation.FindCharacterStyling
+        Case "Btn_FindParStyle"
+            Call Macros_ms.Validation.FindParagraphStyling
     End Select
 End Sub
 

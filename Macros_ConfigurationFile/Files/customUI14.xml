@@ -1040,6 +1040,87 @@
         </group>
             
     </tab>
+
+    <tab id="Validation" 
+         label="Validation_ms">
+        <group id="CG_ValTables" 
+                label="Tables"
+                visible="true">
+            <button id="Btn_TablesFormat" 
+                    label="Format" 
+                    size="large"
+                    imageMso="ChartFormatDataTable" 
+                    onAction="RibbonControl.BttnVal"
+                    screentip="Format Tables"
+                    supertip="Format all tables in ActiveDocument, one by one, according to specified styling. Macro: Tables_Format." />
+            <button id="Btn_TablesCheckNesting" 
+                    label="Check Nesting" 
+                    size="large"
+                    imageMso="TimelineStyles" 
+                    onAction="RibbonControl.BttnVal"
+                    screentip="Check Nesting"
+                    supertip="Check nesting of all tables in ActiveDocument. If there is one table embedded (nested) in another table, warning is shown. Macro: Tables_CheckNestingLevel." />
+        </group>
+            
+        <group id="CG_ValTools"
+                label="Tools"
+                visible="true">
+            <button id="Btn_UpdateAllFields" 
+                    label="Update All Fields" 
+                    size="large"
+                    imageMso="UpdateAsScheduledMenu" 
+                    onAction="RibbonControl.BttnVal"
+                    screentip="Update All Fields"
+                    supertip="Update all fields in ActiveDocument, not only in document body, but also in headers and footers. Macro: UpdateAllFields." />
+            <button id="Btn_NoBrakeSpace" 
+                    label="Insert No-brake Space" 
+                    size="large"
+                    imageMso="Break" 
+                    onAction="RibbonControl.BttnVal"
+                    screentip="Insert No-brake Space"
+                    supertip="Insert no-brake space in all captions 'Tab.' and 'Pic.' in ActiveDocument. Macro: InsertNoBrakeSpace." />
+            <button id="Btn_ReplaceUnwanted" 
+                    label="Replace Unwanted" 
+                    size="large"
+                    imageMso="ReplaceDialog" 
+                    onAction="RibbonControl.BttnVal"
+                    screentip="Replace Unwanted"
+                    supertip="Replace unwanted text strings from ActiveDocument: double spaces, double dots, single dots, single pause, single paragraphs, etc. Macro: ReplaceUnwantedTextstrings." />
+            <button id="Btn_ModifyReferences" 
+                    label="Modify References" 
+                    size="large"
+                    imageMso="TableSharePointListsModifyWorkflow" 
+                    onAction="RibbonControl.BttnVal"
+                    screentip="Modify References"
+                    supertip="Modify references in document body, to change letter capitalization: 'see Pic. 24' to 'see pic. 24'. Macro: ModifyReferencesToPicTab." />
+        </group>            
+            
+        <group id="CG_ValFind"
+                label="Find style"
+                visible="true">
+          <menu id="Menu_ValFind" 
+                label="Find Styles" 
+                imageMso="UpdateFolderList" 
+                size="large" 
+                itemSize="large"
+                screentip="Find Styles"
+                supertip="Find Styles in ActiveDocument.">
+            <button id="Btn_FindCharStyle" 
+                    label="Find Character Style" 
+                    imageMso="AdvancedFind" 
+                    onAction="RibbonControl.BttnVal"
+                    screentip="Find Character Style"
+                    supertip="Find character style in ActiveDocument. Macro: FindCharacterStyling." />
+            <button id="Btn_FindParStyle" 
+                    label="Find Paragraph Style" 
+                    imageMso="CatalogMergeFindRecipient" 
+                    onAction="RibbonControl.BttnVal"
+                    screentip="Find Paragraph Style"
+                    supertip="Find paragraph style in ActiveDocument. Macro: FindParagraphStyling." />
+          </menu>
+        </group>
+            
+    </tab>
           
     </tabs>
   </ribbon>
