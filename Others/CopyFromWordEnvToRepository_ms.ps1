@@ -29,7 +29,7 @@ $RepoBase = Join-Path $UserProfile "Documents\GitHub\MicrosoftWordTemplate_ms"
 # Define file name variables
 $RibbonCustomization = "RibbonCustomizations_ms.exportedUI"
 $Macros = "Macros_ms.dotm"
-$BuildingBlocks = "BB_ms.dotm"
+$BuildingBlocks = "BB_ms.dotx"
 $Theme = "Theme_ms.thmx"
 
 # Define reversed source and destination mappings

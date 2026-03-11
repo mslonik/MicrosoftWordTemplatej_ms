@@ -328,7 +328,9 @@ Sub BB_ExportAll()
     SavePath = Options.DefaultFilePath(wdDocumentsPath) & "\" & NewFilename & "_BB_Content.docx"
     
     ' Make sure the new document contains all "ms" styles
-    Call Macros_ms.StylesM.CreateCustomStyles
+    Call Macros_ms.StylesM.AddCompliantStyles
+    Call Macros_ms.Theme.AttachTheme
+    Call Macros_ms.Tools.SetPageLayout_A4_H_1_2
         
     Set bbe = MainTemplate.BuildingBlockEntries
     If bbe.count = 0 Then
@@ -459,7 +461,7 @@ Sub BB_ExportSelectedCategories()
     SavePath = Options.DefaultFilePath(wdDocumentsPath) & "\" & NewFilename & "_BB_Content.docx"
     
     ' Make sure the new document contains all "ms" styles
-    Call Macros_ms.StylesM.CreateCustomStyles     ' in module Styles
+    Call Macros_ms.StylesM.AddCompliantStyles     ' in module Styles
 
     ' Get the BuildingBlockEntries collection from the template
     Set bbe = ActiveDocument.AttachedTemplate.BuildingBlockEntries
@@ -683,7 +685,7 @@ End Sub
 ' 2025-12-28 by ms
 Sub BB_Add()
     On Error GoTo ErrHandler
-    Dim MyRng As Word.Range
+    Dim myRng As Word.Range
     Dim MyTemplate As Template
     Dim TemplatePath As String
 
@@ -694,7 +696,7 @@ Sub BB_Add()
     Dim MsgBoxTitle As String
     MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
-    Set MyRng = Selection.Range
+    Set myRng = Selection.Range
     TemplatePath = Options.DefaultFilePath(wdStartupPath) & "\" & C_F_BuildingBlocks
     Set MyTemplate = Templates(TemplatePath)
     If MyTemplate Is Nothing Then
@@ -755,14 +757,14 @@ Sub BB_Add()
         Name:=bbName, _
         Type:=CInt(bbType), _
         Category:=bbCategory, _
-        Range:=MyRng, _
+        Range:=myRng, _
         Description:=bbDescription, _
         InsertOptions:=CInt(bbInsertOptions)
     
     MyTemplate.Save
     
     ' Clear object variables
-    Set MyRng = Nothing
+    Set myRng = Nothing
     Set MyTemplate = Nothing
     
     MsgBox _
@@ -777,7 +779,7 @@ Sub BB_Add()
 
 ErrHandler:
     ' Clear object variables
-    Set MyRng = Nothing
+    Set myRng = Nothing
     Set MyTemplate = Nothing
     MsgBox _
         Prompt:="Error: " & Err.Number & " - " & Err.Description, _
@@ -788,7 +790,7 @@ End Sub
 ' 2025-12-21 by ms and AI
 Sub BB_InsertBBTemplate()
     Dim InsertText As String
-    Dim MyRng As Range
+    Dim myRng As Range
     
     ' Prepare the text with paragraph breaks
     InsertText = C_TTR_name & "MyBuildingBlockTemplate" & vbNewLine & _
@@ -798,15 +800,15 @@ Sub BB_InsertBBTemplate()
                  C_TTR_insertoptions & "wdInsertContent | wdInsertParagraph | wdInsertPage"
     
    ' Take a snapshot of the current Selection as a Range (no UI typing)
-    Set MyRng = Selection.Range
+    Set myRng = Selection.Range
     ' Collapse to the insertion point (end of selection/caret)
-    MyRng.Collapse Direction:=wdCollapseEnd
+    myRng.Collapse Direction:=wdCollapseEnd
     
     ' Insert text after the caret
-    MyRng.InsertAfter InsertText
+    myRng.InsertAfter InsertText
     ' No change to Selection: the user's caret remains where it was
     ' Clear object variables
-    Set MyRng = Nothing
+    Set myRng = Nothing
 End Sub
 
 ' 2025-12-21 by ms and AI

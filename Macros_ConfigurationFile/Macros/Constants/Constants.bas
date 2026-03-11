@@ -23,7 +23,7 @@ Public Const C_FT_AntiHomoglyph As String = "Consolas"
 ' File names
 Public Const C_F_BBB = "Built-In Building Blocks.dotx"          ' BBB = Built-in BuildingBlocks, default file (re)created by Microsoft Word
 Public Const C_F_Normal = "Normal.dotm"
-Public Const C_F_BuildingBlocks As String = "BB_ms.dotm"        ' Name of the template file containing BuildingBlocks
+Public Const C_F_BuildingBlocks As String = "BB_ms.dotx"        ' Name of the template file containing BuildingBlocks
 Public Const C_F_Theme As String = "Theme_ms.thmx"
 Public Const C_F_Macros As String = "Macros_ms.dotm"
 
