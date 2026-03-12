@@ -328,7 +328,7 @@ Public Sub InitParagraphStyles()
         Array("C_S_ParNormalAB", "ParNormalAB ms"), _
         Array("C_S_ParPictureCanva", "ParPictureCanva ms"), _
         Array("C_S_ParSourceCode", "ParSourceCode ms"), _
-        Array("C_S_TOC1", "TOC1"), Array("C_S_TOC2", "TOC2"), Array("C_S_TOC3", "TOC3"), _
+        Array("C_S_TOC1", "TOC1"), Array("C_S_TOC2", "TOC2"), Array("C_S_TOC3", "TOC3"), Array("C_S_TOC8", "TOC8"), Array("C_S_TOC9", "TOC9"), _
         Array("C_S_TextBoxes", "ParTextBoxes ms"), _
         Array("C_S_ListNumRef", "ParNumRef ms"), _
         Array("C_S_ListNumTable", "ParListInTable ms"), _

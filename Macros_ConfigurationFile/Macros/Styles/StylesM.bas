@@ -73,6 +73,8 @@ Attribute VB_Name = "StylesM"
 'CreateStyle_TOC1
 'CreateStyle_TOC2
 'CreateStyle_TOC3
+'CreateStyle_TOC8
+'CreateStyle_TOC9
 'CreateStyle_ParTextBoxesMs
 'CreateStyle_ParNumRefMs
 'CreateStyle_ParListInTableMs
@@ -574,7 +576,7 @@ Sub ReapplyStylesFromTemplateFull()
         End If
         ' Increment checked paragraphs counter
         checkedParagraphs = checkedParagraphs + 1
-        ReapplyStylesFromTemplate_Form.ProgressLabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
+        ReapplyStylesFromTemplate_Form.progresslabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
         ' The DoEvents function in Visual Basic for Applications (VBA) for Microsoft Word is used to yield execution so that the operating system can process other events. This function allows the operating system to handle other tasks, such as updating the screen, responding to user inputs, or processing other events in the queue, while your macro is running
         DoEvents
     Next para
@@ -595,7 +597,7 @@ Sub ReapplyStylesFromTemplateFull()
                 End If
                 ' Increment checked paragraphs counter
                 checkedParagraphs = checkedParagraphs + 1
-                ReapplyStylesFromTemplate_Form.ProgressLabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
+                ReapplyStylesFromTemplate_Form.progresslabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
                 ' The DoEvents function in Visual Basic for Applications (VBA) for Microsoft Word is used to yield execution so that the operating system can process other events. This function allows the operating system to handle other tasks, such as updating the screen, responding to user inputs, or processing other events in the queue, while your macro is running
                 DoEvents
             Next para
@@ -615,7 +617,7 @@ Sub ReapplyStylesFromTemplateFull()
                 End If
                 ' Increment checked paragraphs counter
                 checkedParagraphs = checkedParagraphs + 1
-                ReapplyStylesFromTemplate_Form.ProgressLabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
+                ReapplyStylesFromTemplate_Form.progresslabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
                 ' The DoEvents function in Visual Basic for Applications (VBA) for Microsoft Word is used to yield execution so that the operating system can process other events. This function allows the operating system to handle other tasks, such as updating the screen, responding to user inputs, or processing other events in the queue, while your macro is running
                 DoEvents
             Next para
@@ -1586,6 +1588,28 @@ Sub AddCompliantStyles()
     If IsSuccessful = False Then
         MsgBox _
             Prompt:="Error on time of creation the paragraph style " & vbNewLine & wdStyleTOC3 & vbNewLine & ". Exiting.", _
+            Buttons:=vbCritical, _
+            Title:=MsgBoxTitle
+        Exit Sub
+    Else
+        ParagraphCounter = ParagraphCounter + 1
+    End If
+    
+    IsSuccessful = CreateStyle_TOC8
+    If IsSuccessful = False Then
+        MsgBox _
+            Prompt:="Error on time of creation the paragraph style " & vbNewLine & wdStyleTOC8 & vbNewLine & ". Exiting.", _
+            Buttons:=vbCritical, _
+            Title:=MsgBoxTitle
+        Exit Sub
+    Else
+        ParagraphCounter = ParagraphCounter + 1
+    End If
+    
+    IsSuccessful = CreateStyle_TOC9
+    If IsSuccessful = False Then
+        MsgBox _
+            Prompt:="Error on time of creation the paragraph style " & vbNewLine & wdStyleTOC9 & vbNewLine & ". Exiting.", _
             Buttons:=vbCritical, _
             Title:=MsgBoxTitle
         Exit Sub
@@ -2591,6 +2615,200 @@ StyleError:
 ShortcutError:
     MsgBox _
         Prompt:="Error adding shortcut for style '" & C_S_TextBoxes & "'." & vbCrLf & _
+           "Error Number: " & Err.Number & vbCrLf & _
+           "Description: " & Err.Description, _
+        Buttons:=vbCritical, _
+        Title:=MsgBoxTitle
+    Resume Next
+
+End Function
+
+' Exception: built-in styles, which I modify. This is the only way which I know to keep Table of Content functionality of Microsoft Word.
+' This style is used to create Building Block ListOfPictures: { TOC \h \z \t "ParLegendPicture ms,8" }
+' 2026-03-12 by ms
+Private Function CreateStyle_TOC8() As Boolean
+    Dim NewStyle As style
+    
+    Dim FileName As String:       FileName = C_F_Macros
+    Dim ModuleName As String:     ModuleName = C_M_Styles
+    Dim MacroName As String:      MacroName = "CreateStyle_TOC8"
+    Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
+    ' Check if the style already exists in the document
+    ' If an error occurs, skip the line that caused the error and continue with the next line of code.
+    On Error Resume Next
+    Set NewStyle = ActiveDocument.Styles(wdStyleTOC8)   ' exception, apply built-in style
+    '  Turns off any active error handler and restores default behavior
+    On Error GoTo 0
+    
+    ' If built-in style doesn't exist, warn user and exit.
+    If NewStyle Is Nothing Then
+        ' It should not happen, as this is built-in style
+        MsgBox _
+            Prompt:="Built-in style cannot be find: " & wdStyleTOC8 & vbNewLine & vbNewLine & _
+                "Exiting.", _
+            Buttons:=vbCritical, _
+            Title:=MsgBoxTitle
+        CreateStyle_TOC8 = False
+        Exit Function
+    End If
+
+    With NewStyle
+        .Visibility = False
+        .UnhideWhenUsed = False
+        .BaseStyle = C_S_ParNormal
+        .NextParagraphStyle = C_S_ParNormal
+        .AutomaticallyUpdate = False
+        .QuickStyle = False
+        .LanguageId = wdEnglishUS
+        .NoSpaceBetweenParagraphsOfSameStyle = True
+        
+        ' Font formatting
+        With .font
+            .Name = C_FT_Body
+            .Size = C_BaseFontSize
+            .Bold = False
+            .Italic = False
+            .color = wdColorAutomatic
+        End With
+        
+        ' Paragraph formatting
+        With .ParagraphFormat
+            .Alignment = wdAlignParagraphLeft
+            .LeftIndent = CentimetersToPoints(0)
+            .FirstLineIndent = CentimetersToPoints(0)
+            .TabStops.ClearAll
+            .TabStops.Add Position:=CentimetersToPoints(17.5), _
+                          Alignment:=wdAlignTabRight, _
+                          Leader:=wdTabLeaderDots
+            .SpaceBefore = 0
+            .SpaceAfter = 5
+            .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
+            .LineSpacingRule = C_ParLineDistance
+            .WidowControl = True
+            .KeepWithNext = False
+            .KeepTogether = False
+            .PageBreakBefore = False
+            .OutlineLevel = wdOutlineLevelBodyText
+            .Hyphenation = False
+        End With
+    End With
+
+'       === Add keyboard shortcut for the style ===
+'       On Error GoTo ShortcutError
+'       CustomizationContext = ActiveDocument
+'       KeyBindings.Add _
+'            KeyCategory:=wdKeyCategoryStyle, _
+'            Command:=C_S_TOC1, _
+'            KeyCode:=BuildKeyCode(wdKeyAlt, wdKeyN), _
+'            KeyCode2:=wdKeyM
+'       On Error GoTo 0
+
+    CreateStyle_TOC8 = True
+    Exit Function
+                
+' === Error handler ===
+        
+ShortcutError:
+    MsgBox _
+        Prompt:="Error adding shortcut for style '" & wdStyleTOC8 & "'." & vbCrLf & _
+           "Error Number: " & Err.Number & vbCrLf & _
+           "Description: " & Err.Description, _
+        Buttons:=vbCritical, _
+        Title:=MsgBoxTitle
+    Resume Next
+
+End Function
+
+' Exception: built-in styles, which I modify. This is the only way which I know to keep Table of Content functionality of Microsoft Word.
+' This style is used to create Building Block ListOfTables: { TOC \h \z \t "ParLegendTable ms,9" }
+' 2026-03-12 by ms
+Private Function CreateStyle_TOC9() As Boolean
+    Dim NewStyle As style
+    
+    Dim FileName As String:       FileName = C_F_Macros
+    Dim ModuleName As String:     ModuleName = C_M_Styles
+    Dim MacroName As String:      MacroName = "CreateStyle_TOC9"
+    Dim MsgBoxTitle As String:    MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
+    ' Check if the style already exists in the document
+    ' If an error occurs, skip the line that caused the error and continue with the next line of code.
+    On Error Resume Next
+    Set NewStyle = ActiveDocument.Styles(wdStyleTOC9)   ' exception, apply built-in style
+    '  Turns off any active error handler and restores default behavior
+    On Error GoTo 0
+    
+    ' If built-in style doesn't exist, warn user and exit.
+    If NewStyle Is Nothing Then
+        ' It should not happen, as this is built-in style
+        MsgBox _
+            Prompt:="Built-in style cannot be find: " & wdStyleTOC9 & vbNewLine & vbNewLine & _
+                "Exiting.", _
+            Buttons:=vbCritical, _
+            Title:=MsgBoxTitle
+        CreateStyle_TOC9 = False
+        Exit Function
+    End If
+
+    With NewStyle
+        .Visibility = False
+        .UnhideWhenUsed = False
+        .BaseStyle = C_S_ParNormal
+        .NextParagraphStyle = C_S_ParNormal
+        .AutomaticallyUpdate = False
+        .QuickStyle = False
+        .LanguageId = wdEnglishUS
+        .NoSpaceBetweenParagraphsOfSameStyle = True
+        
+        ' Font formatting
+        With .font
+            .Name = C_FT_Body
+            .Size = C_BaseFontSize
+            .Bold = False
+            .Italic = False
+            .color = wdColorAutomatic
+        End With
+        
+        ' Paragraph formatting
+        With .ParagraphFormat
+            .Alignment = wdAlignParagraphLeft
+            .LeftIndent = CentimetersToPoints(0)
+            .FirstLineIndent = CentimetersToPoints(0)
+            .TabStops.ClearAll
+            .TabStops.Add Position:=CentimetersToPoints(17.5), _
+                          Alignment:=wdAlignTabRight, _
+                          Leader:=wdTabLeaderDots
+            .SpaceBefore = 0
+            .SpaceAfter = 5
+            .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
+            .LineSpacingRule = C_ParLineDistance
+            .WidowControl = True
+            .KeepWithNext = False
+            .KeepTogether = False
+            .PageBreakBefore = False
+            .OutlineLevel = wdOutlineLevelBodyText
+            .Hyphenation = False
+        End With
+    End With
+
+'       === Add keyboard shortcut for the style ===
+'       On Error GoTo ShortcutError
+'       CustomizationContext = ActiveDocument
+'       KeyBindings.Add _
+'            KeyCategory:=wdKeyCategoryStyle, _
+'            Command:=C_S_TOC1, _
+'            KeyCode:=BuildKeyCode(wdKeyAlt, wdKeyN), _
+'            KeyCode2:=wdKeyM
+'       On Error GoTo 0
+
+    CreateStyle_TOC9 = True
+    Exit Function
+                
+' === Error handler ===
+        
+ShortcutError:
+    MsgBox _
+        Prompt:="Error adding shortcut for style '" & wdStyleTOC9 & "'." & vbCrLf & _
            "Error Number: " & Err.Number & vbCrLf & _
            "Description: " & Err.Description, _
         Buttons:=vbCritical, _
@@ -6786,7 +7004,7 @@ Private Sub ShowNonCompliantStylingInParagraphs()
 
         ' Update progress label
         PerVal = (i / NoTotalPar) * 100 ' Calculate percentage value
-        TemplateStyleValidation_Form.ProgressLabel = "Paragraph counter: " & i & " out of " & NoTotalPar & _
+        TemplateStyleValidation_Form.progresslabel = "Paragraph counter: " & i & " out of " & NoTotalPar & _
             " (" & Int(PerVal) & "%)" & vbNewLine & _
             "Compliant paragraph counter: " & NomsCompliantPar & vbNewLine & _
             "Non-compliant paragraph counter: " & NomsNotCompliantPar & vbNewLine & _
@@ -6976,7 +7194,7 @@ Sub DeleteNCHighlighting()
         
         ' Update progress label
         PerVal = (i / NoTotalPar) * 100 ' Calculate percentage value
-        TemplateStyleValidation_Form.ProgressLabel = "Paragraph counter: " & i & " out of " & NoTotalPar & _
+        TemplateStyleValidation_Form.progresslabel = "Paragraph counter: " & i & " out of " & NoTotalPar & _
             " (" & Int(PerVal) & "%)"
         ' The DoEvents function in Visual Basic for Applications (VBA) for Microsoft Word is used to yield execution so that the operating system can process other events. This function allows the operating system to handle other tasks, such as updating the screen, responding to user inputs, or processing other events in the queue, while your macro is running
         DoEvents

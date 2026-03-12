@@ -118,6 +118,33 @@ Dim WordAppEvents As ClsAppEvents
 ' For sleep / delay function
 Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As LongPtr)
 
+' Check display state on file opening.
+' This sub is called in ClsAppEvents. Thanks to this sub the ThisDocument Document_Open in Normal.dotm is no longer needed.
+' 2026-03-10 by ms
+Sub UpdateDisplayStateOnFileOpen()
+    Dim DocVarName As String: DocVarName = "DocVarToggleSpecificFormatting"
+    Dim SavedMode As Integer
+    
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "UpdateDisplayStateOnFileOpen"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    
+    On Error Resume Next
+    ' Check if the variable exists in the document being opened
+    SavedMode = CInt(ActiveDocument.Variables(DocVarName).Value)
+    
+    If Err.Number = 0 Then
+        ' The variable exists! Apply the view without incrementing.
+        MsgBox _
+            Prompt:="Restoring saved view mode: " & SavedMode, _
+            Buttons:=vbInformation, _
+            Title:=MsgBoxTitle
+        Call Macros_ms.Tools.ApplyViewMode(ViewMode:=SavedMode)
+    End If
+    On Error GoTo 0
+End Sub
+
 ' Borrowed from https://wordribbon.tips.net/T013280_Unlinking_All_Headers_and_Footers.html
 ' 2026-03-02  by ms
 Sub SectionUnlinkAllHF()
@@ -1721,9 +1748,10 @@ Sub ParDistAtNewSectionCheck()
 
 End Sub
 
+' Saves file in the default directory with specific PDF settings
 ' 2025-08-03 by ms
 ' 2025-11-16 by ms
-' Saves file in the default directory with specific PDF settings
+' 2026-03-12 by ms
 Sub SaveDocumentAsPDFWithSettings()
     Dim FilePath As String
     Dim DefaultPath As String
@@ -1748,6 +1776,16 @@ Sub SaveDocumentAsPDFWithSettings()
     ' Construct full path with .pdf extension
     FilePath = DefaultPath & "\" & BaseName & ".pdf"
     
+    If IsFileOpen(FilePath) Then
+        MsgBox _
+            Prompt:="The PDF file is already open in another program." & vbNewLine & _
+                    "Please close the PDF and try again." & vbNewLine & vbNewLine & _
+                    "Path: " & FilePath, _
+            Buttons:=vbCritical + vbOKOnly, _
+            Title:=MsgBoxTitle
+        Exit Sub
+    End If
+       
     ' Check if the document is saved (it needs a file path)
     If FilePath = "" Then
         MsgBox _
@@ -1759,20 +1797,19 @@ Sub SaveDocumentAsPDFWithSettings()
     End If
     
     ' Export the document as PDF with specified settings
+    On Error GoTo ErrorHandler
     ActiveDocument.ExportAsFixedFormat _
         OutputFileName:=FilePath, _
         ExportFormat:=wdExportFormatPDF, _
         OpenAfterExport:=False, _
         OptimizeFor:=wdExportOptimizeForPrint, _
         Range:=wdExportAllDocument, _
-        From:=1, _
-        To:=1, _
         item:=wdExportDocumentContent, _
         IncludeDocProps:=False, _
         KeepIRM:=True, _
         CreateBookmarks:=wdExportCreateHeadingBookmarks, _
-        DocStructureTags:=False, _
-        BitmapMissingFonts:=True, _
+        DocStructureTags:=True, _
+        BitmapMissingFonts:=False, _
         UseISO19005_1:=False
     
     MsgBox _
@@ -1780,7 +1817,41 @@ Sub SaveDocumentAsPDFWithSettings()
             FilePath, _
         Buttons:=vbInformation + vbOKOnly, _
         Title:=MsgBoxTitle
+    Exit Sub
+        
+ErrorHandler:
+    MsgBox _
+        Prompt:="Export failed. Error: " & Err.Description & vbNewLine & vbNewLine & _
+            "Perhaps close PDF reader.", _
+        Buttons:=vbCritical, _
+        Title:=MsgBoxTitle
 End Sub
+
+' Function to check if a file is locked/open
+' 2026-03-12 by ms
+Function IsFileOpen(FileName As String) As Boolean
+    Dim ff As Integer
+    On Error Resume Next
+    ' If the file doesn't exist, it's not open
+    If Dir(FileName) = "" Then
+        IsFileOpen = False
+        Exit Function
+    End If
+    
+    ff = FreeFile
+    ' Try to open the file for exclusive access
+    Open FileName For Binary Access Read Write Lock Read Write As #ff
+    Close #ff
+    
+    ' If an error occurred, the file is likely open/locked
+    If Err.Number <> 0 Then
+        IsFileOpen = True
+        Err.Clear
+    Else
+        IsFileOpen = False
+    End If
+    On Error GoTo 0
+End Function
 
 ' Management of customer properties:
 ' 1. Check if required properties exist, add them if they don't
