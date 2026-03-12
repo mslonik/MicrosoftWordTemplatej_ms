@@ -113,6 +113,7 @@ Public Const C_ListTabPosL2 As Single = 1.5     ' cm
 Public Const C_ListTabPosL3 As Single = 2#      ' cm
 Public Const C_ListTabPosL4 As Single = 2.5     ' cm
 Public Const C_ParLineDistance = wdLineSpaceSingle ' wdLineSpaceExactly
+Public Const C_ParHyphen = True
 
 ' C = Constant
 Public Const C_PointsToCm As Single = 0.0352778

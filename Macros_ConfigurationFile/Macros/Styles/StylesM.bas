@@ -574,7 +574,7 @@ Sub ReapplyStylesFromTemplateFull()
         End If
         ' Increment checked paragraphs counter
         checkedParagraphs = checkedParagraphs + 1
-        ReapplyStylesFromTemplate_Form.progresslabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
+        ReapplyStylesFromTemplate_Form.ProgressLabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
         ' The DoEvents function in Visual Basic for Applications (VBA) for Microsoft Word is used to yield execution so that the operating system can process other events. This function allows the operating system to handle other tasks, such as updating the screen, responding to user inputs, or processing other events in the queue, while your macro is running
         DoEvents
     Next para
@@ -595,7 +595,7 @@ Sub ReapplyStylesFromTemplateFull()
                 End If
                 ' Increment checked paragraphs counter
                 checkedParagraphs = checkedParagraphs + 1
-                ReapplyStylesFromTemplate_Form.progresslabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
+                ReapplyStylesFromTemplate_Form.ProgressLabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
                 ' The DoEvents function in Visual Basic for Applications (VBA) for Microsoft Word is used to yield execution so that the operating system can process other events. This function allows the operating system to handle other tasks, such as updating the screen, responding to user inputs, or processing other events in the queue, while your macro is running
                 DoEvents
             Next para
@@ -615,7 +615,7 @@ Sub ReapplyStylesFromTemplateFull()
                 End If
                 ' Increment checked paragraphs counter
                 checkedParagraphs = checkedParagraphs + 1
-                ReapplyStylesFromTemplate_Form.progresslabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
+                ReapplyStylesFromTemplate_Form.ProgressLabel = "Finished: " & checkedParagraphs & " out of " & totalParagraphs
                 ' The DoEvents function in Visual Basic for Applications (VBA) for Microsoft Word is used to yield execution so that the operating system can process other events. This function allows the operating system to handle other tasks, such as updating the screen, responding to user inputs, or processing other events in the queue, while your macro is running
                 DoEvents
             Next para
@@ -2369,6 +2369,7 @@ Private Function CreateStyle_ParListInTableMs() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -2463,6 +2464,7 @@ Private Function CreateStyle_ParNumRefMs() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -2557,6 +2559,7 @@ Private Function CreateStyle_ParTextBoxesMs() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -2650,9 +2653,6 @@ Private Function CreateStyle_TOC3() As Boolean
             .LeftIndent = CentimetersToPoints(1.8)  ' 1.8 -1.5 = 0.3
             .FirstLineIndent = CentimetersToPoints(-1.5)
             .TabStops.ClearAll
-'            .TabStops.Add Position:=CentimetersToPoints(0), _
-'                            Alignment:=wdAlignTabLeft, _
-'                            Leader:=wdTabLeaderSpaces
             .TabStops.Add Position:=CentimetersToPoints(17.5), _
                           Alignment:=wdAlignTabRight, _
                           Leader:=wdTabLeaderDots
@@ -2665,6 +2665,7 @@ Private Function CreateStyle_TOC3() As Boolean
             .KeepTogether = False
             .PageBreakBefore = False
             .OutlineLevel = wdOutlineLevelBodyText
+            .Hyphenation = False
         End With
     End With
 
@@ -2747,9 +2748,6 @@ Private Function CreateStyle_TOC2() As Boolean
             .LeftIndent = CentimetersToPoints(1.8)
             .FirstLineIndent = CentimetersToPoints(-1.8)
             .TabStops.ClearAll
-'            .TabStops.Add Position:=CentimetersToPoints(0), _
-'                            Alignment:=wdAlignTabLeft, _
-'                            Leader:=wdTabLeaderSpaces
             .TabStops.Add Position:=CentimetersToPoints(17.5), _
                           Alignment:=wdAlignTabRight, _
                           Leader:=wdTabLeaderDots
@@ -2762,6 +2760,7 @@ Private Function CreateStyle_TOC2() As Boolean
             .KeepTogether = False
             .PageBreakBefore = False
             .OutlineLevel = wdOutlineLevelBodyText
+            .Hyphenation = False
         End With
     End With
 
@@ -2846,9 +2845,6 @@ Private Function CreateStyle_TOC1() As Boolean
             .LeftIndent = CentimetersToPoints(1.2)
             .FirstLineIndent = CentimetersToPoints(-1.2)
             .TabStops.ClearAll
-'            .TabStops.Add Position:=CentimetersToPoints(0), _
-'                            Alignment:=wdAlignTabLeft, _
-'                            Leader:=wdTabLeaderSpaces
             .TabStops.Add Position:=CentimetersToPoints(17.5), _
                           Alignment:=wdAlignTabRight, _
                           Leader:=wdTabLeaderDots
@@ -2861,6 +2857,7 @@ Private Function CreateStyle_TOC1() As Boolean
             .KeepTogether = False
             .PageBreakBefore = False
             .OutlineLevel = wdOutlineLevelBodyText
+            .Hyphenation = False
         End With
     End With
 
@@ -2945,6 +2942,7 @@ Private Function CreateStyle_ParMinimalMs() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -3040,6 +3038,7 @@ Private Function CreateStyle_ParListIndentB4Ms() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -3134,6 +3133,7 @@ Private Function CreateStyle_ParListIndent4Ms() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -3229,6 +3229,7 @@ Private Function CreateStyle_ParListIndentB3Ms() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -3323,6 +3324,7 @@ Private Function CreateStyle_ParListIndent3Ms() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -3418,6 +3420,7 @@ Private Function CreateStyle_ParListIndentB2Ms() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -3512,6 +3515,7 @@ Private Function CreateStyle_ParListIndent2Ms() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -3607,6 +3611,7 @@ Private Function CreateStyle_ParListIndentB1Ms() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -3701,6 +3706,7 @@ Private Function CreateStyle_ParListIndent1Ms() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -3795,6 +3801,7 @@ Private Function CreateStyle_ParListHeadingMs() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevel1
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -3985,6 +3992,7 @@ Private Function CreateStyle_ParLegendPictureMs() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -4079,6 +4087,7 @@ Private Function CreateStyle_ParLegalNoteMs() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -4173,6 +4182,7 @@ Private Function CreateStyle_ParInTableMs() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -4267,6 +4277,7 @@ Private Function CreateStyle_ParHeading8ms() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevel8
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -4360,6 +4371,7 @@ Private Function CreateStyle_ParHeading7ms() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevel7
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -4453,6 +4465,7 @@ Private Function CreateStyle_ParHeading6ms() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevel6
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -4546,6 +4559,7 @@ Private Function CreateStyle_ParHeading5ms() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevel5
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -4639,6 +4653,7 @@ Private Function CreateStyle_ParHeading4ms() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevel4
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -4732,6 +4747,7 @@ Private Function CreateStyle_ParHeading3ms() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevel3
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -4825,6 +4841,7 @@ Private Function CreateStyle_ParHeading2ms() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevel2
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -4918,6 +4935,7 @@ Private Function CreateStyle_ParHeading1ms() As Boolean
                 .KeepTogether = True
                 .PageBreakBefore = True
                 .OutlineLevel = wdOutlineLevel1
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -5105,6 +5123,7 @@ Private Function CreateStyle_ParNormalMs() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -5199,6 +5218,7 @@ Private Function CreateStyle_ParSourceCodeMs() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = False
             End With
         End With
         
@@ -5297,6 +5317,7 @@ Private Function CreateStyle_ParPictureCanvaMs() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -5390,6 +5411,7 @@ Private Function CreateStyle_ParIconMs() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -5482,6 +5504,7 @@ Private Function CreateStyle_ParNormalZeroMs() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -5575,6 +5598,7 @@ Private Function CreateStyle_ParNormalBelowMs() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -5669,6 +5693,7 @@ Private Function CreateStyle_ParNormalAboveMs() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -5763,6 +5788,7 @@ Private Function CreateStyle_ParNormalAboveBelowMs() As Boolean
                 .KeepTogether = False
                 .PageBreakBefore = False
                 .OutlineLevel = wdOutlineLevelBodyText
+                .Hyphenation = C_ParHyphen
             End With
         End With
 
@@ -6760,7 +6786,7 @@ Private Sub ShowNonCompliantStylingInParagraphs()
 
         ' Update progress label
         PerVal = (i / NoTotalPar) * 100 ' Calculate percentage value
-        TemplateStyleValidation_Form.progresslabel = "Paragraph counter: " & i & " out of " & NoTotalPar & _
+        TemplateStyleValidation_Form.ProgressLabel = "Paragraph counter: " & i & " out of " & NoTotalPar & _
             " (" & Int(PerVal) & "%)" & vbNewLine & _
             "Compliant paragraph counter: " & NomsCompliantPar & vbNewLine & _
             "Non-compliant paragraph counter: " & NomsNotCompliantPar & vbNewLine & _
@@ -6950,7 +6976,7 @@ Sub DeleteNCHighlighting()
         
         ' Update progress label
         PerVal = (i / NoTotalPar) * 100 ' Calculate percentage value
-        TemplateStyleValidation_Form.progresslabel = "Paragraph counter: " & i & " out of " & NoTotalPar & _
+        TemplateStyleValidation_Form.ProgressLabel = "Paragraph counter: " & i & " out of " & NoTotalPar & _
             " (" & Int(PerVal) & "%)"
         ' The DoEvents function in Visual Basic for Applications (VBA) for Microsoft Word is used to yield execution so that the operating system can process other events. This function allows the operating system to handle other tasks, such as updating the screen, responding to user inputs, or processing other events in the queue, while your macro is running
         DoEvents
