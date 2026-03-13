@@ -1681,7 +1681,6 @@ End Sub
 
 ' 2025-04-14 by ms
 Private Sub SetShortcut_ToggleCharSourceCode(ByVal IfMsgBox As String)
-    ActiveDocument.Variables(C_S_CharSourceCode).Value = False
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_ShiftCtrlK, _
         WhichMacro:="Macros_ms.StylesM.ToggleCharSourceCode", _

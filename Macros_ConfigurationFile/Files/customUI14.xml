@@ -1029,6 +1029,11 @@
                     label="Reveal Formatting"
                     screentip="Reveal Formatting pane"
                     supertip="Reveal Formatting pane."/>
+            <toggleButton idMso="ApplyStylesPane"
+                    size="large"
+                    label="Apply Styles"
+                    screentip="Apply Styles"
+                    supertip="Enables text input with filtering."/>
         </group>
 
         <group id="CB_StylesGallery"
@@ -1128,6 +1133,7 @@
                 visible="true">
             <button id="Btn_NewFile" 
                     label="New File Content" 
+                    size="large"
                     imageMso="CreateNewReportMenu" 
                     onAction="RibbonControl.BttnContent"
                     screentip="New File Content"

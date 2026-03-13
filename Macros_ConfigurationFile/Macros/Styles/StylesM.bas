@@ -1737,7 +1737,6 @@ Sub AddCompliantStyles()
             Title:=MsgBoxTitle
         Exit Sub
     Else
-        ActiveDocument.Variables(C_S_CharSourceCode).Value = True
         CharCounter = CharCounter + 1
     End If
     
