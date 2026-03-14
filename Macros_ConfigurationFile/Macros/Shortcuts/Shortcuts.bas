@@ -1553,11 +1553,11 @@ End Sub
 Private Sub SetShortcut_CustomFileSave(ByVal IfMsgBox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_CtrlS, _
-        WhichMacro:="Macros_ms.Content.FileSave", _
+        WhichMacro:="Macros_ms.Content.CustomizedFileSave", _
         IfMsgBox:=IfMsgBox)
 End Sub
 
-' Original Microsoft Word command: FileSave
+' Original Microsoft Word command: CustomizedFileSave
 ' 2025-03-12 by ms
 Private Sub ResetShortcut_CustomFileSave()
     Call Macros_ms.Shortcuts.DeleteKeyBinding(KeybShortcut:=C_SC_CtrlS)

@@ -814,75 +814,76 @@ End Sub
 ' Remove header paragraphs from content of ActiveDocument
 ' 2025-12-21 by ms and AI
 ' 2025-12-28 by ms and AI
+' 2026-03-14 by ms
 Sub BB_DeleteHeaderPar()
-    Dim TagsToRemove As Variant     ' array
+    Dim TagsToRemove As Variant
     Dim Tag As Variant
     Dim aStory As Range
+    Dim subStory As Range
+    Dim foundRange As Range
+    Dim deleteList As Collection
     Dim RemovedCount As Long
-    Dim SafeTag As String
+    Dim i As Long
     
-    ' Tags to check at the start of each paragraph
-    TagsToRemove = Array( _
-        C_TTR_name, _
-        C_TTR_type, _
-        C_TTR_category, _
-        C_TTR_description, _
-        C_TTR_insertoptions)
-        
-    Application.ScreenUpdating = False
-    RemovedCount = 0
-    
-    On Error Resume Next
-    
-    ' Search all areas of documents (StoryRanges), including headers and footers
-    ' Iterate backwards to avoid reindexing issues when deleting
-    For Each aStory In ActiveDocument.StoryRanges
-        Do
-            For Each Tag In TagsToRemove
-                ' Escape the < and > so Word treats them as text
-                SafeTag = EscapeWildcards(CStr(Tag))
-                
-                With aStory.Find
-                    .ClearFormatting
-                    .Replacement.ClearFormatting
-                    ' The pattern matches the Tag at the start of a paragraph
-                    ' and everything until the end of that paragraph.
-                    ' [!^13]* means "any character that is NOT a carriage return"
-                    .Text = "(" & SafeTag & ")[!^13]{1,}^13"
-                    .Replacement.Text = ""
-                    .Forward = True
-                    .Wrap = wdFindStop      ' Stop at end of story to count
-                    .Format = False
-                    .MatchWildcards = True ' Enable Wildcards for speed
-                
-                    Do While .Execute(Replace:=wdReplaceOne)
-                        RemovedCount = RemovedCount + 1
-                    Loop
-                End With
-            Next Tag
-            
-            ' Move to the next Story (headers, footers, etc.)
-            Set aStory = aStory.NextStoryRange
-        Loop Until aStory Is Nothing
-    Next aStory
+    TagsToRemove = Array(C_TTR_name, C_TTR_type, C_TTR_category, _
+                         C_TTR_description, C_TTR_insertoptions)
     
     Application.ScreenUpdating = True
-    Set aStory = Nothing
+    RemovedCount = 0
+    Set deleteList = New Collection
+    
+    ' --- PHASE 1: COLLECT RANGES ---
+    For Each aStory In ActiveDocument.StoryRanges
+        Set subStory = aStory
+        Do
+            For Each Tag In TagsToRemove
+                If Len(Tag) > 0 Then
+                    Set foundRange = subStory.Duplicate
+                    With foundRange.Find
+                        .ClearFormatting
+                        .Text = CStr(Tag)
+                        .Forward = True
+                        .Wrap = wdFindStop
+                        .MatchWildcards = False
+                        
+                        Do While .Execute
+                            ' Add the range to our collection
+                            Dim rToDel As Range
+                            Set rToDel = foundRange.Duplicate
+                            rToDel.Expand Unit:=wdParagraph
+                            deleteList.Add rToDel
+                            
+                            ' Move past the found text to avoid finding same spot
+                            foundRange.Collapse wdCollapseEnd
+                        Loop
+                    End With
+                End If
+            Next Tag
+            Set subStory = subStory.NextStoryRange
+        Loop Until subStory Is Nothing
+    Next aStory
+    
+    ' --- PHASE 2: DELETE IN REVERSE ---
+    ' Deleting from the end of the collection back to the start
+    ' ensures that deleting one range doesn't shift the positions of others.
+    On Error Resume Next
+    For i = deleteList.count To 1 Step -1
+        deleteList(i).Delete
+        If Err.Number = 0 Then RemovedCount = RemovedCount + 1
+        Err.Clear
+    Next i
+    On Error GoTo 0
+    
+    Application.ScreenUpdating = True
+    
     
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_BuildingBlocks
-    Dim MacroName As String:    MacroName = "RemoveBBDefParagraphs"
+    Dim MacroName As String:    MacroName = "BB_DeleteHeaderPar"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-        
+    
     MsgBox _
         Prompt:=RemovedCount & " paragraph(s) removed.", _
         Buttons:=vbInformation, _
         Title:=MsgBoxTitle
 End Sub
-
-' Helper function to make tags Wildcard-safe
-Function EscapeWildcards(ByVal txt As String) As String
-    txt = Replace(txt, "<", "\<")
-    txt = Replace(txt, ">", "\>")
-    EscapeWildcards = txt
-End Function

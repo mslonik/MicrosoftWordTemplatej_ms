@@ -92,6 +92,7 @@ Attribute VB_Name = "Tools"
 '   50. ToggleApplyStyles()
 '   51. CustomizedCopyFormat()
 '   52. CustomizedPasteFormat()
+'   53. CustomInsertAutoText()
 '
 '   Others / legacy:
 '   53. InsertSVNCommitNumber()
@@ -104,6 +105,8 @@ Attribute VB_Name = "Tools"
 ' declare all variables using the Dim, Private, Public, ReDim, or Static statements before using them. This helps prevent errors caused by typos or
 ' undeclared variables.
 Option Explicit
+
+Private glngStartPos As Long
 
 ' The following enum is used in InsertCrossRef()
 Private Enum RefType
@@ -1274,27 +1277,33 @@ Sub CommentCountByUser()
         Title:=MsgBoxTitle
 End Sub
 
-
+' 2026-03-14 by ms
 Public Sub AddLastCursorPositionBookmark()
-    ' Adds a bookmark in place where cursor is present
-    Dim rng As Range
+' Capture the exact character index before the insertion starts
+    glngStartPos = Selection.Start
     
-    If ActiveWindow.ActivePane.View.SeekView = wdSeekMainDocument Then
-        Set rng = Selection.Range
-        rng.Bookmarks.Add C_BM_LastCursorPosition
-    End If
-    
-    ' Clear object variable
-    Set rng = Nothing
+    ' Still add a bookmark as a fallback, but set it to a single point (Length 0)
+    ActiveDocument.Bookmarks.Add Name:=C_BM_LastCursorPosition, _
+        Range:=ActiveDocument.Range(glngStartPos, glngStartPos)
 End Sub
 
+' 2026-03-14 by ms
 Public Sub RemoveLastCursorPositionBookmark()
-    If ActiveDocument.Bookmarks.Exists(C_BM_LastCursorPosition) Then
-        Selection.GoTo What:=wdGoToBookmark, Name:=C_BM_LastCursorPosition
-        ActiveDocument.Bookmarks(C_BM_LastCursorPosition).Delete
-    Else
-        ActiveDocument.GoTo wdStory ' it moves the selection (or cursor) to the very beginning of the document.
+' Instead of jumping to the bookmark (which moved),
+    ' we jump back to the numerical coordinate we saved.
+    
+    If glngStartPos >= 0 Then
+        ' Move the cursor back to the exact character index where we started
+        ActiveDocument.Range(glngStartPos, glngStartPos).Select
     End If
+    
+    ' Clean up the bookmark
+    If ActiveDocument.Bookmarks.Exists(C_BM_LastCursorPosition) Then
+        ActiveDocument.Bookmarks(C_BM_LastCursorPosition).Delete
+    End If
+    
+    ' Reset the coordinate
+    glngStartPos = -1
 End Sub
 
 ' Fixes a bug in Microsoft Word where function "ViewFieldCodes" jumps over the document body each time it is called.
@@ -1303,10 +1312,17 @@ End Sub
 ' 2025-03-06 by ms added line with customization context.
 ' 2025-03-08 by ms, separated macro code from shortcut
 ' 2025-03-27 by ms, Range instead of Select
+' 2026-03-14 by ms
 Sub CustomizedToggleFieldCodes()
     Call Macros_ms.Tools.AddLastCursorPositionBookmark
     Application.Run "ViewFieldCodes" ' call built-in Microsoft Word command
     Call Macros_ms.Tools.RemoveLastCursorPositionBookmark
+    
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "CustomizedToggleFieldCodes"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+    Application.StatusBar = MsgBoxTitle & " > " & "was running..."
 End Sub
 
 ' 2025-08-19 by ms and AI
@@ -1474,6 +1490,7 @@ End Sub
 ' Jumps to the next paragraph type list.
 ' Shortcuts to this sub are set in the module "Shortcuts".
 ' 2025-03-08 by ms and AI
+' 2026-03-14 by ms
 Sub JumpToNextList()
     Dim para As Paragraph
     Dim found As Boolean
@@ -1501,6 +1518,8 @@ Sub JumpToNextList()
         End If
     Next para
     
+    Application.StatusBar = MsgBoxTitle & " > " & "was running..."
+    
     ' Inform the user if no list was found
     If Not found Then
         MsgBox _
@@ -1513,6 +1532,7 @@ End Sub
 ' Jumps to the next paragraph type table.
 ' Shortcuts to this sub are set in the module "Shortcuts".
 ' 2025-03-08 by ms and AI
+' 2026-03-14 by ms
 Sub JumpToNextTable()
     Dim tbl As Table
     Dim found As Boolean
@@ -1538,6 +1558,8 @@ Sub JumpToNextTable()
         End If
     Next tbl
     
+    Application.StatusBar = MsgBoxTitle & " > " & "was running..."
+    
     ' Inform the user if no table was found
     If Not found Then
         MsgBox _
@@ -1548,6 +1570,7 @@ Sub JumpToNextTable()
 End Sub
 
 ' 2025-04-11 by ms and AI
+' 2026-03-14 by ms
 Sub JumpToNextCanvas()
     Dim shp As Shape
     Dim found As Boolean
@@ -1564,14 +1587,25 @@ Sub JumpToNextCanvas()
     
     ' Loop through all shapes in the document
     For Each shp In ActiveDocument.Shapes
-        ' Check if the shape is a canvas and is after the current selection
         If shp.Type = msoCanvas And shp.Anchor.Start > startPos Then
-            ' Move the selection to the start of the canvas
+            
+            ' 1. Select the canvas
             shp.Select
+            
+            ' 2. Force the application window to scroll to the selection
+            ' This ensures the canvas is physically visible on screen
+            Application.ActiveWindow.ScrollIntoView shp.Anchor, True
+            
+            ' 3. Optional: Move the cursor to the paragraph anchor of the canvas
+            ' This prevents the "floating" selection and puts the cursor in the text
+            shp.Anchor.Select
+            
             found = True
             Exit For
         End If
     Next shp
+    
+    Application.StatusBar = MsgBoxTitle & " > " & "was running..."
     
     ' Inform the user if no canvas was found
     If Not found Then
@@ -2398,6 +2432,7 @@ End Sub
 
 ' Microsoft Word customized settings
 ' 2025-04-02 by ms and AI
+' 2026-03-14 by ms
 Sub WordOptionsCustomize()
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Tools
@@ -2409,13 +2444,16 @@ Sub WordOptionsCustomize()
     ActiveWindow.StyleAreaWidth = CentimetersToPoints(5.3)          ' Set Style area pane width in Draft and Outline view to 5.3 cm
     ActiveDocument.Compatibility(wdSuppressBottomSpacing) = False   ' Suppress extra line spacing at bottom of page
     ActiveDocument.Compatibility(wdSuppressTopSpacing) = False      ' Suppress extra line spacing at top of page
+    Options.INSKeyForOvertype = True
+    ActiveWindow.View.Type = wdPrintView
     
     MsgBox _
         Prompt:="Microsoft Word options customized successfully:" & vbNewLine & vbNewLine & _
             "Show measurements in units of centimeters: " & Options.MeasurementUnit & vbNewLine & _
             "Set Style area pane width in Draft and Outline view to 5.3 cm: " & ActiveWindow.StyleAreaWidth & vbNewLine & _
             "Suppress extra line spacing at bottom of page: " & ActiveDocument.Compatibility(wdSuppressBottomSpacing) & vbNewLine & _
-            "Suppress extra line spacing at top of page: " & ActiveDocument.Compatibility(wdSuppressTopSpacing), _
+            "Suppress extra line spacing at top of page: " & ActiveDocument.Compatibility(wdSuppressTopSpacing) & vbNewLine & _
+            "Use INS keyboard key for overtype mode: " & Options.INSKeyForOvertype, _
         Buttons:=vbInformation + vbOKOnly, _
         Title:=MsgBoxTitle
 End Sub
@@ -3825,7 +3863,23 @@ End Function
 ' 2025-07-16 by ms
 ' This macro is equivalent of the "Reapply" button in the "Apply Styles" pane in Microsoft Word (opened via Ctrl + Shift + S)
 Sub ReapplyTemplateStyle()
-    Selection.style = Selection.style
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "ReapplyTemplateStyle"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+
+    Dim currentStyle As Variant
+    
+    currentStyle = Selection.style
+    
+    ' 1. Remove manual character formatting (Ctrl + Space)
+    Selection.font.Reset
+    ' 2. Remove manual paragraph formatting (Ctrl + Q)
+    Selection.ParagraphFormat.Reset
+    ' 3. Re-link the style
+    Selection.style = currentStyle
+
+    Application.StatusBar = MsgBoxTitle & " > " & "was running..."
 End Sub
 
 ' 2025-07-16 by ms and AI
@@ -3894,7 +3948,7 @@ Sub ToggleHeadingCollapseExpand()
     Dim para As Paragraph
     Set para = Selection.Paragraphs(1)
     
-    If para.style Like "Heading*" Then
+    If para.style Like "*Heading*" Then
         para.CollapsedState = Not para.CollapsedState
     Else
         Dim FileName As String:         FileName = C_F_Macros
@@ -4454,4 +4508,21 @@ Sub TabDefaultSetCustom()
             Round(Application.PointsToCentimeters(ActiveDocument.DefaultTabStop), 2) & " cm", _
         Buttons:=vbInformation + vbOKOnly, _
         Title:=MsgBoxTitle
+End Sub
+
+' Custom InsertAutoText
+' 2026-03-14 by ms
+Sub CustomInsertAutoText()
+    Dim FileName As String:     FileName = C_F_Macros
+    Dim ModuleName As String:   ModuleName = C_M_Tools
+    Dim MacroName As String:    MacroName = "CustomInsertAutoText"
+    Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
+
+    Call Macros_ms.Tools.AddLastCursorPositionBookmark
+    On Error Resume Next
+    Application.Run "InsertAutoText" ' call built-in Microsoft Word command
+    On Error GoTo 0
+    Call Macros_ms.Tools.RemoveLastCursorPositionBookmark
+    
+    Application.StatusBar = MsgBoxTitle & " > " & "was running..."
 End Sub

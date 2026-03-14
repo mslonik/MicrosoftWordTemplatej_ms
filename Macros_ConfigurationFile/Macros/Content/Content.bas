@@ -57,10 +57,10 @@ End Sub
 ' Then the built-in command Save is run.
 ' 2025-03-09 by ms and AI
 ' 2026-01-17 by ms
-Sub ApplyDistanceBetweenNumberingAndHeading()
+Sub CustomizedFileSave()
     Dim FileName As String:      FileName = C_F_Macros
     Dim ModuleName As String:    ModuleName = C_M_Content
-    Dim MacroName As String:     MacroName = "ApplyDistanceBetweenNumberingAndHeading"
+    Dim MacroName As String:     MacroName = "CustomizedFileSave"
     Dim MsgBoxTitle As String:   MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     ' Initialize em space constant as BetweenNumberAndText
@@ -69,6 +69,7 @@ Sub ApplyDistanceBetweenNumberingAndHeading()
     
     ' Enable error handling in case that user presses 'Cancel' button.
 '    On Error Resume Next
+    Call Macros_ms.BuildingBlocks.BB_DeleteHeaderPar
     ' Execute the built-in Save command
     ActiveDocument.Save
     ' This statement turns off the error handling that was set by On Error Resume Next. It restores the default error handling behavior, which means that if an error occurs after this point, VBA will stop execution and display an error message.
@@ -124,7 +125,7 @@ Sub NewFileContent()
     If UserDecision = vbYes Then
         Call Macros_ms.Shortcuts.CreateActiveDocumentMacroShortcuts
     End If
-    
+
     ' 2. Inserting customized styles
     QuestionCounter = QuestionCounter + 1
     Beep
@@ -137,7 +138,7 @@ Sub NewFileContent()
     If UserDecision = vbYes Then
         Call Macros_ms.StylesM.AddCompliantStyles
     End If
-    
+
     ' 3. Setting up Theme file
     QuestionCounter = QuestionCounter + 1
     Beep
@@ -151,7 +152,7 @@ Sub NewFileContent()
     If UserDecision = vbYes Then
         Call Macros_ms.Theme.AttachTheme
     End If
-    
+
     ' 4. Setting up customized Microsoft Word options
     QuestionCounter = QuestionCounter + 1
     Beep
@@ -163,7 +164,7 @@ Sub NewFileContent()
     If UserDecision = vbYes Then
         Call Macros_ms.Tools.WordOptionsCustomize
     End If
-    
+
     ' 5. Setting of active document margins
     Beep
     QuestionCounter = QuestionCounter + 1
@@ -175,7 +176,7 @@ Sub NewFileContent()
     If UserDecision = vbYes Then
         Call Macros_ms.Tools.SetPageLayout_A4_V_1_2
     End If
-    
+
     ' 6. Setting of active document custom properties
     Dim DocPropertiesFlag As Boolean    ' This flag will be set to true only if user decides to add custom DoC properties.
     DocPropertiesFlag = msoFalse
@@ -193,7 +194,7 @@ Sub NewFileContent()
     If UserDecision = vbNo Then
         DocPropertiesFlag = msoFalse
     End If
-        
+
     ' 7. Setting of Microsoft Word customized captions
     Beep
     QuestionCounter = QuestionCounter + 1
@@ -209,7 +210,7 @@ Sub NewFileContent()
             Call Macros_ms.Tools.CapationAddCustomized
         End If
     End If
-    
+
     ' 8. Setting of document hyphenation
     Beep
     QuestionCounter = QuestionCounter + 1
@@ -236,10 +237,11 @@ Sub NewFileContent()
     ' If basic content is selected, call the following set of macros
     If UserDecision = vbNo Then
         Call Macros_ms.Content.InsertBasicContent(TemplateIndex)
-        Call Macros_ms.BuildingBlocks.BB_RemoveDefParagraphs
-        If DocPropertiesFlag = msoTrue Then
-            Call Macros_ms.Tools.DocPropertiesAddCustom
-        End If
+        Call Macros_ms.BuildingBlocks.BB_DeleteHeaderPar
+        Call Macros_ms.Content.CleanHeadersFooters
+'        If DocPropertiesFlag = msoTrue Then
+'            Call Macros_ms.Tools.DocPropertiesAddCustom
+'        End If
         Exit Sub
     End If
     
@@ -258,10 +260,11 @@ Sub NewFileContent()
             Exit Sub
         End If
         Call Macros_ms.Content.InsertFullContent(TemplateIndex)
-        Call Macros_ms.BuildingBlocks.BB_RemoveDefParagraphs
-        If DocPropertiesFlag = msoTrue Then
-            Call Macros_ms.Tools.DocPropertiesAddCustom
-        End If
+        Call Macros_ms.BuildingBlocks.BB_DeleteHeaderPar
+        Call Macros_ms.Content.CleanHeadersFooters
+'        If DocPropertiesFlag = msoTrue Then
+'            Call Macros_ms.Tools.DocPropertiesAddCustom
+'        End If
     End If
 
     ' 10. Set document page background color to customized (grey).
@@ -285,109 +288,176 @@ Sub NewFileContent()
     
 End Sub
 
-' 2025-07-19 by ms
+' Clean headers and footers from unwanted empty paragraphs
+' 2026-03-14 by ms
+Sub CleanHeadersFooters()
+    Dim sec As Section
+    Dim hf As HeaderFooter
+    Dim i As Integer
+    Dim RemovedCount As Long
+    
+    Application.ScreenUpdating = False
+    RemovedCount = 0
+    
+    For Each sec In ActiveDocument.Sections
+        ' 1 = Primary, 2 = FirstPage, 3 = EvenPages
+        For i = 1 To 3
+            RemovedCount = RemovedCount + DeleteEmptyByStyle(sec.Headers(i), "Header")
+            RemovedCount = RemovedCount + DeleteEmptyByStyle(sec.Footers(i), "Footer")
+            RemovedCount = RemovedCount + DeleteEmptyByStyle(sec.Headers(i), C_S_ParNormal)
+            RemovedCount = RemovedCount + DeleteEmptyByStyle(sec.Footers(i), C_S_ParNormal)
+        Next i
+    Next sec
+    
+    Application.ScreenUpdating = True
+    MsgBox RemovedCount & " paragraph(s) removed without switching views.", vbInformation
+End Sub
+
+Private Function DeleteEmptyByStyle(hf As HeaderFooter, styleName As String) As Long
+    Dim i As Long
+    Dim p As Paragraph
+    Dim count As Long: count = 0
+    
+    ' If the header doesn't exist (e.g. no different first page), skip it
+    If Not hf.Exists Then Exit Function
+    
+    ' Loop backwards so the index (i) doesn't break when we delete a paragraph
+    For i = hf.Range.Paragraphs.count To 1 Step -1
+        Set p = hf.Range.Paragraphs(i)
+        
+        ' 1. Check if the style matches
+        If InStr(1, p.style.NameLocal, styleName, vbTextCompare) > 0 Then
+            
+            ' 2. Check if it's empty (Length is 1 because of the paragraph mark)
+            If Len(p.Range.Text) = 1 Then
+                
+                ' 3. Word requires at least ONE paragraph to stay in the header
+                If hf.Range.Paragraphs.count > 1 Then
+                    p.Range.Delete
+                    count = count + 1
+                End If
+                
+            End If
+        End If
+    Next i
+    
+    DeleteEmptyByStyle = count
+End Function
+
 ' Insert full content into body of the ActiveDocument.
+' 2025-07-19 by ms
+' 2026-03-14 by ms
 Private Sub InsertFullContent(TemplateIndex As Integer)
-    Dim doc As Document
-    Set doc = ActiveDocument
-    'wdHeaderFooterPrimary: This constant is used to apply headers and footers to all pages in a section, except for the first page and even pages if they have their own headers and footers defined. This is the default header and footer type that is applied to pages in a section.
-    ' Do not insert explicite Section 1 as it is already inserted on time a new file is created.
-      
-    ' Insert header and footer for Section 1
-    Application.Templates(TemplateIndex).BuildingBlockEntries("HeaderCoverPage").Insert doc.Sections(1).Headers(wdHeaderFooterPrimary).Range
-    Application.Templates(TemplateIndex).BuildingBlockEntries("FooterCoverPage").Insert doc.Sections(1).Footers(wdHeaderFooterPrimary).Range
-    
-    ' Insert BuildingBlocks for Section 1
-    Application.Templates(TemplateIndex).BuildingBlockEntries("CoverTable").Insert doc.Sections(1).Range
-    
-    ' Insert Section 2
-    doc.Sections.Add
-    doc.Sections(2).Headers(wdHeaderFooterPrimary).LinkToPrevious = False
-    doc.Sections(2).Footers(wdHeaderFooterPrimary).LinkToPrevious = False
-    
-    ' Insert header and footer for Section 2
-    Application.Templates(TemplateIndex).BuildingBlockEntries("HeaderOrdinary").Insert doc.Sections(2).Headers(wdHeaderFooterPrimary).Range
-    Application.Templates(TemplateIndex).BuildingBlockEntries("FooterOrdinary").Insert doc.Sections(2).Footers(wdHeaderFooterPrimary).Range
-    
-    ' Insert BuildingBlocks for Section 2
+    Dim doc As Document: Set doc = ActiveDocument
     Dim InsertionPoint As Range
-    Set InsertionPoint = doc.Sections(2).Range
-        
-    InsertionPoint.Collapse Direction:=wdCollapseEnd
-    Application.Templates(TemplateIndex).BuildingBlockEntries("DocumentInfoNew").Insert _
-    InsertionPoint, True
-    
-    ' Define a new range for the just inserted paragraph
+    Dim NewSection As Section
     Dim NewParagraph As Range
+    Dim oTemplate As Template
     
-    ' Insert empty paragraph
-    InsertionPoint.MoveEnd (wdSection)
-    InsertionPoint.Collapse Direction:=wdCollapseEnd
-    InsertionPoint.InsertParagraphAfter
-    Set NewParagraph = doc.Paragraphs(doc.Paragraphs.count).Range
-    NewParagraph.style = C_S_ParNormal
+    ' Set reference to the specific template
+    Set oTemplate = Application.Templates(TemplateIndex)
     
-    InsertionPoint.MoveEnd (wdSection)
-    InsertionPoint.Collapse Direction:=wdCollapseEnd
-    Application.Templates(TemplateIndex).BuildingBlockEntries("ListOfContent").Insert _
-        InsertionPoint
+    ' 1. Enable Odd & Even headers for the entire document
+    doc.PageSetup.OddAndEvenPagesHeaderFooter = True
+    
+    ' --- SECTION 1: COVER PAGE ---
+    With doc.Sections(1)
+        ' Headers and Footers (No extra paragraphs needed here as they are in the H/F story)
+        oTemplate.BuildingBlockEntries("HeaderCoverPage").Insert .Headers(wdHeaderFooterPrimary).Range
+        oTemplate.BuildingBlockEntries("HeaderCoverPage").Insert .Headers(wdHeaderFooterEvenPages).Range
+        oTemplate.BuildingBlockEntries("FooterCoverPage").Insert .Footers(wdHeaderFooterPrimary).Range
+        oTemplate.BuildingBlockEntries("FooterCoverPage").Insert .Footers(wdHeaderFooterEvenPages).Range
         
-    InsertionPoint.MoveEnd (wdSection)
-    InsertionPoint.Collapse Direction:=wdCollapseEnd
-    Application.Templates(TemplateIndex).BuildingBlockEntries("ListOfPictures").Insert _
-    InsertionPoint
-    
-    InsertionPoint.MoveEnd (wdSection)
-    InsertionPoint.Collapse Direction:=wdCollapseEnd
-    Application.Templates(TemplateIndex).BuildingBlockEntries("ListOfTables").Insert _
-        InsertionPoint, RichText:=True
-    
-    ' Insert the specified field just before the 3rd section break
-    ' This trick comes from the book WordTips_TheMacros_8E.pdf, section 7.07 "Automatic Blank Pages at the end of section"
-    ' The "A4_Ver_BlankPage" must contain a page break character and empty paragraph afterwards.
-    ' Selection.Fields.Add Range:=Selection.Range, Type:=wdFieldEmpty, Text:="IF { =INT({ PAGE } / 2) * 2 } = { PAGE } { AUTOTEXT ""A4_Ver_BlankPage"" } "" "" ", PreserveFormatting:=False
-    ' https://stackoverflow.com/questions/15338309/setting-up-a-nested-field-in-word-using-vba
-    ' BuildingBlocks: A4_Ver_BlankPage (Custom 1) + BlankPageFieldOddSection (Custom 1)
-    
-    ' Insert content paragraph
-    With InsertionPoint
-        .MoveEnd (wdSection)
-        .Collapse Direction:=wdCollapseEnd
-        .InsertParagraphAfter
+        ' Insert Cover Table Building Block
+        oTemplate.BuildingBlockEntries("CoverTable").Insert .Range
     End With
+    
+    ' Add empty paragraph after Cover Table
+    Call AddStyledParagraph(doc, "ParNormal ms")
+    
+    ' --- SECTION 2: MAIN CONTENT ---
+    Set InsertionPoint = doc.Range
+    InsertionPoint.Collapse Direction:=wdCollapseEnd
+    
+    Set NewSection = doc.Sections.Add(Range:=InsertionPoint)
+    With NewSection
+        .Headers(wdHeaderFooterPrimary).LinkToPrevious = False
+        .Headers(wdHeaderFooterEvenPages).LinkToPrevious = False
+        .Footers(wdHeaderFooterPrimary).LinkToPrevious = False
+        .Footers(wdHeaderFooterEvenPages).LinkToPrevious = False
+        
+        oTemplate.BuildingBlockEntries("HeaderOrdinary").Insert .Headers(wdHeaderFooterPrimary).Range
+        oTemplate.BuildingBlockEntries("HeaderOrdinary").Insert .Headers(wdHeaderFooterEvenPages).Range
+        oTemplate.BuildingBlockEntries("FooterOrdinary").Insert .Footers(wdHeaderFooterPrimary).Range
+        oTemplate.BuildingBlockEntries("FooterOrdinary").Insert .Footers(wdHeaderFooterEvenPages).Range
+    End With
+    
+    ' Insert DocumentInfoNew at start of Section 2
+    Set InsertionPoint = NewSection.Range
+    InsertionPoint.Collapse Direction:=wdCollapseStart
+    oTemplate.BuildingBlockEntries("DocumentInfoNew").Insert InsertionPoint, True
+    
+    ' Add empty paragraph after DocumentInfoNew
+    Call AddStyledParagraph(doc, "ParNormal ms")
+    
+    ' --- Lists ---
+    ' List Of Content
+    Set InsertionPoint = doc.Range
+    InsertionPoint.Collapse Direction:=wdCollapseEnd
+    oTemplate.BuildingBlockEntries("ListOfContent").Insert InsertionPoint
+    Call AddStyledParagraph(doc, "ParNormal ms")
+    
+    ' List Of Pictures
+    Set InsertionPoint = doc.Range
+    InsertionPoint.Collapse Direction:=wdCollapseEnd
+    oTemplate.BuildingBlockEntries("ListOfPictures").Insert InsertionPoint
+    Call AddStyledParagraph(doc, "ParNormal ms")
+    
+    ' List Of Tables
+    Set InsertionPoint = doc.Range
+    InsertionPoint.Collapse Direction:=wdCollapseEnd
+    oTemplate.BuildingBlockEntries("ListOfTables").Insert InsertionPoint, RichText:=True
+    Call AddStyledParagraph(doc, "ParNormal ms")
+    
+    ' --- Heading 1 [Content] ---
+    doc.Content.InsertAfter vbCr
     Set NewParagraph = doc.Paragraphs(doc.Paragraphs.count).Range
     With NewParagraph
         .style = C_S_Heading1
         .Text = "[Content]"
     End With
     
-    ' Insert empty paragraph
-    With InsertionPoint
-        .MoveEnd (wdSection)
-        .Collapse Direction:=wdCollapseEnd
-        .InsertParagraphAfter
-    End With
-    Set NewParagraph = doc.Paragraphs(doc.Paragraphs.count).Range
-    NewParagraph.style = C_S_ParNormal
+    ' Add empty paragraph after Heading 1
+    Call AddStyledParagraph(doc, "ParNormal ms")
     
-    InsertionPoint.MoveEnd (wdSection)
+    ' Final Section 2 Paragraph (as per previous requirement)
+    Call AddStyledParagraph(doc, C_S_ParNormal)
+    
+    ' --- SECTION 3: LAST PAGE ---
+    Set InsertionPoint = doc.Range
     InsertionPoint.Collapse Direction:=wdCollapseEnd
-    Application.Templates(TemplateIndex).BuildingBlockEntries("BlankPageFieldOddSection").Insert _
-        InsertionPoint
     
-    ' Insert Section 3
-    doc.Sections.Add
-    doc.Sections(3).Headers(wdHeaderFooterPrimary).LinkToPrevious = False
-    doc.Sections(3).Footers(wdHeaderFooterPrimary).LinkToPrevious = False
+    Set NewSection = doc.Sections.Add(Range:=InsertionPoint)
+    With NewSection
+        .Headers(wdHeaderFooterPrimary).LinkToPrevious = False
+        .Headers(wdHeaderFooterEvenPages).LinkToPrevious = False
+        .Footers(wdHeaderFooterPrimary).LinkToPrevious = False
+        .Footers(wdHeaderFooterEvenPages).LinkToPrevious = False
+        
+        oTemplate.BuildingBlockEntries("HeaderLastPage").Insert .Headers(wdHeaderFooterPrimary).Range
+        oTemplate.BuildingBlockEntries("HeaderLastPage").Insert .Headers(wdHeaderFooterEvenPages).Range
+        oTemplate.BuildingBlockEntries("FooterLastPage").Insert .Footers(wdHeaderFooterPrimary).Range
+        oTemplate.BuildingBlockEntries("FooterLastPage").Insert .Footers(wdHeaderFooterEvenPages).Range
+    End With
     
-    ' Insert header and footer for Section 3
-    Application.Templates(TemplateIndex).BuildingBlockEntries("HeaderLastPage").Insert doc.Sections(3).Headers(wdHeaderFooterPrimary).Range
-    Application.Templates(TemplateIndex).BuildingBlockEntries("FooterLastPage").Insert doc.Sections(3).Footers(wdHeaderFooterPrimary).Range
-    
-    ' Clear object variables
-    Set doc = Nothing
-    Set InsertionPoint = Nothing
-    Set NewParagraph = Nothing
+    ' Cleanup
+    Set doc = Nothing: Set InsertionPoint = Nothing: Set NewSection = Nothing: Set NewParagraph = Nothing
+End Sub
+
+' --- HELPER SUB TO REDUCE REPETITION ---
+Private Sub AddStyledParagraph(ByRef doc As Document, ByVal styleName As Variant)
+    doc.Content.InsertAfter vbCr
+    doc.Paragraphs(doc.Paragraphs.count).Range.style = styleName
 End Sub
 
 ' Insert basic content into ActiveDocument: no cover page and last page.
