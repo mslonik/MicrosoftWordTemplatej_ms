@@ -14,7 +14,7 @@ Attribute VB_Name = "BuildingBlocks"
 '| 5       | BB_List                     | BuildingBlocks_ms | no name (custom) | BB_List                                |
 '| 6       | BB_Add                      | BuildingBlocks_ms | Edit             | BB_Add                                 |
 '| 7       | BB_InsertBBTemplate         | BuildingBlocks_ms | Edit             | BB_InsertBBTemplate                    |
-'| 8       | BB_RemoveDefParagraphs      | BuildingBlocks_ms | Edit             | BB_RemoveDefParagraphs                 |
+'| 8       | BB_DeleteHeaderPar          | BuildingBlocks_ms | Edit             | BB_DeleteHeaderPar                 |
 '| 9       | —                           | BuildingBlocks_ms | built-in         | Building Block Gallery Content Control |
 '| 10      | —                           | BuildingBlocks_ms | built-in         | Building Block Organizer               |
 '+---------+-----------------------------+-------------------+------------------+----------------------------------------+
@@ -811,16 +811,15 @@ Sub BB_InsertBBTemplate()
     Set myRng = Nothing
 End Sub
 
+' Remove header paragraphs from content of ActiveDocument
 ' 2025-12-21 by ms and AI
 ' 2025-12-28 by ms and AI
-Sub BB_RemoveDefParagraphs()
+Sub BB_DeleteHeaderPar()
     Dim TagsToRemove As Variant     ' array
-    Dim aStory As Range
-    Dim p As Paragraph
-    Dim i As Long
-    Dim txt As String
     Dim Tag As Variant
+    Dim aStory As Range
     Dim RemovedCount As Long
+    Dim SafeTag As String
     
     ' Tags to check at the start of each paragraph
     TagsToRemove = Array( _
@@ -833,93 +832,57 @@ Sub BB_RemoveDefParagraphs()
     Application.ScreenUpdating = False
     RemovedCount = 0
     
+    On Error Resume Next
+    
     ' Search all areas of documents (StoryRanges), including headers and footers
     ' Iterate backwards to avoid reindexing issues when deleting
     For Each aStory In ActiveDocument.StoryRanges
         Do
-            ' Check if in a Story there are any paragraphs at all
-            If aStory.Paragraphs.count > 0 Then
-                For i = aStory.Paragraphs.count To 1 Step -1
-                    ' If specific section or field is blocked / uneditable
-                    On Error Resume Next
-                    Set p = aStory.Paragraphs(i)
-                    
-                    If Err.Number = 0 And Not p Is Nothing Then
-                        txt = p.Range.Text
-                        txt = Replace(Replace(txt, vbCr, ""), vbLf, "")
-                        txt = Trim$(txt)
-                        
-                        For Each Tag In TagsToRemove
-                            If Len(txt) >= Len(Tag) Then
-                                If Left$(txt, Len(Tag)) = CStr(Tag) Then
-                                    p.Range.Delete
-                                    
-                                    If Err.Number = 0 Then
-                                        RemovedCount = RemovedCount + 1
-                                    Else
-                                        Err.Clear
-                                    End If
-                                    
-                                    Exit For
-                                End If
-                            End If
-                        Next Tag
-                    End If
-                    On Error GoTo 0
-                    ' Let user to stop it while running with Ctrl + Break
-                    DoEvents
-                Next i
+            For Each Tag In TagsToRemove
+                ' Escape the < and > so Word treats them as text
+                SafeTag = EscapeWildcards(CStr(Tag))
                 
-                ' Brute force to remove empty paragraphs
-                If aStory.StoryType <> wdMainTextStory Then
-                    For i = aStory.Paragraphs.count To 1 Step -1
-                        Set p = aStory.Paragraphs(i)
-                        ' Check if paragraph is empty (if it contains just paragraph character)
-                        ' it doesn't contain any 'anchors' of pictures or shapes
-                        If Len(p.Range.Text) <= 1 And _
-                            p.Range.InlineShapes.count = 0 And _
-                            p.Range.ShapeRange.count = 0 Then
-                            ' Simulate pressing of DEL key
-                            ' Set range to the end of paragraph
-                            ' and expand it by one character
-                            Dim delRange As Range
-                            Set delRange = p.Range
-                            delRange.Collapse Direction:=wdCollapseStart
-                            delRange.MoveEnd Unit:=wdCharacter, count:=1
-
-                            On Error Resume Next
-                            delRange.Delete
-                            On Error GoTo 0
-                        End If
-                    ' Let user to stop it while running with Ctrl + Break
-                    DoEvents
-                    Next i
-                End If
+                With aStory.Find
+                    .ClearFormatting
+                    .Replacement.ClearFormatting
+                    ' The pattern matches the Tag at the start of a paragraph
+                    ' and everything until the end of that paragraph.
+                    ' [!^13]* means "any character that is NOT a carriage return"
+                    .Text = "(" & SafeTag & ")[!^13]{1,}^13"
+                    .Replacement.Text = ""
+                    .Forward = True
+                    .Wrap = wdFindStop      ' Stop at end of story to count
+                    .Format = False
+                    .MatchWildcards = True ' Enable Wildcards for speed
                 
-            End If
+                    Do While .Execute(Replace:=wdReplaceOne)
+                        RemovedCount = RemovedCount + 1
+                    Loop
+                End With
+            Next Tag
             
-            ' Move to the next Story.
+            ' Move to the next Story (headers, footers, etc.)
             Set aStory = aStory.NextStoryRange
-            ' Let user to stop it while running with Ctrl + Break
-            DoEvents
         Loop Until aStory Is Nothing
-        ' Let user to stop it while running with Ctrl + Break
-        DoEvents
     Next aStory
+    
     Application.ScreenUpdating = True
+    Set aStory = Nothing
     
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_BuildingBlocks
     Dim MacroName As String:    MacroName = "RemoveBBDefParagraphs"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
-    
-    ' Clear object variables
-    Set p = Nothing
-    Set aStory = Nothing
-    
+        
     MsgBox _
         Prompt:=RemovedCount & " paragraph(s) removed.", _
         Buttons:=vbInformation, _
         Title:=MsgBoxTitle
 End Sub
 
+' Helper function to make tags Wildcard-safe
+Function EscapeWildcards(ByVal txt As String) As String
+    txt = Replace(txt, "<", "\<")
+    txt = Replace(txt, ">", "\>")
+    EscapeWildcards = txt
+End Function

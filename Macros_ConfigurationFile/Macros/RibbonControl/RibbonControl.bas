@@ -271,7 +271,7 @@ Sub BttnBB(control As IRibbonControl)
         Case "Btn_BBTemp"
             Call Macros_ms.BuildingBlocks.BB_InsertBBTemplate
         Case "Btn_BBRemHead"
-            Call Macros_ms.BuildingBlocks.BB_RemoveDefParagraphs
+            Call Macros_ms.BuildingBlocks.BB_DeleteHeaderPar
     End Select
 End Sub
 

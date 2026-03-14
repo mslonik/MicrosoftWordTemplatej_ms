@@ -29,7 +29,7 @@ Attribute VB_Name = "Shortcuts"
 '   19. SetShortcut_JumpToNextList()                -> ResetShortcut_JumpToNextList()
 '   21. SetShortcut_JumpToNextTable()               -> ResetShortcut_JumpToNextTable()
 '   23. SetShortcut_JumpToNextCanvas()              -> ResetShortcut_JumpToNextCanvas()
-'   25. SetShortcut_SaveFileApplyNumberingDistance() -> ResetShortcut_SaveFileApplyNumberingDistance()
+'   25. SetShortcut_CustomFileSave()                -> ResetShortcut_CustomFileSave()
 '   27. SetShortcut_CloseFileApplyUpdateFields()    -> ResetShortcut_CloseFileApplyUpdateFields()
 '   29. SetShortcut_CustomizedPrintPreviewAndPrint() -> ResetShortcut_CustomizedPrintPreviewAndPrint()
 '   31. SetShortcut_ToggleCharBoldStyle()           -> ResetShortcut_ToggleCharBoldStyle()
@@ -92,7 +92,7 @@ Sub CreateActiveDocumentMacroShortcuts()
     Call Macros_ms.Shortcuts.SetShortcut_JumpToNextList(IfMsgBox:="quiet")                 ' module: Shortcuts: 2
     Call Macros_ms.Shortcuts.SetShortcut_JumpToNextTable(IfMsgBox:="quiet")                ' module: Shortcuts: 3
     Call Macros_ms.Shortcuts.SetShortcut_JumpToNextCanvas(IfMsgBox:="quiet")               ' module: Shortcuts: 4
-    Call Macros_ms.Shortcuts.SetShortcut_SaveFileApplyNumberingDistance(IfMsgBox:="quiet") ' module: Shortcuts: 5
+    Call Macros_ms.Shortcuts.SetShortcut_CustomFileSave(IfMsgBox:="quiet") ' module: Shortcuts: 5
     Call Macros_ms.Shortcuts.SetShortcut_CloseFileApplyUpdateFields(IfMsgBox:="quiet")     ' module: Shortcuts: 6
     Call Macros_ms.Shortcuts.SetShortcut_CustomizedPrintPreviewAndPrint(IfMsgBox:="quiet") ' module: Shortcuts: 7
     Call Macros_ms.Shortcuts.SetShortcut_ToggleCharBoldStyle(IfMsgBox:="quiet")            ' module: Shortcuts: 8
@@ -165,7 +165,7 @@ Sub RemoveActiveDocumentMacroShortcuts()
     Call Macros_ms.Shortcuts.ResetShortcut_JumpToNextList
     Call Macros_ms.Shortcuts.ResetShortcut_JumpToNextTable
     Call Macros_ms.Shortcuts.ResetShortcut_JumpToNextCanvas
-    Call Macros_ms.Shortcuts.ResetShortcut_SaveFileApplyNumberingDistance
+    Call Macros_ms.Shortcuts.ResetShortcut_CustomFileSave
     Call Macros_ms.Shortcuts.ResetShortcut_CloseFileApplyUpdateFields
     Call Macros_ms.Shortcuts.ResetShortcut_CustomizedPrintPreviewAndPrint
     Call Macros_ms.Shortcuts.ResetShortcut_ToggleCharBoldStyle
@@ -1548,19 +1548,18 @@ Private Sub ResetShortcut_JumpToNextCanvas()
     Call Macros_ms.Shortcuts.DeleteKeyBinding(KeybShortcut:=C_SC_AltF5)
 End Sub
 
-
 ' Sets call-forward to built-in command "Save File" (Ctrl + S), adding macro to apply numbering distance
 ' 2025-03-12 by ms
-Private Sub SetShortcut_SaveFileApplyNumberingDistance(ByVal IfMsgBox As String)
+Private Sub SetShortcut_CustomFileSave(ByVal IfMsgBox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_CtrlS, _
-        WhichMacro:="Macros_ms.Content.ApplyDistanceBetweenNumberingAndHeading", _
+        WhichMacro:="Macros_ms.Content.FileSave", _
         IfMsgBox:=IfMsgBox)
 End Sub
 
 ' Original Microsoft Word command: FileSave
 ' 2025-03-12 by ms
-Private Sub ResetShortcut_SaveFileApplyNumberingDistance()
+Private Sub ResetShortcut_CustomFileSave()
     Call Macros_ms.Shortcuts.DeleteKeyBinding(KeybShortcut:=C_SC_CtrlS)
 End Sub
 
