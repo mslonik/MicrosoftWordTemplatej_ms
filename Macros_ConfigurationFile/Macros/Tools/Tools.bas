@@ -1840,6 +1840,15 @@ Sub SaveDocumentAsPDFWithSettings()
     Else
         BaseName = ActiveDocument.Name
     End If
+    
+    If BaseName = "" Then
+        MsgBox _
+            Prompt:="The file must be named!" & vbNewLine & vbNewLine & "Exiting.", _
+            Buttons:=vbExclamation, _
+            Title:=MsgBoxTitle
+        Exit Sub
+    End If
+    
     ' Construct full path with .pdf extension
     FilePath = DefaultPath & "\" & BaseName & ".pdf"
     
@@ -4249,6 +4258,7 @@ Sub CustomizedSaveAs()
         )
     If UserDecision = vbYes Then
         Call Macros_ms.Tools.SaveDocumentAsPDFWithSettings
+        
         Exit Sub
     End If
     
