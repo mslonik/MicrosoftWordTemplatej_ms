@@ -4,7 +4,8 @@ Attribute VB_Name = "RibbonControl"
 '
 '   License: MIT License.
 '
-' This module serves as middle layer between customUI and the rest of existing macros.
+' This module serves as middle layer between customUI14.xml which is stored in Macros_ms.dotm and the rest of existing macros.
+'
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 ' Used to enforce the explicit declaration of all variables in a module. When you include Option Explicit at the beginning of a module, it ensures that you must
 ' declare all variables using the Dim, Private, Public, ReDim, or Static statements before using them. This helps prevent errors caused by typos or
@@ -147,7 +148,7 @@ Sub BttnCaption(control As IRibbonControl)
         Case "Btn_CaptionShow"
             Call Macros_ms.Tools.CaptionShow
         Case "Btn_CaptionAddCustom"
-            Call Macros_ms.Tools.CapationAddCustomized
+            Call Macros_ms.Tools.CaptionAddCustomized
         Case "Btn_CaptionDelCustom"
             Call Macros_ms.Tools.CaptionLabelDeleteCustomized
     End Select

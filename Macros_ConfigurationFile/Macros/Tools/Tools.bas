@@ -43,18 +43,18 @@ Attribute VB_Name = "Tools"
 '+----+-------------------------------+-------------+-----------------+-------------------------------+
 '| 19 | CaptionShow                   | Tools_ms    | Captions        | CaptionShow                   |
 '| 20 | CaptionLabelDeleteCustomized  | Tools_ms    | Captions        | CaptionLabelDeleteCustomized  |
-'| 21 | CapationAddCustomized         | Tools_ms    | Captions        | CapationAddCustomized         |
+'| 21 | CaptionAddCustomized          | Tools_ms    | Captions        | CaptionAddCustomized          |
 '+----+-------------------------------+-------------+-----------------+-------------------------------+
-'| 22 | WordOptionsCustomize          | Tools_ms    | Word Options    | WordOptionsCustomize          |
-'| 23 | WordOptionsRestore            | Tools_ms    | Word Options    | WordOptionsRestore            |
-'|    | WordOptionsAutoFormatEnable   | Tools_ms    | Word Options    |
-'|    | WordOptionsAutoFormatDisable  | Tools_ms    | Word Options    |
+'| 22 | WordOptionsCustomize                  | Tools_ms    | Word Options    | WordOptionsCustomize  |
+'| 23 | WordOptionsRestore                    | Tools_ms    | Word Options    | WordOptionsRestore    |
+'|    | WordOptionsAutoFormatEnable           | Tools_ms    | Word Options    |
+'|    | WordOptionsAutoFormatDisable          | Tools_ms    | Word Options    |
 '|    | WordOptionsAutoFormatAsYouTypeDisable | Tools_ms    | Word Options    |
 '|    | WordOptionsAutoFormatAsYouTypeEnable  | Tools_ms    | Word Options    |
-'|    | WordOptionsAutoCorrectEnable  | Tools_ms    | Word Options    |
-'|    | WordOptionsAutoCorrectDisable | Tools_ms    | Word Options    |
-'|    | WordOptionsAutoCorrectAllEnable  | Tools_ms    | Word Options    |
-'|    | WordOptionsAutoCorrectAllDisable | Tools_ms    | Word Options    |
+'|    | WordOptionsAutoCorrectEnable          | Tools_ms    | Word Options    |
+'|    | WordOptionsAutoCorrectDisable         | Tools_ms    | Word Options    |
+'|    | WordOptionsAutoCorrectAllEnable       | Tools_ms    | Word Options    |
+'|    | WordOptionsAutoCorrectAllDisable      | Tools_ms    | Word Options    |
 '+----+-------------------------------+-------------+-----------------+-------------------------------+
 '| 28 | Table_CustomizeFormatting     | Tools_ms    | Tables          | Table_CustomizeFormatting     |
 '| 29 | Table_KeepOnOnePage           | Tools_ms    | Tables          | Table_KeepOnOnePage           |
@@ -1354,26 +1354,59 @@ Function CaptionCheckCustomLabelsOnly() As Boolean
     End If
 End Function
 
-
-' The captions aren't stored in the template, so they must be defined within a macro.
+' The captions aren't stored in the template Normal.dotm, so they must be defined within a macro.
 ' When new document is created from the template body ("enter"), then the specific captions will be available in such document.
-' When you attach this template to existing document and want captions to be moved to that document file, you need to run the macro CaptionLabelCopyFromTemplate.
+' If you want your captions to be present on different computer, attach your Normal.dotm template to existing document or run this macro.
 ' 2025-03-04 by ms and AI
-Sub CapationAddCustomized()
+' 2026-03-15 by ms
+Sub CaptionAddCustomized()
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Macros
-    Dim MacroName As String:    MacroName = "CapationAddCustomized"
+    Dim MacroName As String:    MacroName = "CaptionAddCustomized"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    ' Add the new caption labels
-    CaptionLabels.Add Name:=C_Caption_Tab
-    CaptionLabels.Add Name:=C_Caption_Pic
+    Dim TargetLabels As Variant
+    Dim i As Integer
+    Dim AddedList As String
+    Dim AlreadyExistCount As Integer
     
-    MsgBox _
-        Prompt:="New caption labels " & C_Caption_Tab & " and " & C_Caption_Pic & " have been added to the application.", _
-        Buttons:=vbInformation + vbOKOnly, _
-        Title:=MsgBoxTitle
+    ' Put your constants in an array for easy processing
+    TargetLabels = Array(C_Caption_Tab, C_Caption_Pic)
+    
+    For i = LBound(TargetLabels) To UBound(TargetLabels)
+        If Not DoesCaptionLabelExist(CStr(TargetLabels(i))) Then
+            ' Add the missing label
+            CaptionLabels.Add Name:=TargetLabels(i)
+            ' Track what we added for the MsgBox
+            AddedList = AddedList & "- " & TargetLabels(i) & vbNewLine
+        Else
+            AlreadyExistCount = AlreadyExistCount + 1
+        End If
+    Next i
+    
+    ' --- User Feedback ---
+    If AddedList <> "" Then
+        MsgBox _
+            Prompt:="The following caption labels were added to the Normal.dotm:" & vbNewLine & vbNewLine & _
+                AddedList & vbNewLine & vbNewLine & _
+                "In case Normal.dotm is read only, Microsoft Word will warn you about change.", _
+            Buttons:=vbInformation, _
+            Title:=MsgBoxTitle
+    ElseIf AlreadyExistCount = (UBound(TargetLabels) + 1) Then
+        MsgBox "All customized caption labels already exist in the application.", _
+               vbInformation, MsgBoxTitle
+    End If
 End Sub
+
+' A simple, reusable helper function
+Function DoesCaptionLabelExist(LabelName As String) As Boolean
+    Dim Lbl As CaptionLabel
+    On Error Resume Next
+    ' Try to set a reference to the label; if it fails, it doesn't exist
+    Set Lbl = CaptionLabels(LabelName)
+    DoesCaptionLabelExist = (Err.Number = 0)
+    On Error GoTo 0
+End Function
 
 ' Delete not built-in caption labels
 ' 2025-04-27 by ms and AI
@@ -2433,29 +2466,67 @@ End Sub
 ' Microsoft Word customized settings
 ' 2025-04-02 by ms and AI
 ' 2026-03-14 by ms
+' 2026-03-15 by ms
 Sub WordOptionsCustomize()
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Tools
     Dim MacroName As String:    MacroName = "WordOptionsCustomize"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    Options.MeasurementUnit = wdCentimeters                         ' Show measurements in units of centimeters
-    ActiveWindow.View.Type = wdNormalView
-    ActiveWindow.StyleAreaWidth = CentimetersToPoints(5.3)          ' Set Style area pane width in Draft and Outline view to 5.3 cm
-    ActiveDocument.Compatibility(wdSuppressBottomSpacing) = False   ' Suppress extra line spacing at bottom of page
-    ActiveDocument.Compatibility(wdSuppressTopSpacing) = False      ' Suppress extra line spacing at top of page
-    Options.INSKeyForOvertype = True
-    ActiveWindow.View.Type = wdPrintView
+    Dim CheckFlag As Boolean:   CheckFlag = True
+    Dim TargetWidth As Single:  TargetWidth = CentimetersToPoints(5.3)
     
-    MsgBox _
-        Prompt:="Microsoft Word options customized successfully:" & vbNewLine & vbNewLine & _
-            "Show measurements in units of centimeters: " & Options.MeasurementUnit & vbNewLine & _
-            "Set Style area pane width in Draft and Outline view to 5.3 cm: " & ActiveWindow.StyleAreaWidth & vbNewLine & _
-            "Suppress extra line spacing at bottom of page: " & ActiveDocument.Compatibility(wdSuppressBottomSpacing) & vbNewLine & _
-            "Suppress extra line spacing at top of page: " & ActiveDocument.Compatibility(wdSuppressTopSpacing) & vbNewLine & _
-            "Use INS keyboard key for overtype mode: " & Options.INSKeyForOvertype, _
-        Buttons:=vbInformation + vbOKOnly, _
-        Title:=MsgBoxTitle
+    Application.ScreenUpdating = False
+    
+    ' 1. Measurement Units
+    If Options.MeasurementUnit <> wdCentimeters Then
+        Options.MeasurementUnit = wdCentimeters                         ' Show measurements in units of centimeters
+        CheckFlag = False
+    End If
+    
+    ' 2. Style Area Width (Rounded to 2 decimal places for reliable comparison)
+    If Round(ActiveWindow.StyleAreaWidth, 2) <> Round(TargetWidth, 2) Then
+        Dim CurrentView As WdViewType: CurrentView = ActiveWindow.View.Type
+        
+        ActiveWindow.View.Type = wdNormalView
+        ActiveWindow.StyleAreaWidth = TargetWidth          ' Set Style area pane width in Draft and Outline view to 5.3 cm
+        ActiveWindow.View.Type = wdPrintView
+        ActiveWindow.View.Type = CurrentView
+        CheckFlag = False
+    End If
+    
+    ' 3. Insert Key
+    If Not Options.INSKeyForOvertype Then
+        Options.INSKeyForOvertype = True
+        CheckFlag = False
+    End If
+    
+    ' 4. Compatibility Spacing
+    If ActiveDocument.Compatibility(wdSuppressBottomSpacing) Then
+        ActiveDocument.Compatibility(wdSuppressBottomSpacing) = False   ' Suppress extra line spacing at bottom of page
+        CheckFlag = False
+    End If
+    
+    If ActiveDocument.Compatibility(wdSuppressTopSpacing) Then
+        ActiveDocument.Compatibility(wdSuppressTopSpacing) = False      ' Suppress extra line spacing at top of page
+        CheckFlag = False
+    End If
+    
+    Application.ScreenUpdating = True
+    
+    ' 5. Feedback
+    If Not CheckFlag Then
+        MsgBox _
+            Prompt:="Microsoft Word options customized successfully:" & vbNewLine & vbNewLine & _
+                "Show measurements in units of centimeters: " & Options.MeasurementUnit & vbNewLine & _
+                "Set Style area pane width in Draft and Outline view to 5.3 cm: " & ActiveWindow.StyleAreaWidth & vbNewLine & _
+                "Suppress extra line spacing at bottom of page: " & ActiveDocument.Compatibility(wdSuppressBottomSpacing) & vbNewLine & _
+                "Suppress extra line spacing at top of page: " & ActiveDocument.Compatibility(wdSuppressTopSpacing) & vbNewLine & _
+                "Use INS keyboard key for overtype mode: " & Options.INSKeyForOvertype, _
+            Buttons:=vbInformation + vbOKOnly, _
+            Title:=MsgBoxTitle
+    End If
+    
 End Sub
 
 ' Restore customized Microsoft Word options.
