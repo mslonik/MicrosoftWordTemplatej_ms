@@ -243,11 +243,11 @@ Sub ImportAllVBAModules()
 End Sub
 
 Sub DeleteAllVBAModules()
-    Call DeleteVBAModules
+    Call Macros_ms.Macros.DeleteVBAModules
 End Sub
 
 Sub DeleteAllVBAModulesExceptMacros()
-    Call DeleteVBAModules(Exception:="Macros")
+    Call Macros_ms.Macros.DeleteVBAModules(Exception:="Macros")
 End Sub
     
 
@@ -332,7 +332,7 @@ Private Sub DeleteVBAModules(Optional Exception As String)
     
     ' If there is no exception such as "Macros", remove also content from "ThisDocument"
     If Exception = "" Then
-        Call RemoveContentFromThisDocument  ' in this file
+        Call Macros_ms.Macros.RemoveContentFromThisDocument
     End If
     
     ' Clear object variables

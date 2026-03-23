@@ -207,6 +207,7 @@ Public Const C_SC_ShiftCtrlK As String = "Shift + Ctrl + K"     ' ToggleCharSour
 Public Const C_SC_ShiftCtrlS As String = "Shift + Ctrl + S"     ' ToggleApplyStyles
 Public Const C_SC_ShiftCtrlC As String = "Shift + Ctrl + C"     ' CopyFormat
 Public Const C_SC_ShiftCtrlV As String = "Shift + Ctrl + V"     ' PasteFormat
+Public Const C_SC_F3 As String = "F3"                           ' CustomInsertAutoText
 Public Const C_SC_F4 As String = "F4"                           ' ToggleSpecificFormatting
 Public Const C_SC_F7 As String = "F7"                           ' InsertCrossRef
 Public Const C_SC_F8 As String = "F8"                           ' SetLanguageToEnglishUS

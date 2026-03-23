@@ -588,6 +588,14 @@ Sub AddBlankPages()
     
     Set oRng = Nothing
     Set bBlock = Nothing
+    
+    MsgBox _
+        Prompt:="Blank pages added to the document: at the end of sections with odd number of pages" & vbNewLine & _
+            "and" & vbNewLine & _
+            "one page before the last section odd page.", _
+        Buttons:=vbInformation, _
+        Title:=MsgBoxTitle
+    
 End Sub
 ' 2026-03-02 by ms
 Sub DeleteTempBlankPages()
@@ -1840,15 +1848,6 @@ Sub SaveDocumentAsPDFWithSettings()
     Else
         BaseName = ActiveDocument.Name
     End If
-    
-    If BaseName = "" Then
-        MsgBox _
-            Prompt:="The file must be named!" & vbNewLine & vbNewLine & "Exiting.", _
-            Buttons:=vbExclamation, _
-            Title:=MsgBoxTitle
-        Exit Sub
-    End If
-    
     ' Construct full path with .pdf extension
     FilePath = DefaultPath & "\" & BaseName & ".pdf"
     
@@ -4258,7 +4257,6 @@ Sub CustomizedSaveAs()
         )
     If UserDecision = vbYes Then
         Call Macros_ms.Tools.SaveDocumentAsPDFWithSettings
-        
         Exit Sub
     End If
     

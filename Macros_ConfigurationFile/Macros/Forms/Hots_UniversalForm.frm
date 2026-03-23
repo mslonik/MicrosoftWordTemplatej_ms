@@ -15,6 +15,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
 
+
 Option Explicit
 ' The QueryClose event is a standard event for UserForms in VBA, and it should be named UserForm_QueryClose regardless of the form's name.
 ' This code is placed in the code module for the Hots_UniversalForm form. The UserForm_QueryClose event should be triggered when you close the form manually by clicking the "X" button in the top right corner.

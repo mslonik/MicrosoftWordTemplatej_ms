@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} InputDocProperties_Form 
    Caption         =   "Input user document properties"
-   ClientHeight    =   5510
-   ClientLeft      =   120
-   ClientTop       =   470
-   ClientWidth     =   9380.001
+   ClientHeight    =   3670
+   ClientLeft      =   80
+   ClientTop       =   320
+   ClientWidth     =   6250
    OleObjectBlob   =   "InputDocProperties_Form.frx":0000
    StartUpPosition =   1  'CenterOwner
 End

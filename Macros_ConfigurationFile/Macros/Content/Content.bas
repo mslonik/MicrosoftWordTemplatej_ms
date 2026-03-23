@@ -207,7 +207,7 @@ Sub NewFileContent()
             Title:=MsgBoxTitle)
         If UserDecision = vbYes Then
             Call Macros_ms.Tools.CaptionLabelDeleteCustomized
-            Call Macros_ms.Tools.CapationAddCustomized
+            Call Macros_ms.Tools.CaptionAddCustomized
         End If
     End If
 
@@ -239,10 +239,6 @@ Sub NewFileContent()
         Call Macros_ms.Content.InsertBasicContent(TemplateIndex)
         Call Macros_ms.BuildingBlocks.BB_DeleteHeaderPar
         Call Macros_ms.Content.CleanHeadersFooters
-'        If DocPropertiesFlag = msoTrue Then
-'            Call Macros_ms.Tools.DocPropertiesAddCustom
-'        End If
-        Exit Sub
     End If
     
     If UserDecision = vbCancel Then
@@ -262,9 +258,6 @@ Sub NewFileContent()
         Call Macros_ms.Content.InsertFullContent(TemplateIndex)
         Call Macros_ms.BuildingBlocks.BB_DeleteHeaderPar
         Call Macros_ms.Content.CleanHeadersFooters
-'        If DocPropertiesFlag = msoTrue Then
-'            Call Macros_ms.Tools.DocPropertiesAddCustom
-'        End If
     End If
 
     ' 10. Set document page background color to customized (grey).
@@ -462,73 +455,69 @@ End Sub
 
 ' Insert basic content into ActiveDocument: no cover page and last page.
 ' 2025-04-27 by ms
+' 2026-03-14 by ms
 Private Sub InsertBasicContent(TemplateIndex As Integer)
-    Dim doc As Document
-    Set doc = ActiveDocument
-
-    ' Insert header and footer for Section 1
-    Application.Templates(TemplateIndex).BuildingBlockEntries("HeaderOrdinary").Insert doc.Sections(1).Headers(wdHeaderFooterPrimary).Range
-    Application.Templates(TemplateIndex).BuildingBlockEntries("FooterOrdinary").Insert doc.Sections(1).Footers(wdHeaderFooterPrimary).Range
-    
-    ' Insert BuildingBlocks for Section 1
+    Dim doc As Document: Set doc = ActiveDocument
     Dim InsertionPoint As Range
-    Set InsertionPoint = doc.Sections(1).Range
-        
-    InsertionPoint.Collapse Direction:=wdCollapseEnd
-    Application.Templates(TemplateIndex).BuildingBlockEntries("DocumentInfo").Insert _
-    InsertionPoint, True
-    
-    ' Define a new range for the just inserted paragraph
     Dim NewParagraph As Range
+    Dim oTemplate As Template
     
-    ' Insert empty paragraph
-    InsertionPoint.MoveEnd (wdSection)
-    InsertionPoint.Collapse Direction:=wdCollapseEnd
-    InsertionPoint.InsertParagraphAfter
-    Set NewParagraph = doc.Paragraphs(doc.Paragraphs.count).Range
-    NewParagraph.style = C_S_ParNormal
+    ' Set reference to the specific template
+    Set oTemplate = Application.Templates(TemplateIndex)
     
-    InsertionPoint.MoveEnd (wdSection)
-    InsertionPoint.Collapse Direction:=wdCollapseEnd
-    Application.Templates(TemplateIndex).BuildingBlockEntries("ListOfContent").Insert _
-        InsertionPoint
+    ' Basic content usually implies Odd/Even headers as well
+    doc.PageSetup.OddAndEvenPagesHeaderFooter = True
+    
+    ' --- SECTION 1: HEADERS & FOOTERS ---
+    With doc.Sections(1)
+        oTemplate.BuildingBlockEntries("HeaderOrdinary").Insert .Headers(wdHeaderFooterPrimary).Range
+        oTemplate.BuildingBlockEntries("HeaderOrdinary").Insert .Headers(wdHeaderFooterEvenPages).Range
         
-    InsertionPoint.MoveEnd (wdSection)
-    InsertionPoint.Collapse Direction:=wdCollapseEnd
-    Application.Templates(TemplateIndex).BuildingBlockEntries("ListOfPictures").Insert _
-    InsertionPoint
-    
-    InsertionPoint.MoveEnd (wdSection)
-    InsertionPoint.Collapse Direction:=wdCollapseEnd
-    Application.Templates(TemplateIndex).BuildingBlockEntries("ListOfTables").Insert _
-        InsertionPoint, RichText:=True
-    
-    ' Insert content paragraph
-    With InsertionPoint
-        .MoveEnd (wdSection)
-        .Collapse Direction:=wdCollapseEnd
-        .InsertParagraphAfter
+        oTemplate.BuildingBlockEntries("FooterOrdinary").Insert .Footers(wdHeaderFooterPrimary).Range
+        oTemplate.BuildingBlockEntries("FooterOrdinary").Insert .Footers(wdHeaderFooterEvenPages).Range
     End With
+    
+    ' --- SECTION 1: BODY CONTENT ---
+    ' Start at the beginning of the document
+    Set InsertionPoint = doc.Range(0, 0)
+    
+    ' 1. DocumentInfo
+    oTemplate.BuildingBlockEntries("DocumentInfo").Insert InsertionPoint, True
+    Call AddStyledParagraph(doc, "ParNormal ms")
+    
+    ' 2. ListOfContent
+    Set InsertionPoint = doc.Range
+    InsertionPoint.Collapse Direction:=wdCollapseEnd
+    oTemplate.BuildingBlockEntries("ListOfContent").Insert InsertionPoint
+    Call AddStyledParagraph(doc, "ParNormal ms")
+    
+    ' 3. ListOfPictures
+    Set InsertionPoint = doc.Range
+    InsertionPoint.Collapse Direction:=wdCollapseEnd
+    oTemplate.BuildingBlockEntries("ListOfPictures").Insert InsertionPoint
+    Call AddStyledParagraph(doc, "ParNormal ms")
+    
+    ' 4. ListOfTables
+    Set InsertionPoint = doc.Range
+    InsertionPoint.Collapse Direction:=wdCollapseEnd
+    oTemplate.BuildingBlockEntries("ListOfTables").Insert InsertionPoint, RichText:=True
+    Call AddStyledParagraph(doc, "ParNormal ms")
+    
+    ' 5. Heading 1 [Content]
+    doc.Content.InsertAfter vbCr
     Set NewParagraph = doc.Paragraphs(doc.Paragraphs.count).Range
     With NewParagraph
         .style = C_S_Heading1
         .Text = "[Content]"
     End With
     
-    ' Insert empty paragraph
-    With InsertionPoint
-        .MoveEnd (wdSection)
-        .Collapse Direction:=wdCollapseEnd
-        .InsertParagraphAfter
-    End With
-    Set NewParagraph = doc.Paragraphs(doc.Paragraphs.count).Range
-    NewParagraph.style = C_S_ParNormal
-            
-    With InsertionPoint
-        .MoveEnd (wdSection)
-        .Collapse Direction:=wdCollapseEnd
-    End With
+    ' Add empty paragraph after Heading 1 as requested
+    Call AddStyledParagraph(doc, "ParNormal ms")
     
+    ' 6. Final trailing paragraph
+    Call AddStyledParagraph(doc, C_S_ParNormal)
+    
+    ' Cleanup
     Set doc = Nothing
     Set InsertionPoint = Nothing
     Set NewParagraph = Nothing

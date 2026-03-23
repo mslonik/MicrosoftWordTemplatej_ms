@@ -14,6 +14,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 
+
 Private Sub UserForm_Initialize()
     Me.Caption = "Select caption"
     OB_PicSmall.Value = True ' Default selection

@@ -18,6 +18,8 @@ Attribute VB_Name = "Validation"
 '| 8  | FindCharacterStyling       | Validation  | FindCharacterStyling       |                          |
 '+----+----------------------------+-------------+----------------------------+--------------------------+
 '
+'   SearchNCstylingBookmarks()
+'
 ' = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 '
 ' Used to enforce the explicit declaration of all variables in a module. When you include Option Explicit at the beginning of a module, it ensures that you must
@@ -125,7 +127,7 @@ Sub ReplaceUnwantedTextstrings()
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
     Application.ScreenUpdating = True
-    Call Macros_ms.Validation.AddLastCursorPositionBookmark
+    Call Macros_ms.Tools.AddLastCursorPositionBookmark
 
     Summary = "Finished processing." _
         & vbNewLine
@@ -159,7 +161,7 @@ Sub ReplaceUnwantedTextstrings()
     ReplacePattern findText, replaceText, Summary, MsgBoxTitle
     
     Call Macros_ms.Validation.DeleteEmptyParagraphs(Summary, MsgBoxTitle)
-    Call Macros_ms.Validation.RemoveLastCursorPositionBookmark
+    Call Macros_ms.Tools.RemoveLastCursorPositionBookmark
     Call Macros_ms.Validation.Logging(Summary, MsgBoxTitle)
     MsgBox _
         Prompt:=Summary, _
@@ -342,17 +344,17 @@ Sub UpdateAllFields()
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     Call Macros_ms.Validation.MacroBeginning
-    Call Macros_ms.Validation.AddLastCursorPositionBookmark
+    Call Macros_ms.Tools.AddLastCursorPositionBookmark
 
-    UpdateAllFields_Form.ProgressLabel = "Macro UpdateAllFields is running..."
-    UpdateAllFields_Form.ProgressLabel.font = "Consolas"
+    UpdateAllFields_Form.progresslabel = "Macro UpdateAllFields is running..."
+    UpdateAllFields_Form.progresslabel.font = "Consolas"
     UpdateAllFields_Form.Show vbModeless ' sets ShowModal to False in the corresponding Form
     ' The DoEvents function in Visual Basic for Applications (VBA) for Microsoft Word is used to yield execution so that the operating system can process other events. This function allows the operating system to handle other tasks, such as updating the screen, responding to user inputs, or processing other events in the queue, while your macro is running
     DoEvents
    
     For Each aStory In ActiveDocument.StoryRanges
         aStory.Fields.Update
-        UpdateAllFields_Form.ProgressLabel = "Document fields content update..."
+        UpdateAllFields_Form.progresslabel = "Document fields content update..."
         ' The DoEvents function in Visual Basic for Applications (VBA) for Microsoft Word is used to yield execution so that the operating system can process other events. This function allows the operating system to handle other tasks, such as updating the screen, responding to user inputs, or processing other events in the queue, while your macro is running
         DoEvents
     Next aStory
@@ -360,14 +362,14 @@ Sub UpdateAllFields()
     ' surprisingly the following loop do not update the fields in headers and footers
     For Each toC In ActiveDocument.TablesOfContents
         toC.Update
-        UpdateAllFields_Form.ProgressLabel = "Table of Contents (ToCs) content update"
+        UpdateAllFields_Form.progresslabel = "Table of Contents (ToCs) content update"
         ' The DoEvents function in Visual Basic for Applications (VBA) for Microsoft Word is used to yield execution so that the operating system can process other events. This function allows the operating system to handle other tasks, such as updating the screen, responding to user inputs, or processing other events in the queue, while your macro is running
         DoEvents
     Next toC
     
     ' end of macro
     Call Macros_ms.Validation.MacroFinish
-    Call Macros_ms.Validation.RemoveLastCursorPositionBookmark
+    Call Macros_ms.Tools.RemoveLastCursorPositionBookmark
     Call Macros_ms.Validation.UpdateHeadersFootersSub
     Unload UpdateAllFields_Form
         
@@ -379,7 +381,7 @@ End Sub
 
 ' 2025-10-05 by ms
 ' Checks content against 'reference zero' or 'reference error'. Loggs information into the dedicated file. If error was found it exits. Thanks to that user may fix an issue.
-' This function is called in the Scenarios module
+' This function is called in the Content module
 Function CheckFieldsAgainstErrors() As Boolean
     CheckFieldsAgainstErrors = True         ' by default everything is fine
     Dim Summary As String
@@ -425,20 +427,33 @@ Function CheckFieldsAgainstErrors() As Boolean
     Call Macros_ms.Validation.Logging(Summary, MsgBoxTitle)
 End Function
 
-Private Sub RemoveLastCursorPositionBookmark()
-    If ActiveDocument.Bookmarks.Exists(C_BM_LastCursorPosition) Then
-        Selection.GoTo What:=wdGoToBookmark, Name:=C_BM_LastCursorPosition
-        ActiveDocument.Bookmarks(C_BM_LastCursorPosition).Delete
-    Else
-        ActiveDocument.GoTo wdStory ' it moves the selection (or cursor) to the very beginning of the document.
-    End If
-End Sub
+' Sub of the same name is in Tools module
+' 2026-03-14 by ms
+'Private Sub RemoveLastCursorPositionBookmark()
+'    If ActiveDocument.Bookmarks.Exists(C_BM_LastCursorPosition) Then
+'        Dim bmRange As Range
+'        Set bmRange = ActiveDocument.Bookmarks(C_BM_LastCursorPosition).Range
+'
+'        ' Move the cursor to the START of where the bookmark was
+'        bmRange.Collapse Direction:=wdCollapseStart
+'        bmRange.Select
+'
+'        ' Delete the bookmark now that we are back home
+'        ActiveDocument.Bookmarks(C_BM_LastCursorPosition).Delete
+'    Else
+'        ' Fallback: Start of document
+'        ActiveDocument.Range(0, 0).Select
+'    End If
+'End Sub
 
-Private Sub AddLastCursorPositionBookmark()
-    ' Adds a bookmark in place where cursor is present
-    If ActiveWindow.ActivePane.View.SeekView = wdSeekMainDocument Then _
-        Selection.Bookmarks.Add (C_BM_LastCursorPosition)
-End Sub
+' Sub of the same name is in Tools module
+' 2026-03-14 by ms
+'Private Sub AddLastCursorPositionBookmark()
+'    ' Adds a bookmark in place where cursor is present
+'    If ActiveWindow.ActivePane.View.SeekView = wdSeekMainDocument Then
+'        ActiveDocument.Bookmarks.Add Name:=C_BM_LastCursorPosition, Range:=Selection.Range
+'    End If
+'End Sub
 
 Sub MacroBeginning()
     ' Switch to Print Layout view
@@ -486,12 +501,12 @@ Private Sub RefToHyperlinks()
     Call Macros_ms.Validation.CheckMicrosoftWordVersion(MacroName)
     
     Call Macros_ms.Validation.MacroBeginning
-    Call Macros_ms.Validation.AddLastCursorPositionBookmark
+    Call Macros_ms.Tools.AddLastCursorPositionBookmark
     
     i = ActiveDocument.Fields.count
     j = 0
-    RefToHyperlinks_Form.ProgressLabel.font = "Consolas"
-    RefToHyperlinks_Form.ProgressLabel = "Finished: " & j & " out of " & i
+    RefToHyperlinks_Form.progresslabel.font = "Consolas"
+    RefToHyperlinks_Form.progresslabel = "Finished: " & j & " out of " & i
     RefToHyperlinks_Form.Show vbModeless ' this means ShowModal is set to False in the corresponding Form
     For Each aField In oSource.Fields
         Call Macros_ms.Tools.RefFormatToHyperlink(aField)
@@ -503,14 +518,14 @@ Private Sub RefToHyperlinks()
         End If
         
         j = j + 1
-        RefToHyperlinks_Form.ProgressLabel = "Finished: " & j & " out of " & i
+        RefToHyperlinks_Form.progresslabel = "Finished: " & j & " out of " & i
         ' The DoEvents function in Visual Basic for Applications (VBA) for Microsoft Word is used to yield execution so that the operating system can process other events. This function allows the operating system to handle other tasks, such as updating the screen, responding to user inputs, or processing other events in the queue, while your macro is running
         DoEvents
     Next aField
     
     Unload RefToHyperlinks_Form
     Call Macros_ms.Validation.MacroFinish
-    Call Macros_ms.Validation.RemoveLastCursorPositionBookmark
+    Call Macros_ms.Tools.RemoveLastCursorPositionBookmark
     
     Call Macros_ms.Validation.Logging("Finished processing.", MsgBoxTitle)
     
@@ -614,7 +629,7 @@ Sub Tables_Format()
     End If
 
     ' Macro to set last position of the cursor
-    Call Macros_ms.Validation.AddLastCursorPositionBookmark
+    Call Macros_ms.Tools.AddLastCursorPositionBookmark
     
     ' Switch to Print View mode of operation
     ActiveWindow.View.Type = wdPrintView
@@ -639,7 +654,7 @@ Sub Tables_Format()
         YesCenterCellsVertically = YesCenterCellsVertically + Table_CenterCellsVertically(tbl:=tbl, MsgBoxHeader:=MsgBoxTitle)  ' 4. Center cells vertically
     Next tbl
     
-    Call Macros_ms.Validation.RemoveLastCursorPositionBookmark
+    Call Macros_ms.Tools.RemoveLastCursorPositionBookmark
     
      Summary = "Total number of tables: " & TotalNoTables & vbNewLine & _
               "Number of tables with header row set: " & YesHeaderCount & vbNewLine & _
@@ -772,7 +787,7 @@ Sub InsertNoBrakeSpace()
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
 
     Call Macros_ms.Validation.MacroBeginning
-    Call Macros_ms.Validation.AddLastCursorPositionBookmark
+    Call Macros_ms.Tools.AddLastCursorPositionBookmark
 
     If StyleExists(C_S_PictureLegend) Or StyleExists(C_S_TableLegend) Then
         ' ^s = non breaking space
@@ -820,7 +835,7 @@ Sub InsertNoBrakeSpace()
     End If
     
     Call Macros_ms.Validation.MacroFinish
-    Call Macros_ms.Validation.RemoveLastCursorPositionBookmark
+    Call Macros_ms.Tools.RemoveLastCursorPositionBookmark
     
     Call Macros_ms.Validation.Logging("Finished processing.", MsgBoxTitle)
 
@@ -1103,7 +1118,7 @@ Private Sub AddModifiedRefCaption()
     Dim MacroName As String:    MacroName = "AddModifiedRefCaption"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    Call Macros_ms.Validation.AddLastCursorPositionBookmark
+    Call Macros_ms.Tools.AddLastCursorPositionBookmark
     
     Set doc = ActiveDocument
     foundCount = 0
@@ -1178,7 +1193,7 @@ Private Sub AddModifiedRefCaption()
         End If
     Next fld
     
-    Call Macros_ms.Validation.RemoveLastCursorPositionBookmark
+    Call Macros_ms.Tools.RemoveLastCursorPositionBookmark
     DoEvents    ' Force a screen refresh
     ' Display a message indicating the process is complete
     MsgBox _
@@ -1350,7 +1365,7 @@ End Sub
 
 ' Auxiliary function to clean up / delete hiddent text inserted earlier by the sub ModifyRefFields.
 ' 2025-03-03 by ms
-Private Sub DeleteHiddenText() ' required in Scenarios -> ModifyReferencesToPicTab
+Private Sub DeleteHiddenText() ' required in Content -> ModifyReferencesToPicTab
     'Const C_Caption_Pic As String = "Pic."
     'Const C_Caption_Tab As String = "Tab."
     'Const C_Caption_PicSmall As String = "pic."
@@ -1459,7 +1474,7 @@ Sub FindParagraphStyling()
     NomsNotCompliantPar = 0
     NoParInTable = 0
 
-    Call Macros_ms.Validation.AddLastCursorPositionBookmark
+    Call Macros_ms.Tools.AddLastCursorPositionBookmark
 
     ' Initialization of the dedicated Form
     TemplateStyleValidation_Form.Show vbModeless ' sets ShowModal to False in the corresponding Form
@@ -1486,7 +1501,7 @@ Sub FindParagraphStyling()
 
         ' Update progress label
         PerVal = (i / NoTotalPar) * 100 ' Calculate percentage value
-        TemplateStyleValidation_Form.ProgressLabel = "Paragraph counter: " & i & " out of " & NoTotalPar & _
+        TemplateStyleValidation_Form.progresslabel = "Paragraph counter: " & i & " out of " & NoTotalPar & _
             " (" & Int(PerVal) & "%)" & vbNewLine & _
             "Compliant paragraph counter: " & NomsCompliantPar & vbNewLine & _
             "Non-compliant paragraph counter: " & NomsNotCompliantPar & vbNewLine & _
@@ -1497,7 +1512,7 @@ Sub FindParagraphStyling()
     Next i
 
     Unload TemplateStyleValidation_Form
-    Call Macros_ms.Validation.RemoveLastCursorPositionBookmark
+    Call Macros_ms.Tools.RemoveLastCursorPositionBookmark
 
     ' Display summary
     summaryMessage = "Total number of paragraphs: " & NoTotalPar & vbCrLf & _
@@ -1612,7 +1627,7 @@ Sub FindCharacterStyling()
 
         ' Update progress label
         PerVal = (i / NoTotalPar) * 100 ' Calculate percentage value
-        TemplateStyleValidation_Form.ProgressLabel = "Paragraph counter: " & i & " out of " & NoTotalPar & _
+        TemplateStyleValidation_Form.progresslabel = "Paragraph counter: " & i & " out of " & NoTotalPar & _
             " (" & Int(PerVal) & "%)" & vbNewLine & _
             "Compliant paragraph counter: " & NomsCompliantPar & vbNewLine & _
             "Non-compliant paragraph counter: " & NomsNotCompliantPar & vbNewLine & _

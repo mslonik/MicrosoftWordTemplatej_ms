@@ -96,7 +96,6 @@ Attribute VB_Name = "StylesM"
 'Create_LT_Bullets
 'Create_LT_SingleLevelListNumRefMs
 'Create_LT_SingleLevelListInTableMs
-'Create_LT_ToC
 '
 ' Table styles:
 'CreateStyle_TabTableMs()
@@ -518,7 +517,7 @@ Sub ReapplyStylesFromTemplateFull()
     Dim ftr As HeaderFooter
     Dim doc As Document
     Dim templateStyle As style
-    Dim CurrentStyle As style
+    Dim currentStyle As style
     Dim diffCount As Integer
     Dim TemplateName As String
     Dim totalParagraphs As Integer
@@ -568,7 +567,7 @@ Sub ReapplyStylesFromTemplateFull()
         ' Get the default style from the template
         Set templateStyle = doc.Styles(para.style.NameLocal)
         ' Get the current style of the paragraph
-        Set CurrentStyle = para.style
+        Set currentStyle = para.style
         ' Compare the styles
         If Not CompareParagraphFormatting(para:=para, style:=templateStyle) Then
             diffCount = diffCount + 1
@@ -589,7 +588,7 @@ Sub ReapplyStylesFromTemplateFull()
                 ' Get the default style from the template
                 Set templateStyle = doc.Styles(para.style.NameLocal)
                 ' Get the current style of the paragraph
-                Set CurrentStyle = para.style
+                Set currentStyle = para.style
                 ' Compare the styles
                 If Not CompareParagraphFormatting(para:=para, style:=templateStyle) Then
                     diffCount = diffCount + 1
@@ -609,7 +608,7 @@ Sub ReapplyStylesFromTemplateFull()
                 ' Get the default style from the template
                 Set templateStyle = doc.Styles(para.style.NameLocal)
                 ' Get the current style of the paragraph
-                Set CurrentStyle = para.style
+                Set currentStyle = para.style
                 ' Compare the styles
                 If Not CompareParagraphFormatting(para:=para, style:=templateStyle) Then
                     diffCount = diffCount + 1
@@ -643,7 +642,7 @@ Sub ReapplyStylesFromTemplateFull()
     ' Clear object variables
     Set doc = Nothing
     Set templateStyle = Nothing
-    Set CurrentStyle = Nothing
+    Set currentStyle = Nothing
 End Sub
 
 ' Function to compare paragraph formatting
@@ -1096,11 +1095,11 @@ End Function
 ' 2025-08-06 by ms
 ' 2026-01-15 by ms
 Sub ToggleCharHiddenStyle()
-    Dim CurrentStyle As String
+    Dim currentStyle As String
     
     ' Surprisingly this is enough to proceed further. If user selects few paragraphs with different styling, then Selectio.style.NameLocal is empty.
     On Error Resume Next
-        CurrentStyle = Selection.style.NameLocal
+        currentStyle = Selection.style.NameLocal
     On Error GoTo 0
     
     Dim FileName As String:     FileName = C_F_Macros
@@ -1143,11 +1142,11 @@ End Sub
 ' 2025-08-06 by ms
 ' 2026-01-15 by ms
 Sub ToggleCharSourceCode()
-    Dim CurrentStyle As String
+    Dim currentStyle As String
     
     ' Surprisingly this is enough to proceed further. If user selects few paragraphs with different styling, then Selectio.style.NameLocal is empty.
     On Error Resume Next
-        CurrentStyle = Selection.style.NameLocal
+        currentStyle = Selection.style.NameLocal
     On Error GoTo 0
     
     Dim FileName As String:     FileName = C_F_Macros
@@ -5426,8 +5425,8 @@ Private Function CreateStyle_ParSourceCodeMs() As Boolean
                 .LeftIndent = CentimetersToPoints(0.3)
                 .RightIndent = CentimetersToPoints(0.3)
                 .FirstLineIndent = 0
-                .SpaceBefore = 12
-                .SpaceAfter = 12
+                .SpaceBefore = 0
+                .SpaceAfter = 0
                 .LineSpacing = NewStyle.font.Size   ' order matters: specify at first LineSpacing, next LineSpacingRule
                 .LineSpacingRule = C_ParLineDistance
                 .WidowControl = True

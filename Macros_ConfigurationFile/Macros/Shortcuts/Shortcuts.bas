@@ -86,37 +86,38 @@ Const WS_SYSMENU = &H80000
 ' 2025-04-21 by ms, reworked
 Sub CreateActiveDocumentMacroShortcuts()
     ' Pripare all the shortcuts:
-    Call Macros_ms.Shortcuts.Set_CommandShortcuts(IfMsgBox:="quiet")                       ' module: Shortcuts
+    Call Macros_ms.Shortcuts.Set_CommandShortcuts(ifmsgbox:="quiet")                       ' module: Shortcuts
     
-    Call Macros_ms.Shortcuts.SetShortcut_CustomizedToggleFieldCodes(IfMsgBox:="quiet")     ' module: Shortcuts: 1
-    Call Macros_ms.Shortcuts.SetShortcut_JumpToNextList(IfMsgBox:="quiet")                 ' module: Shortcuts: 2
-    Call Macros_ms.Shortcuts.SetShortcut_JumpToNextTable(IfMsgBox:="quiet")                ' module: Shortcuts: 3
-    Call Macros_ms.Shortcuts.SetShortcut_JumpToNextCanvas(IfMsgBox:="quiet")               ' module: Shortcuts: 4
-    Call Macros_ms.Shortcuts.SetShortcut_CustomFileSave(IfMsgBox:="quiet") ' module: Shortcuts: 5
-    Call Macros_ms.Shortcuts.SetShortcut_CloseFileApplyUpdateFields(IfMsgBox:="quiet")     ' module: Shortcuts: 6
-    Call Macros_ms.Shortcuts.SetShortcut_CustomizedPrintPreviewAndPrint(IfMsgBox:="quiet") ' module: Shortcuts: 7
-    Call Macros_ms.Shortcuts.SetShortcut_ToggleCharBoldStyle(IfMsgBox:="quiet")            ' module: Shortcuts: 8
-    Call Macros_ms.Shortcuts.SetShortcut_ToggleCharItalicStyle(IfMsgBox:="quiet")          ' module: Shortcuts: 9
-    Call Macros_ms.Shortcuts.SetShortcut_ToggleCharCrossoutStyle(IfMsgBox:="quiet")        ' module: Shortcuts: 10
-    Call Macros_ms.Shortcuts.SetShortcut_ToggleCharUnderlineStyle(IfMsgBox:="quiet")       ' module: Shortcuts: 11
-    Call Macros_ms.Shortcuts.SetShortcut_ToggleCharHiddenStyle(IfMsgBox:="quiet")          ' module: Shortcuts: 12
-    Call Macros_ms.Shortcuts.SetShortcut_ToggleSpecificFormatting(IfMsgBox:="quiet")       ' module: Shortcuts: 13
-    Call Macros_ms.Shortcuts.SetShortcut_ToggleCharSourceCode(IfMsgBox:="quiet")           ' module: Shortcuts: 14
-    Call Macros_ms.Shortcuts.SetShortcut_SetLanguageToEnglishUS(IfMsgBox:="quiet")         ' module: Shortcuts: 15
-    Call Macros_ms.Shortcuts.SetShortcut_ToggleApplyStyles(IfMsgBox:="quiet")              ' module: Shortcuts: 16
-    Call Macros_ms.Shortcuts.SetShortcut_ToggleOvertypeMode(IfMsgBox:="quiet")             ' module: Shortcuts: 17
-    Call Macros_ms.Shortcuts.SetShortcut_ReapplyTemplateStyle(IfMsgBox:="quiet")           ' module: Shortcuts: 18
-    Call Macros_ms.Shortcuts.SetShortcut_RestartListNumbering(IfMsgBox:="quiet")           ' module: Shortcuts: 19
-    Call Macros_ms.Shortcuts.SetShortcut_InsertCrossReference(IfMsgBox:="quiet")           ' module: Shortcuts: 20
-    Call Macros_ms.Shortcuts.SetShortcut_ToggleHeadingCollapseExpand(IfMsgBox:="quiet")    ' module: Shortcuts: 21
-    Call Macros_ms.Shortcuts.SetShortcut_PrintDocument(IfMsgBox:="quiet")                  ' module: Shortcuts: 22
-    Call Macros_ms.Shortcuts.SetShortcut_CustomizedCopyFormat(IfMsgBox:="quiet")           ' module: Shortcuts: 23
-    Call Macros_ms.Shortcuts.SetShortcut_CustomizedPasteFormat(IfMsgBox:="quiet")          ' module: Shortcuts: 24
-    Call Macros_ms.Shortcuts.SetShortcut_CustomizedSaveAs(IfMsgBox:="quiet")               ' module: Shortcuts: 25
+    Call Macros_ms.Shortcuts.SetShortcut_CustomizedToggleFieldCodes(ifmsgbox:="quiet")     ' module: Shortcuts: 1
+    Call Macros_ms.Shortcuts.SetShortcut_JumpToNextList(ifmsgbox:="quiet")                 ' module: Shortcuts: 2
+    Call Macros_ms.Shortcuts.SetShortcut_JumpToNextTable(ifmsgbox:="quiet")                ' module: Shortcuts: 3
+    Call Macros_ms.Shortcuts.SetShortcut_JumpToNextCanvas(ifmsgbox:="quiet")               ' module: Shortcuts: 4
+    Call Macros_ms.Shortcuts.SetShortcut_CustomFileSave(ifmsgbox:="quiet") ' module: Shortcuts: 5
+    Call Macros_ms.Shortcuts.SetShortcut_CloseFileApplyUpdateFields(ifmsgbox:="quiet")     ' module: Shortcuts: 6
+    Call Macros_ms.Shortcuts.SetShortcut_CustomizedPrintPreviewAndPrint(ifmsgbox:="quiet") ' module: Shortcuts: 7
+    Call Macros_ms.Shortcuts.SetShortcut_ToggleCharBoldStyle(ifmsgbox:="quiet")            ' module: Shortcuts: 8
+    Call Macros_ms.Shortcuts.SetShortcut_ToggleCharItalicStyle(ifmsgbox:="quiet")          ' module: Shortcuts: 9
+    Call Macros_ms.Shortcuts.SetShortcut_ToggleCharCrossoutStyle(ifmsgbox:="quiet")        ' module: Shortcuts: 10
+    Call Macros_ms.Shortcuts.SetShortcut_ToggleCharUnderlineStyle(ifmsgbox:="quiet")       ' module: Shortcuts: 11
+    Call Macros_ms.Shortcuts.SetShortcut_ToggleCharHiddenStyle(ifmsgbox:="quiet")          ' module: Shortcuts: 12
+    Call Macros_ms.Shortcuts.SetShortcut_ToggleSpecificFormatting(ifmsgbox:="quiet")       ' module: Shortcuts: 13
+    Call Macros_ms.Shortcuts.SetShortcut_ToggleCharSourceCode(ifmsgbox:="quiet")           ' module: Shortcuts: 14
+    Call Macros_ms.Shortcuts.SetShortcut_SetLanguageToEnglishUS(ifmsgbox:="quiet")         ' module: Shortcuts: 15
+    Call Macros_ms.Shortcuts.SetShortcut_ToggleApplyStyles(ifmsgbox:="quiet")              ' module: Shortcuts: 16
+    Call Macros_ms.Shortcuts.SetShortcut_ToggleOvertypeMode(ifmsgbox:="quiet")             ' module: Shortcuts: 17
+    Call Macros_ms.Shortcuts.SetShortcut_ReapplyTemplateStyle(ifmsgbox:="quiet")           ' module: Shortcuts: 18
+    Call Macros_ms.Shortcuts.SetShortcut_RestartListNumbering(ifmsgbox:="quiet")           ' module: Shortcuts: 19
+    Call Macros_ms.Shortcuts.SetShortcut_InsertCrossReference(ifmsgbox:="quiet")           ' module: Shortcuts: 20
+    Call Macros_ms.Shortcuts.SetShortcut_ToggleHeadingCollapseExpand(ifmsgbox:="quiet")    ' module: Shortcuts: 21
+    Call Macros_ms.Shortcuts.SetShortcut_PrintDocument(ifmsgbox:="quiet")                  ' module: Shortcuts: 22
+    Call Macros_ms.Shortcuts.SetShortcut_CustomizedCopyFormat(ifmsgbox:="quiet")           ' module: Shortcuts: 23
+    Call Macros_ms.Shortcuts.SetShortcut_CustomizedPasteFormat(ifmsgbox:="quiet")          ' module: Shortcuts: 24
+    Call Macros_ms.Shortcuts.SetShortcut_CustomizedSaveAs(ifmsgbox:="quiet")               ' module: Shortcuts: 25
+    Call Macros_ms.Shortcuts.SetShortcut_CustomInsertAutoText(ifmsgbox:="quiet")
 
-    Call Macros_ms.Shortcuts.SetShortcut_HotMacros(IfMsgBox:="quiet")                      ' module: Shortcuts: 26
-    Call Macros_ms.Shortcuts.SetShortcut_HotStrings(IfMsgBox:="quiet")                     ' module: Shortcuts: 27
-    Call Macros_ms.Shortcuts.SetShortcut_HotKeys(IfMsgBox:="quiet")                        ' module: Shortcuts: 28
+    Call Macros_ms.Shortcuts.SetShortcut_HotMacros(ifmsgbox:="quiet")                      ' module: Shortcuts: 26
+    Call Macros_ms.Shortcuts.SetShortcut_HotStrings(ifmsgbox:="quiet")                     ' module: Shortcuts: 27
+    Call Macros_ms.Shortcuts.SetShortcut_HotKeys(ifmsgbox:="quiet")                        ' module: Shortcuts: 28
     
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Template
@@ -186,6 +187,7 @@ Sub RemoveActiveDocumentMacroShortcuts()
     Call Macros_ms.Shortcuts.ResetShortcut_CustomizedCopyFormat
     Call Macros_ms.Shortcuts.ResetShortcut_CustomizedPasteFormat
     Call Macros_ms.Shortcuts.ResetShortcut_CustomizedSaveAs
+    Call Macros_ms.Shortcuts.ResetShortcut_CustomInsertAutoText
     
     Call Macros_ms.Shortcuts.ResetShortcut_HotMacros
     Call Macros_ms.Shortcuts.ResetShortcut_Strings
@@ -523,7 +525,7 @@ Private Sub HotMacrosUserForm_Initialize(HotkeyHotkey As String)
     Call Macros_ms.Shortcuts.GetMacrosKeyBindings(MyStyleName, MyShortcut)
     
     ' Set the Forms properties
-    frmHotMacros.Caption = "Styles macro shortcuts (HotKeys): " & HotkeyHotkey
+    frmHotMacros.Caption = "Macro shortcuts (HotKeys): " & HotkeyHotkey
     frmHotMacros.font = "Consolas"
     
     ' Add a listbox
@@ -1012,14 +1014,14 @@ End Sub
 
 ' 2025-07-15 by ms
 ' This macro contains changed or added shortcuts. I don't remember why I keep them in separate sub.
-Private Sub Set_CommandShortcuts(ByVal IfMsgBox As String)
+Private Sub Set_CommandShortcuts(ByVal ifmsgbox As String)
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Shortcuts
     Dim MacroName As String:    MacroName = "Set_CommandShortcuts"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
         
     ' Validate argument
-    If LCase(IfMsgBox) <> "quiet" And LCase(IfMsgBox) <> "loud" Then
+    If LCase(ifmsgbox) <> "quiet" And LCase(ifmsgbox) <> "loud" Then
         MsgBox _
             Prompt:="Invalid argument. Use 'quiet' or 'loud'." & vbNewLine & vbNewLine & "Exiting.", _
             Buttons:=vbCritical + vbOKOnly, _
@@ -1046,7 +1048,7 @@ Private Sub Set_CommandShortcuts(ByVal IfMsgBox As String)
         Command:="FormatFont", _
         KeyCode:=BuildKeyCode(wdKeyAlt, wdKeyF)
             
-    If LCase(IfMsgBox) = "loud" Then
+    If LCase(ifmsgbox) = "loud" Then
         MsgBox _
             Prompt:="The following shortcuts have been added:" & vbNewLine & vbNewLine & _
                 C_SC_AltCtrlH & " -> " & "NavPane" & vbNewLine & _
@@ -1270,14 +1272,14 @@ End Sub
 ' The issue is that KeyBindings collection contains all keybindings from all contexts and I need to set correct one.
 Private Sub SetKeyBindingMacro(ByVal KeybShortcut As String, _
                                 ByVal WhichMacro As String, _
-                                ByVal IfMsgBox As String)
+                                ByVal ifmsgbox As String)
     
     Dim FileName As String:     FileName = C_F_Macros
     Dim ModuleName As String:   ModuleName = C_M_Shortcuts
     Dim MacroName As String:    MacroName = "SetKeyBindingMacro"
     Dim MsgBoxTitle As String:  MsgBoxTitle = FileName & " : " & ModuleName & " : " & MacroName
     
-    If LCase(IfMsgBox) <> "quiet" And LCase(IfMsgBox) <> "loud" Then
+    If LCase(ifmsgbox) <> "quiet" And LCase(ifmsgbox) <> "loud" Then
         MsgBox _
             Prompt:="Invalid argument. Use 'quiet' or 'loud'." & vbNewLine & vbNewLine & "Exiting.", _
             Buttons:=vbCritical + vbOKOnly, _
@@ -1336,7 +1338,7 @@ Private Sub SetKeyBindingMacro(ByVal KeybShortcut As String, _
     End If
     
     If Not kb Is Nothing Then
-        If LCase(IfMsgBox) = "loud" Then
+        If LCase(ifmsgbox) = "loud" Then
             MsgBox _
                 Prompt:="Keybinding for " & KeybShortcut & " has been set to " & WhichMacro & "." & _
                     "Customization context:" & vbNewLine & vbNewLine & _
@@ -1497,11 +1499,11 @@ Private Function KeyStringToKeyCode(key As String) As Long
 End Function
 
 
-Private Sub SetShortcut_CustomizedToggleFieldCodes(ByVal IfMsgBox As String)
+Private Sub SetShortcut_CustomizedToggleFieldCodes(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_AltF9, _
         WhichMacro:="Macros_ms.Tools.CustomizedToggleFieldCodes", _
-        IfMsgBox:="quiet")
+        ifmsgbox:="quiet")
 End Sub
 
 ' Original Microsoft Word command: ViewFieldCodes
@@ -1511,11 +1513,11 @@ End Sub
 
 ' Sets keyboard shortcut to the macro JumpToNextList
 ' 2025-03-08 by ms
-Private Sub SetShortcut_JumpToNextList(ByVal IfMsgBox As String)
+Private Sub SetShortcut_JumpToNextList(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_AltF2, _
         WhichMacro:="Macros_ms.Tools.JumpToNextList", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 Private Sub ResetShortcut_JumpToNextList()
@@ -1524,11 +1526,11 @@ End Sub
 
 ' Sets keyboard shortcut to the macro JumpToNextTable
 ' 2025-03-08 by ms
-Private Sub SetShortcut_JumpToNextTable(ByVal IfMsgBox As String)
+Private Sub SetShortcut_JumpToNextTable(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_AltF3, _
         WhichMacro:="Macros_ms.Tools.JumpToNextTable", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 Private Sub ResetShortcut_JumpToNextTable()
@@ -1537,11 +1539,11 @@ End Sub
 
 ' Sets keyboard shortcut to the macro JumpToNextCanvas
 ' 2025-04-11 by ms
-Private Sub SetShortcut_JumpToNextCanvas(ByVal IfMsgBox As String)
+Private Sub SetShortcut_JumpToNextCanvas(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_AltF5, _
         WhichMacro:="Macros_ms.Tools.JumpToNextCanvas", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 Private Sub ResetShortcut_JumpToNextCanvas()
@@ -1550,11 +1552,11 @@ End Sub
 
 ' Sets call-forward to built-in command "Save File" (Ctrl + S), adding macro to apply numbering distance
 ' 2025-03-12 by ms
-Private Sub SetShortcut_CustomFileSave(ByVal IfMsgBox As String)
+Private Sub SetShortcut_CustomFileSave(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_CtrlS, _
         WhichMacro:="Macros_ms.Content.CustomizedFileSave", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' Original Microsoft Word command: CustomizedFileSave
@@ -1566,11 +1568,11 @@ End Sub
 ' Sets call-forward macro to built-in command
 ' "Close File" / command DocClose (Ctrl + W),
 ' 2025-03-15 by ms
-Private Sub SetShortcut_CloseFileApplyUpdateFields(ByVal IfMsgBox As String)
+Private Sub SetShortcut_CloseFileApplyUpdateFields(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_CtrlW, _
         WhichMacro:="Macros_ms.Content.UpdateAllFieldsAndCloseFile", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' Original Microsoft Word command: DocClose
@@ -1582,11 +1584,11 @@ End Sub
 ' Sets call-forward macro to built-in command
 ' "Print Preview" / command PrintPreviewAndPrint (Ctrl + F2),
 ' 2025-03-15 by ms
-Private Sub SetShortcut_CustomizedPrintPreviewAndPrint(ByVal IfMsgBox As String)
+Private Sub SetShortcut_CustomizedPrintPreviewAndPrint(ByVal ifmsgbox As String)
     Call SetKeyBindingMacro( _
         KeybShortcut:=C_SC_CtrlF2, _
         WhichMacro:="Macros_ms.Content.CustomizedPrintPreviewAndPrint", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' Original Microsoft Word command: PrintPreviewAndPrint
@@ -1596,11 +1598,11 @@ Private Sub ResetShortcut_CustomizedPrintPreviewAndPrint()
 End Sub
 
 ' 2025-03-20 by ms
-Private Sub SetShortcut_ToggleCharBoldStyle(ByVal IfMsgBox As String)
+Private Sub SetShortcut_ToggleCharBoldStyle(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_CtrlB, _
         WhichMacro:="Macros_ms.Tools.Bold", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' Original Microsoft Word command: Bold
@@ -1610,11 +1612,11 @@ Private Sub ResetShortcut_ToggleCharBoldStyle()
 End Sub
 
 ' 2025-03-20 by ms
-Private Sub SetShortcut_ToggleCharItalicStyle(ByVal IfMsgBox As String)
+Private Sub SetShortcut_ToggleCharItalicStyle(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_CtrlI, _
         WhichMacro:="Macros_ms.Tools.Italic", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' Original Microsoft Word command: Italic
@@ -1624,11 +1626,11 @@ Private Sub ResetShortcut_ToggleCharItalicStyle()
 End Sub
 
 ' 2025-03-20 by ms
-Private Sub SetShortcut_ToggleCharUnderlineStyle(ByVal IfMsgBox As String)
+Private Sub SetShortcut_ToggleCharUnderlineStyle(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_CtrlU, _
         WhichMacro:="Macros_ms.Tools.Underline", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' Original Microsoft Word command: Underline
@@ -1640,11 +1642,11 @@ End Sub
 ' 2025-03-21 by ms
 ' It is strange and not yet clarified. This function always returns run-time error '5346': Word cannot change the function of the specified key.
 ' But when shortcut is set manually to the macro "ToggleCharCrossoutStyle", it works. So this is unclear why this error is set.
-Private Sub SetShortcut_ToggleCharCrossoutStyle(ByVal IfMsgBox As String)
+Private Sub SetShortcut_ToggleCharCrossoutStyle(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_ShiftCtrlX, _
         WhichMacro:="Macros_ms.Tools.Strikethrough", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' 2025-03-21 by ms
@@ -1653,11 +1655,11 @@ Private Sub ResetShortcut_ToggleCharCrossoutStyle()
 End Sub
 
 ' 2025-03-21 by ms
-Private Sub SetShortcut_ToggleCharHiddenStyle(ByVal IfMsgBox As String)
+Private Sub SetShortcut_ToggleCharHiddenStyle(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_ShiftCtrlH, _
         WhichMacro:="Macros_ms.StylesM.ToggleCharHiddenStyle", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' 2025-03-21 by ms
@@ -1666,11 +1668,11 @@ Private Sub ResetShortcut_ToggleCharHiddenStyle()
     Call Macros_ms.Shortcuts.DeleteKeyBinding(KeybShortcut:=C_SC_ShiftCtrlH)
 End Sub
 
-Private Sub SetShortcut_ToggleSpecificFormatting(ByVal IfMsgBox As String)
+Private Sub SetShortcut_ToggleSpecificFormatting(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_F4, _
         WhichMacro:="Macros_ms.Tools.ToggleSpecificFormatting", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' Original Microsoft Word command: EditRedoOrRepeat
@@ -1679,11 +1681,11 @@ Private Sub ResetShortcut_ToggleSpecificFormatting()
 End Sub
 
 ' 2025-04-14 by ms
-Private Sub SetShortcut_ToggleCharSourceCode(ByVal IfMsgBox As String)
+Private Sub SetShortcut_ToggleCharSourceCode(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_ShiftCtrlK, _
         WhichMacro:="Macros_ms.StylesM.ToggleCharSourceCode", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' 2025-04-14 by ms
@@ -1693,11 +1695,11 @@ Private Sub ResetShortcut_ToggleCharSourceCode()
 End Sub
 
 ' 2025-04-14 by ms
-Private Sub SetShortcut_SetLanguageToEnglishUS(ByVal IfMsgBox As String)
+Private Sub SetShortcut_SetLanguageToEnglishUS(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_F8, _
         WhichMacro:="Macros_ms.Tools.SetLanguageToEnglishUS", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' 2025-04-14 by ms
@@ -1707,11 +1709,11 @@ Private Sub ResetShortcut_SetLanguageToEnglishUS()
     Call Macros_ms.Shortcuts.DeleteKeyBinding(KeybShortcut:=C_SC_F8)
 End Sub
 
-Private Sub SetShortcut_ToggleApplyStyles(ByVal IfMsgBox As String)
+Private Sub SetShortcut_ToggleApplyStyles(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_ShiftCtrlS, _
         WhichMacro:="Macros_ms.Tools.ToggleApplyStyles", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' Original Microsoft Word command: StyleApplyPane
@@ -1720,11 +1722,11 @@ Private Sub ResetShortcut_ToggleApplyStyles()
 End Sub
 
 ' 2025-04-20 by ms
-Private Sub SetShortcut_ToggleOvertypeMode(ByVal IfMsgBox As String)
+Private Sub SetShortcut_ToggleOvertypeMode(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_Insert, _
         WhichMacro:="Macros_ms.Tools.CustomizedOvertype", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' Original Microsoft Word command: Overtype
@@ -1734,11 +1736,11 @@ Private Sub ResetShortcut_ToggleOvertypeMode()
 End Sub
 
 ' 2025-04-20 by ms
-Private Sub SetShortcut_InsertCrossReference(ByVal IfMsgBox As String)
+Private Sub SetShortcut_InsertCrossReference(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_F7, _
         WhichMacro:="Macros_ms.Tools.InsertCrossRef", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' Original Microsoft Word command: ToolsProofing
@@ -1748,11 +1750,11 @@ Private Sub ResetShortcut_InsertCrossReference()
 End Sub
 
 ' 2025-07-16 by ms
-Private Sub SetShortcut_ReapplyTemplateStyle(ByVal IfMsgBox As String)
+Private Sub SetShortcut_ReapplyTemplateStyle(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_AltRplusS, _
         WhichMacro:="Macros_ms.Tools.ReapplyTemplateStyle", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' 2025-07-16 by ms
@@ -1761,11 +1763,11 @@ Private Sub ResetShortcut_ReapplyTemplateStyle()
 End Sub
 
 ' 2025-07-16 by ms
-Private Sub SetShortcut_RestartListNumbering(ByVal IfMsgBox As String)
+Private Sub SetShortcut_RestartListNumbering(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_AltLplusR, _
         WhichMacro:="Macros_ms.Tools.RestartListNumbering", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' 2025-07-16 by ms
@@ -1774,11 +1776,11 @@ Private Sub ResetShortcut_RestartListNumbering()
 End Sub
 
 ' 2025-07-21 by ms
-Private Sub SetShortcut_HotMacros(ByVal IfMsgBox As String)
+Private Sub SetShortcut_HotMacros(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_AltHplusM, _
         WhichMacro:="Macros_ms.Shortcuts.ShowFormHotMacros", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' 2025-07-21 by ms
@@ -1787,11 +1789,11 @@ Private Sub ResetShortcut_HotMacros()
 End Sub
 
 ' 2025-07-21 by ms
-Private Sub SetShortcut_HotStrings(ByVal IfMsgBox As String)
+Private Sub SetShortcut_HotStrings(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_AltHplusS, _
         WhichMacro:="Macros_ms.Shortcuts.ShowFormHotstrings", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' 2025-07-21 by ms
@@ -1800,11 +1802,11 @@ Private Sub ResetShortcut_Strings()
 End Sub
 
 ' 2025-07-21 by ms
-Private Sub SetShortcut_HotKeys(ByVal IfMsgBox As String)
+Private Sub SetShortcut_HotKeys(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_AltHplusK, _
         WhichMacro:="Macros_ms.Shortcuts.ShowFormHotkeys", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' 2025-07-21 by ms
@@ -1813,11 +1815,11 @@ Private Sub ResetShortcut_HotKeys()
 End Sub
 
 ' 2025-07-30 by ms
-Private Sub SetShortcut_ToggleHeadingCollapseExpand(ByVal IfMsgBox As String)
+Private Sub SetShortcut_ToggleHeadingCollapseExpand(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_AltCtrlSqOpen, _
         WhichMacro:="Macros_ms.Tools.ToggleHeadingCollapseExpand", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' 2025-07-30 by ms
@@ -1826,11 +1828,11 @@ Private Sub ResetShortcut_ToggleHeadingCollapseExpand()
 End Sub
 
 ' 2025-08-03 by ms
-Private Sub SetShortcut_PrintDocument(ByVal IfMsgBox As String)
+Private Sub SetShortcut_PrintDocument(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_CtrlP, _
         WhichMacro:="Macros_ms.Tools.CustomizedPrinting", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' 2025-08-03 by ms
@@ -1839,11 +1841,11 @@ Private Sub ResetShortcut_PrintDocument()
 End Sub
 
 ' 2025-08-03 by ms
-Private Sub SetShortcut_CustomizedSaveAs(ByVal IfMsgBox As String)
+Private Sub SetShortcut_CustomizedSaveAs(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_F12, _
         WhichMacro:="Macros_ms.Tools.CustomizedSaveAs", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' 2025-08-03 by ms
@@ -1852,11 +1854,11 @@ Private Sub ResetShortcut_CustomizedSaveAs()
 End Sub
 
 ' 2025-10-02 by ms
-Private Sub SetShortcut_CustomizedCopyFormat(ByVal IfMsgBox As String)
+Private Sub SetShortcut_CustomizedCopyFormat(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_ShiftCtrlC, _
         WhichMacro:="Macros_ms.Tools.CustomizedCopyFormat", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' 2025-10-02 by ms
@@ -1865,16 +1867,29 @@ Private Sub ResetShortcut_CustomizedCopyFormat()
 End Sub
 
 ' 2025-10-02 by ms
-Private Sub SetShortcut_CustomizedPasteFormat(ByVal IfMsgBox As String)
+Private Sub SetShortcut_CustomizedPasteFormat(ByVal ifmsgbox As String)
     Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
         KeybShortcut:=C_SC_ShiftCtrlV, _
         WhichMacro:="Macros_ms.Tools.CustomizedPasteFormat", _
-        IfMsgBox:=IfMsgBox)
+        ifmsgbox:=ifmsgbox)
 End Sub
 
 ' 2025-10-02 by ms
 Private Sub ResetShortcut_CustomizedPasteFormat()
     Call Macros_ms.Shortcuts.DeleteKeyBinding(KeybShortcut:=C_SC_ShiftCtrlV)
+End Sub
+
+' 2026-03-14 by ms
+Private Sub SetShortcut_CustomInsertAutoText(ByVal ifmsgbox As String)
+    Call Macros_ms.Shortcuts.SetKeyBindingMacro( _
+        KeybShortcut:=C_SC_F3, _
+        WhichMacro:="macros_ms.tools.CustomInsertAutoText", _
+        ifmsgbox:=ifmsgbox)
+End Sub
+
+' 2026-03-14 by ms
+Private Sub ResetShortcut_CustomInsertAutoText()
+    Call Macros_ms.Shortcuts.DeleteKeyBinding(KeybShortcut:=C_SC_F3)
 End Sub
 
 ' 2025-11-20 by ms
